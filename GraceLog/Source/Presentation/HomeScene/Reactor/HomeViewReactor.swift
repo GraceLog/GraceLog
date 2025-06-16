@@ -41,6 +41,8 @@ final class HomeViewReactor: Reactor {
     }
     
     struct State {
+        
+        // FIXME: - 추후 다른 Reactor통해 구분지을 예정, 이후 삭제
         enum HomeModeSegment {
             case user
             case group
