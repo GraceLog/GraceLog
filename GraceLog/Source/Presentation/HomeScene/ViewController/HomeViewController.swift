@@ -9,11 +9,32 @@ import UIKit
 import RxDataSources
 import ReactorKit
 
+enum HomeMenuItem: CaseIterable {
+    case user
+    case group
+    
+    var title: String {
+        switch self {
+        case .user:
+            // TODO: - User관련 정보 처리 필요
+            return "승렬"
+        case .group:
+            return "공동체"
+        }
+    }
+}
+
 final class HomeViewController: GraceLogBaseViewController, View {
     weak var coordinator: Coordinator?
     var disposeBag = DisposeBag()
     
-    private let headerView = HomeNavBarTableViewHeader()
+    private let homeMenuView = GLUnderlineSegmentedControl(items: HomeMenuItem.allCases.map { $0.title }).then {
+        $0.selectedSegmentIndex = 0
+        
+        // TODO: - 폰트 재작업 필요
+        $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont(name: "Pretendard-Bold", size: 18)!], for: .normal)
+        $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: UIFont(name: "Pretendard-Bold", size: 18)!], for: .selected)
+    }
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
         $0.separatorStyle = .none
@@ -95,16 +116,17 @@ final class HomeViewController: GraceLogBaseViewController, View {
     private func configureUI() {
         let safeArea = view.safeAreaLayoutGuide
         
-        view.addSubview(headerView)
-        headerView.snp.makeConstraints {
+        view.addSubview(homeMenuView)
+        homeMenuView.snp.makeConstraints {
             $0.top.equalTo(safeArea)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.lessThanOrEqualToSuperview()
             $0.height.equalTo(47)
         }
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom)
+            $0.top.equalTo(homeMenuView.snp.bottom)
             $0.leading.trailing.bottom.equalTo(safeArea)
         }
     }
@@ -130,13 +152,16 @@ final class HomeViewController: GraceLogBaseViewController, View {
     
     func bind(reactor: HomeViewReactor) {
         // Action
-        headerView.segmentTapped
-            .map { isUserSelected in
-                return isUserSelected ?
-                HomeViewReactor.Action.userButtonTapped :
-                HomeViewReactor.Action.groupButtonTapped
+        homeMenuView.rx.value
+            .map { HomeMenuItem.allCases[$0] }
+            .bind(with: self) { owner, selectedMenu in
+                switch selectedMenu {
+                case .user:
+                    reactor.action.onNext(HomeViewReactor.Action.userButtonTapped)
+                case .group:
+                    reactor.action.onNext(HomeViewReactor.Action.groupButtonTapped)
+                }
             }
-            .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self)
@@ -171,44 +196,41 @@ final class HomeViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         reactor.state
-            .map { state in
-                return state.currentSegment == .user
-            }
+            .map { $0.currentSegment }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .bind(onNext: { owner, isUserSelected in
-                owner.headerView.updateUI(isUserSelected: isUserSelected)
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, selectedSegment in
+                let selectedSegmentIndex = selectedSegment == .user ? 0 : 1
+                owner.homeMenuView.selectedSegmentIndex = selectedSegmentIndex
                 owner.tableView.reloadData()
-            })
+            }
             .disposed(by: disposeBag)
         
         reactor.state
             .map { $0.selectedCommunity }
             .distinctUntilChanged()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
+            .subscribe(with: self) { owner, _ in
                 DispatchQueue.main.async {
                     owner.tableView.reloadData()
                 }
-            })
+            }
             .disposed(by: disposeBag)
         
         reactor.state
             .map { $0.user }
             .distinctUntilChanged()
             .compactMap { $0 }
-            .withUnretained(self)
-            .subscribe(onNext: { owner, user in
-                owner.headerView.updateUser(user: user)
-            })
+            .subscribe(with: self) { owner, user in
+                // TODO: - 상준 네비게이션바 사용자 이름 및 프로필 이미지 등록
+            }
             .disposed(by: disposeBag)
         
         reactor.state
             .compactMap { $0.error }
-            .withUnretained(self)
-            .bind(onNext: { owner, error in
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, error in
                 owner.view.makeToast(error.localizedDescription)
-            })
+            }
             .disposed(by: disposeBag)
     }
 }
