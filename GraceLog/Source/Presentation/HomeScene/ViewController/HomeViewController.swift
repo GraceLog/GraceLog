@@ -153,6 +153,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
         navigationBar.addRightItem(bellButton)
         navigationBar.addRightItem(profileButton)
         
+        navigationBar.rightStackViewSpacing = 12
         navigationBar.updateLeftStackViewConstraints(leading: 20, bottom: 0)
         navigationBar.updateRightStackViewConstraints(trailing: -20, bottom: -8)
     }
