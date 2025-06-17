@@ -42,7 +42,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
     private let bellButton = UIButton().then {
         $0.setImage(UIImage(named: "bell"), for: .normal)
         $0.tintColor = .black
-        $0.setDimensions(width: 24, height: 24)
+        $0.setDimensions(width: 32, height: 32)
     }
     
     private let profileButton = UIButton().then {
@@ -153,9 +153,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
         navigationBar.addRightItem(bellButton)
         navigationBar.addRightItem(profileButton)
         
-        navigationBar.rightStackViewSpacing = 12
-        navigationBar.updateLeftStackViewConstraints(leading: 20, bottom: 0)
-        navigationBar.updateRightStackViewConstraints(trailing: -20, bottom: -8)
+        navigationBar.rightStackViewSpacing = 10
     }
     
     private func configureTableView() {

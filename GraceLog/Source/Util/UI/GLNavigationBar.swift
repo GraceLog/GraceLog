@@ -9,47 +9,29 @@ import UIKit
 import SnapKit
 import Then
 
+
+
 final class GLNavigationBar: UIView {
     private let containerView = UIView()
-    
     private let titleLabel = UILabel()
-    
-    var title: String? {
-        didSet {
-            titleLabel.text = title
-            titleLabel.isHidden = title?.isEmpty ?? true
-        }
-    }
-    
-    var titleColor: UIColor = .black {
-        didSet {
-            titleLabel.textColor = titleColor
-        }
-    }
-    
-    var titleFont: UIFont = .systemFont(ofSize: 17) {
-        didSet {
-            titleLabel.font = titleFont
-        }
-    }
     
     private let leftStackView = UIStackView().then {
         $0.axis = .horizontal
-        $0.alignment = .center
+        $0.alignment = .leading
     }
     
     private let rightStackView = UIStackView().then {
         $0.axis = .horizontal
-        $0.alignment = .center
+        $0.alignment = .trailing
     }
     
-    var leftStackViewSpacing: CGFloat = 12 {
+    var leftStackViewSpacing: CGFloat = 10 {
         didSet {
             leftStackView.spacing = leftStackViewSpacing
         }
     }
     
-    var rightStackViewSpacing: CGFloat = 12 {
+    var rightStackViewSpacing: CGFloat = 10 {
         didSet {
             rightStackView.spacing = rightStackViewSpacing
         }
@@ -77,66 +59,25 @@ final class GLNavigationBar: UIView {
         }
         
         leftStackView.snp.makeConstraints {
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
         }
         
         rightStackView.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
     }
     
-    func updateLeftStackViewConstraints(leading: CGFloat? = nil, top: CGFloat? = nil, bottom: CGFloat? = nil) {
-        leftStackView.snp.updateConstraints {
-            if let leading = leading {
-                $0.leading.equalToSuperview().offset(leading)
-            }
-        }
-        
-        if let top = top, let bottom = bottom {
-            leftStackView.snp.remakeConstraints {
-                $0.leading.equalToSuperview().offset(leading ?? 0)
-                $0.top.equalToSuperview().offset(top)
-                $0.bottom.equalToSuperview().offset(bottom)
-            }
-        } else if let top = top {
-            leftStackView.snp.remakeConstraints {
-                $0.leading.equalToSuperview().offset(leading ?? 0)
-                $0.top.equalToSuperview().offset(top)
-            }
-        } else if let bottom = bottom {
-            leftStackView.snp.remakeConstraints {
-                $0.leading.equalToSuperview().offset(leading ?? 0)
-                $0.bottom.equalToSuperview().offset(bottom)
-            }
-        }
-    }
-    
-    func updateRightStackViewConstraints(trailing: CGFloat? = nil, top: CGFloat? = nil, bottom: CGFloat? = nil) {
-        rightStackView.snp.updateConstraints {
-            if let trailing = trailing {
-                $0.trailing.equalToSuperview().offset(trailing)
-            }
-        }
-        
-        if let top = top, let bottom = bottom {
-            rightStackView.snp.remakeConstraints {
-                $0.trailing.equalToSuperview().offset(trailing ?? 0)
-                $0.top.equalToSuperview().offset(top)
-                $0.bottom.equalToSuperview().offset(bottom)
-            }
-        } else if let top = top {
-            rightStackView.snp.remakeConstraints {
-                $0.trailing.equalToSuperview().offset(trailing ?? 0)
-                $0.top.equalToSuperview().offset(top)
-            }
-        } else if let bottom = bottom {
-            rightStackView.snp.remakeConstraints {
-                $0.trailing.equalToSuperview().offset(trailing ?? 0)
-                $0.bottom.equalToSuperview().offset(bottom)
-            }
-        }
+    func setupTitleLabel(
+        text: String? = nil,
+        color: UIColor = .black,
+        font: UIFont = GLFont.bold18.font
+    ) {
+        titleLabel.text = text
+        titleLabel.textColor = color
+        titleLabel.font = font
+        titleLabel.isHidden = text?.isEmpty ?? true
     }
     
     func addLeftItem(_ view: UIView) {
