@@ -21,7 +21,7 @@ final class DiaryDescriptionTableViewCell: UITableViewCell {
     
     private let descriptionTextView = UITextView().then {
         $0.backgroundColor = .white
-        $0.font = UIFont(name: "Pretendard-Regular", size: 14)
+        $0.font = GLFont.regular14.font
         $0.textColor = .black
         $0.placeholder = "오늘은 하나님께 어떤 점이 감사했나요?"
         $0.placeholderColor = .gray200
@@ -34,7 +34,7 @@ final class DiaryDescriptionTableViewCell: UITableViewCell {
     }
     
     private let countLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Regular", size: 14)
+        $0.font = GLFont.regular14.font
         $0.textColor = .gray200
         $0.text = "0/500"
         $0.textAlignment = .right

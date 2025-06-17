@@ -78,10 +78,10 @@ final class GraceLogAppCoordinator: Coordinator {
         
         let itemAppearance = UITabBarItemAppearance()
         itemAppearance.normal.titleTextAttributes = [
-            .font: UIFont(name: "Pretendard-Medium", size: 10) ?? .systemFont(ofSize: 10)
+            .font: GLFont.medium10.font
         ]
         itemAppearance.selected.titleTextAttributes = [
-            .font: UIFont(name: "Pretendard-Medium", size: 10) ?? .systemFont(ofSize: 10)
+            .font: GLFont.medium10.font
         ]
         
         appearance.stackedLayoutAppearance = itemAppearance

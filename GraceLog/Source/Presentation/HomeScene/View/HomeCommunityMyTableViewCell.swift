@@ -21,7 +21,7 @@ final class HomeCommunityMyTableViewCell: UITableViewCell {
     }
     
     private let usernameLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Bold", size: 12)
+        $0.font = GLFont.bold12.font
         $0.textColor = .graceGray
     }
     
@@ -39,13 +39,13 @@ final class HomeCommunityMyTableViewCell: UITableViewCell {
     private let overlayView = UIView()
     
     private let titleLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Bold", size: 20)
+        $0.font = GLFont.bold20.font
         $0.textColor = .white
         $0.numberOfLines = 0
     }
     
     private let hashtagsLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Light", size: 11)
+        $0.font = GLFont.light11.font
         $0.textColor = .white
     }
     
@@ -57,7 +57,7 @@ final class HomeCommunityMyTableViewCell: UITableViewCell {
         config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var outgoing = incoming
-            outgoing.font = UIFont(name: "Pretendard-Bold", size: 14)
+            outgoing.font = GLFont.bold14.font
             outgoing.foregroundColor = .gray100
             return outgoing
         }
@@ -73,7 +73,7 @@ final class HomeCommunityMyTableViewCell: UITableViewCell {
         config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var outgoing = incoming
-            outgoing.font = UIFont(name: "Pretendard-Bold", size: 14)
+            outgoing.font = GLFont.bold14.font
             outgoing.foregroundColor = .gray
             return outgoing
         }

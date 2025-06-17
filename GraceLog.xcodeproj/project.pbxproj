@@ -35,6 +35,9 @@
 		02F0DA512DDEAED900CD036A /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0DA502DDEAED900CD036A /* AuthManager.swift */; };
 		6D6D359847E48286C67E16F7 /* Pods_GraceLogUseCaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */; };
 		704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */; };
+		7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815792DFFF362009ECDBD /* FontStylable.swift */; };
+		7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157B2DFFF570009ECDBD /* GLFont.swift */; };
+		7048157E2DFFF95B009ECDBD /* FontName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157D2DFFF95B009ECDBD /* FontName.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
 		A88BF65DF907D86788F86BF8 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */; };
 		DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B972D53A855007C2066 /* DiaryCoordinator.swift */; };
@@ -202,6 +205,9 @@
 		3772E15DC148101F5890C6F5 /* Pods-GraceLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.release.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.release.xcconfig"; sourceTree = "<group>"; };
 		45FB5606D88433D808BF0656 /* Pods-GraceLogTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.debug.xcconfig"; sourceTree = "<group>"; };
 		704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLUnderlineSegmentedControl.swift; sourceTree = "<group>"; };
+		704815792DFFF362009ECDBD /* FontStylable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStylable.swift; sourceTree = "<group>"; };
+		7048157B2DFFF570009ECDBD /* GLFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLFont.swift; sourceTree = "<group>"; };
+		7048157D2DFFF95B009ECDBD /* FontName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontName.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E14D79ABA16C7A19244077 /* Pods-GraceLogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.release.xcconfig"; sourceTree = "<group>"; };
 		8BC9F644955C12A97595F5EF /* Pods-GraceLogUseCaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -544,6 +550,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		704815782DFFF2B5009ECDBD /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				704815792DFFF362009ECDBD /* FontStylable.swift */,
+				7048157B2DFFF570009ECDBD /* GLFont.swift */,
+				7048157D2DFFF95B009ECDBD /* FontName.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -839,6 +855,7 @@
 		DE3BFCC22D043D200076426D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				704815782DFFF2B5009ECDBD /* Font */,
 				026656A92DE7E9BD00541D96 /* UI */,
 				02F0DA4F2DDEAECC00CD036A /* Manager */,
 				DE2700472D1F9E56005C9DCF /* Extension */,
@@ -1458,6 +1475,7 @@
 				DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */,
 				DE58FEB32D04284D008CADCD /* SceneDelegate.swift in Sources */,
 				DEEFEACA2D29270500699692 /* GraceLogUser.swift in Sources */,
+				7048157E2DFFF95B009ECDBD /* FontName.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DE9A1FC62D69D62E0044F655 /* CommunityTableViewCell.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
@@ -1489,12 +1507,14 @@
 				02DC29882DDC29C000662D8A /* MyInfoTableViewCell.swift in Sources */,
 				02DC29892DDC29C000662D8A /* MyInfoViewController.swift in Sources */,
 				02DC298A2DDC29C000662D8A /* ProfileEditFieldView.swift in Sources */,
+				7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */,
 				02DC298B2DDC29C000662D8A /* MyInfoButtonTableViewCell.swift in Sources */,
 				02DC298C2DDC29C000662D8A /* MyInfoDataSource.swift in Sources */,
 				02DC298D2DDC29C000662D8A /* ProfileTableViewCell.swift in Sources */,
 				DE9A1FF02D7C05720044F655 /* CommunityDiaryDTO.swift in Sources */,
 				DE23872A2E003BDE00893D8C /* GLNavigationBar.swift in Sources */,
 				DED558842DBE1E4000137B10 /* GraceLogResponseDTO.swift in Sources */,
+				7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */,
 				DE9A1FF82D7C08070044F655 /* DefaultHomeUseCase.swift in Sources */,
 				DE069B9C2D5711D3007C2066 /* HomeNextViewController.swift in Sources */,
 				DE9A1FEE2D7C05240044F655 /* HomeCommunityContentDTO.swift in Sources */,

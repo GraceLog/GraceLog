@@ -31,7 +31,7 @@ final class DiaryAddImageCollectionViewCell: UICollectionViewCell {
     
     private let countLabel = UILabel().then {
         $0.textColor = .gray200
-        $0.font = UIFont(name: "Pretendard-Regular", size: 10)
+        $0.font = GLFont.regular10.font
         $0.textAlignment = .center
     }
     

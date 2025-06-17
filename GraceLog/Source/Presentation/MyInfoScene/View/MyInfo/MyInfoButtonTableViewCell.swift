@@ -14,7 +14,7 @@ final class MyInfoButtonTableViewCell: UITableViewCell {
     
     private let button = UIButton().then {
         $0.backgroundColor = .white
-        $0.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 15)
+        $0.titleLabel?.font = GLFont.regular15.font
         $0.titleLabel?.textAlignment = .center
     }
     

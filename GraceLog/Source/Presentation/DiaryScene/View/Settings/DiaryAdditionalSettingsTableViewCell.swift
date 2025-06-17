@@ -17,12 +17,12 @@ final class DiaryAdditionalSettingsTableViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     
     private let titleLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
+        $0.font = GLFont.regular16.font
         $0.textColor = .black
     }
     
     private let descLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Regular", size: 12)
+        $0.font = GLFont.regular12.font
         $0.textColor = .gray200
     }
     

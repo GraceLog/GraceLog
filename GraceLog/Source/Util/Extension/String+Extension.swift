@@ -9,10 +9,8 @@ import UIKit
 
 extension String {
     func toDiaryDateAttributedString(
-        regularFont: String = "Pretendard-Regular",
-        boldFont: String = "Pretendard-Bold",
-        regularSize: CGFloat = 12,
-        boldSize: CGFloat = 15,
+        regularFont: UIFont = GLFont.regular12.font,
+        boldFont: UIFont = GLFont.bold15.font,
         color: UIColor = .themeColor
     ) -> NSAttributedString {
         let components = self.components(separatedBy: "\n")
@@ -23,7 +21,7 @@ extension String {
         let part1 = NSAttributedString(
             string: components[0] + "\n",
             attributes: [
-                .font: UIFont(name: regularFont, size: regularSize) ?? .systemFont(ofSize: regularSize),
+                .font: regularFont,
                 .foregroundColor: color
             ]
         )
@@ -31,7 +29,7 @@ extension String {
         let part2 = NSAttributedString(
             string: components[1],
             attributes: [
-                .font: UIFont(name: boldFont, size: boldSize) ?? .systemFont(ofSize: boldSize, weight: .bold),
+                .font: boldFont,
                 .foregroundColor: color
             ]
         )

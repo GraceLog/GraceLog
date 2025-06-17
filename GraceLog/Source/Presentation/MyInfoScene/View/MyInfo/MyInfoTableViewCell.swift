@@ -18,7 +18,7 @@ final class MyInfoTableViewCell: UITableViewCell {
     
     private let titleLabel = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont(name: "Pretendard-Regular", size: 15)
+        $0.font = GLFont.regular15.font
     }
     
     private let disclosureView = UIImageView().then {

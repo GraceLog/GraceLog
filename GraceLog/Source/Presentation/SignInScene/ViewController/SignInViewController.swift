@@ -30,7 +30,7 @@ final class SignInViewController: UIViewController {
     private let sloganLabel = UILabel().then {
         $0.text = "감사가 채우는 하루"
         $0.textColor = .themeColor
-        $0.font = UIFont(name: "Pretendard-Regular", size: 24)
+        $0.font = GLFont.regular24.font
     }
     
     private let logoImgView = UIImageView().then {
@@ -40,7 +40,7 @@ final class SignInViewController: UIViewController {
     private let startLabel = UILabel().then {
         $0.text = "시작하기"
         $0.textColor = .themeColor
-        $0.font = UIFont(name: "Pretendard-regular", size: 14)
+        $0.font = GLFont.regular14.font
         $0.textAlignment = .center
         $0.setDimensions(width: 74, height: 38)
     }
@@ -73,7 +73,7 @@ final class SignInViewController: UIViewController {
     private let copyrightLabel = UILabel().then {
         $0.text = "Copyright Ⓒ 에끌레시아 All Rights Reserved."
         $0.textColor = .themeColor
-        $0.font = UIFont(name: "Pretendard-Regular", size: 12)
+        $0.font = GLFont.regular12.font
     }
     
     private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: .black, padding: 0).then {
