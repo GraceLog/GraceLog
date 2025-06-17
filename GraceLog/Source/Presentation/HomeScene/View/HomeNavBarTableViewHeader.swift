@@ -16,7 +16,7 @@ final class HomeNavBarTableViewHeader: UIView {
     private let disposeBag = DisposeBag()
     
     private let userButton = UIButton().then {
-        $0.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
+        $0.titleLabel?.font = GLFont.bold18.font
         $0.setTitle("승렬", for: .normal)
         $0.setTitleColor(.themeColor, for: .normal)
     }
@@ -27,7 +27,7 @@ final class HomeNavBarTableViewHeader: UIView {
     }
     
     private let groupButton = UIButton().then {
-        $0.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
+        $0.titleLabel?.font = GLFont.bold18.font
         $0.setTitle("공동체", for: .normal)
         $0.setTitleColor(.black, for: .normal)
     }

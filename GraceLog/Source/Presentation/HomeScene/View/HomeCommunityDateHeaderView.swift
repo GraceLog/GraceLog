@@ -13,7 +13,7 @@ final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
     static let identifier = "HomeCommunityDateHeaderView"
     
     private let dateLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Regular", size: 12)
+        $0.font = GLFont.regular12.font
         $0.textColor = .themeColor
     }
     

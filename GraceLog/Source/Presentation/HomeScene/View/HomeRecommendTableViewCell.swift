@@ -13,7 +13,7 @@ final class HomeRecommendTableViewCell: UITableViewCell {
     static let identifier = "HomeRecommendTableViewCell"
     
     private let contentTitleLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Bold", size: 14)
+        $0.font = GLFont.bold14.font
         $0.textColor = .graceGray
     }
     

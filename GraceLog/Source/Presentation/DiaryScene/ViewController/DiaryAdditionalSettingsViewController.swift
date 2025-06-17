@@ -73,7 +73,7 @@ extension DiaryAdditionalSettingsViewController: UITableViewDelegate {
         }
         
         let sectionTitle = dataSource.sectionModels[section].header
-        headerView.setTitle(sectionTitle, font: UIFont(name: "Pretendard-Bold", size: 16) ?? .systemFont(ofSize: 16, weight: .bold))
+        headerView.setTitle(sectionTitle, font: GLFont.bold16.font)
         headerView.updateTopOffset(section == 0 ? 4 : 20)
         
         return headerView

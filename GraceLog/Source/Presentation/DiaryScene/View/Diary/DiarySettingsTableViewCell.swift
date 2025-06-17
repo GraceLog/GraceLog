@@ -20,7 +20,7 @@ final class DiarySettingsTableViewCell: UITableViewCell {
     
     private let titleLabel = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont(name: "Pretendard-Regular", size: 16)
+        $0.font = GLFont.regular16.font
         $0.text = "추가 설정"
     }
     

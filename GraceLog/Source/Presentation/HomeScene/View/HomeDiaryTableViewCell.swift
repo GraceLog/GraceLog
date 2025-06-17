@@ -18,7 +18,7 @@ final class HomeDiaryTableViewCell: UITableViewCell {
     }
     
     private let titleLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Bold", size: 12)
+        $0.font = GLFont.bold12.font
         $0.textColor = .themeColor
     }
     

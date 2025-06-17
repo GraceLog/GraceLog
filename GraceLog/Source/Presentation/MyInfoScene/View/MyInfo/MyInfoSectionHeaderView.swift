@@ -14,7 +14,7 @@ final class MyInfoSectionHeaderView: UITableViewHeaderFooterView {
     
     private let titleLabel = UILabel().then {
         $0.textColor = .themeColor
-        $0.font = UIFont(name: "Pretendard-Bold", size: 12)
+        $0.font = GLFont.bold12.font
     }
     
     override init(reuseIdentifier: String?) {

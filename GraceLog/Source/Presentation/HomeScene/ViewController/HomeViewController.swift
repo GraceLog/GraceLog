@@ -32,8 +32,8 @@ final class HomeViewController: GraceLogBaseViewController, View {
         $0.selectedSegmentIndex = 0
         
         // TODO: - 폰트 재작업 필요
-        $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont(name: "Pretendard-Bold", size: 18)!], for: .normal)
-        $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: UIFont(name: "Pretendard-Bold", size: 18)!], for: .selected)
+        $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
+        $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: GLFont.bold18.font], for: .selected)
     }
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)

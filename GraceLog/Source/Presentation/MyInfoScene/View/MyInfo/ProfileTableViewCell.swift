@@ -21,14 +21,14 @@ final class ProfileTableViewCell: UITableViewCell {
     
     private let nameLabel = UILabel().then {
         $0.textColor = .themeColor
-        $0.font = UIFont(name: "Pretendard-Bold", size: 20)
+        $0.font = GLFont.bold20.font
         $0.textAlignment = .center
         $0.text = AuthManager.shared.getUser()?.name
     }
     
     private let emailLabel = UILabel().then {
         $0.textColor = .graceGray
-        $0.font = UIFont(name: "Pretendard-Regular", size: 12)
+        $0.font = GLFont.regular12.font
         $0.textAlignment = .center
         $0.text = AuthManager.shared.getUser()?.email
     }

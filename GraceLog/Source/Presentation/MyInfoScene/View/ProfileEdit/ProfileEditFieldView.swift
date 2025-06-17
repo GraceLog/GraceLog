@@ -13,12 +13,12 @@ import RxCocoa
 
 final class ProfileEditFieldView: UIView {
     private let titleLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Regular", size: 14)
+        $0.font = GLFont.regular14.font
         $0.textColor = .gray200
     }
     
     let infoField = UITextField().then {
-        $0.font = UIFont(name: "Pretendard-SemiBold", size: 16)
+        $0.font = GLFont.semiBold16.font
         $0.textColor = .black
     }
     
@@ -63,7 +63,7 @@ final class ProfileEditFieldView: UIView {
         titleLabel.text = title
         infoField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [
             .foregroundColor: UIColor.gray200,
-            .font: UIFont(name: "Pretendard-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
+            .font: GLFont.regular16.font
         ])
     }
 }

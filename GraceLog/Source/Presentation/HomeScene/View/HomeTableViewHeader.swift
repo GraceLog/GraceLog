@@ -14,18 +14,18 @@ final class HomeTableViewHeader: UITableViewHeaderFooterView {
     
     private let titleLabel = UILabel().then {
         $0.textColor = .themeColor
-        $0.font = UIFont(name: "Pretendard-Bold", size: 12)
+        $0.font = GLFont.bold12.font
     }
     
     private let descLabel = UILabel().then {
         $0.textColor = .graceGray
-        $0.font = UIFont(name: "Pretendard-Regular", size: 24)
+        $0.font = GLFont.regular24.font
         $0.numberOfLines = 4
     }
     
     private let paragraphLabel = UILabel().then {
         $0.textColor = .graceGray
-        $0.font = UIFont(name: "Pretendard-Regular", size: 14)
+        $0.font = GLFont.regular14.font
     }
     
     private let stackView = UIStackView().then {
