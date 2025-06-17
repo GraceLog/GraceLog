@@ -12,18 +12,6 @@ import Then
 final class GLNavigationBar: UIView {
     private let containerView = UIView()
     
-    private let leftStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 8
-        $0.alignment = .center
-    }
-    
-    private let rightStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 8
-        $0.alignment = .center
-    }
-    
     private let titleLabel = UILabel()
     
     var title: String? {
@@ -42,6 +30,28 @@ final class GLNavigationBar: UIView {
     var titleFont: UIFont = .systemFont(ofSize: 17) {
         didSet {
             titleLabel.font = titleFont
+        }
+    }
+    
+    private let leftStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .center
+    }
+    
+    private let rightStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .center
+    }
+    
+    var leftStackViewSpacing: CGFloat = 12 {
+        didSet {
+            leftStackView.spacing = leftStackViewSpacing
+        }
+    }
+    
+    var rightStackViewSpacing: CGFloat = 12 {
+        didSet {
+            rightStackView.spacing = rightStackViewSpacing
         }
     }
     
