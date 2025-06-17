@@ -33,7 +33,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
     }
     
     private let homeMenuView = GLUnderlineSegmentedControl(items: HomeMenuItem.allCases.map { $0.title }).then {
-        $0.setHeight(47)
+        $0.setHeight(50)
         $0.selectedSegmentIndex = 0
         $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
         $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: GLFont.bold18.font], for: .selected)
