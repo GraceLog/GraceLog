@@ -14,12 +14,12 @@ final class CommonSectionWithDescHeaderView: UITableViewHeaderFooterView {
     
     private let titleLabel = UILabel().then {
         $0.textColor = .themeColor
-        $0.font = UIFont(name: "Pretendard-Bold", size: 14)
+        $0.font = GLFont.bold14.font
     }
     
     private let descLabel = UILabel().then {
         $0.textColor = .gray200
-        $0.font = UIFont(name: "Pretendard-Regular", size: 12)
+        $0.font = GLFont.regular12.font
     }
     
     override init(reuseIdentifier: String?) {

@@ -30,7 +30,7 @@ final class CommunityButton: UIView {
     }
     
     private let titleLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Regular", size: 11)
+        $0.font = GLFont.regular11.font
         $0.textAlignment = .center
         $0.textColor = .graceGray
     }

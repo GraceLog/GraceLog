@@ -17,7 +17,7 @@ final class CommonButtonTableViewCell: UITableViewCell {
         $0.layer.cornerRadius = 10
         $0.backgroundColor = .themeColor
         $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = UIFont(name: "Pretendard-ExtraBold", size: 18)
+        $0.titleLabel?.font = GLFont.extraBold18.font
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

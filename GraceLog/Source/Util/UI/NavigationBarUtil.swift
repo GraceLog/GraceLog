@@ -14,7 +14,7 @@ final class NavigationBarUtil {
         appearance.backgroundColor = .white
         appearance.titleTextAttributes = [
             .foregroundColor: UIColor.black,
-            .font: UIFont(name: "Pretendard-Bold", size: 17) ?? UIFont.boldSystemFont(ofSize: 17)
+            .font: GLFont.bold17.font
         ]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
         

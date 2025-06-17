@@ -36,13 +36,13 @@ final class DiaryCardView: UIView {
     }
     
     private let dateDescLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Light", size: 11)
+        $0.font = GLFont.light11.font
         $0.textColor = .white
     }
     
     private lazy var descLabel = UILabel().then {
         $0.textColor = .white
-        $0.font = UIFont(name: "Pretendard-Regular", size: 18)
+        $0.font = GLFont.regular18.font
         $0.numberOfLines = 0
     }
     
@@ -68,7 +68,7 @@ final class DiaryCardView: UIView {
         imageView.image = item.image
         
         titleLabel.text = item.title
-        titleLabel.font = UIFont(name: "Pretendard-Bold", size: style == .latest ? 14 : 20)
+        titleLabel.font = style == .latest ? GLFont.bold14.font : GLFont.bold20.font
         
         dateDescLabel.text = item.dateDesc
         

@@ -22,7 +22,7 @@ final class DiaryTitleTableViewCell: UITableViewCell {
     private let titleField = UITextField().then {
         $0.setHeight(40)
         $0.backgroundColor = UIColor(white: 1, alpha: 0.1)
-        $0.font = UIFont(name: "Pretendard-Regular", size: 14)
+        $0.font = GLFont.regular14.font
         $0.textColor = .black
         $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 17, height: $0.frame.height))
         $0.leftViewMode = .always
@@ -33,7 +33,7 @@ final class DiaryTitleTableViewCell: UITableViewCell {
     }
     
     private let countLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Regular", size: 14)
+        $0.font = GLFont.regular14.font
         $0.textColor = .gray200
         $0.text = "0/30"
         $0.textAlignment = .center

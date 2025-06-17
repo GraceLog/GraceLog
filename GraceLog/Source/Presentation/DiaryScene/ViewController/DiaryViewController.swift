@@ -42,7 +42,7 @@ final class DiaryViewController: UIViewController, View {
         $0.backgroundColor = .themeColor
         $0.setTitle("공유하기", for: .normal)
         $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = UIFont(name: "Pretendard-ExtraBold", size: 18)
+        $0.titleLabel?.font = GLFont.extraBold18.font
         $0.layer.cornerRadius = 10
         $0.clipsToBounds = true
     }
@@ -225,7 +225,7 @@ extension DiaryViewController: UITableViewDelegate {
         case .title, .description, .shareOptions:
             if let title = dataSource[section].title {
                 let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CommonSectionHeaderView.identifier) as? CommonSectionHeaderView
-                headerView?.setTitle(title, font: UIFont(name: "Pretendard-Bold", size: 14)!)
+                headerView?.setTitle(title, font: GLFont.bold14.font)
                 return headerView
             }
         case .keyword:

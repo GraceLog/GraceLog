@@ -13,7 +13,7 @@ final class DiaryKeywordCollectionViewCell: UICollectionViewCell {
     static let identifier = "DiaryKeywordCollectionViewCell"
     
     private let titleLabel = UILabel().then {
-        $0.font = UIFont(name: "Pretendard-Bold", size: 14)
+        $0.font = GLFont.bold14.font
         $0.textColor = .gray200
         $0.textAlignment = .center
     }

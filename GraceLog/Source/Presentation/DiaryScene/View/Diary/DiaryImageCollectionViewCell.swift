@@ -33,7 +33,7 @@ final class DiaryImageCollectionViewCell: UICollectionViewCell {
         $0.text = "대표 사진"
         $0.textColor = .white
         $0.textAlignment = .center
-        $0.font = UIFont(name: "Pretendard-Regular", size: 10)
+        $0.font = GLFont.regular10.font
         $0.clipsToBounds = true
         $0.isHidden = true
     }
