@@ -45,6 +45,7 @@
 		DE069BA22D571485007C2066 /* HomeRecommendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069BA12D571485007C2066 /* HomeRecommendTableViewCell.swift */; };
 		DE069BA42D571499007C2066 /* HomeTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069BA32D571499007C2066 /* HomeTableViewHeader.swift */; };
 		DE069BA82D61E310007C2066 /* DiaryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069BA72D61E310007C2066 /* DiaryCardView.swift */; };
+		DE23872A2E003BDE00893D8C /* GLNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2387292E003BDE00893D8C /* GLNavigationBar.swift */; };
 		DE24DB6D2D26D34D00581621 /* LoginUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FEC72D04284E008CADCD /* LoginUseCaseTests.swift */; };
 		DE24DB6E2D26D36100581621 /* MockFireStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2700732D257068005C9DCF /* MockFireStoreRepository.swift */; };
 		DE27003B2D1EFB4E005C9DCF /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */; };
@@ -215,6 +216,7 @@
 		DE069BA12D571485007C2066 /* HomeRecommendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendTableViewCell.swift; sourceTree = "<group>"; };
 		DE069BA32D571499007C2066 /* HomeTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewHeader.swift; sourceTree = "<group>"; };
 		DE069BA72D61E310007C2066 /* DiaryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCardView.swift; sourceTree = "<group>"; };
+		DE2387292E003BDE00893D8C /* GLNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLNavigationBar.swift; sourceTree = "<group>"; };
 		DE24DB632D26D32200581621 /* GraceLogUseCaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraceLogUseCaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		DE2700332D1EFB4E005C9DCF /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 			children = (
 				026656AA2DE7E9CA00541D96 /* NavigationBarUtil.swift */,
 				704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */,
+				DE2387292E003BDE00893D8C /* GLNavigationBar.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1490,6 +1493,7 @@
 				02DC298C2DDC29C000662D8A /* MyInfoDataSource.swift in Sources */,
 				02DC298D2DDC29C000662D8A /* ProfileTableViewCell.swift in Sources */,
 				DE9A1FF02D7C05720044F655 /* CommunityDiaryDTO.swift in Sources */,
+				DE23872A2E003BDE00893D8C /* GLNavigationBar.swift in Sources */,
 				DED558842DBE1E4000137B10 /* GraceLogResponseDTO.swift in Sources */,
 				DE9A1FF82D7C08070044F655 /* DefaultHomeUseCase.swift in Sources */,
 				DE069B9C2D5711D3007C2066 /* HomeNextViewController.swift in Sources */,
