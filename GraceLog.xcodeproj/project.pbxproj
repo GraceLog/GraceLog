@@ -45,6 +45,7 @@
 		7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157B2DFFF570009ECDBD /* GLFont.swift */; };
 		7048157E2DFFF95B009ECDBD /* FontName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157D2DFFF95B009ECDBD /* FontName.swift */; };
 		704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */; };
+		704815822E018E30009ECDBD /* GLDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815812E018E30009ECDBD /* GLDividerView.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
 		A88BF65DF907D86788F86BF8 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */; };
 		DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B972D53A855007C2066 /* DiaryCoordinator.swift */; };
@@ -222,6 +223,7 @@
 		7048157B2DFFF570009ECDBD /* GLFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLFont.swift; sourceTree = "<group>"; };
 		7048157D2DFFF95B009ECDBD /* FontName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontName.swift; sourceTree = "<group>"; };
 		7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
+		704815812E018E30009ECDBD /* GLDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLDividerView.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E14D79ABA16C7A19244077 /* Pods-GraceLogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.release.xcconfig"; sourceTree = "<group>"; };
 		8BC9F644955C12A97595F5EF /* Pods-GraceLogUseCaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1586,6 +1588,7 @@
 				DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */,
 				DE9A1FC82D69DA2A0044F655 /* CommunityButton.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
+				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityMyTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserTarget.swift in Sources */,
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
