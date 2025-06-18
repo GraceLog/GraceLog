@@ -1534,6 +1534,7 @@
 				02DC29892DDC29C000662D8A /* MyInfoViewController.swift in Sources */,
 				02DC298A2DDC29C000662D8A /* ProfileEditFieldView.swift in Sources */,
 				7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */,
+				702D2B5A2E02B43700D5E71E /* GLInputFieldView.swift in Sources */,
 				02DC298B2DDC29C000662D8A /* MyInfoButtonTableViewCell.swift in Sources */,
 				02DC298C2DDC29C000662D8A /* MyInfoDataSource.swift in Sources */,
 				02DC298D2DDC29C000662D8A /* ProfileTableViewCell.swift in Sources */,
