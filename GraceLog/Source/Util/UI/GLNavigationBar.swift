@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 import Then
 
-
-
 final class GLNavigationBar: UIView {
     private let containerView = UIView()
     private let titleLabel = UILabel()
