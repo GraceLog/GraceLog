@@ -676,6 +676,7 @@
 				DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */,
 				DEA04FA62D69A8C000BA978A /* String+Extension.swift */,
 				7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */,
+				702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1489,6 +1490,7 @@
 				DED5588E2DBE26E600137B10 /* GraceLogAuthenticationCredential.swift in Sources */,
 				0220A0752DE7F57000D045F7 /* ImagePickerManager.swift in Sources */,
 				DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */,
+				702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */,
 				DE3BFCD82D048B550076426D /* Coordinator.swift in Sources */,
 				DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
