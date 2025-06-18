@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 
 final class DiaryViewReactor: Reactor {
+    private var maxDiaryImageCount = 5
+    var initialState: State
+    
     enum Action {
         case updateImages([UIImage])
         case deleteImage(at: Int)
@@ -20,7 +23,7 @@ final class DiaryViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setImages([UIImage])
+        case setImages([DiaryImage])
         case setTitle(String)
         case setDescription(String)
         case setShareOption(index: Int, isOn: Bool)
@@ -29,35 +32,46 @@ final class DiaryViewReactor: Reactor {
     }
     
     struct State {
-        var images: [UIImage] = []
-        var title: String = ""
-        var description: String = ""
-        var shareOptions: [(imageUrl: String, title: String, isOn: Bool)] = [
-            ("community1", "새롬교회", false),
-            ("community1", "Grace_log", false),
-            ("community3", "스튜디오306", false),
-            ("community4", "스튜디오카페", false),
-            ("community1", "홀리파이어", false)
-        ]
-        
-        var isSaving: Bool = false
-        var sections: [DiarySection] = []
+        @Pulse var images: [DiaryImage]
+        var title: String
+        var description: String
+        var shareOptions: [(imageUrl: String, title: String, isOn: Bool)]
+        var isSaving: Bool
+        var sections: [DiarySection]
     }
     
-    var initialState: State = State()
-    
     init() {
-        var initialState = State()
-        initialState.sections = createSections(state: initialState)
-        self.initialState = initialState
+        self.initialState = State(
+            images: [],
+            title: "",
+            description: "",
+            shareOptions: [
+                ("community1", "새롬교회", false),
+                ("community1", "Grace_log", false),
+                ("community3", "스튜디오306", false),
+                ("community4", "스튜디오카페", false),
+                ("community1", "홀리파이어", false)
+            ],
+            isSaving: false,
+            sections: []
+        )
     }
 }
 
 extension DiaryViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .updateImages(let images):
-            return .just(.setImages(images))
+        case .updateImages(let newImages):
+            let currentImages = currentState.images
+            let convertedImages = newImages.map { DiaryImage(id: UUID(), image: $0) }
+            let uploadImages = currentImages + convertedImages
+            
+            guard uploadImages.count <= maxDiaryImageCount else {
+                print("Diary Upload Image 최대 제한 개수 초과")
+                return .empty()
+            }
+            
+            return .just(.setImages(uploadImages))
         case .deleteImage(let index):
             var updatedImages = currentState.images
             if index < updatedImages.count {
@@ -83,7 +97,6 @@ extension DiaryViewReactor {
         switch mutation {
         case .setImages(let images):
             newState.images = images
-            newState.sections = createSections(state: newState)
         case .setTitle(let title):
             newState.title = title
             newState.sections = createSections(state: newState)
@@ -104,7 +117,7 @@ extension DiaryViewReactor {
     }
     
     private func createSections(state: State) -> [DiarySection] {
-        let imageItems: [DiarySectionItem] = [.images(state.images)]
+        let imageItems: [DiarySectionItem] = []
         let titleItems: [DiarySectionItem] = [.title(state.title)]
         let descriptionItems: [DiarySectionItem] = [.description(state.description)]
         let keywordItems: [DiarySectionItem] = [.keyword]

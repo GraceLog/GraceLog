@@ -102,8 +102,8 @@ extension DiaryImageTableViewCell: UICollectionViewDataSource, UICollectionViewD
             let imageIndex = indexPath.item - 1
             let image = images[imageIndex]
             let isRepresentative = representativeImageIndex == imageIndex
-            cell.updateUI(with: image, isRepresentative: isRepresentative)
-            cell.deleteButtonTap
+            cell.updateUI(diaryImage: image, isRepresentative: isRepresentative)
+            cell.deleteButton.rx.tap
                 .map { imageIndex }
                 .bind(to: imageDeleteTap)
                 .disposed(by: cell.disposeBag)

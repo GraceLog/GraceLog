@@ -391,6 +391,7 @@
 				DED558612DABAB3400137B10 /* DiaryKeywordTableViewCell.swift */,
 				DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */,
 				704815832E018F5A009ECDBD /* DiaryEditView.swift */,
+				702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -1499,6 +1500,7 @@
 				702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */,
 				DE3BFCD82D048B550076426D /* Coordinator.swift in Sources */,
 				DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */,
+				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
 				DED5588A2DBE226D00137B10 /* AuthRepository.swift in Sources */,
 				DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */,

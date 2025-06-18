@@ -32,6 +32,7 @@ final class DiaryViewController: UIViewController, View {
         $0.alignment = .fill
     }
     
+    private let diaryImageListView = DiaryImageListView()
     private let diaryEditView = DiaryEditView()
     
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
@@ -63,6 +64,7 @@ final class DiaryViewController: UIViewController, View {
     }
     
     private lazy var saveButton = UIBarButtonItem(title: "임시저장", style: .plain, target: nil, action: nil)
+    
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<DiarySection>(
         configureCell: { [weak self] dataSource, tableView, indexPath, item in
             guard let self = self, let reactor = self.reactor else {
@@ -139,7 +141,6 @@ final class DiaryViewController: UIViewController, View {
         setupLayouts()
         setupConstraints()
         setupStyles()
-        configureTableView()
     }
     
     private func setupStyles() {
@@ -150,8 +151,8 @@ final class DiaryViewController: UIViewController, View {
     private func setupLayouts() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerStackView)
-        let subviews = [diaryEditView]
-        containerStackView.addArrangedDividerSubViews(subviews)
+        let subviews = [diaryImageListView, diaryEditView]
+        containerStackView.addArrangedDividerSubViews(subviews, exclude: [0])
     }
     
     private func setupConstraints() {
@@ -170,7 +171,7 @@ final class DiaryViewController: UIViewController, View {
         
         tableView.register(CommonSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: CommonSectionHeaderView.identifier)
         tableView.register(CommonSectionWithDescHeaderView.self, forHeaderFooterViewReuseIdentifier: CommonSectionWithDescHeaderView.identifier)
-        tableView.register(DiaryImageTableViewCell.self, forCellReuseIdentifier: DiaryImageTableViewCell.identifier)
+//        tableView.register(DiaryImageTableViewCell.self, forCellReuseIdentifier: DiaryImageTableViewCell.identifier)
         tableView.register(DiaryTitleTableViewCell.self, forCellReuseIdentifier: DiaryTitleTableViewCell.identifier)
         tableView.register(DiaryDescriptionTableViewCell.self, forCellReuseIdentifier: DiaryDescriptionTableViewCell.identifier)
         tableView.register(DiaryKeywordTableViewCell.self, forCellReuseIdentifier: DiaryKeywordTableViewCell.identifier)
@@ -216,31 +217,17 @@ final class DiaryViewController: UIViewController, View {
                     newImages.append(photo.image)
                 }
             }
-            
-            if let reactor = self?.reactor {
-                let existingImages = reactor.currentState.images
-                
-                var combinedImages = existingImages + newImages
-                if combinedImages.count > 5 {
-                    combinedImages = Array(combinedImages.prefix(5))
-                }
-                reactor.action.onNext(.updateImages(combinedImages))
-            }
+
+            self?.reactor?.action.onNext(.updateImages(newImages))
         }
         
         present(picker, animated: true, completion: nil)
     }
     
     func bind(reactor: DiaryViewReactor) {
-        // Action
         saveButton.rx.tap
             .map { Reactor.Action.saveDiary }
             .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        // State
-        reactor.state.map { $0.sections }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         diaryEditView.titleInputView.didEndEditing
@@ -256,7 +243,59 @@ final class DiaryViewController: UIViewController, View {
                 reactor.action.onNext(.updateDescription(text))
             }
             .disposed(by: disposeBag)
+        
+        diaryImageListView.addImageButton.rx.tap
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                owner.showImagePicker()
+            }
+            .disposed(by: disposeBag)
+        
+        bindDiaryImageCollectionView(reactor: reactor)
     }
+    
+    private func bindDiaryImageCollectionView(reactor: DiaryViewReactor) {
+        let imageDataSource = RxCollectionViewSectionedAnimatedDataSource<DiaryImageSection>(
+            configureCell: { _, collectionView, indexPath, item in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: DiaryImageCollectionViewCell.reuseIdentifier,
+                    for: indexPath
+                ) as? DiaryImageCollectionViewCell ?? DiaryImageCollectionViewCell()
+                cell.updateUI(diaryImage: item.image)
+                cell.deleteButton.rx.tap
+                    .subscribe(with: self) { owner, _ in
+                        if case let .image(model) = item {
+                            let images = reactor.currentState.images
+                            if let index = images.firstIndex(where: { $0.id == model.id }) {
+                                // TODO: - 삭제버튼 터치영역 재확인 필요
+                                reactor.action.onNext(.deleteImage(at: index))
+                            }
+                        }
+                    }
+                    .disposed(by: cell.disposeBag)
+
+                return cell
+            }
+        )
+        
+        let diaryImageSectionState = reactor.pulse(\.$images)
+            .map { images in
+                let items = images.map { DiaryImageItem.image($0) }
+                return [DiaryImageSection.imageSection(items: items)]
+            }.share(replay: 1)
+
+        diaryImageSectionState
+            .compactMap { $0.first?.items.count }
+            .subscribe(with: self) { owner, imageCount in
+                owner.diaryImageListView.updateWrittenCount(count: imageCount)
+            }
+            .disposed(by: disposeBag)
+        
+        diaryImageSectionState
+            .bind(to: diaryImageListView.diaryImageCollectionView.rx.items(dataSource: imageDataSource))
+            .disposed(by: disposeBag)
+    }
+
 }
 
 extension DiaryViewController: UITableViewDelegate {
