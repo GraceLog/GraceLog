@@ -19,6 +19,21 @@ final class DiaryViewController: UIViewController, View {
     
     var disposeBag = DisposeBag()
     
+    private lazy var scrollView = UIScrollView().then {
+        $0.backgroundColor = .clear
+        $0.showsHorizontalScrollIndicator = false
+        $0.alwaysBounceVertical = true
+    }
+    
+    private lazy var containerStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.backgroundColor = .clear
+        $0.distribution = .fill
+        $0.alignment = .fill
+    }
+    
+    private let diaryEditView = DiaryEditView()
+    
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = .white
         $0.separatorStyle = .none
@@ -121,19 +136,32 @@ final class DiaryViewController: UIViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
+        setupLayouts()
+        setupConstraints()
+        setupStyles()
         configureTableView()
     }
     
-    private func configureUI() {
+    private func setupStyles() {
         navigationItem.rightBarButtonItem = saveButton
         navigationItem.rightBarButtonItem?.tintColor = .themeColor
+    }
+    
+    private func setupLayouts() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(containerStackView)
+        let subviews = [diaryEditView]
+        containerStackView.addArrangedDividerSubViews(subviews)
+    }
+    
+    private func setupConstraints() {
+        scrollView.snp.makeConstraints {
+            $0.directionalEdges.width.equalToSuperview()
+        }
         
-        let safeArea = view.safeAreaLayoutGuide
-        
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(safeArea)
+        containerStackView.snp.makeConstraints {
+            $0.top.directionalHorizontalEdges.width.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
     
@@ -213,6 +241,20 @@ final class DiaryViewController: UIViewController, View {
         // State
         reactor.state.map { $0.sections }
             .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        diaryEditView.titleInputView.didEndEditing
+            .withLatestFrom(diaryEditView.titleInputView.text)
+            .subscribe(with: self) { owner, text in
+                reactor.action.onNext(.updateTitle(text))
+            }
+            .disposed(by: disposeBag)
+        
+        diaryEditView.descriptionInputView.didEndEditing
+            .withLatestFrom(diaryEditView.descriptionInputView.text)
+            .subscribe(with: self) { owner, text in
+                reactor.action.onNext(.updateDescription(text))
+            }
             .disposed(by: disposeBag)
     }
 }
