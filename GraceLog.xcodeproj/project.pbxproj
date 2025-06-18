@@ -1520,6 +1520,7 @@
 				DE2700632D22D188005C9DCF /* DefaultUserRepository.swift in Sources */,
 				DE9A1FDE2D79B0A50044F655 /* HomeContent.swift in Sources */,
 				704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */,
+				702D2B5C2E02C3A000D5E71E /* GLInputTextView.swift in Sources */,
 				DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */,
 				DE3BFCDA2D059A3B0076426D /* HomeViewController.swift in Sources */,
 				02DC29802DDC29C000662D8A /* MyInfoSectionHeaderView.swift in Sources */,
