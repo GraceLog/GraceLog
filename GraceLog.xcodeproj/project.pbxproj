@@ -34,6 +34,11 @@
 		02DC298D2DDC29C000662D8A /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC29762DDC29C000662D8A /* ProfileTableViewCell.swift */; };
 		02F0DA512DDEAED900CD036A /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0DA502DDEAED900CD036A /* AuthManager.swift */; };
 		6D6D359847E48286C67E16F7 /* Pods_GraceLogUseCaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */; };
+		702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */; };
+		702D2B5A2E02B43700D5E71E /* GLInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B592E02B43700D5E71E /* GLInputFieldView.swift */; };
+		702D2B5C2E02C3A000D5E71E /* GLInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B5B2E02C3A000D5E71E /* GLInputTextView.swift */; };
+		702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */; };
+		702D2B662E05185900D5E71E /* DiaryImageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B652E05185900D5E71E /* DiaryImageSection.swift */; };
 		704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */; };
 		7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815792DFFF362009ECDBD /* FontStylable.swift */; };
 		7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157B2DFFF570009ECDBD /* GLFont.swift */; };
@@ -205,6 +210,11 @@
 		13CEE664F868FEB4EF0F50A2 /* Pods-GraceLogUseCaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.release.xcconfig"; sourceTree = "<group>"; };
 		3772E15DC148101F5890C6F5 /* Pods-GraceLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.release.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.release.xcconfig"; sourceTree = "<group>"; };
 		45FB5606D88433D808BF0656 /* Pods-GraceLogTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.debug.xcconfig"; sourceTree = "<group>"; };
+		702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		702D2B592E02B43700D5E71E /* GLInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLInputFieldView.swift; sourceTree = "<group>"; };
+		702D2B5B2E02C3A000D5E71E /* GLInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLInputTextView.swift; sourceTree = "<group>"; };
+		702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageListView.swift; sourceTree = "<group>"; };
+		702D2B652E05185900D5E71E /* DiaryImageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageSection.swift; sourceTree = "<group>"; };
 		704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLUnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		704815792DFFF362009ECDBD /* FontStylable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStylable.swift; sourceTree = "<group>"; };
 		7048157B2DFFF570009ECDBD /* GLFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLFont.swift; sourceTree = "<group>"; };
@@ -995,6 +1005,7 @@
 			children = (
 				DE56384E2D9E01D100A12192 /* DiaryDataSource.swift */,
 				0234461C2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift */,
+				702D2B652E05185900D5E71E /* DiaryImageSection.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -1502,6 +1513,7 @@
 				DE3BFCDA2D059A3B0076426D /* HomeViewController.swift in Sources */,
 				02DC29802DDC29C000662D8A /* MyInfoSectionHeaderView.swift in Sources */,
 				02DC29812DDC29C000662D8A /* MyInfoCoordinator.swift in Sources */,
+				702D2B662E05185900D5E71E /* DiaryImageSection.swift in Sources */,
 				02DC29822DDC29C000662D8A /* ProfileEditViewReactor.swift in Sources */,
 				02DC29832DDC29C000662D8A /* ProfileEditViewController.swift in Sources */,
 				026656AB2DE7E9CA00541D96 /* NavigationBarUtil.swift in Sources */,
