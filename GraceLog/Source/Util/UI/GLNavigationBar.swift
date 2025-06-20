@@ -16,23 +16,13 @@ final class GLNavigationBar: UIView {
     private let leftStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .leading
+        $0.spacing = 10
     }
     
     private let rightStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .trailing
-    }
-    
-    var leftStackViewSpacing: CGFloat = 10 {
-        didSet {
-            leftStackView.spacing = leftStackViewSpacing
-        }
-    }
-    
-    var rightStackViewSpacing: CGFloat = 10 {
-        didSet {
-            rightStackView.spacing = rightStackViewSpacing
-        }
+        $0.spacing = 10
     }
     
     override init(frame: CGRect) {
@@ -56,13 +46,17 @@ final class GLNavigationBar: UIView {
             $0.edges.equalToSuperview()
         }
         
+        titleLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
         leftStackView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
         }
         
         rightStackView.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.centerY.equalToSuperview()
         }
     }
@@ -70,7 +64,7 @@ final class GLNavigationBar: UIView {
     func setupTitleLabel(
         text: String? = nil,
         color: UIColor = .black,
-        font: UIFont = GLFont.bold18.font
+        font: UIFont = GLFont.bold16.font
     ) {
         titleLabel.text = text
         titleLabel.textColor = color

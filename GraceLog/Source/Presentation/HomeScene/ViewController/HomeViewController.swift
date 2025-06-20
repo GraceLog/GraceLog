@@ -152,8 +152,6 @@ final class HomeViewController: GraceLogBaseViewController, View {
         navigationBar.addLeftItem(homeMenuView)
         navigationBar.addRightItem(bellButton)
         navigationBar.addRightItem(profileButton)
-        
-        navigationBar.rightStackViewSpacing = 10
     }
     
     private func configureTableView() {
