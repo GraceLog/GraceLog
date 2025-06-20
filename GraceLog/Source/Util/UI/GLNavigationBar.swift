@@ -10,8 +10,12 @@ import SnapKit
 import Then
 
 final class GLNavigationBar: UIView {
-    private let containerView = UIView()
-    private let titleLabel = UILabel()
+    private let titleContainerView = UIView()
+    
+    private let titleLabel = UILabel().then {
+        $0.numberOfLines = 1
+        $0.textAlignment = .center
+    }
     
     private let leftStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -37,18 +41,11 @@ final class GLNavigationBar: UIView {
     private func setupUI() {
         backgroundColor = .systemBackground
         
-        addSubview(containerView)
-        [leftStackView, titleLabel, rightStackView].forEach {
-            containerView.addSubview($0)
+        [leftStackView, titleContainerView, rightStackView].forEach {
+            addSubview($0)
         }
         
-        containerView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
+        titleContainerView.addSubview(titleLabel)
         
         leftStackView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -58,6 +55,19 @@ final class GLNavigationBar: UIView {
         rightStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
             $0.centerY.equalToSuperview()
+        }
+        
+        titleContainerView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.leading.greaterThanOrEqualTo(leftStackView.snp.trailing).offset(10)
+            $0.trailing.lessThanOrEqualTo(rightStackView.snp.leading).offset(-10)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.leading.greaterThanOrEqualToSuperview()
+            $0.trailing.lessThanOrEqualToSuperview()
         }
     }
     
@@ -73,10 +83,12 @@ final class GLNavigationBar: UIView {
     }
     
     func addLeftItem(_ view: UIView) {
+        view.setContentCompressionResistancePriority(.required, for: .horizontal)
         leftStackView.addArrangedSubview(view)
     }
     
     func addRightItem(_ view: UIView) {
+        view.setContentCompressionResistancePriority(.required, for: .horizontal)
         rightStackView.addArrangedSubview(view)
     }
     

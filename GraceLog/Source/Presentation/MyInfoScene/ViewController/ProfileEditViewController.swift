@@ -58,7 +58,7 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func configureUI() {

@@ -55,7 +55,7 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     )
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewDidLoad() {
