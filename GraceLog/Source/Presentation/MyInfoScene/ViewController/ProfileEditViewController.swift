@@ -10,11 +10,25 @@ import NVActivityIndicatorView
 import ReactorKit
 
 final class ProfileEditViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
     typealias Reactor = ProfileEditViewReactor
     
-    private let saveBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: nil, action: nil)
+    var disposeBag = DisposeBag()
+    
+    private let navigationBar = GLNavigationBar().then {
+        $0.backgroundColor = .white
+        $0.setupTitleLabel(text: "프로필 편집")
+    }
+    
+    private let backButton = UIButton().then {
+        $0.setImage(UIImage(named: "nav_chevron_left"), for: .normal)
+    }
+    
+    private let saveButton = UIButton().then {
+        $0.setTitle("저장", for: .normal)
+        $0.setTitleColor(.themeColor, for: .normal)
+        $0.titleLabel?.font = GLFont.regular16.font
+    }
+    
     private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: .black, padding: 0).then {
         $0.isHidden = true
     }
@@ -40,19 +54,28 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureNavBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func configureUI() {
         let safeArea = view.safeAreaLayoutGuide
         
-        navigationItem.rightBarButtonItem = saveBarButtonItem
-        
-        [profileImgView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
+        [navigationBar, profileImgView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
             view.addSubview($0)
         }
         
+        navigationBar.snp.makeConstraints {
+            $0.top.equalTo(safeArea)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
+        }
+        
         profileImgView.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(27)
+            $0.top.equalTo(navigationBar.snp.bottom).offset(27)
             $0.centerX.equalToSuperview()
         }
         
@@ -78,6 +101,11 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
         nicknameContainerView.configure(title: "닉네임", placeholder: "ex. Peter")
         nameContainerView.configure(title: "이름", placeholder: "ex. 베드로")
         messageContainerView.configure(title: "메시지", placeholder: "ex. 잠언 16:9")
+    }
+    
+    private func configureNavBar() {
+        navigationBar.addLeftItem(backButton)
+        navigationBar.addRightItem(saveButton)
     }
     
     func bind(reactor: ProfileEditViewReactor) {
@@ -160,7 +188,7 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        saveBarButtonItem.rx.tap
+        saveButton.rx.tap
             .map { Reactor.Action.didTapSaveButton }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

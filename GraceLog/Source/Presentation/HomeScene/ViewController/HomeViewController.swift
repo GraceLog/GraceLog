@@ -28,13 +28,31 @@ final class HomeViewController: GraceLogBaseViewController, View {
     weak var coordinator: Coordinator?
     var disposeBag = DisposeBag()
     
+    private let navigationBar = GLNavigationBar().then {
+        $0.backgroundColor = .white
+    }
+    
     private let homeMenuView = GLUnderlineSegmentedControl(items: HomeMenuItem.allCases.map { $0.title }).then {
+        $0.setHeight(50)
         $0.selectedSegmentIndex = 0
-        
-        // TODO: - 폰트 재작업 필요
         $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
         $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: GLFont.bold18.font], for: .selected)
     }
+    
+    private let bellButton = UIButton().then {
+        $0.setImage(UIImage(named: "bell"), for: .normal)
+        $0.tintColor = .black
+        $0.setDimensions(width: 32, height: 32)
+    }
+    
+    private let profileButton = UIButton().then {
+        $0.backgroundColor = .systemGray2
+        $0.layer.cornerRadius = 16
+        $0.clipsToBounds = true
+        $0.setBackgroundImage(UIImage(named: "profile"), for: .normal)
+        $0.setDimensions(width: 32, height: 32)
+    }
+    
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
         $0.separatorStyle = .none
@@ -111,24 +129,29 @@ final class HomeViewController: GraceLogBaseViewController, View {
         ))
         configureUI()
         configureTableView()
+        configureNavBar()
     }
     
     private func configureUI() {
         let safeArea = view.safeAreaLayoutGuide
         
-        view.addSubview(homeMenuView)
-        homeMenuView.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
-            $0.leading.equalToSuperview()
-            $0.trailing.lessThanOrEqualToSuperview()
-            $0.height.equalTo(47)
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(safeArea)
+            $0.height.equalTo(50)
         }
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.top.equalTo(homeMenuView.snp.bottom)
+            $0.top.equalTo(navigationBar.snp.bottom)
             $0.leading.trailing.bottom.equalTo(safeArea)
         }
+    }
+    
+    private func configureNavBar() {
+        navigationBar.addLeftItem(homeMenuView)
+        navigationBar.addRightItem(bellButton)
+        navigationBar.addRightItem(profileButton)
     }
     
     private func configureTableView() {

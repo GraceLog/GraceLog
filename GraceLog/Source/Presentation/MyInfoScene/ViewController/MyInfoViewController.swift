@@ -14,6 +14,11 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     
     var disposeBag = DisposeBag()
     
+    private let navigationBar = GLNavigationBar().then {
+        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.setupTitleLabel(text: "내 계정")
+    }
+    
     private lazy var tableView = UITableView(frame: .zero, style: .insetGrouped).then {
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
         $0.layoutMargins = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
@@ -49,6 +54,10 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
         }
     )
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -58,9 +67,17 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     private func configureUI() {
         let safeArea = view.safeAreaLayoutGuide
         
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints {
+            $0.top.equalTo(safeArea)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44)
+        }
+        
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalTo(safeArea)
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(safeArea)
         }
     }
     
