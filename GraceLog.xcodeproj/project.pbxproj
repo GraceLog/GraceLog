@@ -39,6 +39,7 @@
 		702D2B5C2E02C3A000D5E71E /* GLInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B5B2E02C3A000D5E71E /* GLInputTextView.swift */; };
 		702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */; };
 		702D2B662E05185900D5E71E /* DiaryImageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B652E05185900D5E71E /* DiaryImageSection.swift */; };
+		702D2B682E05674B00D5E71E /* AutoSizingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B672E05674B00D5E71E /* AutoSizingCollectionView.swift */; };
 		704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */; };
 		7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815792DFFF362009ECDBD /* FontStylable.swift */; };
 		7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157B2DFFF570009ECDBD /* GLFont.swift */; };
@@ -215,6 +216,7 @@
 		702D2B5B2E02C3A000D5E71E /* GLInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLInputTextView.swift; sourceTree = "<group>"; };
 		702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageListView.swift; sourceTree = "<group>"; };
 		702D2B652E05185900D5E71E /* DiaryImageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageSection.swift; sourceTree = "<group>"; };
+		702D2B672E05674B00D5E71E /* AutoSizingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSizingCollectionView.swift; sourceTree = "<group>"; };
 		704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLUnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		704815792DFFF362009ECDBD /* FontStylable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStylable.swift; sourceTree = "<group>"; };
 		7048157B2DFFF570009ECDBD /* GLFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLFont.swift; sourceTree = "<group>"; };
@@ -419,6 +421,10 @@
 				026656AA2DE7E9CA00541D96 /* NavigationBarUtil.swift */,
 				704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */,
 				DE2387292E003BDE00893D8C /* GLNavigationBar.swift */,
+				704815812E018E30009ECDBD /* GLDividerView.swift */,
+				702D2B592E02B43700D5E71E /* GLInputFieldView.swift */,
+				702D2B5B2E02C3A000D5E71E /* GLInputTextView.swift */,
+				702D2B672E05674B00D5E71E /* AutoSizingCollectionView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1471,6 +1477,7 @@
 				025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */,
 				DE3BFCD62D048B170076426D /* GraceLogAppCoordinator.swift in Sources */,
 				025019CA2DE04410003FD48D /* MyInfoUseCase.swift in Sources */,
+				702D2B682E05674B00D5E71E /* AutoSizingCollectionView.swift in Sources */,
 				DE3BFCDE2D059D3D0076426D /* SearchViewController.swift in Sources */,
 				DE56384F2D9E01D100A12192 /* DiaryDataSource.swift in Sources */,
 				DE069BA42D571499007C2066 /* HomeTableViewHeader.swift in Sources */,
