@@ -12,6 +12,7 @@ import RxCocoa
 final class DiaryViewReactor: Reactor {
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
+    private var selectedShareOptions: Set<DiaryShareOption> = []
     
     var initialState: State
     
@@ -20,16 +21,15 @@ final class DiaryViewReactor: Reactor {
         case deleteImage(at: Int)
         case updateTitle(String)
         case updateDescription(String)
-        case updateShareOption(index: Int, isOn: Bool)
         case saveDiary
         case didSelectKeyword(DiaryKeywordState)
+        case didSelectShareOption(DiaryShareState)
     }
     
     enum Mutation {
         case setImages([DiaryImage])
         case setTitle(String)
         case setDescription(String)
-        case setShareOption(index: Int, isOn: Bool)
         case setSaving(Bool)
         case setSaveResult(Bool)
     }
@@ -39,7 +39,7 @@ final class DiaryViewReactor: Reactor {
         var keywords: [DiaryKeywordState]
         var title: String
         var description: String
-        var shareOptions: [(imageUrl: String, title: String, isOn: Bool)]
+        var shareStates: [DiaryShareState]
         var isSaving: Bool
         var sections: [DiarySection]
     }
@@ -50,13 +50,7 @@ final class DiaryViewReactor: Reactor {
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
             title: "",
             description: "",
-            shareOptions: [
-                ("community1", "새롬교회", false),
-                ("community1", "Grace_log", false),
-                ("community3", "스튜디오306", false),
-                ("community4", "스튜디오카페", false),
-                ("community1", "홀리파이어", false)
-            ],
+            shareStates: DiaryShareOption.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) },
             isSaving: false,
             sections: []
         )
@@ -87,8 +81,6 @@ extension DiaryViewReactor {
             return .just(.setTitle(title))
         case .updateDescription(let description):
             return .just(.setDescription(description))
-        case .updateShareOption(let index, let isOn):
-            return .just(.setShareOption(index: index, isOn: isOn))
         case .saveDiary:
             return Observable.concat([
                 .just(.setSaving(true)),
@@ -98,6 +90,14 @@ extension DiaryViewReactor {
                 selectedKeywords.insert(state.keyword)
             } else {
                 selectedKeywords.remove(state.keyword)
+            }
+            return .empty()
+            
+        case .didSelectShareOption(let state):
+            if state.isSelected {
+                selectedShareOptions.insert(state.diaryOption)
+            } else {
+                selectedShareOptions.remove(state.diaryOption)
             }
             return .empty()
         }
@@ -115,10 +115,6 @@ extension DiaryViewReactor {
         case .setDescription(let description):
             newState.description = description
             newState.sections = createSections(state: newState)
-        case .setShareOption(index: let index, isOn: let isOn):
-            if index < newState.shareOptions.count {
-                newState.shareOptions[index].isOn = isOn
-            }
         case .setSaving(let isSaving):
             newState.isSaving = isSaving
         case .setSaveResult:
@@ -135,9 +131,6 @@ extension DiaryViewReactor {
         let keywordItems: [DiarySectionItem] = [.keyword]
         
         var shareItems: [DiarySectionItem] = []
-        for option in state.shareOptions {
-            shareItems.append(.shareOption(imageUrl: option.imageUrl, title: option.title, isOn: option.isOn))
-        }
         
         let settingItems: [DiarySectionItem] = [.settings]
         let buttonItems: [DiarySectionItem] = [.button(title: "공유하기")]
@@ -175,4 +168,38 @@ enum DiaryKeyword: String, CaseIterable {
         case peace        = "평안"
         case suffering    = "고난"
         case perseverance = "끈기"
+}
+
+// MARK: - Diary Share State/Model
+
+struct DiaryShareState {
+    let diaryOption: DiaryShareOption
+    let isSelected: Bool
+}
+
+enum DiaryShareOption: String, CaseIterable {
+    case saeromchurch
+    case gracelog
+    case studio306
+    case studiocafe
+    case holyfire
+    
+    var title: String {
+        switch self {
+        case .saeromchurch:
+            return "새롬교회"
+        case .gracelog:
+            return "Grace_log"
+        case .studio306:
+            return "스튜디오306"
+        case .studiocafe:
+            return "스튜디오카페"
+        case .holyfire:
+            return "홀리파이어"
+        }
+    }
+    
+    var logoImageNamed: String {
+        return "diary_share_\(self)"
+    }
 }

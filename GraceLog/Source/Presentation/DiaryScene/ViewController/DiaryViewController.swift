@@ -35,6 +35,7 @@ final class DiaryViewController: UIViewController, View {
     private let diaryImageListView = DiaryImageListView()
     private let diaryEditView = DiaryEditView()
     private let diaryKeywordView = DiaryKeywordView()
+    private let diaryShareView = DiaryShareView()
     
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = .white
@@ -111,10 +112,10 @@ final class DiaryViewController: UIViewController, View {
                 }
                 return cell
             case .shareOption(let imageUrl, let title, let isOn):
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: DiarySwitchTableViewCell.identifier, for: indexPath) as? DiarySwitchTableViewCell else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: DiaryShareTableViewCell.identifier, for: indexPath) as? DiaryShareTableViewCell else {
                     return UITableViewCell()
                 }
-                cell.updateUI(imageUrl: imageUrl, title: title, isOn: isOn)
+//                cell.updateUI(imageUrl: imageUrl, title: title, isOn: isOn)
                 return cell
             case .settings:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: DiarySettingsTableViewCell.identifier, for: indexPath) as? DiarySettingsTableViewCell else {
@@ -154,7 +155,7 @@ final class DiaryViewController: UIViewController, View {
     private func setupLayouts() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerStackView)
-        let subviews = [diaryImageListView, diaryEditView, diaryKeywordView]
+        let subviews = [diaryImageListView, diaryEditView, diaryKeywordView, diaryShareView]
         containerStackView.addArrangedDividerSubViews(subviews, exclude: [0])
     }
     
@@ -178,7 +179,7 @@ final class DiaryViewController: UIViewController, View {
         tableView.register(DiaryTitleTableViewCell.self, forCellReuseIdentifier: DiaryTitleTableViewCell.identifier)
         tableView.register(DiaryDescriptionTableViewCell.self, forCellReuseIdentifier: DiaryDescriptionTableViewCell.identifier)
         tableView.register(DiaryKeywordTableViewCell.self, forCellReuseIdentifier: DiaryKeywordTableViewCell.identifier)
-        tableView.register(DiarySwitchTableViewCell.self, forCellReuseIdentifier: DiarySwitchTableViewCell.identifier)
+        tableView.register(DiaryShareTableViewCell.self, forCellReuseIdentifier: DiaryShareTableViewCell.identifier)
         tableView.register(DiarySettingsTableViewCell.self, forCellReuseIdentifier: DiarySettingsTableViewCell.identifier)
         tableView.register(CommonButtonTableViewCell.self, forCellReuseIdentifier: CommonButtonTableViewCell.identifier)
         tableView.register(CommonDivideTableViewCell.self, forCellReuseIdentifier: CommonDivideTableViewCell.identifier)
@@ -251,6 +252,32 @@ final class DiaryViewController: UIViewController, View {
             .asDriver()
             .drive(with: self) { owner, _ in
                 owner.showImagePicker()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.shareStates }
+            .asDriver(onErrorJustReturn: [])
+            .drive(diaryShareView.diaryShareTableView.rx.items(
+                cellIdentifier: DiaryShareTableViewCell.identifier,
+                cellType: DiaryShareTableViewCell.self)
+            ) { index, item, cell in
+                cell.updateUI(
+                    imageNamed: item.diaryOption.logoImageNamed,
+                    title: item.diaryOption.title,
+                    isOn: item.isSelected
+                )
+                
+                cell.shareSwitchButton.rx.isOn
+                    .subscribe(with: self) { owner, isOn in
+                        guard let indexPath = owner.diaryShareView.diaryShareTableView.indexPath(for: cell),
+                              let currentState = try? owner.diaryShareView.diaryShareTableView.rx.model(at: indexPath) as DiaryShareState else {
+                            return
+                        }
+                        let updateState = DiaryShareState(diaryOption: currentState.diaryOption, isSelected: isOn)
+                        reactor.action.onNext(.didSelectShareOption(updateState))
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
