@@ -11,6 +11,8 @@ import RxCocoa
 
 final class DiaryViewReactor: Reactor {
     private var maxDiaryImageCount = 5
+    private var selectedKeywords: Set<DiaryKeyword> = []
+    
     var initialState: State
     
     enum Action {
@@ -20,6 +22,7 @@ final class DiaryViewReactor: Reactor {
         case updateDescription(String)
         case updateShareOption(index: Int, isOn: Bool)
         case saveDiary
+        case didSelectKeyword(DiaryKeywordState)
     }
     
     enum Mutation {
@@ -33,6 +36,7 @@ final class DiaryViewReactor: Reactor {
     
     struct State {
         @Pulse var images: [DiaryImage]
+        var keywords: [DiaryKeywordState]
         var title: String
         var description: String
         var shareOptions: [(imageUrl: String, title: String, isOn: Bool)]
@@ -42,7 +46,8 @@ final class DiaryViewReactor: Reactor {
     
     init() {
         self.initialState = State(
-            images: [],
+            images: [], 
+            keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
             title: "",
             description: "",
             shareOptions: [
@@ -88,6 +93,13 @@ extension DiaryViewReactor {
             return Observable.concat([
                 .just(.setSaving(true)),
             ])
+        case .didSelectKeyword(let state):
+            if state.isSelected {
+                selectedKeywords.insert(state.keyword)
+            } else {
+                selectedKeywords.remove(state.keyword)
+            }
+            return .empty()
         }
     }
     
@@ -145,4 +157,22 @@ extension DiaryViewReactor {
             .button(items: buttonItems)
         ]
     }
+}
+
+// MARK: - Diary Keyword State/Model
+
+struct DiaryKeywordState {
+    let keyword: DiaryKeyword
+    let isSelected: Bool
+}
+
+enum DiaryKeyword: String, CaseIterable {
+    case obedience        = "순종"
+        case faith        = "믿음"
+        case love         = "사랑"
+        case vision       = "비전"
+        case guidance     = "인내"
+        case peace        = "평안"
+        case suffering    = "고난"
+        case perseverance = "끈기"
 }

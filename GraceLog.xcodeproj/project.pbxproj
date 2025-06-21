@@ -40,6 +40,7 @@
 		702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */; };
 		702D2B662E05185900D5E71E /* DiaryImageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B652E05185900D5E71E /* DiaryImageSection.swift */; };
 		702D2B682E05674B00D5E71E /* AutoSizingCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B672E05674B00D5E71E /* AutoSizingCollectionView.swift */; };
+		702D2B6A2E058E9600D5E71E /* DiaryKeywordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B692E058E9600D5E71E /* DiaryKeywordView.swift */; };
 		704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */; };
 		7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815792DFFF362009ECDBD /* FontStylable.swift */; };
 		7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157B2DFFF570009ECDBD /* GLFont.swift */; };
@@ -219,6 +220,7 @@
 		702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageListView.swift; sourceTree = "<group>"; };
 		702D2B652E05185900D5E71E /* DiaryImageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageSection.swift; sourceTree = "<group>"; };
 		702D2B672E05674B00D5E71E /* AutoSizingCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSizingCollectionView.swift; sourceTree = "<group>"; };
+		702D2B692E058E9600D5E71E /* DiaryKeywordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeywordView.swift; sourceTree = "<group>"; };
 		704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLUnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		704815792DFFF362009ECDBD /* FontStylable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStylable.swift; sourceTree = "<group>"; };
 		7048157B2DFFF570009ECDBD /* GLFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLFont.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */,
 				704815832E018F5A009ECDBD /* DiaryEditView.swift */,
 				702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */,
+				702D2B692E058E9600D5E71E /* DiaryKeywordView.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -1507,6 +1510,7 @@
 				DE58FEB32D04284D008CADCD /* SceneDelegate.swift in Sources */,
 				DEEFEACA2D29270500699692 /* GraceLogUser.swift in Sources */,
 				7048157E2DFFF95B009ECDBD /* FontName.swift in Sources */,
+				702D2B6A2E058E9600D5E71E /* DiaryKeywordView.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DE9A1FC62D69D62E0044F655 /* CommunityTableViewCell.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,

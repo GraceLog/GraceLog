@@ -84,7 +84,7 @@ extension DiaryKeywordTableViewCell: UICollectionViewDataSource, UICollectionVie
         }
         
         let keyword = keywords[indexPath.row]
-        cell.updateUI(title: keywords[indexPath.row], isSelected: selectedKeywords.contains(keyword))
+//        cell.updateUI(title: keywords[indexPath.row], isSelected: selectedKeywords.contains(keyword))
         return cell
     }
     

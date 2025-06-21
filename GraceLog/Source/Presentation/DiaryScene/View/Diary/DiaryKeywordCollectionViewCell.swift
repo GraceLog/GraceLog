@@ -27,6 +27,14 @@ final class DiaryKeywordCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+        contentView.backgroundColor = nil
+        contentView.layer.borderColor = nil
+        isSelected = false
+    }
+    
     private func configureUI() {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 15
@@ -38,18 +46,13 @@ final class DiaryKeywordCollectionViewCell: UICollectionViewCell {
             $0.edges.equalToSuperview().inset(4)
         }
     }
-    
-    func updateUI(title: String, isSelected: Bool) {
-        titleLabel.text = title
-        
-        if isSelected {
-            contentView.backgroundColor = .themeColor.withAlphaComponent(0.1)
-            contentView.layer.borderColor = UIColor.themeColor.cgColor
-            titleLabel.textColor = .themeColor
-        } else {
-            contentView.backgroundColor = .white
-            contentView.layer.borderColor = UIColor.gray200.cgColor
-            titleLabel.textColor = .gray200
-        }
+}
+
+extension DiaryKeywordCollectionViewCell {
+    func configureUI(keyword: String) {
+        titleLabel.text = keyword
+        titleLabel.textColor = isSelected ? .themeColor : .gray200
+        contentView.backgroundColor = isSelected ? .themeColor.withAlphaComponent(0.1) : .white
+        contentView.layer.borderColor = isSelected ? UIColor.themeColor.cgColor : UIColor.gray200.cgColor
     }
 }

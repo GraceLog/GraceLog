@@ -34,6 +34,7 @@ final class DiaryViewController: UIViewController, View {
     
     private let diaryImageListView = DiaryImageListView()
     private let diaryEditView = DiaryEditView()
+    private let diaryKeywordView = DiaryKeywordView()
     
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = .white
@@ -146,12 +147,14 @@ final class DiaryViewController: UIViewController, View {
     private func setupStyles() {
         navigationItem.rightBarButtonItem = saveButton
         navigationItem.rightBarButtonItem?.tintColor = .themeColor
+        
+        diaryKeywordView.keywordCollectionView.delegate = self
     }
     
     private func setupLayouts() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerStackView)
-        let subviews = [diaryImageListView, diaryEditView]
+        let subviews = [diaryImageListView, diaryEditView, diaryKeywordView]
         containerStackView.addArrangedDividerSubViews(subviews, exclude: [0])
     }
     
@@ -252,6 +255,7 @@ final class DiaryViewController: UIViewController, View {
             .disposed(by: disposeBag)
         
         bindDiaryImageCollectionView(reactor: reactor)
+        bindDiaryKeywordCollectionView(reactor: reactor)
     }
     
     private func bindDiaryImageCollectionView(reactor: DiaryViewReactor) {
@@ -296,6 +300,49 @@ final class DiaryViewController: UIViewController, View {
             .disposed(by: disposeBag)
     }
 
+    private func bindDiaryKeywordCollectionView(reactor: DiaryViewReactor) {
+        reactor.state
+            .map { $0.keywords }
+            .asDriver(onErrorJustReturn: [])
+            .drive(diaryKeywordView.keywordCollectionView.rx.items(
+                cellIdentifier: DiaryKeywordCollectionViewCell.identifier,
+                cellType: DiaryKeywordCollectionViewCell.self)
+            ) { index, item, cell in
+                cell.configureUI(keyword: item.keyword.rawValue)
+            }
+            .disposed(by: disposeBag)
+        
+        let collectionView = diaryKeywordView.keywordCollectionView
+        
+        let keywordSelectionEvent = Observable.merge(
+            collectionView.rx.itemSelected.asObservable(),
+            collectionView.rx.itemDeselected.asObservable()
+        )
+
+        let selectedKeywordModels = Observable.merge(
+            collectionView.rx.modelSelected(DiaryKeywordState.self).asObservable(),
+            collectionView.rx.modelDeselected(DiaryKeywordState.self).asObservable()
+        )
+        
+        Observable.zip(keywordSelectionEvent, selectedKeywordModels)
+            .subscribe(with: self) { owner, state in
+                let (indexPath, model) = state
+                guard let cell = collectionView.cellForItem(at: indexPath) as? DiaryKeywordCollectionViewCell else {
+                    return
+                }
+                
+                cell.configureUI(keyword: model.keyword.rawValue)
+                
+                Observable.just(DiaryKeywordState(
+                    keyword: model.keyword,
+                    isSelected: cell.isSelected
+                ))
+                .map { DiaryViewReactor.Action.didSelectKeyword($0) }
+                .bind(to: reactor.action)
+                .disposed(by: owner.disposeBag)
+                
+            }.disposed(by: disposeBag)
+    }
 }
 
 extension DiaryViewController: UITableViewDelegate {
@@ -343,5 +390,15 @@ extension DiaryViewController: UITableViewDelegate {
         default:
             return .leastNonzeroMagnitude
         }
+    }
+}
+
+extension DiaryViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == diaryKeywordView.keywordCollectionView {
+            let width = (collectionView.frame.width - 20) / 3
+            return CGSize(width: width, height: 30)
+        }
+        return .zero
     }
 }
