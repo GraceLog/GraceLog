@@ -203,3 +203,17 @@ enum DiaryShareOption: String, CaseIterable {
         return "diary_share_\(self)"
     }
 }
+
+// MARK: - Diary Setting
+
+enum DiarySettingMenu: CaseIterable {
+    case setting
+    
+    var title: String {
+        return "추가 설정"
+    }
+    
+    var imageNamed: String {
+        return "diary_\(self)"
+    }
+}

@@ -43,6 +43,8 @@
 		702D2B6A2E058E9600D5E71E /* DiaryKeywordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B692E058E9600D5E71E /* DiaryKeywordView.swift */; };
 		702D2B6C2E07008800D5E71E /* DiaryShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B6B2E07008800D5E71E /* DiaryShareView.swift */; };
 		702D2B6E2E07107A00D5E71E /* AutoSizingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B6D2E07107A00D5E71E /* AutoSizingTableView.swift */; };
+		702D2B702E07F35B00D5E71E /* DiarySettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B6F2E07F35A00D5E71E /* DiarySettingView.swift */; };
+		702D2B722E07F42500D5E71E /* DiarySettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B712E07F42500D5E71E /* DiarySettingTableViewCell.swift */; };
 		704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */; };
 		7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815792DFFF362009ECDBD /* FontStylable.swift */; };
 		7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157B2DFFF570009ECDBD /* GLFont.swift */; };
@@ -225,6 +227,8 @@
 		702D2B692E058E9600D5E71E /* DiaryKeywordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeywordView.swift; sourceTree = "<group>"; };
 		702D2B6B2E07008800D5E71E /* DiaryShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareView.swift; sourceTree = "<group>"; };
 		702D2B6D2E07107A00D5E71E /* AutoSizingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSizingTableView.swift; sourceTree = "<group>"; };
+		702D2B6F2E07F35A00D5E71E /* DiarySettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingView.swift; sourceTree = "<group>"; };
+		702D2B712E07F42500D5E71E /* DiarySettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingTableViewCell.swift; sourceTree = "<group>"; };
 		704815762DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLUnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		704815792DFFF362009ECDBD /* FontStylable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStylable.swift; sourceTree = "<group>"; };
 		7048157B2DFFF570009ECDBD /* GLFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLFont.swift; sourceTree = "<group>"; };
@@ -400,6 +404,8 @@
 				702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */,
 				702D2B692E058E9600D5E71E /* DiaryKeywordView.swift */,
 				702D2B6B2E07008800D5E71E /* DiaryShareView.swift */,
+				702D2B6F2E07F35A00D5E71E /* DiarySettingView.swift */,
+				702D2B712E07F42500D5E71E /* DiarySettingTableViewCell.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -1508,6 +1514,7 @@
 				0220A0752DE7F57000D045F7 /* ImagePickerManager.swift in Sources */,
 				DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */,
 				702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */,
+				702D2B702E07F35B00D5E71E /* DiarySettingView.swift in Sources */,
 				DE3BFCD82D048B550076426D /* Coordinator.swift in Sources */,
 				DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */,
 				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
@@ -1574,6 +1581,7 @@
 				DE069BA02D571472007C2066 /* HomeNavBarTableViewHeader.swift in Sources */,
 				DE27005C2D212609005C9DCF /* DefaultSignInUseCase.swift in Sources */,
 				DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */,
+				702D2B722E07F42500D5E71E /* DiarySettingTableViewCell.swift in Sources */,
 				DE66C2FF2D96B723009A983F /* DiaryAddImageCollectionViewCell.swift in Sources */,
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,
 				DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */,
