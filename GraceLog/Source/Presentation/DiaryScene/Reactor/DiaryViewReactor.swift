@@ -28,8 +28,6 @@ final class DiaryViewReactor: Reactor {
     
     enum Mutation {
         case setImages([DiaryImage])
-        case setTitle(String)
-        case setDescription(String)
         case setSaving(Bool)
         case setSaveResult(Bool)
     }
@@ -37,22 +35,16 @@ final class DiaryViewReactor: Reactor {
     struct State {
         @Pulse var images: [DiaryImage]
         var keywords: [DiaryKeywordState]
-        var title: String
-        var description: String
         var shareStates: [DiaryShareState]
         var isSaving: Bool
-        var sections: [DiarySection]
     }
     
     init() {
         self.initialState = State(
             images: [], 
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
-            title: "",
-            description: "",
             shareStates: DiaryShareOption.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) },
-            isSaving: false,
-            sections: []
+            isSaving: false
         )
     }
 }
@@ -78,9 +70,9 @@ extension DiaryViewReactor {
             }
             return .just(.setImages(updatedImages))
         case .updateTitle(let title):
-            return .just(.setTitle(title))
+            return .empty()
         case .updateDescription(let description):
-            return .just(.setDescription(description))
+            return .empty()
         case .saveDiary:
             return Observable.concat([
                 .just(.setSaving(true)),
@@ -109,12 +101,6 @@ extension DiaryViewReactor {
         switch mutation {
         case .setImages(let images):
             newState.images = images
-        case .setTitle(let title):
-            newState.title = title
-            newState.sections = createSections(state: newState)
-        case .setDescription(let description):
-            newState.description = description
-            newState.sections = createSections(state: newState)
         case .setSaving(let isSaving):
             newState.isSaving = isSaving
         case .setSaveResult:
@@ -122,33 +108,6 @@ extension DiaryViewReactor {
         }
         
         return newState
-    }
-    
-    private func createSections(state: State) -> [DiarySection] {
-        let imageItems: [DiarySectionItem] = []
-        let titleItems: [DiarySectionItem] = [.title(state.title)]
-        let descriptionItems: [DiarySectionItem] = [.description(state.description)]
-        let keywordItems: [DiarySectionItem] = [.keyword]
-        
-        var shareItems: [DiarySectionItem] = []
-        
-        let settingItems: [DiarySectionItem] = [.settings]
-        let buttonItems: [DiarySectionItem] = [.button(title: "공유하기")]
-        let dividerItems: [DiarySectionItem] = [.divide(left: 0,right: 0)]
-        
-        return [
-            .images(items: imageItems),
-            .title(header: "제목", items: titleItems),
-            .description(header: "본문", items: descriptionItems),
-            .divide(items: dividerItems),
-            .keyword(header: "대표 키워드", desc: "중복 선택할 수 있어요!", items: keywordItems),
-            .divide(items: dividerItems),
-            .shareOptions(header: "공동체에게 공유", items: shareItems),
-            .divide(items: dividerItems),
-            .settings(items: settingItems),
-            .divide(items: dividerItems),
-            .button(items: buttonItems)
-        ]
     }
 }
 
@@ -160,14 +119,14 @@ struct DiaryKeywordState {
 }
 
 enum DiaryKeyword: String, CaseIterable {
-    case obedience        = "순종"
-        case faith        = "믿음"
-        case love         = "사랑"
-        case vision       = "비전"
-        case guidance     = "인내"
-        case peace        = "평안"
-        case suffering    = "고난"
-        case perseverance = "끈기"
+    case obedience    = "순종"
+    case faith        = "믿음"
+    case love         = "사랑"
+    case vision       = "비전"
+    case guidance     = "인내"
+    case peace        = "평안"
+    case suffering    = "고난"
+    case perseverance = "끈기"
 }
 
 // MARK: - Diary Share State/Model

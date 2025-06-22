@@ -94,7 +94,6 @@
 		DE5638472D99785D00A12192 /* DiaryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5638462D99785D00A12192 /* DiaryUseCase.swift */; };
 		DE5638492D9DFD2E00A12192 /* DiaryCommunityData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE5638482D9DFD2E00A12192 /* DiaryCommunityData.json */; };
 		DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */; };
-		DE56384F2D9E01D100A12192 /* DiaryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56384E2D9E01D100A12192 /* DiaryDataSource.swift */; };
 		DE5638512DA147EA00A12192 /* CommonSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5638502DA147EA00A12192 /* CommonSectionHeaderView.swift */; };
 		DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5638522DA1726700A12192 /* CommonButtonTableViewCell.swift */; };
 		DE58FEB12D04284D008CADCD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FEB02D04284D008CADCD /* AppDelegate.swift */; };
@@ -106,10 +105,8 @@
 		DE655B212DA5EC480073B4F7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */; };
 		DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */; };
 		DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2F42D96B0E4009A983F /* DiaryViewReactor.swift */; };
-		DE66C2F72D96B26F009A983F /* DiaryImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2F62D96B26F009A983F /* DiaryImageTableViewCell.swift */; };
 		DE66C2FB2D96B39B009A983F /* DefaultDiaryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2FA2D96B39B009A983F /* DefaultDiaryUseCase.swift */; };
 		DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2FC2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift */; };
-		DE66C2FF2D96B723009A983F /* DiaryAddImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2FE2D96B723009A983F /* DiaryAddImageCollectionViewCell.swift */; };
 		DE9565032DC4B311006DD9CF /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9565022DC4B311006DD9CF /* KeychainService.swift */; };
 		DE9A1FC62D69D62E0044F655 /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FC52D69D62E0044F655 /* CommunityTableViewCell.swift */; };
 		DE9A1FC82D69DA2A0044F655 /* CommunityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FC72D69DA2A0044F655 /* CommunityButton.swift */; };
@@ -134,8 +131,6 @@
 		DE9A1FFE2D7C31FE0044F655 /* HomeCommunityData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9A1FFD2D7C31FE0044F655 /* HomeCommunityData.json */; };
 		DE9A20002D7C32050044F655 /* HomeMyData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9A1FFF2D7C32050044F655 /* HomeMyData.json */; };
 		DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA04FA62D69A8C000BA978A /* String+Extension.swift */; };
-		DED558602DAB9F4400137B10 /* DiarySettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5585F2DAB9F4400137B10 /* DiarySettingsTableViewCell.swift */; };
-		DED558622DABAB3400137B10 /* DiaryKeywordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558612DABAB3400137B10 /* DiaryKeywordTableViewCell.swift */; };
 		DED558642DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */; };
 		DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558652DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift */; };
 		DED558712DBC6FA800137B10 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558702DBC6FA800137B10 /* AuthService.swift */; };
@@ -167,8 +162,6 @@
 		DEEFEACC2D2A5E8200699692 /* GraceLogUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEAC92D29270500699692 /* GraceLogUser.swift */; };
 		DEEFEACD2D2A5E8400699692 /* GraceLogUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEAC92D29270500699692 /* GraceLogUser.swift */; };
 		DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEACE2D2A64CF00699692 /* SignInCoordinator.swift */; };
-		DEFC29A72D928C5A004D00DA /* DiaryTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFC29A62D928C5A004D00DA /* DiaryTitleTableViewCell.swift */; };
-		DEFC29A92D941623004D00DA /* DiaryDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFC29A82D941623004D00DA /* DiaryDescriptionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,7 +279,6 @@
 		DE5638462D99785D00A12192 /* DiaryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryUseCase.swift; sourceTree = "<group>"; };
 		DE5638482D9DFD2E00A12192 /* DiaryCommunityData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DiaryCommunityData.json; sourceTree = "<group>"; };
 		DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDTO.swift; sourceTree = "<group>"; };
-		DE56384E2D9E01D100A12192 /* DiaryDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDataSource.swift; sourceTree = "<group>"; };
 		DE5638502DA147EA00A12192 /* CommonSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSectionHeaderView.swift; sourceTree = "<group>"; };
 		DE5638522DA1726700A12192 /* CommonButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButtonTableViewCell.swift; sourceTree = "<group>"; };
 		DE58FEAD2D04284D008CADCD /* GraceLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraceLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,10 +294,8 @@
 		DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareTableViewCell.swift; sourceTree = "<group>"; };
 		DE66C2F42D96B0E4009A983F /* DiaryViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewReactor.swift; sourceTree = "<group>"; };
-		DE66C2F62D96B26F009A983F /* DiaryImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageTableViewCell.swift; sourceTree = "<group>"; };
 		DE66C2FA2D96B39B009A983F /* DefaultDiaryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiaryUseCase.swift; sourceTree = "<group>"; };
 		DE66C2FC2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		DE66C2FE2D96B723009A983F /* DiaryAddImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAddImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE9565022DC4B311006DD9CF /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		DE9A1FC52D69D62E0044F655 /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
 		DE9A1FC72D69DA2A0044F655 /* CommunityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityButton.swift; sourceTree = "<group>"; };
@@ -330,8 +320,6 @@
 		DE9A1FFD2D7C31FE0044F655 /* HomeCommunityData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HomeCommunityData.json; sourceTree = "<group>"; };
 		DE9A1FFF2D7C32050044F655 /* HomeMyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HomeMyData.json; sourceTree = "<group>"; };
 		DEA04FA62D69A8C000BA978A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		DED5585F2DAB9F4400137B10 /* DiarySettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingsTableViewCell.swift; sourceTree = "<group>"; };
-		DED558612DABAB3400137B10 /* DiaryKeywordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeywordTableViewCell.swift; sourceTree = "<group>"; };
 		DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeywordCollectionViewCell.swift; sourceTree = "<group>"; };
 		DED558652DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSectionWithDescHeaderView.swift; sourceTree = "<group>"; };
 		DED558702DBC6FA800137B10 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -353,8 +341,6 @@
 		DED5589E2DC4B12200137B10 /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		DEEFEAC92D29270500699692 /* GraceLogUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogUser.swift; sourceTree = "<group>"; };
 		DEEFEACE2D2A64CF00699692 /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
-		DEFC29A62D928C5A004D00DA /* DiaryTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTitleTableViewCell.swift; sourceTree = "<group>"; };
-		DEFC29A82D941623004D00DA /* DiaryDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		E2561CE1730A7CC76CC990A3 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE7CB138D1109187A996503 /* Pods-GraceLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.debug.xcconfig"; sourceTree = "<group>"; };
@@ -391,21 +377,12 @@
 		023446182DB61C8500F21439 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
-				DEFC29A62D928C5A004D00DA /* DiaryTitleTableViewCell.swift */,
-				DEFC29A82D941623004D00DA /* DiaryDescriptionTableViewCell.swift */,
-				DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */,
-				DE66C2F62D96B26F009A983F /* DiaryImageTableViewCell.swift */,
-				DE66C2FC2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift */,
-				DE66C2FE2D96B723009A983F /* DiaryAddImageCollectionViewCell.swift */,
-				DED5585F2DAB9F4400137B10 /* DiarySettingsTableViewCell.swift */,
-				DED558612DABAB3400137B10 /* DiaryKeywordTableViewCell.swift */,
-				DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */,
+				702D2B732E080A2B00D5E71E /* Cell */,
 				704815832E018F5A009ECDBD /* DiaryEditView.swift */,
 				702D2B5D2E02D01A00D5E71E /* DiaryImageListView.swift */,
 				702D2B692E058E9600D5E71E /* DiaryKeywordView.swift */,
 				702D2B6B2E07008800D5E71E /* DiaryShareView.swift */,
 				702D2B6F2E07F35A00D5E71E /* DiarySettingView.swift */,
-				702D2B712E07F42500D5E71E /* DiarySettingTableViewCell.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -587,6 +564,17 @@
 				7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		702D2B732E080A2B00D5E71E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				702D2B712E07F42500D5E71E /* DiarySettingTableViewCell.swift */,
+				DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */,
+				DE66C2FC2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift */,
+				DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		704815782DFFF2B5009ECDBD /* Font */ = {
@@ -1031,7 +1019,6 @@
 		DE56384D2D9E01B900A12192 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				DE56384E2D9E01D100A12192 /* DiaryDataSource.swift */,
 				0234461C2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift */,
 				702D2B652E05185900D5E71E /* DiaryImageSection.swift */,
 			);
@@ -1502,7 +1489,6 @@
 				025019CA2DE04410003FD48D /* MyInfoUseCase.swift in Sources */,
 				702D2B682E05674B00D5E71E /* AutoSizingCollectionView.swift in Sources */,
 				DE3BFCDE2D059D3D0076426D /* SearchViewController.swift in Sources */,
-				DE56384F2D9E01D100A12192 /* DiaryDataSource.swift in Sources */,
 				DE069BA42D571499007C2066 /* HomeTableViewHeader.swift in Sources */,
 				DED558822DBC95EC00137B10 /* SignInResponseDTO.swift in Sources */,
 				DE3BFCE12D059DDC0076426D /* HomeCoordinator.swift in Sources */,
@@ -1539,9 +1525,7 @@
 				DE9565032DC4B311006DD9CF /* KeychainService.swift in Sources */,
 				DE2700502D1FA03B005C9DCF /* UIView+Extension.swift in Sources */,
 				DE9A1FDC2D79AFFA0044F655 /* MyDiaryItem.swift in Sources */,
-				DE66C2F72D96B26F009A983F /* DiaryImageTableViewCell.swift in Sources */,
 				DED558862DBE224300137B10 /* DefaultAuthRepository.swift in Sources */,
-				DED558622DABAB3400137B10 /* DiaryKeywordTableViewCell.swift in Sources */,
 				DE2700632D22D188005C9DCF /* DefaultUserRepository.swift in Sources */,
 				DE9A1FDE2D79B0A50044F655 /* HomeContent.swift in Sources */,
 				704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */,
@@ -1582,10 +1566,8 @@
 				DE27005C2D212609005C9DCF /* DefaultSignInUseCase.swift in Sources */,
 				DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */,
 				702D2B722E07F42500D5E71E /* DiarySettingTableViewCell.swift in Sources */,
-				DE66C2FF2D96B723009A983F /* DiaryAddImageCollectionViewCell.swift in Sources */,
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,
 				DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */,
-				DED558602DAB9F4400137B10 /* DiarySettingsTableViewCell.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
 				DE9A1FFA2D7C09350044F655 /* HomeRepository.swift in Sources */,
@@ -1607,9 +1589,7 @@
 				02F0DA512DDEAED900CD036A /* AuthManager.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DE069BA82D61E310007C2066 /* DiaryCardView.swift in Sources */,
-				DEFC29A72D928C5A004D00DA /* DiaryTitleTableViewCell.swift in Sources */,
 				DE9A1FFC2D7C0B680044F655 /* DefaultHomeRepository.swift in Sources */,
-				DEFC29A92D941623004D00DA /* DiaryDescriptionTableViewCell.swift in Sources */,
 				02C5861A2DD736CA00E1F626 /* UserService.swift in Sources */,
 				DE9A1FF62D7C07FE0044F655 /* HomeUseCase.swift in Sources */,
 				DED558642DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift in Sources */,

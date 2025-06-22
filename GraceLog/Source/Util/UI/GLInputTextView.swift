@@ -7,6 +7,7 @@
 
 import UIKit
 
+import UITextView_Placeholder
 import RxSwift
 import RxRelay
 import SnapKit

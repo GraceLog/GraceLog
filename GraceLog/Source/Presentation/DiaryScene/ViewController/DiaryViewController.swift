@@ -38,15 +38,6 @@ final class DiaryViewController: UIViewController, View {
     private let diaryShareView = DiaryShareView()
     private let diarySettingView = DiarySettingView()
     
-    private let settingButton = UIButton().then {
-        $0.backgroundColor = .themeColor
-        $0.setTitle("", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = GLFont.extraBold18.font
-        $0.layer.cornerRadius = 10
-        $0.clipsToBounds = true
-    }
-    
     private let shareButton = UIButton().then {
         $0.backgroundColor = .themeColor
         $0.setTitle("공유하기", for: .normal)
@@ -69,9 +60,16 @@ final class DiaryViewController: UIViewController, View {
     
     private func setupLayouts() {
         view.addSubview(scrollView)
-        scrollView.addSubview(containerStackView)
+        [containerStackView, shareButton].forEach { scrollView.addSubview($0) }
         let subviews = [diaryImageListView, diaryEditView, diaryKeywordView, diaryShareView, diarySettingView]
         containerStackView.addArrangedDividerSubViews(subviews, exclude: [0])
+        
+        shareButton.snp.makeConstraints {
+            $0.height.equalTo(45)
+            $0.directionalHorizontalEdges.equalToSuperview().inset(30)
+            $0.top.equalTo(containerStackView.snp.bottom).offset(22)
+            $0.bottom.equalToSuperview().inset(33)
+        }
     }
     
     private func setupConstraints() {
@@ -173,6 +171,13 @@ final class DiaryViewController: UIViewController, View {
                         reactor.action.onNext(.didSelectShareOption(updateState))
                     }
                     .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        shareButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                // TODO: - 공유하기관련 액션 구현 필요
+                print("공유하기 버튼 클릭")
             }
             .disposed(by: disposeBag)
         
