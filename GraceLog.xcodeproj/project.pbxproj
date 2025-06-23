@@ -56,13 +56,15 @@
 		A88BF65DF907D86788F86BF8 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */; };
 		DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B972D53A855007C2066 /* DiaryCoordinator.swift */; };
 		DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B992D53A884007C2066 /* DiaryViewController.swift */; };
-		DE069B9C2D5711D3007C2066 /* HomeNextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B9B2D5711D3007C2066 /* HomeNextViewController.swift */; };
+		DE069B9C2D5711D3007C2066 /* HomeCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */; };
 		DE069B9E2D57144A007C2066 /* HomeDiaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B9D2D57144A007C2066 /* HomeDiaryTableViewCell.swift */; };
-		DE069BA02D571472007C2066 /* HomeNavBarTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B9F2D571472007C2066 /* HomeNavBarTableViewHeader.swift */; };
 		DE069BA22D571485007C2066 /* HomeRecommendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069BA12D571485007C2066 /* HomeRecommendTableViewCell.swift */; };
 		DE069BA42D571499007C2066 /* HomeTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069BA32D571499007C2066 /* HomeTableViewHeader.swift */; };
 		DE069BA82D61E310007C2066 /* DiaryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069BA72D61E310007C2066 /* DiaryCardView.swift */; };
 		DE23872A2E003BDE00893D8C /* GLNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2387292E003BDE00893D8C /* GLNavigationBar.swift */; };
+		DE23872C2E07C28500893D8C /* HomeCommunityViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872B2E07C28500893D8C /* HomeCommunityViewReactor.swift */; };
+		DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872D2E07C2DC00893D8C /* HomeMyViewController.swift */; };
+		DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872F2E07E46300893D8C /* HomeMyViewReactor.swift */; };
 		DE24DB6D2D26D34D00581621 /* LoginUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FEC72D04284E008CADCD /* LoginUseCaseTests.swift */; };
 		DE24DB6E2D26D36100581621 /* MockFireStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2700732D257068005C9DCF /* MockFireStoreRepository.swift */; };
 		DE27003B2D1EFB4E005C9DCF /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */; };
@@ -237,13 +239,15 @@
 		C2C92987C1F1070895365F17 /* Pods_GraceLogTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE069B972D53A855007C2066 /* DiaryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCoordinator.swift; sourceTree = "<group>"; };
 		DE069B992D53A884007C2066 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
-		DE069B9B2D5711D3007C2066 /* HomeNextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNextViewController.swift; sourceTree = "<group>"; };
+		DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityViewController.swift; sourceTree = "<group>"; };
 		DE069B9D2D57144A007C2066 /* HomeDiaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiaryTableViewCell.swift; sourceTree = "<group>"; };
-		DE069B9F2D571472007C2066 /* HomeNavBarTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavBarTableViewHeader.swift; sourceTree = "<group>"; };
 		DE069BA12D571485007C2066 /* HomeRecommendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendTableViewCell.swift; sourceTree = "<group>"; };
 		DE069BA32D571499007C2066 /* HomeTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewHeader.swift; sourceTree = "<group>"; };
 		DE069BA72D61E310007C2066 /* DiaryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCardView.swift; sourceTree = "<group>"; };
 		DE2387292E003BDE00893D8C /* GLNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLNavigationBar.swift; sourceTree = "<group>"; };
+		DE23872B2E07C28500893D8C /* HomeCommunityViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityViewReactor.swift; sourceTree = "<group>"; };
+		DE23872D2E07C2DC00893D8C /* HomeMyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyViewController.swift; sourceTree = "<group>"; };
+		DE23872F2E07E46300893D8C /* HomeMyViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyViewReactor.swift; sourceTree = "<group>"; };
 		DE24DB632D26D32200581621 /* GraceLogUseCaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraceLogUseCaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		DE2700332D1EFB4E005C9DCF /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
@@ -634,6 +638,29 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		DE2387312E09810700893D8C /* My */ = {
+			isa = PBXGroup;
+			children = (
+				DE069B9D2D57144A007C2066 /* HomeDiaryTableViewCell.swift */,
+				DE069BA72D61E310007C2066 /* DiaryCardView.swift */,
+				DE069BA32D571499007C2066 /* HomeTableViewHeader.swift */,
+				DE069BA12D571485007C2066 /* HomeRecommendTableViewCell.swift */,
+			);
+			path = My;
+			sourceTree = "<group>";
+		};
+		DE2387322E09812B00893D8C /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				DE9A1FC52D69D62E0044F655 /* CommunityTableViewCell.swift */,
+				DE9A1FC72D69DA2A0044F655 /* CommunityButton.swift */,
+				DE9A1FCB2D6C7D890044F655 /* HomeCommunityMyTableViewCell.swift */,
+				DE9A1FCD2D6C86C00044F655 /* HomeCommunityUserTableViewCell.swift */,
+				DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
 		DE24DB642D26D32200581621 /* GraceLogUseCaseTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -948,6 +975,8 @@
 			isa = PBXGroup;
 			children = (
 				DE9A1FC92D6AAC8C0044F655 /* HomeViewReactor.swift */,
+				DE23872F2E07E46300893D8C /* HomeMyViewReactor.swift */,
+				DE23872B2E07C28500893D8C /* HomeCommunityViewReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -955,16 +984,8 @@
 		DE3BFCCC2D0489C20076426D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DE069B9F2D571472007C2066 /* HomeNavBarTableViewHeader.swift */,
-				DE069B9D2D57144A007C2066 /* HomeDiaryTableViewCell.swift */,
-				DE069BA12D571485007C2066 /* HomeRecommendTableViewCell.swift */,
-				DE069BA32D571499007C2066 /* HomeTableViewHeader.swift */,
-				DE069BA72D61E310007C2066 /* DiaryCardView.swift */,
-				DE9A1FC52D69D62E0044F655 /* CommunityTableViewCell.swift */,
-				DE9A1FC72D69DA2A0044F655 /* CommunityButton.swift */,
-				DE9A1FCB2D6C7D890044F655 /* HomeCommunityMyTableViewCell.swift */,
-				DE9A1FCD2D6C86C00044F655 /* HomeCommunityUserTableViewCell.swift */,
-				DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */,
+				DE2387322E09812B00893D8C /* Community */,
+				DE2387312E09810700893D8C /* My */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -973,7 +994,8 @@
 			isa = PBXGroup;
 			children = (
 				DE3BFCD92D059A3B0076426D /* HomeViewController.swift */,
-				DE069B9B2D5711D3007C2066 /* HomeNextViewController.swift */,
+				DE23872D2E07C2DC00893D8C /* HomeMyViewController.swift */,
+				DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1511,6 +1533,7 @@
 				DEEFEACA2D29270500699692 /* GraceLogUser.swift in Sources */,
 				7048157E2DFFF95B009ECDBD /* FontName.swift in Sources */,
 				702D2B6A2E058E9600D5E71E /* DiaryKeywordView.swift in Sources */,
+				DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DE9A1FC62D69D62E0044F655 /* CommunityTableViewCell.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
@@ -1553,7 +1576,7 @@
 				DED558842DBE1E4000137B10 /* GraceLogResponseDTO.swift in Sources */,
 				7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */,
 				DE9A1FF82D7C08070044F655 /* DefaultHomeUseCase.swift in Sources */,
-				DE069B9C2D5711D3007C2066 /* HomeNextViewController.swift in Sources */,
+				DE069B9C2D5711D3007C2066 /* HomeCommunityViewController.swift in Sources */,
 				DE9A1FEE2D7C05240044F655 /* HomeCommunityContentDTO.swift in Sources */,
 				DE2700492D1F9E6B005C9DCF /* UIColor+CustomColor.swift in Sources */,
 				DE5638472D99785D00A12192 /* DiaryUseCase.swift in Sources */,
@@ -1562,7 +1585,6 @@
 				0234461D2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift in Sources */,
 				DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */,
 				0234461B2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift in Sources */,
-				DE069BA02D571472007C2066 /* HomeNavBarTableViewHeader.swift in Sources */,
 				DE27005C2D212609005C9DCF /* DefaultSignInUseCase.swift in Sources */,
 				DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */,
 				702D2B722E07F42500D5E71E /* DiarySettingTableViewCell.swift in Sources */,
@@ -1584,6 +1606,7 @@
 				DED5589F2DC4B12200137B10 /* KeychainAccessible.swift in Sources */,
 				DE5638512DA147EA00A12192 /* CommonSectionHeaderView.swift in Sources */,
 				DE66C2FB2D96B39B009A983F /* DefaultDiaryUseCase.swift in Sources */,
+				DE23872C2E07C28500893D8C /* HomeCommunityViewReactor.swift in Sources */,
 				DE069BA22D571485007C2066 /* HomeRecommendTableViewCell.swift in Sources */,
 				DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */,
 				02F0DA512DDEAED900CD036A /* AuthManager.swift in Sources */,
@@ -1595,6 +1618,7 @@
 				DED558642DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift in Sources */,
 				DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */,
 				DE9A1FC82D69DA2A0044F655 /* CommunityButton.swift in Sources */,
+				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityMyTableViewCell.swift in Sources */,

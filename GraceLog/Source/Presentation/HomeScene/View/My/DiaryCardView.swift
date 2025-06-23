@@ -36,7 +36,7 @@ final class DiaryCardView: UIView {
     }
     
     private let dateDescLabel = UILabel().then {
-        $0.font = GLFont.light11.font
+        $0.font = GLFont.medium10.font
         $0.textColor = .white
     }
     
@@ -68,7 +68,7 @@ final class DiaryCardView: UIView {
         imageView.image = item.image
         
         titleLabel.text = item.title
-        titleLabel.font = style == .latest ? GLFont.bold14.font : GLFont.bold20.font
+        titleLabel.font = style == .latest ? GLFont.bold14.font : GLFont.bold18.font
         
         dateDescLabel.text = item.dateDesc
         
@@ -155,14 +155,14 @@ final class DiaryCardView: UIView {
     
     private func setupPastConstraints() {
         dateDescLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView).offset(32)
+            $0.top.equalTo(contentView).offset(37)
             $0.leading.trailing.equalTo(contentView).inset(26)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(dateDescLabel.snp.bottom)
-            $0.leading.trailing.equalTo(contentView).inset(25)
-            $0.bottom.lessThanOrEqualTo(contentView).offset(-21)
+            $0.top.equalTo(dateDescLabel.snp.bottom).offset(4)
+            $0.leading.trailing.equalTo(contentView).inset(26)
+            $0.bottom.lessThanOrEqualTo(contentView).offset(-37)
         }
     }
 }
