@@ -14,7 +14,7 @@ final class HomeTableViewHeader: UITableViewHeaderFooterView {
     
     private let titleLabel = UILabel().then {
         $0.textColor = .themeColor
-        $0.font = GLFont.bold12.font
+        $0.font = GLFont.bold14.font
     }
     
     private let descLabel = UILabel().then {
