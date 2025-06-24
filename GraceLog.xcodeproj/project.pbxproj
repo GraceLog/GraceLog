@@ -51,6 +51,7 @@
 		DE23872C2E07C28500893D8C /* HomeCommunityViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872B2E07C28500893D8C /* HomeCommunityViewReactor.swift */; };
 		DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872D2E07C2DC00893D8C /* HomeMyViewController.swift */; };
 		DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872F2E07E46300893D8C /* HomeMyViewReactor.swift */; };
+		DE2387342E0A601600893D8C /* HomeMyDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2387332E0A601600893D8C /* HomeMyDiaryView.swift */; };
 		DE24DB6D2D26D34D00581621 /* LoginUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FEC72D04284E008CADCD /* LoginUseCaseTests.swift */; };
 		DE24DB6E2D26D36100581621 /* MockFireStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2700732D257068005C9DCF /* MockFireStoreRepository.swift */; };
 		DE27003B2D1EFB4E005C9DCF /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */; };
@@ -227,6 +228,7 @@
 		DE23872B2E07C28500893D8C /* HomeCommunityViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityViewReactor.swift; sourceTree = "<group>"; };
 		DE23872D2E07C2DC00893D8C /* HomeMyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyViewController.swift; sourceTree = "<group>"; };
 		DE23872F2E07E46300893D8C /* HomeMyViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyViewReactor.swift; sourceTree = "<group>"; };
+		DE2387332E0A601600893D8C /* HomeMyDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyDiaryView.swift; sourceTree = "<group>"; };
 		DE24DB632D26D32200581621 /* GraceLogUseCaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraceLogUseCaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		DE2700332D1EFB4E005C9DCF /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				DE069BA72D61E310007C2066 /* DiaryCardView.swift */,
 				DE069BA32D571499007C2066 /* HomeTableViewHeader.swift */,
 				DE069BA12D571485007C2066 /* HomeRecommendTableViewCell.swift */,
+				DE2387332E0A601600893D8C /* HomeMyDiaryView.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -955,8 +958,8 @@
 		DE3BFCCC2D0489C20076426D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DE2387322E09812B00893D8C /* Community */,
 				DE2387312E09810700893D8C /* My */,
+				DE2387322E09812B00893D8C /* Community */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1549,6 +1552,7 @@
 				DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */,
 				0234461B2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift in Sources */,
 				DE27005C2D212609005C9DCF /* DefaultSignInUseCase.swift in Sources */,
+				DE2387342E0A601600893D8C /* HomeMyDiaryView.swift in Sources */,
 				DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */,
 				DE66C2FF2D96B723009A983F /* DiaryAddImageCollectionViewCell.swift in Sources */,
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,

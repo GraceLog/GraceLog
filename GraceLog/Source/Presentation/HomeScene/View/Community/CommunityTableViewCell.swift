@@ -80,8 +80,11 @@ final class CommunityTableViewCell: UITableViewCell {
         communityButtons.removeAll()
         
         buttons.forEach { buttonModel in
-            let buttonView = createCommunityButton(image: UIImage(named: buttonModel.imageName),
-                                                   title: buttonModel.title, model: buttonModel)
+            let buttonView = createCommunityButton(
+                image: UIImage(named: buttonModel.imageName),
+                title: buttonModel.title,
+                model: buttonModel
+            )
             communityButtons.append(buttonView)
             stackView.addArrangedSubview(buttonView)
         }
