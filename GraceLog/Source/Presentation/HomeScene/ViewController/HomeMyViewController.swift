@@ -15,6 +15,18 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
     typealias Reactor = HomeMyViewReactor
     var disposeBag = DisposeBag()
     
+    private lazy var scrollView = UIScrollView().then {
+        $0.backgroundColor = .clear
+        $0.alwaysBounceHorizontal = true
+    }
+    
+    private lazy var containerStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.backgroundColor = .clear
+        $0.distribution = .fill
+        $0.alignment = .fill
+    }
+    
     private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
         $0.separatorStyle = .none
