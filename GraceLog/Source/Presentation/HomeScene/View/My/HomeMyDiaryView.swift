@@ -73,8 +73,8 @@ final class HomeMyDiaryView: UIView {
     func updateDateLabelsAndLines(with items: [MyDiaryItem]) {
         self.diaryItems = items
         
-        DispatchQueue.main.async { [weak self] in
-            self?.setupDateLabelsAndLines()
+        DispatchQueue.main.async {
+            self.setupDateLabelsAndLines()
         }
     }
     
