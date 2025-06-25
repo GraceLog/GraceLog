@@ -1639,13 +1639,10 @@
 				DE069BA22D571485007C2066 /* HomeRecommendVideoTableViewCell.swift in Sources */,
 				DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */,
 				02F0DA512DDEAED900CD036A /* AuthManager.swift in Sources */,
-<<<<<<< HEAD
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DE069BA82D61E310007C2066 /* DiaryCardView.swift in Sources */,
-=======
 				DE66C2F32D941AF5009A983F /* DiarySwitchTableViewCell.swift in Sources */,
 				DEFC29A72D928C5A004D00DA /* DiaryTitleTableViewCell.swift in Sources */,
->>>>>>> ce6da9a ([FEAT] HomeMyViewController 바인딩 구현(홈 유저 부분 UI))
 				DE9A1FFC2D7C0B680044F655 /* DefaultHomeRepository.swift in Sources */,
 				02C5861A2DD736CA00E1F626 /* UserService.swift in Sources */,
 				DE9A1FF62D7C07FE0044F655 /* HomeUseCase.swift in Sources */,
@@ -1654,12 +1651,11 @@
 				DE9A1FC82D69DA2A0044F655 /* CommunityButton.swift in Sources */,
 				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
-<<<<<<< HEAD
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
-=======
 				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
->>>>>>> ce6da9a ([FEAT] HomeMyViewController 바인딩 구현(홈 유저 부분 UI))
+				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
+				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityMyTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserTarget.swift in Sources */,
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
