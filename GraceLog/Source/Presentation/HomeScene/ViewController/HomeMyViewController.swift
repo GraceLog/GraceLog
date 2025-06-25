@@ -17,7 +17,7 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
     
     private lazy var scrollView = UIScrollView().then {
         $0.backgroundColor = .clear
-        $0.alwaysBounceHorizontal = true
+        $0.alwaysBounceVertical = true
     }
     
     private lazy var containerStackView = UIStackView().then {
@@ -27,41 +27,9 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
         $0.alignment = .fill
     }
     
-    private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
-        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
-        $0.separatorStyle = .none
-        $0.sectionHeaderTopPadding = 0
-        $0.sectionFooterHeight = 0
-        $0.estimatedSectionHeaderHeight = 100
-        $0.sectionHeaderHeight = UITableView.automaticDimension
-    }
-    
-    private lazy var dataSource = RxTableViewSectionedReloadDataSource<HomeSectionModel>(
-        configureCell: { [weak self] dataSource, tableView, indexPath, item in
-            switch dataSource[indexPath.section] {
-            case .diary:
-                let cell = tableView.dequeueReusableCell(withIdentifier: HomeDiaryTableViewCell.identifier, for: indexPath) as! HomeDiaryTableViewCell
-                cell.selectionStyle = .none
-                
-                if let diaryItem = item as? [MyDiaryItem] {
-                    cell.configure(with: diaryItem)
-                }
-                
-                return cell
-            case .contentList:
-                let cell = tableView.dequeueReusableCell(withIdentifier: HomeRecommendTableViewCell.identifier, for: indexPath) as! HomeRecommendTableViewCell
-                cell.selectionStyle = .none
-                
-                if let videoItem = item as? HomeVideoItem {
-                    let image = UIImage(named: videoItem.imageName) ?? UIImage()
-                    cell.configure(title: videoItem.title, image: image)
-                }
-                return cell
-            default:
-                return UITableViewCell()
-            }
-        }
-    )
+    private let myBibleView = HomeMyBibleView()
+    private let myDiaryView = HomeMyDiaryView()
+    private let myRecommendVideoView = HomeMyRecommendVideoView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,59 +41,126 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
             homeRepository: DefaultHomeRepository()
         ))
         
-        configureUI()
-        configureTableView()
+        setupUI()
     }
     
-    private func configureUI() {
+    private func setupUI() {
         let safeArea = view.safeAreaLayoutGuide
         
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints {
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(safeArea).offset(50)
             $0.leading.trailing.bottom.equalTo(safeArea)
         }
-    }
-    
-    private func configureTableView() {
-        tableView.register(HomeTableViewHeader.self, forHeaderFooterViewReuseIdentifier: HomeTableViewHeader.identifier)
-        tableView.register(HomeDiaryTableViewCell.self, forCellReuseIdentifier: HomeDiaryTableViewCell.identifier)
-        tableView.register(HomeRecommendTableViewCell.self, forCellReuseIdentifier: HomeRecommendTableViewCell.identifier)
         
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+        scrollView.addSubview(containerStackView)
+        containerStackView.snp.makeConstraints {
+            $0.top.directionalHorizontalEdges.width.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
+        }
+        
+        let subViews = [myBibleView, myDiaryView, myRecommendVideoView]
+        containerStackView.arrangedSubviews(subViews)
     }
     
     func bind(reactor: HomeMyViewReactor) {
-        // Action
+        bindHomeMyBibleView(reactor: reactor)
+        bindHomeMyDiaryView(reactor: reactor)
+        bindHomeMyRecommendVideoView(reactor: reactor)
+    }
+}
+
+// MARK: Home Bindings
+extension HomeMyViewController {
+    private func bindHomeMyBibleView(reactor: HomeMyViewReactor) {
+        // TODO: 성경데이터 모델링 및 API 연동하여 Reactor의 데이터로 바인딩 필요
+        myBibleView.setData(
+            title: "오늘의 말씀",
+            desc:"순종이 제사보다 낫고\n듣는 것이 숫양의 기름보다 나으니",
+            paragraph: "사무엘상 5:22"
+        )
+    }
+    
+    private func bindHomeMyDiaryView(reactor: HomeMyViewReactor) {
+        myDiaryView.diaryCollectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
         
+        reactor.state.compactMap { $0.homeMyData?.diaryList }
+            .asDriver(onErrorJustReturn: [])
+            .drive(myDiaryView.diaryCollectionView.rx.items) { collectionView, index, item in
+                let indexPath = IndexPath(item: index, section: 0)
+                
+                if index == 0 {
+                    let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: HomeLatestDiaryCollectionViewCell.reuseIdentifier,
+                        for: indexPath
+                    ) as! HomeLatestDiaryCollectionViewCell
+                    cell.setData(item: item)
+                    return cell
+                } else {
+                    let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: HomePastDiaryCollectionViewCell.reuseIdentifier,
+                        for: indexPath
+                    ) as! HomePastDiaryCollectionViewCell
+                    cell.setData(item: item)
+                    return cell
+                }
+            }
+            .disposed(by: disposeBag)
         
-        // State
-        reactor.state
-            .map { $0.sections }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+        reactor.state.compactMap { $0.homeMyData?.diaryList }
+            .map { $0.map { MyDiaryItem(date: $0.date, dateDesc: $0.dateDesc, title: $0.title, desc: $0.desc, tags: $0.tags, image: $0.image) } }
+            .subscribe(onNext: { [weak self] items in
+                self?.myDiaryView.updateDateLabelsAndLines(with: items)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindHomeMyRecommendVideoView(reactor: HomeMyViewReactor) {
+        myRecommendVideoView.recommendVideoTableView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        reactor.state.compactMap { $0.homeMyData?.videoList }
+            .asDriver(onErrorJustReturn: [])
+            .drive(myRecommendVideoView.recommendVideoTableView.rx.items(
+                cellIdentifier: HomeRecommendVideoTableViewCell.reuseIdentifier,
+                cellType: HomeRecommendVideoTableViewCell.self)
+            ) { index, item, cell in
+                cell.configure(title: item.title, image: item.imageName)
+            }
             .disposed(by: disposeBag)
     }
 }
 
+// MARK: HomeMyDiaryView CollectionView UICollectionViewDelegateFlowLayout
+extension HomeMyViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screenWidth = self.view.bounds.width - 97
+        let width = screenWidth
+        
+        let height: CGFloat = indexPath.item == 0 ?
+        screenWidth * 1.0 : screenWidth * (11.0/30.0)
+        
+        return CGSize(width: width, height: height)
+    }
+}
+
+// MARK: HomeRecommendVideoView TableView UITableViewDelegate
 extension HomeMyViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let homeSection = HomeSection(rawValue: section) else { return UIView() }
+        guard tableView == myRecommendVideoView.recommendVideoTableView else { return nil }
         
-        // FIXME: - 추후 API 연동 - 추천 말씀 및 추천 영상
-        switch homeSection {
-        case .diary:
-            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HomeTableViewHeader.identifier) as! HomeTableViewHeader
-            header.configure(
-                title: "오늘의 말씀",
-                desc: "순종이 제사보다 낫고 듣는 것이 숫양의 기름보다 나으니",
-                paragraph: "사무엘상 5:22"
-            )
-            return header
-        case .contentList:
-            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: HomeTableViewHeader.identifier) as! HomeTableViewHeader
-            header.configure(title: "추천영상", desc: "#순종 #도전", paragraph: nil)
-            return header
-        }
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: HomeRecommendVideoTableViewHeaderView.reuseIdentifier) as! HomeRecommendVideoTableViewHeaderView
+        headerView.configure(
+            title: "추천영상",
+            desc: "#순종 #도전"
+        )
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tableView == myRecommendVideoView.recommendVideoTableView ? 60 : 0
     }
 }
