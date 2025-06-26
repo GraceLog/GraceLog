@@ -1215,6 +1215,7 @@ PODS:
   - KakaoSDKUser (2.22.7):
     - KakaoSDKAuth (= 2.22.7)
   - KeychainAccess (4.2.2)
+  - Kingfisher (8.1.2)
   - leveldb-library (1.22.5)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
@@ -1277,6 +1278,7 @@ DEPENDENCIES:
   - KakaoSDKAuth
   - KakaoSDKUser
   - KeychainAccess
+  - Kingfisher (~> 8.0)
   - "NSObject+Rx"
   - NVActivityIndicatorView
   - ReactorKit
@@ -1330,6 +1332,7 @@ SPEC REPOS:
     - KakaoSDKCommon
     - KakaoSDKUser
     - KeychainAccess
+    - Kingfisher
     - leveldb-library
     - nanopb
     - "NSObject+Rx"
@@ -1389,6 +1392,7 @@ SPEC CHECKSUMS:
   KakaoSDKCommon: 132164a6bac8bcd3a4346d3bf777f34f8f39fdca
   KakaoSDKUser: 4c9cf1da78710d19d0b2c2dd32d1a44c544cdfa4
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  Kingfisher: dc989619594e24713c83e5a98f89f08850e0c529
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   "NSObject+Rx": 61cf1f7306a73dcef8b36649198af0813ec18dfd
@@ -1413,6 +1417,6 @@ SPEC CHECKSUMS:
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
   YPImagePicker: afc81b3cffab05a6e7261c5daf80dc31b4e917b4
 
-PODFILE CHECKSUM: c393a32d7aa46c7537b54b108be7f8167abfd8c5
+PODFILE CHECKSUM: e8c11c4558a185a48c7244500e4c32eb5102f1b4
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
