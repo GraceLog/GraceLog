@@ -45,12 +45,9 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
     }
     
     private func setupUI() {
-        let safeArea = view.safeAreaLayoutGuide
-        
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(50)
-            $0.leading.trailing.bottom.equalTo(safeArea)
+            $0.directionalEdges.width.equalToSuperview()
         }
         
         scrollView.addSubview(containerStackView)
@@ -76,8 +73,8 @@ extension HomeMyViewController {
         // TODO: 성경데이터 모델링 및 API 연동하여 Reactor의 데이터로 바인딩 필요
         myBibleView.setData(
             title: "오늘의 말씀",
-            desc:"순종이 제사보다 낫고\n듣는 것이 숫양의 기름보다 나으니",
-            paragraph: "사무엘상 5:22"
+            content:"순종이 제사보다 낫고\n듣는 것이 숫양의 기름보다 나으니",
+            reference: "사무엘상 5:22"
         )
     }
     
@@ -86,81 +83,112 @@ extension HomeMyViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
-        reactor.state.compactMap { $0.homeMyData?.diaryList }
+        reactor.state
+            .map { $0.diaryItems }
             .asDriver(onErrorJustReturn: [])
-            .drive(myDiaryView.diaryCollectionView.rx.items) { collectionView, index, item in
-                let indexPath = IndexPath(item: index, section: 0)
-                
-                if index == 0 {
-                    let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: HomeLatestDiaryCollectionViewCell.reuseIdentifier,
-                        for: indexPath
-                    ) as! HomeLatestDiaryCollectionViewCell
-                    cell.setData(item: item)
-                    return cell
-                } else {
-                    let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: HomePastDiaryCollectionViewCell.reuseIdentifier,
-                        for: indexPath
-                    ) as! HomePastDiaryCollectionViewCell
-                    cell.setData(item: item)
-                    return cell
-                }
+            .drive(with: self) { owner, diaryList in
+                Observable.just(diaryList)
+                    .bind(to: owner.myDiaryView.diaryCollectionView.rx.items) { collectionView, index, item in
+                        let indexPath = IndexPath(item: index, section: 0)
+                        let diaryCount = diaryList.count
+
+                        guard diaryCount > 0 else {
+                            // TODO: - 일기장 목록이 없을 경우 처리 필요
+                            return UICollectionViewCell()
+                        }
+
+                        let isFirst = index == 0
+                        let isLast = index == diaryCount - 1
+                        let isSingleItem = diaryCount == 1
+                        let hideTop = true
+                        let hideBottom = isSingleItem
+
+                        let cell: DiaryTimelineCollectionViewCell
+
+                        if isSingleItem || isFirst {
+                            let latestCell = collectionView.dequeueReusableCell(
+                                withReuseIdentifier: HomeLatestDiaryCollectionViewCell.reuseIdentifier,
+                                for: indexPath
+                            ) as! HomeLatestDiaryCollectionViewCell
+                            
+                            latestCell.setData(
+                                backgroundImageURL: URL(string: "https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg"),
+                                title: item.title,
+                                content: item.desc,
+                                relativeDate: "오늘",
+                                exactDate: "2/14",
+                                hideTopLine: hideTop,
+                                hideBottomLine: hideBottom
+                            )
+                            cell = latestCell
+                        } else {
+                            let pastCell = collectionView.dequeueReusableCell(
+                                withReuseIdentifier: HomePastDiaryCollectionViewCell.reuseIdentifier,
+                                for: indexPath
+                            ) as! HomePastDiaryCollectionViewCell
+                            
+                            pastCell.setData(
+                                backgroundImageURL: URL(string: "https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg"),
+                                date: item.dateDesc,
+                                content: item.title,
+                                relativeDate: "지난주",
+                                exactDate: "2/7",
+                                hideTopLine: false,
+                                hideBottomLine: isLast
+                            )
+                            cell = pastCell
+                        }
+
+                        cell.backgroundImageView.rx.gestureTap
+                            .asDriver()
+                            .drive(onNext: { [weak self] _ in
+                                guard let self,
+                                      let indexPath = self.myDiaryView.diaryCollectionView.indexPath(for: cell),
+                                      let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiaryItem else {
+                                    return
+                                }
+                                print("선택된 일기장 정보: \(selectedItem)\n선택된 일기장 인덱스: \(indexPath)")
+                            })
+                            .disposed(by: cell.disposeBag)
+
+                        return cell
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
-        
-        reactor.state.compactMap { $0.homeMyData?.diaryList }
-            .map { $0.map { MyDiaryItem(date: $0.date, dateDesc: $0.dateDesc, title: $0.title, desc: $0.desc, tags: $0.tags, image: $0.image) } }
-            .subscribe(onNext: { [weak self] items in
-                self?.myDiaryView.updateDateLabelsAndLines(with: items)
-            })
-            .disposed(by: disposeBag)
+
     }
     
     private func bindHomeMyRecommendVideoView(reactor: HomeMyViewReactor) {
-        myRecommendVideoView.recommendVideoTableView.rx
-            .setDelegate(self)
-            .disposed(by: disposeBag)
-        
-        reactor.state.compactMap { $0.homeMyData?.videoList }
+        reactor.state
+            .map { $0.videoItems }
             .asDriver(onErrorJustReturn: [])
             .drive(myRecommendVideoView.recommendVideoTableView.rx.items(
                 cellIdentifier: HomeRecommendVideoTableViewCell.reuseIdentifier,
                 cellType: HomeRecommendVideoTableViewCell.self)
             ) { index, item, cell in
-                cell.configure(title: item.title, image: item.imageName)
+                cell.configureUI(title: item.title, thumbnailImageURL: URL(string: "https://pimg.mk.co.kr/meet/neds/2017/11/image_readmed_2017_740612_15101228583092607.jpg"))
+                cell.thumbnailImageView.rx.gestureTap
+                    .asDriver()
+                    .drive(with: self) { owner, isOn in
+                        guard let indexPath = owner.myRecommendVideoView.recommendVideoTableView.indexPath(for: cell),
+                              let selectedItem = try? owner.myRecommendVideoView.recommendVideoTableView.rx.model(at: indexPath) as HomeVideoItem else {
+                            return
+                        }
+                        print("선택된 비디오 정보: \(selectedItem)\n선택된 비디오 인덱스: \(indexPath)")
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
+        
+        myRecommendVideoView.recommendedTagLabel.text = "#순종 #도전"
     }
 }
 
 // MARK: HomeMyDiaryView CollectionView UICollectionViewDelegateFlowLayout
 extension HomeMyViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenWidth = self.view.bounds.width - 97
-        let width = screenWidth
-        
-        let height: CGFloat = indexPath.item == 0 ?
-        screenWidth * 1.0 : screenWidth * (11.0/30.0)
-        
-        return CGSize(width: width, height: height)
-    }
-}
-
-// MARK: HomeRecommendVideoView TableView UITableViewDelegate
-extension HomeMyViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard tableView == myRecommendVideoView.recommendVideoTableView else { return nil }
-        
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: HomeRecommendVideoTableViewHeaderView.reuseIdentifier) as! HomeRecommendVideoTableViewHeaderView
-        headerView.configure(
-            title: "추천영상",
-            desc: "#순종 #도전"
-        )
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return tableView == myRecommendVideoView.recommendVideoTableView ? 60 : 0
+        let height: CGFloat = indexPath.row == 0 ? 300 + 26 : 110 + 26
+        return CGSize(width: collectionView.frame.width, height: height)
     }
 }

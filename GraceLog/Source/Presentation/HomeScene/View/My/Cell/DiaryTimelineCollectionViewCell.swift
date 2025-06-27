@@ -8,10 +8,13 @@
 import UIKit
 
 import Kingfisher
+import RxSwift
 import SnapKit
 import Then
 
 class DiaryTimelineCollectionViewCell: UICollectionViewCell {
+    var disposeBag = DisposeBag()
+    
     let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.masksToBounds = true
@@ -81,6 +84,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         editedDateLabel.text = nil
         topLineView.isHidden = true
         bottomLineView.isHidden = true
+        disposeBag = DisposeBag()
     }
     
     func setupAutoLayouts() {

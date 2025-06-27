@@ -7,85 +7,89 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
-final class HomeLatestDiaryCollectionViewCell: UICollectionViewCell {
+final class HomeLatestDiaryCollectionViewCell: DiaryTimelineCollectionViewCell {
     static let reuseIdentifier = String(describing: HomeLatestDiaryCollectionViewCell.self)
     
-    private let imageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
-        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+    private let containerView = UIView().then {
+        $0.backgroundColor = .clear
     }
-    
-    private let overlayView = UIView()
     
     private let titleLabel = UILabel().then {
         $0.textColor = .white
         $0.font = GLFont.bold14.font
         $0.numberOfLines = 0
+        $0.textAlignment = .left
     }
     
-    private let dateDescLabel = UILabel().then {
+    private let todayGratitudeLabel = UILabel().then {
         $0.font = GLFont.medium10.font
         $0.textColor = .white
+        $0.textAlignment = .left
+        $0.text = "오늘의 감사일기"
     }
     
-    private lazy var descLabel = UILabel().then {
+    private let contentLabel = UILabel().then {
         $0.textColor = .white
         $0.font = GLFont.regular18.font
         $0.numberOfLines = 0
+        $0.lineBreakMode = .byTruncatingTail
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+        contentLabel.text = nil
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-        contentView.layer.cornerRadius = 25
-        contentView.clipsToBounds = true
-        
-        contentView.addSubview(imageView)
-        imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+    override func setupAutoLayouts() {
+        super.setupAutoLayouts()
+        backgroundImageView.addSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.directionalVerticalEdges.equalToSuperview().inset(18)
+            $0.directionalHorizontalEdges.equalToSuperview().inset(21)
         }
         
-        contentView.addSubview(overlayView)
-        overlayView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        [dateDescLabel, titleLabel, descLabel].forEach {
-            overlayView.addSubview($0)
-        }
-        
-        dateDescLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView).offset(18)
-            $0.leading.trailing.equalTo(contentView).inset(21)
+        [todayGratitudeLabel, titleLabel, contentLabel].forEach { containerView.addSubview($0) }
+        todayGratitudeLabel.snp.makeConstraints {
+            $0.top.directionalHorizontalEdges.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(dateDescLabel.snp.bottom)
-            $0.leading.trailing.equalTo(contentView).inset(21)
+            $0.top.equalTo(todayGratitudeLabel.snp.bottom)
+            $0.directionalHorizontalEdges.equalToSuperview()
         }
         
-        descLabel.snp.makeConstraints {
-            $0.leading.equalTo(contentView).offset(22)
-            $0.trailing.equalTo(contentView).inset(34)
-            $0.centerY.equalTo(contentView)
+        contentLabel.snp.makeConstraints {
+            $0.top.greaterThanOrEqualTo(titleLabel.snp.bottom)
+            $0.centerY.equalToSuperview()
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
-    
-    func setData(item: MyDiaryItem) {
-        imageView.image = item.image
-        titleLabel.text = item.title
-        dateDescLabel.text = item.dateDesc
-        descLabel.text = item.desc
+}
+
+extension HomeLatestDiaryCollectionViewCell {
+    func setData(
+        backgroundImageURL: URL?,
+        title: String,
+        content: String,
+        relativeDate: String,
+        exactDate: String,
+        hideTopLine: Bool,
+        hideBottomLine: Bool
+    ) {
+        super.configureUI(
+            backgroundImageURL: backgroundImageURL,
+            relativeDate: relativeDate,
+            exactDate: exactDate,
+            hideTopLine: hideTopLine,
+            hideBottomLine: hideBottomLine
+        )
+        titleLabel.text = title
+        contentLabel.text = content
     }
 }

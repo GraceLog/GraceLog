@@ -6,19 +6,31 @@
 //
 
 import UIKit
-import Then
+
+import RxSwift
 import SnapKit
+import Then
 
 final class HomeRecommendVideoTableViewCell: UITableViewCell {
     static let reuseIdentifier = String(describing: HomeRecommendVideoTableViewCell.self)
+    var disposeBag = DisposeBag()
     
-    private let contentTitleLabel = UILabel().then {
+    private let containerStackView = UIStackView().then {
+        $0.backgroundColor = .clear
+        $0.axis = .vertical
+        $0.spacing = 8
+    }
+    
+    private let titleLabel = UILabel().then {
         $0.font = GLFont.bold14.font
         $0.textColor = .graceGray
     }
     
-    private let contentImgView = UIImageView().then {
+    let thumbnailImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 25
+        $0.isUserInteractionEnabled = true
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -30,27 +42,36 @@ final class HomeRecommendVideoTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureUI() {
-        backgroundColor = UIColor(hex: 0xF4F4F4)
-        selectionStyle = .none
-        
-        [contentTitleLabel, contentImgView].forEach { addSubview($0) }
-        
-        contentTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.leading.trailing.equalToSuperview().inset(30)
-        }
-        
-        contentImgView.snp.makeConstraints {
-            $0.top.equalTo(contentTitleLabel.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(25)
-            $0.height.equalTo(contentImgView.snp.width).multipliedBy(0.5625)
-            $0.bottom.equalToSuperview().inset(10)
-        }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: .init(top: .zero, left: .zero, bottom: 20.44, right: .zero))
     }
     
-    func configure(title: String, image: String) {
-        contentTitleLabel.text = title
-        contentImgView.image = UIImage(named: image)
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
+        thumbnailImageView.image = nil
+        disposeBag = DisposeBag()
+    }
+    
+    private func configureUI() {
+        backgroundColor = UIColor(hex: 0xF4F4F4)
+        contentView.backgroundColor = UIColor(hex: 0xF4F4F4)
+        
+        selectionStyle = .none
+        
+        contentView.addSubview(containerStackView)
+        [titleLabel, thumbnailImageView].forEach { containerStackView.addArrangedSubview($0) }
+        
+        containerStackView.snp.makeConstraints {
+            $0.directionalEdges.equalToSuperview()
+        }
+    }
+}
+
+extension HomeRecommendVideoTableViewCell {
+    func configureUI(title: String, thumbnailImageURL: URL?) {
+        titleLabel.text = title
+        thumbnailImageView.kf.setImage(with: thumbnailImageURL)
     }
 }

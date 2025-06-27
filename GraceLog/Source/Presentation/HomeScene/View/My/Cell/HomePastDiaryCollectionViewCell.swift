@@ -7,74 +7,73 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
-final class HomePastDiaryCollectionViewCell: UICollectionViewCell {
+final class HomePastDiaryCollectionViewCell: DiaryTimelineCollectionViewCell {
     static let reuseIdentifier = String(describing: HomePastDiaryCollectionViewCell.self)
     
-    private let imageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
-        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+    private let containerStackView = UIStackView().then {
+        $0.backgroundColor = .clear
+        $0.axis = .vertical
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = .init(top: 18, left: 21, bottom: 18, right: 21)
+        $0.spacing = 4
     }
     
-    private let overlayView = UIView()
-    
-    private let dateDescLabel = UILabel().then {
-        $0.font = GLFont.medium10.font
+    private let dateLabel = UILabel().then {
         $0.textColor = .white
+        $0.font = GLFont.medium10.font
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
     }
     
-    private let titleLabel = UILabel().then {
+    private let contentLabel = UILabel().then {
         $0.textColor = .white
         $0.font = GLFont.bold18.font
-        $0.numberOfLines = 0
+        $0.numberOfLines = 1
+        $0.lineBreakMode = .byTruncatingTail
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        dateLabel.text = nil
+        contentLabel.text = nil
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-        contentView.layer.cornerRadius = 25
-        contentView.clipsToBounds = true
+    override func setupAutoLayouts() {
+        super.setupAutoLayouts()
+        backgroundImageView.addSubview(containerStackView)
         
-        contentView.addSubview(imageView)
-        imageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        contentView.addSubview(overlayView)
-        overlayView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        [dateDescLabel, titleLabel].forEach {
-            overlayView.addSubview($0)
-        }
-        
-        
-        dateDescLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView).offset(37)
-            $0.leading.trailing.equalTo(contentView).inset(26)
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(dateDescLabel.snp.bottom).offset(4)
-            $0.leading.trailing.equalTo(contentView).inset(26)
-            $0.bottom.lessThanOrEqualTo(contentView).offset(-37)
+        [dateLabel, contentLabel].forEach { containerStackView.addArrangedSubview($0) }
+        containerStackView.snp.makeConstraints {
+            $0.top.greaterThanOrEqualToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
-    
-    func setData(item: MyDiaryItem) {
-        imageView.image = item.image
-        titleLabel.text = item.title
-        dateDescLabel.text = item.dateDesc
+}
+
+extension HomePastDiaryCollectionViewCell {
+    func setData(
+        backgroundImageURL: URL?,
+        date: String,
+        content: String,
+        relativeDate: String,
+        exactDate: String,
+        hideTopLine: Bool,
+        hideBottomLine: Bool
+    ) {
+        super.configureUI(
+            backgroundImageURL: backgroundImageURL,
+            relativeDate: relativeDate,
+            exactDate: exactDate,
+            hideTopLine: hideTopLine,
+            hideBottomLine: hideBottomLine
+        )
+        dateLabel.text = date
+        contentLabel.text = content
     }
 }

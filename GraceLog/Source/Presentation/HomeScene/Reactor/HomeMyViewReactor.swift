@@ -20,65 +20,23 @@ final class HomeMyViewReactor: Reactor {
     
     private func loadData() {
         homeUsecase.fetchHomeMyContent()
-        homeUsecase.fetchUser()
-    }
-    
-    enum Action {
-        case updateUser(GraceLogUser)
     }
     
     enum Mutation {
         case setHomeMyData(HomeContent)
         case setError(Error)
-        case setUser(GraceLogUser)
     }
     
     struct State {
-        var homeMyData: HomeContent?
-        var error: Error?
-        var user: GraceLogUser? = nil
-        
-        var sections: [HomeSectionModel] {
-            guard let myData = homeMyData else {
-                return []
-            }
-            
-            let diaryItems = myData.diaryList.map { item in
-                return MyDiaryItem(
-                    date: item.date,
-                    dateDesc: item.dateDesc,
-                    title: item.title,
-                    desc: item.desc,
-                    tags: item.tags,
-                    image: item.image
-                )
-            }
-            
-            let contentItems = myData.videoList.map { item in
-                return HomeVideoItem(
-                    title: item.title,
-                    imageName: item.imageName
-                )
-            }
-            
-            return [
-                .diary(diaryItems),
-                .contentList(contentItems)
-            ]
-        }
+        var videoItems: [HomeVideoItem] = []
+        var diaryItems: [MyDiaryItem] = []
+        @Pulse var errorMessage: String?
     }
     
     let initialState: State = State()
 }
 
 extension HomeMyViewReactor {
-    func mutate(action: Action) -> Observable<Mutation> {
-        switch action {
-        case .updateUser(let user):
-            return .just(.setUser(user))
-        }
-    }
-    
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
         let data = homeUsecase.homeMyData
             .compactMap { $0 }
@@ -92,11 +50,10 @@ extension HomeMyViewReactor {
         
         switch mutation {
         case .setHomeMyData(let data):
-            newState.homeMyData = data
+            newState.videoItems = data.videoList
+            newState.diaryItems = data.diaryList
         case .setError(let error):
-            newState.error = error
-        case .setUser(let user):
-            newState.user = user
+            newState.errorMessage = error.localizedDescription
         }
         return newState
     }
