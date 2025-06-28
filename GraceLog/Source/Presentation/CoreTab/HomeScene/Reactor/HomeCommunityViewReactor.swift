@@ -23,72 +23,59 @@ final class HomeCommunityViewReactor: Reactor {
     }
     
     enum Action {
-        case selectCommunity(item: CommunityItem)
+        case selectCommunity(id: Int)
     }
     
     enum Mutation {
-        case setCommunityIndex(CommunityItem)
-        case setHomeCommunityData(HomeCommunityContent)
+        case setCommunitys([CommunityItem])
+        case setSelectedCommunityId(Int)
     }
     
     struct State {
-        var selectedCommunity: CommunityItem?
-        var homeCommunityData: HomeCommunityContent?
-        var communitySections: [(date: String, items: [CommunityDiaryItem])] = []
-        
-        var sections: [HomeSectionModel] {
-            guard let communityData = homeCommunityData else {
-                return []
-            }
-            
-            let communityItems = communityData.communityList.map { item in
-                return CommunityItem(
-                    imageName: item.imageName,
-                    title: item.title,
-                    isSelected: item.isSelected
-                )
-            }
-            
-            var sections: [HomeSectionModel] = [
-                .communityButtons(communityItems)
-            ]
-            
-            for sectionData in communityData.diaryList {
-                let items = sectionData.items.map { item in
-                    return CommunityDiaryItem(
-                        type: item.type,
-                        username: item.username,
-                        title: item.title,
-                        subtitle: item.subtitle,
-                        likes: item.likes,
-                        comments: item.comments
-                    )
-                }
-                sections.append(.communityPosts(sectionData.date, items))
-            }
-            return sections
-        }
+        @Pulse var communitys: [CommunityItem] = []
     }
     
-    let initialState: State = State()
+    let initialState = State()
+    
+    init(homeUsecase: HomeUseCase) {
+        self.homeUsecase = homeUsecase
+        loadData()
+    }
+    
+    private func loadData() {
+        homeUsecase.fetchHomeCommunityContent()
+    }
 }
 
 extension HomeCommunityViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .selectCommunity(let model):
-            return .just(.setCommunityIndex(model))
+        case .selectCommunity(let id):
+            return .just(.setSelectedCommunityId(id))
         }
+    }
+    
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        let communityData = homeUsecase.homeCommunityData
+            .compactMap { $0 }
+            .map { Mutation.setCommunitys($0.communityList) }
+        
+        return Observable.merge(mutation, communityData)
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
         switch mutation {
-        case .setCommunityIndex(let selectedModel):
-            newState.selectedCommunity = selectedModel
-        case .setHomeCommunityData(let data):
-            newState.homeCommunityData = data
+        case .setCommunitys(let communitys):
+            newState.communitys = communitys
+            
+            if newState.selectedCommunityId == nil && !communitys.isEmpty {
+                newState.selectedCommunityId = communitys[0].id
+            }
+            
+        case.setSelectedCommunityId(let id):
+            newState.selectedCommunityId = id
         }
         
         return newState
