@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: HomeCommunityListCollectionViewCell.self)
+final class HomeCommunitySelectedCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = String(describing: HomeCommunitySelectedCollectionViewCell.self)
     
     private var stackView = UIStackView().then {
         $0.axis = .vertical
@@ -66,10 +66,14 @@ final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
         communityImageView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(4)
         }
+        
+        communityLabel.snp.makeConstraints {
+            $0.width.equalTo(containerView)
+        }
     }
 }
 
-extension HomeCommunityListCollectionViewCell {
+extension HomeCommunitySelectedCollectionViewCell {
     func updateUI(imageUrl: String, community: String, isSelected: Bool) {
         // TODO: 현재는 이미지 이름으로 -> 추후 이미지 URL을 통해 불러온 데이터로 수정 해야함
         communityImageView.image = UIImage(named: imageUrl)
