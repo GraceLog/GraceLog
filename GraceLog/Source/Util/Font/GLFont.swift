@@ -9,6 +9,7 @@ import UIKit
 
 enum GLFont: FontStylable {
     /// Pretendard-Bold
+    case bold10
     case bold12
     case bold14
     case bold15
@@ -43,7 +44,7 @@ enum GLFont: FontStylable {
     
     var fontStyle: FontStyle {
         switch self {
-        case .bold12, .bold14, .bold15, .bold16, .bold17, .bold18, .bold20:
+        case .bold10, .bold12, .bold14, .bold15, .bold16, .bold17, .bold18, .bold20:
             return .bold
         case .extraBold18:
             return .extraBold
@@ -60,6 +61,8 @@ enum GLFont: FontStylable {
     
     var font: UIFont {
         switch self {
+        case .bold10:
+            return .customFont(font: .pretendard, style: fontStyle, size: 10)
         case .bold12:
             return .customFont(font: .pretendard, style: fontStyle, size: 12)
         case .bold14:

@@ -1,5 +1,5 @@
 //
-//  HomeCommunityUserTableViewCell.swift
+//  HomeCommunityMyTableViewCell.swift
 //  GraceLog
 //
 //  Created by 이상준 on 2/24/25.
@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 import Then
 
-final class HomeCommunityUserTableViewCell: UITableViewCell {
-    static let identifier = "HomeCommunityUserTableViewCell"
+final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
+    static let reuseIdentifier = String(describing: HomeCommunityMyDiaryTableViewCell.self)
     
     private let profileImgView = UIImageView().then {
         $0.setDimensions(width: 40, height: 40)
@@ -39,13 +39,13 @@ final class HomeCommunityUserTableViewCell: UITableViewCell {
     private let overlayView = UIView()
     
     private let titleLabel = UILabel().then {
-        $0.font = GLFont.bold20.font
+        $0.font = GLFont.bold10.font
         $0.textColor = .white
         $0.numberOfLines = 0
     }
     
-    private let hashtagsLabel = UILabel().then {
-        $0.font = GLFont.light11.font
+    private let contentLabel = UILabel().then {
+        $0.font = GLFont.regular18.font
         $0.textColor = .white
     }
     
@@ -91,21 +91,22 @@ final class HomeCommunityUserTableViewCell: UITableViewCell {
     }
     
     private func configureUI() {
-        backgroundColor = UIColor(hex: 0xF4F4F4)
+        backgroundColor = .clear
+        selectionStyle = .none
         
         let userStack = UIStackView(arrangedSubviews: [profileImgView, usernameLabel])
         userStack.axis = .vertical
         userStack.spacing = 4
         userStack.alignment = .center
         
-        let contentStack = UIStackView(arrangedSubviews: [titleLabel, hashtagsLabel])
+        let contentStack = UIStackView(arrangedSubviews: [titleLabel, contentLabel])
         contentStack.axis = .vertical
         contentStack.spacing = 4
         contentStack.alignment = .leading
         
         let interactionStack = UIStackView(arrangedSubviews: [likeButton, commentButton])
         interactionStack.axis = .horizontal
-        interactionStack.spacing = 8
+        interactionStack.spacing = 10
         interactionStack.distribution = .fillEqually
         
         [userStack, diaryCardView, interactionStack].forEach {
@@ -120,13 +121,13 @@ final class HomeCommunityUserTableViewCell: UITableViewCell {
         
         userStack.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
-            $0.leading.equalToSuperview().offset(21)
+            $0.trailing.equalToSuperview().offset(-20)
         }
         
         diaryCardView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
-            $0.leading.equalTo(userStack.snp.trailing).offset(12)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalTo(userStack.snp.leading).offset(-12)
+            $0.leading.equalToSuperview().offset(21)
             $0.height.equalTo(diaryCardView.snp.width).multipliedBy(110.0/300.0)
         }
         
@@ -139,26 +140,26 @@ final class HomeCommunityUserTableViewCell: UITableViewCell {
         }
         
         contentStack.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(37)
+            $0.top.bottom.equalToSuperview().inset(37)
             $0.leading.trailing.equalToSuperview().inset(25)
-            $0.bottom.equalToSuperview().inset(29)
         }
         
         interactionStack.snp.makeConstraints {
             $0.top.equalTo(diaryCardView.snp.bottom).offset(8)
-            $0.leading.equalTo(diaryCardView.snp.leading).offset(23)
-            $0.bottom.equalToSuperview().inset(10)
+            $0.trailing.equalTo(diaryCardView.snp.trailing).offset(-18)
+            $0.bottom.equalToSuperview().offset(-10)
         }
     }
     
-    func configure(username: String, title: String, subtitle: String, likes: Int, comments: Int) {
-        usernameLabel.text = username
+    func updateUI(title: String, subtitle: String, likes: Int, comments: Int) {
         titleLabel.text = title
-        hashtagsLabel.text = subtitle
+        contentLabel .text = subtitle
         likeButton.setTitle("\(likes)", for: .normal)
         commentButton.setTitle("\(comments)", for: .normal)
         
         cardImageView.image = UIImage(named: "diary2")
         profileImgView.image = UIImage(named: "profile")
+        
+        usernameLabel.text = "나"
     }
 }
