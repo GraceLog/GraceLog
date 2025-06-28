@@ -64,7 +64,8 @@ final class DefaultHomeRepository: HomeRepository {
                             title: itemDTO.title,
                             subtitle: itemDTO.subtitle,
                             likes: itemDTO.likes,
-                            comments: itemDTO.comments
+                            comments: itemDTO.comments,
+                            isLiked: itemDTO.isLike
                         )
                     }
                     
@@ -82,8 +83,4 @@ final class DefaultHomeRepository: HomeRepository {
             return Disposables.create()
         }
     }
-    
-    //    func fetchCommunityDiary(communityID: Int) -> Single<CommunityDiary> {
-    //        <#code#>
-    //    }
 }

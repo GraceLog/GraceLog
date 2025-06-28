@@ -8,9 +8,13 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
     static let reuseIdentifier = String(describing: HomeCommunityUserDiaryTableViewCell.self)
+    
+    var disposeBag = DisposeBag()
     
     private let profileImgView = UIImageView().then {
         $0.setDimensions(width: 40, height: 40)
@@ -49,7 +53,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         $0.textColor = .white
     }
     
-    private lazy var likeButton = UIButton().then {
+    lazy var likeButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "home_heart")
         config.title = "4"
@@ -65,7 +69,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         $0.configuration = config
     }
     
-    private lazy var commentButton = UIButton().then {
+    lazy var commentButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "comment")
         config.title = "4"
@@ -84,6 +88,17 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImgView.image = nil
+        cardImageView.image = nil
+        usernameLabel.text = nil
+        titleLabel.text = nil
+        contentLabel.text = nil
+        
+        disposeBag = DisposeBag()
     }
     
     required init?(coder: NSCoder) {
@@ -151,12 +166,17 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         }
     }
     
-    func updateUI(username: String, title: String, subtitle: String, likes: Int, comments: Int) {
+    func updateUI(username: String, title: String, subtitle: String, likes: Int, comments: Int, isLiked: Bool) {
         usernameLabel.text = username
         titleLabel.text = title
         contentLabel.text = subtitle
         likeButton.setTitle("\(likes)", for: .normal)
         commentButton.setTitle("\(comments)", for: .normal)
+        
+        let heartImage = isLiked ? UIImage(named: "home_heart_selected") : UIImage(named: "home_heart")
+        var config = likeButton.configuration
+        config?.image = heartImage
+        likeButton.configuration = config
         
         cardImageView.image = UIImage(named: "diary2")
         profileImgView.image = UIImage(named: "profile")
