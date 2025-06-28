@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
-    static let identifier = "HomeCommunityDateHeaderView"
+    static let reuseIdentifier = String(describing: HomeCommunityDateHeaderView.self)
     
     private let dateLabel = UILabel().then {
         $0.font = GLFont.regular12.font
@@ -25,7 +25,7 @@ final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
-            $0.bottom.equalToSuperview().inset(8)
+            $0.bottom.equalToSuperview().offset(-8)
             $0.centerX.equalToSuperview()
 
         }
@@ -35,7 +35,7 @@ final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(date: String) {
+    func updateUI(date: String) {
         dateLabel.text = date
     }
 }

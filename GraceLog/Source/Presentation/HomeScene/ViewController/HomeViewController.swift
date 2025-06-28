@@ -92,7 +92,7 @@ final class HomeViewController: UIPageViewController, View {
     }
     
     private func configurePageViewController() {
-        dataSource = self
+        dataSource = nil
         delegate = self
         
         setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
