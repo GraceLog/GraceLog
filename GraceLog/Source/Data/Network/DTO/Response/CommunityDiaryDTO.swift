@@ -20,8 +20,3 @@ struct CommunityDiaryItemDTO: Decodable {
     let likes: Int
     let comments: Int
 }
-
-enum CommunityItemType: String {
-    case regular
-    case my
-}

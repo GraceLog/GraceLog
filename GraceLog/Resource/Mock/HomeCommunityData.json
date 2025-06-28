@@ -1,32 +1,39 @@
 {
     "communityList": [
         {
-            "imageName": "community1",
-            "title": "홀리바이블"
+            "id": 1,
+            "imageName": "diary_share_holyfire",
+            "title": "홀리파이어"
         },
         {
-            "imageName": "community2",
+            "id": 2,
+            "imageName": "diary_share_saeromchurch",
             "title": "새롬교회"
         },
         {
-            "imageName": "community3",
+            "id": 3,
+            "imageName": "diary_share_studio306",
             "title": "스튜디오306"
         },
         {
-            "imageName": "community4",
+            "id": 4,
+            "imageName": "diary_share_studiocafe",
             "title": "스터디카페"
         },
         {
-            "imageName": "community1",
-            "title": "홀리바이블1"
+            "id": 5,
+            "imageName": "diary_share_holyfire",
+            "title": "홀리파이어1"
         },
         {
-            "imageName": "community1",
-            "title": "홀리바이블2"
+            "id": 6,
+            "imageName": "diary_share_holyfire",
+            "title": "홀리파이어2"
         },
         {
-            "imageName": "community1",
-            "title": "홀리바이블3"
+            "id": 7,
+            "imageName": "diary_share_holyfire",
+            "title": "홀리파이어3"
         }
     ],
     "diaryList": [
