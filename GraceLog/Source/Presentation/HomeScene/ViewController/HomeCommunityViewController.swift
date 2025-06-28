@@ -138,8 +138,22 @@ extension HomeCommunityViewController {
                             title: diaryItem.title,
                             subtitle: diaryItem.subtitle,
                             likes: diaryItem.likes,
-                            comments: diaryItem.comments
+                            comments: diaryItem.comments,
+                            isLiked: diaryItem.isLiked
                         )
+                        
+                        cell.likeButton.rx.tap
+                            .map { HomeCommunityViewReactor.Action.didTapLike(diaryId: diaryItem.id)}
+                            .bind(to: reactor.action)
+                            .disposed(by: cell.disposeBag)
+                        
+                        cell.commentButton.rx.tap
+                            .asDriver()
+                            .drive(onNext: {
+                                print("댓글 달기로 이동")
+                            })
+                            .disposed(by: cell.disposeBag)
+                        
                         return cell
                     case .regular:
                         let cell = tableView.dequeueReusableCell(
@@ -152,8 +166,22 @@ extension HomeCommunityViewController {
                             title: diaryItem.title,
                             subtitle: diaryItem.subtitle,
                             likes: diaryItem.likes,
-                            comments: diaryItem.comments
+                            comments: diaryItem.comments,
+                            isLiked: diaryItem.isLiked
                         )
+                        
+                        cell.likeButton.rx.tap
+                            .map { HomeCommunityViewReactor.Action.didTapLike(diaryId: diaryItem.id)}
+                            .bind(to: reactor.action)
+                            .disposed(by: cell.disposeBag)
+                        
+                        cell.commentButton.rx.tap
+                            .asDriver()
+                            .drive(onNext: {
+                                print("댓글 달기로 이동")
+                            })
+                            .disposed(by: cell.disposeBag)
+                        
                         return cell
                     }
                 case .dateHeader:

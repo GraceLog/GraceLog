@@ -41,6 +41,7 @@
             "date": "2025년 2월 18일",
             "items": [
                 {
+                    "id": 1,
                     "type": "regular",
                     "username": "상준",
                     "title": "회사에서 함께하신 주님",
@@ -49,6 +50,7 @@
                     "comments": 2
                 },
                 {
+                    "id": 2,
                     "type": "my",
                     "username": "승렬",
                     "title": "나는 느꼈다, 하나님께서...",
@@ -57,6 +59,7 @@
                     "comments": 4
                 },
                 {
+                    "id": 3,
                     "type": "regular",
                     "username": "범철",
                     "title": "회사에서 함께하신 주님",
@@ -65,6 +68,7 @@
                     "comments": 3
                 },
                 {
+                    "id": 4,
                     "type": "regular",
                     "username": "은재",
                     "title": "회사에서 함께하신 주님",
@@ -78,6 +82,7 @@
             "date": "2025년 2월 17일",
             "items": [
                 {
+                    "id": 5,
                     "type": "my",
                     "username": "승렬",
                     "title": "회사에서 함께하신 주님",
@@ -86,6 +91,7 @@
                     "comments": 2
                 },
                 {
+                    "id": 6,
                     "type": "regular",
                     "username": "상준",
                     "title": "회사에서 함께하신 주님",
@@ -94,6 +100,7 @@
                     "comments": 1
                 },
                 {
+                    "id": 7,
                     "type": "regular",
                     "username": "범철",
                     "title": "회사에서 함께하신 주님",
@@ -102,6 +109,7 @@
                     "comments": 5
                 },
                 {
+                    "id": 8,
                     "type": "regular",
                     "username": "은재",
                     "title": "회사에서 함께하신 주님",
@@ -110,6 +118,7 @@
                     "comments": 4
                 },
                 {
+                    "id": 9,
                     "type": "my",
                     "username": "승렬",
                     "title": "나는 느꼈다, 하나님께서...",

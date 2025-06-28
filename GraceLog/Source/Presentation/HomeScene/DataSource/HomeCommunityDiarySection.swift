@@ -19,12 +19,14 @@ enum CommunityItemType: String {
 }
 
 struct CommunityDiaryItem {
+    let id: Int
     let type: CommunityItemType
     let username: String
     let title: String
     let subtitle: String
-    let likes: Int
-    let comments: Int
+    var likes: Int
+    var comments: Int
+    var isLiked: Bool = false
 }
 
 enum HomeCommunityDiaryItem: Equatable {

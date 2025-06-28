@@ -58,6 +58,7 @@ final class DefaultHomeRepository: HomeRepository {
                 let communityDiaries = content.diaryList.map { diaryDTO in
                     let diaryItems = diaryDTO.items.map { itemDTO in
                         return CommunityDiaryItem(
+                            id: itemDTO.id,
                             type: CommunityItemType(rawValue: itemDTO.type) ?? .regular,
                             username: itemDTO.username,
                             title: itemDTO.title,
