@@ -83,8 +83,8 @@ final class HomeViewController: GraceLogBaseViewController, View {
     }
     
     private func configurePageViewController() {
-        pageViewController.dataSource = self
-        pageViewController.delegate = self
+        dataSource = nil
+        delegate = self
         
         pageViewController.setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
     }

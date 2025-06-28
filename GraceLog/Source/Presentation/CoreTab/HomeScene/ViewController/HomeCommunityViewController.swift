@@ -46,6 +46,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         
         setupLayouts()
         setupConstraints()
+        setupStyles()
     }
     
     private func setupLayouts() {
@@ -71,15 +72,21 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         }
     }
     
+    private func setupStyles() {
+        communityDiaryListView.diaryTableView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
     func bind(reactor: HomeCommunityViewReactor) {
-        bindCommunitySelectedView(reactor: reactor)
-        bindCommunityDiaryListView(reactor: reactor)
+        bindCommunitySelectedCollectionView(reactor: reactor)
+        bindCommunityDiaryTableView(reactor: reactor)
     }
 }
 
 // MARK: - Bindings
 extension HomeCommunityViewController {
-    private func bindCommunitySelectedView(reactor: HomeCommunityViewReactor) {
+    private func bindCommunitySelectedCollectionView(reactor: HomeCommunityViewReactor) {
         let communityDataSource = RxCollectionViewSectionedReloadDataSource<HomeCommunitySelectedSection>(
             configureCell: { _, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(
@@ -118,7 +125,77 @@ extension HomeCommunityViewController {
             .disposed(by: disposeBag)
     }
     
-    private func bindCommunityDiaryListView(reactor: HomeCommunityViewReactor) {
+    private func bindCommunityDiaryTableView(reactor: HomeCommunityViewReactor) {
+        let diaryDataSource = RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>(
+            configureCell: { _, tableView, indexPath, item in
+                switch item {
+                case .diary(let diaryItem):
+                    switch diaryItem.type {
+                    case .my:
+                        let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityMyDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityMyDiaryTableViewCell
+                        
+                        cell.updateUI(
+                            title: diaryItem.title,
+                            subtitle: diaryItem.subtitle,
+                            likes: diaryItem.likes,
+                            comments: diaryItem.comments
+                        )
+                        return cell
+                    case .regular:
+                        let cell = tableView.dequeueReusableCell(
+                            withIdentifier: HomeCommunityUserDiaryTableViewCell.reuseIdentifier,
+                            for: indexPath
+                        ) as! HomeCommunityUserDiaryTableViewCell
+                        
+                        cell.updateUI(
+                            username: diaryItem.username,
+                            title: diaryItem.title,
+                            subtitle: diaryItem.subtitle,
+                            likes: diaryItem.likes,
+                            comments: diaryItem.comments
+                        )
+                        return cell
+                    }
+                case .dateHeader:
+                    return UITableViewCell()
+                }
+            }
+        )
         
+        reactor.pulse(\.$communityDiarySections)
+            .asDriver(onErrorJustReturn: [])
+            .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
+            .disposed(by: disposeBag)
+        
+        communityDiaryListView.diaryTableView.rx.modelSelected(HomeCommunityDiaryItem.self)
+            .asDriver()
+            .drive(with: self) { owner, selectedItem in
+                switch selectedItem {
+                case .diary(let diaryItem):
+                    print("감사일기 상세로 이동")
+                case .dateHeader:
+                    break
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension HomeCommunityViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let reactor = reactor else { return nil }
+        
+        let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: HomeCommunityDateHeaderView.reuseIdentifier
+        ) as! HomeCommunityDateHeaderView
+        
+        let sections = reactor.currentState.communityDiarySections
+        headerView.updateUI(date: sections[section].date)
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
