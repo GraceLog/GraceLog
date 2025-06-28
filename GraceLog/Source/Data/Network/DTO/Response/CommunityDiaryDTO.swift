@@ -13,6 +13,7 @@ struct CommunityDiaryDTO: Decodable {
 }
 
 struct CommunityDiaryItemDTO: Decodable {
+    let id: Int
     let type: String
     let username: String
     let title: String
