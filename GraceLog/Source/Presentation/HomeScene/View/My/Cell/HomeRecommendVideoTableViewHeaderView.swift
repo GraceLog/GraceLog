@@ -9,12 +9,12 @@ import UIKit
 import Then
 import SnapKit
 
-final class HomeTableViewHeader: UITableViewHeaderFooterView {
-    static let identifier = "HomeTableViewHeader"
+final class HomeRecommendVideoTableViewHeaderView: UITableViewHeaderFooterView {
+    static let reuseIdentifier = String(describing: HomeRecommendVideoTableViewHeaderView.self)
     
     private let titleLabel = UILabel().then {
         $0.textColor = .themeColor
-        $0.font = GLFont.bold12.font
+        $0.font = GLFont.bold14.font
     }
     
     private let descLabel = UILabel().then {
@@ -23,14 +23,9 @@ final class HomeTableViewHeader: UITableViewHeaderFooterView {
         $0.numberOfLines = 4
     }
     
-    private let paragraphLabel = UILabel().then {
-        $0.textColor = .graceGray
-        $0.font = GLFont.regular14.font
-    }
-    
     private let stackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 6
+        $0.spacing = 5
         $0.alignment = .leading
     }
     
@@ -47,23 +42,17 @@ final class HomeTableViewHeader: UITableViewHeaderFooterView {
         backgroundColor = UIColor(hex: 0xF4F4F4)
         
         addSubview(stackView)
-        [titleLabel, descLabel, paragraphLabel].forEach { stackView.addArrangedSubview($0) }
+        [titleLabel, descLabel].forEach { stackView.addArrangedSubview($0) }
         
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 26, left: 30, bottom: 8, right: 30))
+            $0.top.equalToSuperview().offset(4)
+            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.bottom.equalToSuperview()
         }
     }
     
-    func configure(title: String, desc: String, paragraph: String?) {
+    func configure(title: String, desc: String) {
         titleLabel.text = title
         descLabel.text = desc
-        
-        if let paragraph = paragraph {
-            paragraphLabel.text = paragraph
-            paragraphLabel.isHidden = false
-        } else {
-            paragraphLabel.isHidden = true
-        }
     }
 }
-

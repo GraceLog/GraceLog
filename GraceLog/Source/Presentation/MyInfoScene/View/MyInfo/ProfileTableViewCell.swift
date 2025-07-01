@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import SDWebImage
 
 final class ProfileTableViewCell: UITableViewCell {
     static let identifier = "ProfileTableViewCell"
