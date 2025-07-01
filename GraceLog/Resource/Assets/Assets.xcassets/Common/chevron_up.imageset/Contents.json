@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "diary_chevron.png",
+      "filename" : "cheveron_up.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "diary_chevron@2x.png",
+      "filename" : "cheveron_up@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "diary_chevron@3x.png",
+      "filename" : "cheveron_up@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
