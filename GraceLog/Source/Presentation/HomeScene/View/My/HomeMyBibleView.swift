@@ -16,21 +16,23 @@ final class HomeMyBibleView: UIView {
         $0.font = GLFont.bold14.font
     }
     
-    private let descLabel = UILabel().then {
+    private let bibleContentLabel = UILabel().then {
         $0.textColor = .graceGray
         $0.font = GLFont.regular24.font
         $0.numberOfLines = 4
     }
     
-    private let paragraphLabel = UILabel().then {
+    private let bibleReferenceLabel = UILabel().then {
         $0.textColor = .graceGray
         $0.font = GLFont.regular14.font
     }
     
-    private let stackView = UIStackView().then {
+    private let containerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 12
         $0.alignment = .leading
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = .init(top: 26, left: 30, bottom: 17, right: 30)
     }
     
     override init(frame: CGRect) {
@@ -45,19 +47,19 @@ final class HomeMyBibleView: UIView {
     private func setupUI() {
         backgroundColor = UIColor(hex: 0xF4F4F4)
         
-        addSubview(stackView)
-        [titleLabel, descLabel, paragraphLabel].forEach { stackView.addArrangedSubview($0) }
+        addSubview(containerStackView)
+        [titleLabel, bibleContentLabel, bibleReferenceLabel].forEach { containerStackView.addArrangedSubview($0) }
         
-        stackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(26)
-            $0.horizontalEdges.equalToSuperview().inset(30)
-            $0.bottom.equalToSuperview().offset(-17)
+        containerStackView.snp.makeConstraints {
+            $0.directionalEdges.equalToSuperview()
         }
+        
+        containerStackView.setCustomSpacing(8, after: bibleContentLabel)
     }
     
-    func setData(title: String, desc: String, paragraph: String) {
+    func setData(title: String, content: String, reference: String) {
         titleLabel.text = title
-        descLabel.text = desc
-        paragraphLabel.text = paragraph
+        bibleContentLabel.text = content
+        bibleReferenceLabel.text = reference
     }
 }

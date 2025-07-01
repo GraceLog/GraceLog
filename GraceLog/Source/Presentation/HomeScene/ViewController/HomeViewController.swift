@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import RxDataSources
 import ReactorKit
 
@@ -24,7 +25,7 @@ enum HomeMenuItem: CaseIterable {
     }
 }
 
-final class HomeViewController: UIPageViewController, View {
+final class HomeViewController: GraceLogBaseViewController, View {
     weak var coordinator: Coordinator?
     var disposeBag = DisposeBag()
     
@@ -53,6 +54,12 @@ final class HomeViewController: UIPageViewController, View {
         $0.setDimensions(width: 32, height: 32)
     }
     
+    private let pageViewController = UIPageViewController(
+        transitionStyle: .scroll,
+        navigationOrientation: .horizontal,
+        options: nil
+    )
+    
     private lazy var homeMyViewController = HomeMyViewController()
     private lazy var homeCommunityViewController = HomeCommunityViewController()
     
@@ -60,17 +67,6 @@ final class HomeViewController: UIPageViewController, View {
         homeMyViewController,
         homeCommunityViewController
     ]
-    
-    init() {
-        super.init(
-            transitionStyle: .scroll,
-            navigationOrientation: .horizontal
-        )
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -92,19 +88,25 @@ final class HomeViewController: UIPageViewController, View {
     }
     
     private func configurePageViewController() {
-        dataSource = nil
-        delegate = self
+        pageViewController.dataSource = self
+        pageViewController.delegate = self
         
-        setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
+        pageViewController.setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
     }
     
     private func configureUI() {
         let safeArea = view.safeAreaLayoutGuide
         
-        view.addSubview(navigationBar)
+        [navigationBar, pageViewController.view].forEach { view.addSubview($0) }
         navigationBar.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(safeArea)
+            $0.top.equalTo(safeArea)
+            $0.directionalHorizontalEdges.equalToSuperview()
             $0.height.equalTo(50)
+        }
+        
+        pageViewController.view.snp.makeConstraints {
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.directionalHorizontalEdges.bottom.equalToSuperview()
         }
     }
     
@@ -151,13 +153,13 @@ final class HomeViewController: UIPageViewController, View {
     
     private func moveToPage(at index: Int, animated: Bool) {
         guard index < pages.count,
-              let currentViewController = viewControllers?.first,
+              let currentViewController = pageViewController.viewControllers?.first,
               let currentIndex = pages.firstIndex(of: currentViewController),
               currentIndex != index else { return }
         
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
         
-        setViewControllers(
+        pageViewController.setViewControllers(
             [pages[index]],
             direction: direction,
             animated: animated,
