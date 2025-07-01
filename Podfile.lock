@@ -1272,7 +1272,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Messaging
   - Firebase/Storage
-  - FSCalendar
+  - FSCalendar (~> 2.8.4)
   - GoogleSignIn
   - IQKeyboardManagerSwift
   - JGProgressHUD (~> 2.0.3)
@@ -1417,6 +1417,6 @@ SPEC CHECKSUMS:
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
   YPImagePicker: afc81b3cffab05a6e7261c5daf80dc31b4e917b4
 
-PODFILE CHECKSUM: e0ed99b64457ce6f1c7a94dd416016b22139aaf5
+PODFILE CHECKSUM: 13c58b196b28a44d2911f74c489ca1065084cc6e
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.15.2
