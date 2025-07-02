@@ -13,8 +13,8 @@ final class HomeCommunityDiaryListView: UIView {
     let diaryTableView = AutoSizingTableView().then {
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
         $0.separatorStyle = .none
-        $0.sectionHeaderHeight = 0
-        $0.sectionFooterHeight = 0
+        $0.sectionHeaderHeight = .leastNonzeroMagnitude
+        $0.sectionFooterHeight = .leastNonzeroMagnitude
         $0.sectionHeaderTopPadding = 0
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
