@@ -20,14 +20,14 @@ final class HomeCommunityViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setCommunitys([CommunityItem])
+        case setCommunitys([Community])
         case setSelectedCommunityId(Int)
         case setCommunityDiarys([HomeCommunityDiarySection])
         case setDiaryLike(diaryId: Int)
     }
     
     struct State {
-        @Pulse var communitys: [CommunityItem] = []
+        @Pulse var communitys: [Community] = []
         @Pulse var communityDiarySections: [HomeCommunityDiarySection] = []
         var selectedCommunityId: Int?
     }
