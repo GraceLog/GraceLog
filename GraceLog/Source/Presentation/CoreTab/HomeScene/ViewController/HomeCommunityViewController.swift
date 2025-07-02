@@ -31,7 +31,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         $0.alignment = .fill
     }
     
-    private let communitySelectedView = HomeCommunitySelectedView()
+    private let communitySelectedView = HomeCommunityListView()
     private let communityDiaryListView = HomeCommunityDiaryListView()
     
     override func viewDidLoad() {
@@ -46,7 +46,6 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         
         setupLayouts()
         setupConstraints()
-        setupStyles()
     }
     
     private func setupLayouts() {
@@ -72,15 +71,13 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         }
     }
     
-    private func setupStyles() {
-        communityDiaryListView.diaryTableView.rx
-            .setDelegate(self)
-            .disposed(by: disposeBag)
-    }
-    
     func bind(reactor: HomeCommunityViewReactor) {
         bindCommunitySelectedCollectionView(reactor: reactor)
         bindCommunityDiaryTableView(reactor: reactor)
+        
+        communityDiaryListView.diaryTableView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
     }
 }
 
