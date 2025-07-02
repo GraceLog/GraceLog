@@ -138,10 +138,10 @@
 		DE9A1FFE2D7C31FE0044F655 /* HomeCommunityData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9A1FFD2D7C31FE0044F655 /* HomeCommunityData.json */; };
 		DE9A20002D7C32050044F655 /* HomeMyData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9A1FFF2D7C32050044F655 /* HomeMyData.json */; };
 		DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA04FA62D69A8C000BA978A /* String+Extension.swift */; };
-		DEACFE642E0CFE5500AD4222 /* HomeCommunitySelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE632E0CFE5500AD4222 /* HomeCommunitySelectedView.swift */; };
+		DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE632E0CFE5500AD4222 /* HomeCommunityListView.swift */; };
 		DEACFE662E0D016800AD4222 /* HomeCommunityDiaryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE652E0D016800AD4222 /* HomeCommunityDiaryListView.swift */; };
-		DEACFE682E0D04B900AD4222 /* HomeCommunitySelectedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE672E0D04B900AD4222 /* HomeCommunitySelectedCollectionViewCell.swift */; };
-		DEACFE6A2E0F81DE00AD4222 /* HomeCommunitySelectedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE692E0F81DE00AD4222 /* HomeCommunitySelectedSection.swift */; };
+		DEACFE682E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE672E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift */; };
+		DEACFE6A2E0F81DE00AD4222 /* HomeCommunityListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE692E0F81DE00AD4222 /* HomeCommunityListSection.swift */; };
 		DEACFE6C2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE6B2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift */; };
 		DED558642DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */; };
 		DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558652DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift */; };
@@ -339,10 +339,10 @@
 		DE9A1FFD2D7C31FE0044F655 /* HomeCommunityData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HomeCommunityData.json; sourceTree = "<group>"; };
 		DE9A1FFF2D7C32050044F655 /* HomeMyData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HomeMyData.json; sourceTree = "<group>"; };
 		DEA04FA62D69A8C000BA978A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		DEACFE632E0CFE5500AD4222 /* HomeCommunitySelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunitySelectedView.swift; sourceTree = "<group>"; };
+		DEACFE632E0CFE5500AD4222 /* HomeCommunityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityListView.swift; sourceTree = "<group>"; };
 		DEACFE652E0D016800AD4222 /* HomeCommunityDiaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDiaryListView.swift; sourceTree = "<group>"; };
-		DEACFE672E0D04B900AD4222 /* HomeCommunitySelectedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunitySelectedCollectionViewCell.swift; sourceTree = "<group>"; };
-		DEACFE692E0F81DE00AD4222 /* HomeCommunitySelectedSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunitySelectedSection.swift; sourceTree = "<group>"; };
+		DEACFE672E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityListCollectionViewCell.swift; sourceTree = "<group>"; };
+		DEACFE692E0F81DE00AD4222 /* HomeCommunityListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityListSection.swift; sourceTree = "<group>"; };
 		DEACFE6B2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDiarySection.swift; sourceTree = "<group>"; };
 		DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeywordCollectionViewCell.swift; sourceTree = "<group>"; };
 		DED558652DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSectionWithDescHeaderView.swift; sourceTree = "<group>"; };
@@ -673,7 +673,7 @@
 			isa = PBXGroup;
 			children = (
 				DE2387442E0BE64200893D8C /* Cells */,
-				DEACFE632E0CFE5500AD4222 /* HomeCommunitySelectedView.swift */,
+				DEACFE632E0CFE5500AD4222 /* HomeCommunityListView.swift */,
 				DEACFE652E0D016800AD4222 /* HomeCommunityDiaryListView.swift */,
 			);
 			path = Community;
@@ -697,7 +697,7 @@
 				DE9A1FCB2D6C7D890044F655 /* HomeCommunityMyDiaryTableViewCell.swift */,
 				DE9A1FCD2D6C86C00044F655 /* HomeCommunityUserDiaryTableViewCell.swift */,
 				DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */,
-				DEACFE672E0D04B900AD4222 /* HomeCommunitySelectedCollectionViewCell.swift */,
+				DEACFE672E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1153,7 +1153,7 @@
 			isa = PBXGroup;
 			children = (
 				DE9A1FD92D79AD660044F655 /* HomeDataSource.swift */,
-				DEACFE692E0F81DE00AD4222 /* HomeCommunitySelectedSection.swift */,
+				DEACFE692E0F81DE00AD4222 /* HomeCommunityListSection.swift */,
 				DEACFE6B2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift */,
 			);
 			path = DataSource;
@@ -1583,7 +1583,7 @@
 				702D2B6A2E058E9600D5E71E /* DiaryKeywordView.swift in Sources */,
 				DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
-				DEACFE682E0D04B900AD4222 /* HomeCommunitySelectedCollectionViewCell.swift in Sources */,
+				DEACFE682E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift in Sources */,
 				DE23873B2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
 				DE9A1FF22D7C065C0044F655 /* HomeContentDTO.swift in Sources */,
@@ -1666,7 +1666,7 @@
 				02F0DA512DDEAED900CD036A /* AuthManager.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
-				DEACFE6A2E0F81DE00AD4222 /* HomeCommunitySelectedSection.swift in Sources */,
+				DEACFE6A2E0F81DE00AD4222 /* HomeCommunityListSection.swift in Sources */,
 				DE9A1FFC2D7C0B680044F655 /* DefaultHomeRepository.swift in Sources */,
 				02C5861A2DD736CA00E1F626 /* UserService.swift in Sources */,
 				DE9A1FF62D7C07FE0044F655 /* HomeUseCase.swift in Sources */,
@@ -1684,7 +1684,7 @@
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,
 				0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */,
-				DEACFE642E0CFE5500AD4222 /* HomeCommunitySelectedView.swift in Sources */,
+				DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */,
 				DED5587F2DBC7C2F00137B10 /* HTTPHeaderField.swift in Sources */,
 				704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */,
 				DE27005F2D212770005C9DCF /* UserRepository.swift in Sources */,

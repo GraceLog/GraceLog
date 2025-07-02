@@ -8,6 +8,6 @@
 import Foundation
 
 struct HomeCommunityContent {
-    var communityList: [CommunityItem]
+    var communityList: [Community]
     let diaryList: [CommunityDiary]
 }
