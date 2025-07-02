@@ -184,8 +184,6 @@ extension HomeCommunityViewController {
                         
                         return cell
                     }
-                case .dateHeader:
-                    return UITableViewCell()
                 }
             }
         )
