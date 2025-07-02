@@ -31,32 +31,17 @@ struct CommunityDiaryItem {
 
 enum HomeCommunityDiaryItem: Equatable {
     case diary(CommunityDiaryItem)
-    case dateHeader(String)
     
     static func == (lhs: HomeCommunityDiaryItem, rhs: HomeCommunityDiaryItem) -> Bool {
         switch (lhs, rhs) {
         case (.diary(let lhsItem), .diary(let rhsItem)):
-            return lhsItem.username == rhsItem.username &&
-                   lhsItem.title == rhsItem.title &&
-                   lhsItem.subtitle == rhsItem.subtitle
-        case (.dateHeader(let lhsDate), .dateHeader(let rhsDate)):
-            return lhsDate == rhsDate
-        default:
-            return false
+            return lhsItem.id == rhsItem.id
         }
     }
     
     var diaryItem: CommunityDiaryItem? {
         switch self {
         case .diary(let item): return item
-        case .dateHeader: return nil
-        }
-    }
-    
-    var dateHeader: String? {
-        switch self {
-        case .diary: return nil
-        case .dateHeader(let date): return date
         }
     }
 }
