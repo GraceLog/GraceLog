@@ -270,15 +270,15 @@ extension HomeCommunityViewController {
 
 extension HomeCommunityViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let reactor = reactor else { return nil }
+        guard let sections = reactor?.currentState.communityDiarySections,
+              section < sections.count else {
+            return nil
+        }
         
         let headerView = tableView.dequeueReusableHeaderFooterView(
             withIdentifier: HomeCommunityDateHeaderView.reuseIdentifier
         ) as! HomeCommunityDateHeaderView
-        
-        let sections = reactor.currentState.communityDiarySections
         headerView.updateUI(date: sections[section].date)
-        
         return headerView
     }
     
