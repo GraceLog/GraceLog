@@ -16,7 +16,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     
-    private let profileImgView = UIImageView().then {
+    let profileImageView = UIImageView().then {
         $0.setDimensions(width: 40, height: 40)
         $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .graceLightGray
@@ -29,9 +29,9 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         $0.textColor = .graceGray
     }
     
-    private let diaryCardView = UIView().then {
+    let diaryCardView = UIView().then {
         $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 25
         $0.clipsToBounds = true
     }
     
@@ -92,7 +92,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        profileImgView.image = nil
+        profileImageView.image = nil
         cardImageView.image = nil
         usernameLabel.text = nil
         titleLabel.text = nil
@@ -109,7 +109,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
         
-        let userStack = UIStackView(arrangedSubviews: [profileImgView, usernameLabel])
+        let userStack = UIStackView(arrangedSubviews: [profileImageView, usernameLabel])
         userStack.axis = .vertical
         userStack.spacing = 4
         userStack.alignment = .center
@@ -135,15 +135,14 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         overlayView.addSubview(contentStack)
         
         userStack.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.leading.equalToSuperview().offset(21)
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(21)
         }
         
         diaryCardView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().inset(10)
             $0.leading.equalTo(userStack.snp.trailing).offset(12)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(diaryCardView.snp.width).multipliedBy(110.0/300.0)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         cardImageView.snp.makeConstraints {
@@ -162,7 +161,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         interactionStack.snp.makeConstraints {
             $0.top.equalTo(diaryCardView.snp.bottom).offset(8)
             $0.leading.equalTo(diaryCardView.snp.leading).offset(23)
-            $0.bottom.equalToSuperview().offset(-10)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
     
@@ -174,11 +173,9 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         commentButton.setTitle("\(comments)", for: .normal)
         
         let heartImage = isLiked ? UIImage(named: "home_heart_selected") : UIImage(named: "home_heart")
-        var config = likeButton.configuration
-        config?.image = heartImage
-        likeButton.configuration = config
+        likeButton.setImage(heartImage, for: .normal)
         
         cardImageView.image = UIImage(named: "diary2")
-        profileImgView.image = UIImage(named: "profile")
+        profileImageView.image = UIImage(named: "profile")
     }
 }

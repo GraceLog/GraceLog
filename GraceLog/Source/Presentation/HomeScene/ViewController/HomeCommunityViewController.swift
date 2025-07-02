@@ -62,7 +62,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         let safeArea = view.safeAreaLayoutGuide
         
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(50)
+            $0.top.equalTo(safeArea)
             $0.leading.trailing.bottom.equalTo(safeArea)
         }
         
