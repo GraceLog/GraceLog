@@ -48,7 +48,7 @@ final class DefaultHomeRepository: HomeRepository {
         return .create { single in
             if let content = Bundle.main.decodeMockJSON(HomeCommunityContentDTO.self, from: "HomeCommunityData") {
                 let communityItems = content.communityList.map { dto in
-                    return CommunityItem(
+                    return Community(
                         id: dto.id,
                         imageName: dto.imageName,
                         title: dto.title
