@@ -96,8 +96,6 @@ extension HomeCommunityViewReactor {
                             return .diary(diaryItem)
                         }
                         return item
-                    case .dateHeader:
-                        return item
                     }
                 }
                 return HomeCommunityDiarySection(date: section.date, items: updatedItems)
