@@ -61,7 +61,16 @@ final class HomeViewController: GraceLogBaseViewController, View {
     )
     
     private lazy var homeMyViewController = HomeMyViewController()
-    private lazy var homeCommunityViewController = HomeCommunityViewController()
+    private lazy var homeCommunityViewController = HomeCommunityViewController(
+        reactor: HomeCommunityViewReactor(
+            homeUsecase: DefaultHomeUseCase(
+                userRepository: DefaultUserRepository(
+                    userService: UserService()
+                ),
+                homeRepository: DefaultHomeRepository()
+            )
+        )
+    )
     
     private lazy var pages: [UIViewController] = [
         homeMyViewController,
