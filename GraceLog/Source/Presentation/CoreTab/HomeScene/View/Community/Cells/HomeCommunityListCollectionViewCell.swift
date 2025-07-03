@@ -12,7 +12,7 @@ import Then
 final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: HomeCommunityListCollectionViewCell.self)
     
-    private var stackView = UIStackView().then {
+    private var communityStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 13
         $0.alignment = .center
@@ -48,14 +48,14 @@ final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupLayout() {
-        contentView.addSubview(stackView)
+        contentView.addSubview(communityStackView)
         containerView.addSubview(communityImageView)
-        stackView.addArrangedSubview(containerView)
-        stackView.addArrangedSubview(communityLabel)
+        communityStackView.addArrangedSubview(containerView)
+        communityStackView.addArrangedSubview(communityLabel)
     }
     
     private func setupConstraints() {
-        stackView.snp.makeConstraints {
+        communityStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
