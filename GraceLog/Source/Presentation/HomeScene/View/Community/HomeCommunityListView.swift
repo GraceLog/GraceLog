@@ -18,7 +18,7 @@ final class HomeCommunityListView: UIView {
         $0.itemSize = CGSize(width: 64, height: 87)
     }
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: communityListLayout).then {
+    lazy var communityListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: communityListLayout).then {
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
         $0.alwaysBounceHorizontal = true
@@ -38,11 +38,11 @@ final class HomeCommunityListView: UIView {
     }
     
     private func setupLayouts() {
-        addSubview(collectionView)
+        addSubview(communityListCollectionView)
     }
     
     private func setupConstraints() {
-        collectionView.snp.makeConstraints {
+        communityListCollectionView.snp.makeConstraints {
             $0.directionalEdges.equalToSuperview()
             $0.height.equalTo(140)
         }
