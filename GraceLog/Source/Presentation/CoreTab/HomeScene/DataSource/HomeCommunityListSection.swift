@@ -14,59 +14,38 @@ struct Community: Equatable {
     let title: String
 }
 
-enum CommunityItem: IdentifiableType, Equatable {
-    case community(Community, isSelected: Bool)
-    
-    var identity: Int {
-        switch self {
-        case .community(let model, _):
-            return model.id
-        }
-    }
+enum CommunityItem: Equatable {
+    case community(Community)
     
     static func == (lhs: CommunityItem, rhs: CommunityItem) -> Bool {
         switch (lhs, rhs) {
-        case (.community(let lhsModel, let lhsSelected), .community(let rhsModel, let rhsSelected)):
-            return lhsModel == rhsModel && lhsSelected == rhsSelected
+        case (.community(let lhsModel), .community(let rhsModel)):
+            return lhsModel.id == rhsModel.id
         }
     }
     
     var community: Community {
         switch self {
-        case .community(let model, _):
+        case .community(let model):
             return model
-        }
-    }
-    
-    var isSelected: Bool {
-        switch self {
-        case .community(_, let isSelected):
-            return isSelected
         }
     }
 }
 
-enum HomeCommunityListSection: AnimatableSectionModelType {
-    case communitySection(id: String = "community_section", items: [CommunityItem])
-    
-    var identity: String {
-        switch self {
-        case .communitySection(let id, _):
-            return id
-        }
-    }
+enum HomeCommunityListSection: SectionModelType {
+    case communitySection(items: [CommunityItem])
     
     var items: [CommunityItem] {
         switch self {
-        case .communitySection(_, let items):
+        case .communitySection(let items):
             return items
         }
     }
     
     init(original: HomeCommunityListSection, items: [CommunityItem]) {
         switch original {
-        case .communitySection(let id, _):
-            self = .communitySection(id: id, items: items)
+        case .communitySection(_):
+            self = .communitySection(items: items)
         }
     }
 }
