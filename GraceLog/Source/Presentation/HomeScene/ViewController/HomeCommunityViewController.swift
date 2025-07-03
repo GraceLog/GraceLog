@@ -58,11 +58,8 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
     }
     
     private func setupConstraints() {
-        let safeArea = view.safeAreaLayoutGuide
-        
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
-            $0.leading.trailing.bottom.equalTo(safeArea)
+            $0.directionalEdges.width.equalToSuperview()
         }
         
         containerStackView.snp.makeConstraints {
