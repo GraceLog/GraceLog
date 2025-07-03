@@ -83,38 +83,44 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
 // MARK: - Bindings
 extension HomeCommunityViewController {
     private func bindCommunitySelectedCollectionView(reactor: HomeCommunityViewReactor) {
-        let communityDataSource = RxCollectionViewSectionedAnimatedDataSource<HomeCommunityListSection>(
-            configureCell: { _, collectionView, indexPath, item in
+        let communityDataSource = RxCollectionViewSectionedReloadDataSource<HomeCommunityListSection>(
+            configureCell: { [weak self] _, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
                     for: indexPath
                 ) as? HomeCommunityListCollectionViewCell ?? HomeCommunityListCollectionViewCell()
+                
+                let selectedId = self?.reactor?.currentState.selectedCommunityId
+                let isSelected = item.community.id == selectedId
+                
                 cell.updateUI(
                     imageUrl: item.community.imageName,
                     community: item.community.title,
-                    isSelected: item.isSelected
+                    isSelected: isSelected
                 )
                 return cell
             }
         )
         
-        let communitySectionState = Observable.combineLatest(
-            reactor.pulse(\.$communitys),
-            reactor.state.map { $0.selectedCommunityId }.distinctUntilChanged()
-        )
-            .map { communities, selectedId in
+        reactor.pulse(\.$communitys)
+            .map { communities in
                 let items = communities.map { community in
-                    CommunityItem.community(community, isSelected: community.id == selectedId)
+                    CommunityItem.community(community)
                 }
                 return [HomeCommunityListSection.communitySection(items: items)]
             }
-            .share(replay: 1)
-        
-        communitySectionState
-            .bind(to: communitySelectedView.collectionView.rx.items(dataSource: communityDataSource))
+            .bind(to: communitySelectedView.communityListCollectionView.rx.items(dataSource: communityDataSource))
             .disposed(by: disposeBag)
         
-        communitySelectedView.collectionView.rx.itemSelected
+        reactor.state.map { $0.selectedCommunityId }
+            .distinctUntilChanged()
+            .skip(1) // 초기 값 nil이기 때문
+            .subscribe(onNext: { [weak self] _ in
+                self?.communitySelectedView.communityListCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        communitySelectedView.communityListCollectionView.rx.itemSelected
             .withLatestFrom(reactor.pulse(\.$communitys)) { indexPath, communitys in
                 return communitys[indexPath.item].id
             }
