@@ -47,6 +47,13 @@ final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        communityImageView.image = nil
+        communityLabel.text = nil
+        isSelected = false
+    }
+    
     private func setupLayout() {
         contentView.addSubview(communityStackView)
         containerView.addSubview(communityImageView)
