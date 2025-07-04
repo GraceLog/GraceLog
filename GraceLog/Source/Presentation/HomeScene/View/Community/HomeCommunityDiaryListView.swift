@@ -21,7 +21,7 @@ final class HomeCommunityDiaryListView: UIView {
         $0.rowHeight = 150
         $0.estimatedRowHeight = 150
         $0.register(HomeCommunityDateHeaderView.self, forHeaderFooterViewReuseIdentifier: HomeCommunityDateHeaderView.reuseIdentifier)
-        $0.register(HomeCommunityMyDiaryTableViewCell.self, forCellReuseIdentifier: HomeCommunityMyDiaryTableViewCell.reuseIdentifier)
+        $0.register(HomeCommunityDiaryTableViewCell.self, forCellReuseIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier)
         $0.register(HomeCommunityUserDiaryTableViewCell.self, forCellReuseIdentifier: HomeCommunityUserDiaryTableViewCell.reuseIdentifier)
     }
     
