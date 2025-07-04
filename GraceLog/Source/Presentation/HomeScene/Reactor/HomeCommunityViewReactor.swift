@@ -15,7 +15,7 @@ final class HomeCommunityViewReactor: Reactor {
     private let disposeBag = DisposeBag()
     
     enum Action {
-        case selectCommunity(id: Int)
+        case didSelectCommuniy(selectedCommunityId: Int)
         case didTapLike(diaryId: Int)
     }
     
@@ -27,8 +27,8 @@ final class HomeCommunityViewReactor: Reactor {
     }
     
     struct State {
-        @Pulse var communitys: [Community] = []
-        @Pulse var communityDiarySections: [HomeCommunityDiarySection] = []
+        var communitys: [Community] = []
+        var communityDiarySections: [HomeCommunityDiarySection] = []
         var selectedCommunityId: Int?
     }
     
@@ -47,8 +47,8 @@ final class HomeCommunityViewReactor: Reactor {
 extension HomeCommunityViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .selectCommunity(let id):
-            return .just(.setSelectedCommunityId(id))
+        case .didSelectCommuniy(let selectedCommunityId):
+            return .just(.setSelectedCommunityId(selectedCommunityId))
         case .didTapLike(let diaryId):
             return .just(.setDiaryLike(diaryId: diaryId))
         }
@@ -81,8 +81,8 @@ extension HomeCommunityViewReactor {
             if newState.selectedCommunityId == nil && !communitys.isEmpty {
                 newState.selectedCommunityId = communitys[0].id
             }
-        case.setSelectedCommunityId(let id):
-            newState.selectedCommunityId = id
+        case .setSelectedCommunityId(let communityId):
+            newState.selectedCommunityId = communityId
         case .setCommunityDiarys(let diarySections):
             newState.communityDiarySections = diarySections
         case .setDiaryLike(let diaryId):
