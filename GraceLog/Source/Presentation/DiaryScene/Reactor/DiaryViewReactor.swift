@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 
 final class DiaryViewReactor: Reactor {
+    private let createDiaryUseCase: CreateDiaryUseCase
+    
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
     private var selectedShareOptions: Set<DiaryShareOption> = []
@@ -21,30 +23,29 @@ final class DiaryViewReactor: Reactor {
         case deleteImage(at: Int)
         case updateTitle(String)
         case updateDescription(String)
-        case saveDiary
+        case didTapShareButton
         case didSelectKeyword(DiaryKeywordState)
         case didSelectShareOption(DiaryShareState)
     }
     
     enum Mutation {
         case setImages([DiaryImage])
-        case setSaving(Bool)
-        case setSaveResult(Bool)
+        case setCreateDiaryResult(Bool)
     }
     
     struct State {
         @Pulse var images: [DiaryImage]
         var keywords: [DiaryKeywordState]
         var shareStates: [DiaryShareState]
-        var isSaving: Bool
+        var isSuccessCreateDiary: Bool?
     }
     
-    init() {
+    init(createDiaryUseCase: CreateDiaryUseCase) {
+        self.createDiaryUseCase = createDiaryUseCase
         self.initialState = State(
             images: [], 
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
-            shareStates: DiaryShareOption.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) },
-            isSaving: false
+            shareStates: DiaryShareOption.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) }
         )
     }
 }
@@ -73,10 +74,9 @@ extension DiaryViewReactor {
             return .empty()
         case .updateDescription(let description):
             return .empty()
-        case .saveDiary:
-            return Observable.concat([
-                .just(.setSaving(true)),
-            ])
+        case .didTapShareButton:
+            createDiaryUseCase.createDiary()
+            return .empty()
         case .didSelectKeyword(let state):
             if state.isSelected {
                 selectedKeywords.insert(state.keyword)
@@ -95,16 +95,21 @@ extension DiaryViewReactor {
         }
     }
     
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        Observable.merge(
+            createDiaryUseCase.createDiaryResult.map { .setCreateDiaryResult($0) },
+            mutation
+        )
+    }
+    
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
         switch mutation {
         case .setImages(let images):
             newState.images = images
-        case .setSaving(let isSaving):
-            newState.isSaving = isSaving
-        case .setSaveResult:
-            break
+        case .setCreateDiaryResult(let isSuccess):
+            newState.isSuccessCreateDiary = isSuccess
         }
         
         return newState

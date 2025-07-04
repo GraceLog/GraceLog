@@ -175,9 +175,15 @@ final class DiaryViewController: UIViewController, View {
             .disposed(by: disposeBag)
         
         shareButton.rx.tap
-            .subscribe(with: self) { owner, _ in
-                // TODO: - 공유하기관련 액션 구현 필요
-                print("공유하기 버튼 클릭")
+            .map { DiaryViewReactor.Action.didTapShareButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.isSuccessCreateDiary }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 일기장 생성 성공여부에 따른 로직 구현
+                print("일기장 생성 성공여부: \(isSuccess)")
             }
             .disposed(by: disposeBag)
         
