@@ -15,6 +15,8 @@ final class DiaryViewReactor: Reactor {
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
     private var selectedShareOptions: Set<DiaryShareOption> = []
+    private var diaryTitle = ""
+    private var diaryContent = ""
     
     var initialState: State
     
@@ -22,7 +24,7 @@ final class DiaryViewReactor: Reactor {
         case updateImages([UIImage])
         case deleteImage(at: Int)
         case updateTitle(String)
-        case updateDescription(String)
+        case updateContent(String)
         case didTapShareButton
         case didSelectKeyword(DiaryKeywordState)
         case didSelectShareOption(DiaryShareState)
@@ -71,28 +73,30 @@ extension DiaryViewReactor {
             }
             return .just(.setImages(updatedImages))
         case .updateTitle(let title):
-            return .empty()
-        case .updateDescription(let description):
-            return .empty()
+            diaryTitle = title
+        case .updateContent(let content):
+            diaryContent = content
         case .didTapShareButton:
-            createDiaryUseCase.createDiary()
-            return .empty()
+            createDiaryUseCase.createDiary(
+                title: diaryTitle,
+                content: diaryContent,
+                selectedKeywords: Array(selectedKeywords),
+                shareOptions: Array(selectedShareOptions)
+            )
         case .didSelectKeyword(let state):
             if state.isSelected {
                 selectedKeywords.insert(state.keyword)
             } else {
                 selectedKeywords.remove(state.keyword)
             }
-            return .empty()
-            
         case .didSelectShareOption(let state):
             if state.isSelected {
                 selectedShareOptions.insert(state.diaryOption)
             } else {
                 selectedShareOptions.remove(state.diaryOption)
             }
-            return .empty()
         }
+        return .empty()
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
@@ -116,59 +120,17 @@ extension DiaryViewReactor {
     }
 }
 
-// MARK: - Diary Keyword State/Model
+// MARK: - Diary Model
 
 struct DiaryKeywordState {
     let keyword: DiaryKeyword
     let isSelected: Bool
 }
 
-enum DiaryKeyword: String, CaseIterable {
-    case obedience    = "순종"
-    case faith        = "믿음"
-    case love         = "사랑"
-    case vision       = "비전"
-    case guidance     = "인내"
-    case peace        = "평안"
-    case suffering    = "고난"
-    case perseverance = "끈기"
-}
-
-// MARK: - Diary Share State/Model
-
 struct DiaryShareState {
     let diaryOption: DiaryShareOption
     let isSelected: Bool
 }
-
-enum DiaryShareOption: String, CaseIterable {
-    case saeromchurch
-    case gracelog
-    case studio306
-    case studiocafe
-    case holyfire
-    
-    var title: String {
-        switch self {
-        case .saeromchurch:
-            return "새롬교회"
-        case .gracelog:
-            return "Grace_log"
-        case .studio306:
-            return "스튜디오306"
-        case .studiocafe:
-            return "스튜디오카페"
-        case .holyfire:
-            return "홀리파이어"
-        }
-    }
-    
-    var logoImageNamed: String {
-        return "diary_share_\(self)"
-    }
-}
-
-// MARK: - Diary Setting
 
 enum DiarySettingMenu: CaseIterable {
     case setting

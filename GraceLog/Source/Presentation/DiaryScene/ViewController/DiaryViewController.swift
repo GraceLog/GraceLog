@@ -127,17 +127,15 @@ final class DiaryViewController: UIViewController, View {
     }
     
     func bind(reactor: DiaryViewReactor) {
-        diaryEditView.titleInputView.didEndEditing
-            .withLatestFrom(diaryEditView.titleInputView.text)
-            .subscribe(with: self) { owner, text in
-                reactor.action.onNext(.updateTitle(text))
+        diaryEditView.titleInputView.text
+            .subscribe(with: self) { owner, title in
+                reactor.action.onNext(.updateTitle(title))
             }
             .disposed(by: disposeBag)
         
-        diaryEditView.descriptionInputView.didEndEditing
-            .withLatestFrom(diaryEditView.descriptionInputView.text)
-            .subscribe(with: self) { owner, text in
-                reactor.action.onNext(.updateDescription(text))
+        diaryEditView.descriptionInputView.text
+            .subscribe(with: self) { owner, content in
+                reactor.action.onNext(.updateContent(content))
             }
             .disposed(by: disposeBag)
         

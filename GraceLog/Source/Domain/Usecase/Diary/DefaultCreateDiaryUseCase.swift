@@ -10,7 +10,9 @@ import RxRelay
 final class DefaultCreateDiaryUseCase: CreateDiaryUseCase {
     var createDiaryResult = PublishRelay<Bool>()
     
-    func createDiary() {
+    func createDiary(title: String, content: String, selectedKeywords: [DiaryKeyword], shareOptions: [DiaryShareOption]) {
+        print("작성된 일기장 제목: \(title)\n작성된 일기장 내용: \(content)\n작성된 일기장 키워드들: \(selectedKeywords)\n작성된 일기장 공유목록: \(shareOptions)")
+        
         let result = [true, false].shuffled()[0]
         createDiaryResult.accept(result)
     }
