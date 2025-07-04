@@ -59,7 +59,7 @@ final class DefaultHomeRepository: HomeRepository {
                     let diaryItems = diaryDTO.items.map { itemDTO in
                         return CommunityDiaryItem(
                             id: itemDTO.id,
-                            type: CommunityItemType(rawValue: itemDTO.type) ?? .regular,
+                            type: CommunityDiaryItemType(rawValue: itemDTO.type) ?? .others,
                             username: itemDTO.username,
                             title: itemDTO.title,
                             subtitle: itemDTO.subtitle,
