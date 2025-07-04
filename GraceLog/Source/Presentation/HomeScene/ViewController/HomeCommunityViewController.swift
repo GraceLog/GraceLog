@@ -83,48 +83,25 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
 // MARK: - Bindings
 extension HomeCommunityViewController {
     private func bindCommunitySelectedCollectionView(reactor: HomeCommunityViewReactor) {
-        let communityDataSource = RxCollectionViewSectionedReloadDataSource<HomeCommunityListSection>(
-            configureCell: { [weak self] _, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
-                    for: indexPath
-                ) as? HomeCommunityListCollectionViewCell ?? HomeCommunityListCollectionViewCell()
-                
-                let selectedId = self?.reactor?.currentState.selectedCommunityId
-                let isSelected = item.community.id == selectedId
+        reactor.state.map { $0.communitys }
+            .asDriver(onErrorJustReturn: [])
+            .drive(communitySelectedView.communityListCollectionView.rx.items(
+                cellIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
+                cellType: HomeCommunityListCollectionViewCell.self)
+            ) { index, item, cell in
+                let selectedId = reactor.currentState.selectedCommunityId
+                let isSelected = item.id == selectedId
                 
                 cell.updateUI(
-                    imageUrl: item.community.imageName,
-                    community: item.community.title,
+                    imageUrl: item.imageName,
+                    community: item.title,
                     isSelected: isSelected
                 )
-                return cell
             }
-        )
-        
-        reactor.pulse(\.$communitys)
-            .map { communities in
-                let items = communities.map { community in
-                    CommunityItem.community(community)
-                }
-                return [HomeCommunityListSection.communitySection(items: items)]
-            }
-            .bind(to: communitySelectedView.communityListCollectionView.rx.items(dataSource: communityDataSource))
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.selectedCommunityId }
-            .distinctUntilChanged()
-            .skip(1) // 초기 값 nil이기 때문
-            .subscribe(onNext: { [weak self] _ in
-                self?.communitySelectedView.communityListCollectionView.reloadData()
-            })
-            .disposed(by: disposeBag)
-        
-        communitySelectedView.communityListCollectionView.rx.itemSelected
-            .withLatestFrom(reactor.pulse(\.$communitys)) { indexPath, communitys in
-                return communitys[indexPath.item].id
-            }
-            .map { HomeCommunityViewReactor.Action.selectCommunity(id: $0) }
+        communitySelectedView.communityListCollectionView.rx.modelSelected(Community.self)
+            .map { HomeCommunityViewReactor.Action.didSelectCommuniy(selectedCommunityId: $0.id) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -132,137 +109,70 @@ extension HomeCommunityViewController {
     private func bindCommunityDiaryTableView(reactor: HomeCommunityViewReactor) {
         let diaryDataSource = RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>(
             configureCell: { _, tableView, indexPath, item in
-                switch item {
-                case .diary(let diaryItem):
-                    switch diaryItem.type {
-                    case .my:
-                        let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityMyDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityMyDiaryTableViewCell
+                guard let diaryItem = item.diaryItem else { return UITableViewCell() }
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityDiaryTableViewCell
+                cell.setDiaryType(diaryItem.type)
+                
+                cell.updateUI(
+                    username: diaryItem.username,
+                    title: diaryItem.title,
+                    subtitle: diaryItem.subtitle,
+                    likes: diaryItem.likes,
+                    comments: diaryItem.comments,
+                    isLiked: diaryItem.isLiked
+                )
+                
+                cell.profileImgView.rx.gestureTap
+                    .asDriver()
+                    .drive(onNext: { [weak self] _ in
+                        guard let self,
+                              let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
+                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
+                            return
+                        }
                         
-                        cell.updateUI(
-                            title: diaryItem.title,
-                            subtitle: diaryItem.subtitle,
-                            likes: diaryItem.likes,
-                            comments: diaryItem.comments,
-                            isLiked: diaryItem.isLiked
-                        )
+                        // TODO: - 선택한 유저 정보로 이동
+                        if case .diary(let diaryItem) = selectedItem {
+                            let username = diaryItem.username
+                            print("선택된 유저 이름: \(username)")
+                        }
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.diaryCardView.rx.gestureTap
+                    .asDriver()
+                    .drive(onNext: { [weak self] _ in
+                        guard let self,
+                              let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
+                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
+                            return
+                        }
                         
-                        cell.profileImgView.rx.gestureTap
-                            .asDriver()
-                            .drive(onNext: { [weak self] _ in
-                                guard let self,
-                                      let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                                      let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
-                                    return
-                                }
-
-                                // TODO: - 선택한 유저 정보로 이동
-                                if case .diary(let diaryItem) = selectedItem {
-                                    let username = diaryItem.username
-                                    print("선택된 유저 이름: \(username)")
-                                }
-                            })
-                            .disposed(by: cell.disposeBag)
-                        
-                        cell.diaryCardView.rx.gestureTap
-                            .asDriver()
-                            .drive(onNext: { [weak self] _ in
-                                guard let self,
-                                      let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                                      let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
-                                    return
-                                }
-                                
-                                // TODO: - 선택한 감사일기 상세로 이동
-                                print("선택된 감사일기 정보: \(selectedItem)\n선택된 유저 인덱스: \(indexPath)")
-                            })
-                            .disposed(by: cell.disposeBag)
-                        
-                        cell.likeButton.rx.tap
-                            .throttle(.seconds(2), scheduler: MainScheduler.instance)
-                            .map { HomeCommunityViewReactor.Action.didTapLike(diaryId: diaryItem.id)}
-                            .bind(to: reactor.action)
-                            .disposed(by: cell.disposeBag)
-                        
-                        cell.commentButton.rx.tap
-                            .asDriver()
-                            .drive(onNext: { [weak self] _ in
-                                guard let self,
-                                      let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                                      let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
-                                    return
-                                }
-                                print("선택한 댓글 아이템 \(selectedItem)")
-                            })
-                            .disposed(by: cell.disposeBag)
-                        
-                        return cell
-                    case .regular:
-                        let cell = tableView.dequeueReusableCell(
-                            withIdentifier: HomeCommunityUserDiaryTableViewCell.reuseIdentifier,
-                            for: indexPath
-                        ) as! HomeCommunityUserDiaryTableViewCell
-                        
-                        cell.updateUI(
-                            username: diaryItem.username,
-                            title: diaryItem.title,
-                            subtitle: diaryItem.subtitle,
-                            likes: diaryItem.likes,
-                            comments: diaryItem.comments,
-                            isLiked: diaryItem.isLiked
-                        )
-                        
-                        cell.profileImageView.rx.gestureTap
-                            .asDriver()
-                            .drive(onNext: { [weak self] _ in
-                                guard let self,
-                                      let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                                      let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
-                                    return
-                                }
-                                
-                                // TODO: - 선택한 유저 정보로 이동
-                                if case .diary(let diaryItem) = selectedItem {
-                                    let username = diaryItem.username
-                                    print("선택된 유저 이름: \(username)")
-                                }
-                            })
-                            .disposed(by: cell.disposeBag)
-                        
-                        cell.diaryCardView.rx.gestureTap
-                            .asDriver()
-                            .drive(onNext: { [weak self] _ in
-                                guard let self,
-                                      let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                                      let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
-                                    return
-                                }
-                                
-                                // TODO: - 선택한 감사일기 상세로 이동
-                                print("선택된 감사일기 정보: \(selectedItem)\n선택된 유저 인덱스: \(indexPath)")
-                            })
-                            .disposed(by: cell.disposeBag)
-                        
-                        cell.likeButton.rx.tap
-                            .throttle(.seconds(2), scheduler: MainScheduler.instance)
-                            .map { HomeCommunityViewReactor.Action.didTapLike(diaryId: diaryItem.id)}
-                            .bind(to: reactor.action)
-                            .disposed(by: cell.disposeBag)
-                        
-                        cell.commentButton.rx.tap
-                            .asDriver()
-                            .drive(onNext: { [weak self] _ in
-                                guard let self,
-                                      let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                                      let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
-                                    return
-                                }
-                                print("선택한 댓글 아이템 \(selectedItem)")
-                            })
-                            .disposed(by: cell.disposeBag)
-                        
-                        return cell
-                    }
-                }
+                        // TODO: - 선택한 감사일기 상세로 이동
+                        print("선택된 감사일기 정보: \(selectedItem)\n선택된 유저 인덱스: \(indexPath)")
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.likeButton.rx.tap
+                    .throttle(.seconds(2), scheduler: MainScheduler.instance)
+                    .map { HomeCommunityViewReactor.Action.didTapLike(diaryId: diaryItem.id)}
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.commentButton.rx.tap
+                    .asDriver()
+                    .drive(onNext: { [weak self] _ in
+                        guard let self,
+                              let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
+                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
+                            return
+                        }
+                        print("선택한 댓글 아이템 \(selectedItem)")
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                return cell
             }
         )
         
