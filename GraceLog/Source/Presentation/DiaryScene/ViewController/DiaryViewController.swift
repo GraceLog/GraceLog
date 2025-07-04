@@ -175,6 +175,7 @@ final class DiaryViewController: UIViewController, View {
             .disposed(by: disposeBag)
         
         shareButton.rx.tap
+            .throttle(.milliseconds(500), latest: false, scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
             .map { DiaryViewReactor.Action.didTapShareButton }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
