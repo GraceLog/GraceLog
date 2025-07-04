@@ -122,7 +122,7 @@
 		DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2FC2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift */; };
 		DE9565032DC4B311006DD9CF /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9565022DC4B311006DD9CF /* KeychainService.swift */; };
 		DE9A1FCA2D6AAC8C0044F655 /* HomeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FC92D6AAC8C0044F655 /* HomeViewReactor.swift */; };
-		DE9A1FCC2D6C7D890044F655 /* HomeCommunityMyDiaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FCB2D6C7D890044F655 /* HomeCommunityMyDiaryTableViewCell.swift */; };
+		DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FCB2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift */; };
 		DE9A1FCE2D6C86C00044F655 /* HomeCommunityUserDiaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FCD2D6C86C00044F655 /* HomeCommunityUserDiaryTableViewCell.swift */; };
 		DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */; };
 		DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FD62D79AB8B0044F655 /* HomeCommunityContent.swift */; };
@@ -326,7 +326,7 @@
 		DE66C2FC2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE9565022DC4B311006DD9CF /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		DE9A1FC92D6AAC8C0044F655 /* HomeViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewReactor.swift; sourceTree = "<group>"; };
-		DE9A1FCB2D6C7D890044F655 /* HomeCommunityMyDiaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityMyDiaryTableViewCell.swift; sourceTree = "<group>"; };
+		DE9A1FCB2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDiaryTableViewCell.swift; sourceTree = "<group>"; };
 		DE9A1FCD2D6C86C00044F655 /* HomeCommunityUserDiaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityUserDiaryTableViewCell.swift; sourceTree = "<group>"; };
 		DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDateHeaderView.swift; sourceTree = "<group>"; };
 		DE9A1FD62D79AB8B0044F655 /* HomeCommunityContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityContent.swift; sourceTree = "<group>"; };
@@ -711,7 +711,7 @@
 		DE2387442E0BE64200893D8C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				DE9A1FCB2D6C7D890044F655 /* HomeCommunityMyDiaryTableViewCell.swift */,
+				DE9A1FCB2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift */,
 				DE9A1FCD2D6C86C00044F655 /* HomeCommunityUserDiaryTableViewCell.swift */,
 				DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */,
 				DEACFE672E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift */,
@@ -1701,7 +1701,7 @@
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
-				DE9A1FCC2D6C7D890044F655 /* HomeCommunityMyDiaryTableViewCell.swift in Sources */,
+				DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserTarget.swift in Sources */,
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,

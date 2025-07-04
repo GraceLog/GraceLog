@@ -13,14 +13,14 @@ struct CommunityDiary {
     var items: [CommunityDiaryItem]
 }
 
-enum CommunityItemType: String {
-    case regular
-    case my
+enum CommunityDiaryItemType: String {
+    case me
+    case others
 }
 
 struct CommunityDiaryItem {
     let id: Int
-    let type: CommunityItemType
+    let type: CommunityDiaryItemType
     let username: String
     let title: String
     let subtitle: String
