@@ -1,5 +1,5 @@
 //
-//  DefaultCreateDiaryUseCase.swift
+//  DefaultDiaryUseCase.swift
 //  GraceLog
 //
 //  Created by 이상준 on 3/28/25.
@@ -7,7 +7,9 @@
 
 import RxRelay
 
-final class DefaultCreateDiaryUseCase: CreateDiaryUseCase {
+typealias DiaryUseCase = DiaryCreatableUseCase & DiaryDeletableUseCase
+
+final class DefaultDiaryUseCase: DiaryUseCase {
     var createDiaryResult = PublishRelay<Bool>()
     
     func createDiary(title: String, content: String, selectedKeywords: [DiaryKeyword], shareOptions: [DiaryShareOption]) {

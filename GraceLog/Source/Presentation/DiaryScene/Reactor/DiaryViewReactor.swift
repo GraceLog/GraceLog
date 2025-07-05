@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class DiaryViewReactor: Reactor {
-    private let createDiaryUseCase: CreateDiaryUseCase
+    private let usecase: DiaryCreatableUseCase
     
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
@@ -42,8 +42,8 @@ final class DiaryViewReactor: Reactor {
         @Pulse var isSuccessCreateDiary: Bool?
     }
     
-    init(createDiaryUseCase: CreateDiaryUseCase) {
-        self.createDiaryUseCase = createDiaryUseCase
+    init(usecase: DiaryCreatableUseCase) {
+        self.usecase = usecase
         self.initialState = State(
             images: [], 
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
@@ -77,7 +77,7 @@ extension DiaryViewReactor {
         case .updateContent(let content):
             diaryContent = content
         case .didTapShareButton:
-            createDiaryUseCase.createDiary(
+            usecase.createDiary(
                 title: diaryTitle,
                 content: diaryContent,
                 selectedKeywords: Array(selectedKeywords),
@@ -101,7 +101,7 @@ extension DiaryViewReactor {
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
         Observable.merge(
-            createDiaryUseCase.createDiaryResult.map { .setCreateDiaryResult($0) },
+            usecase.createDiaryResult.map { .setCreateDiaryResult($0) },
             mutation
         )
     }
