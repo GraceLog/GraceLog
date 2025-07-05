@@ -37,9 +37,9 @@ final class DiaryViewReactor: Reactor {
     
     struct State {
         @Pulse var images: [DiaryImage]
-        var keywords: [DiaryKeywordState]
-        var shareStates: [DiaryShareState]
-        var isSuccessCreateDiary: Bool?
+        @Pulse var keywords: [DiaryKeywordState]
+        @Pulse var shareStates: [DiaryShareState]
+        @Pulse var isSuccessCreateDiary: Bool?
     }
     
     init(createDiaryUseCase: CreateDiaryUseCase) {

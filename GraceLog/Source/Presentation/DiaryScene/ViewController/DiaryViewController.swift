@@ -146,8 +146,7 @@ final class DiaryViewController: UIViewController, View {
             }
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.shareStates }
+        reactor.pulse(\.$shareStates)
             .asDriver(onErrorJustReturn: [])
             .drive(diaryShareView.diaryShareTableView.rx.items(
                 cellIdentifier: DiaryShareTableViewCell.identifier,
@@ -178,8 +177,8 @@ final class DiaryViewController: UIViewController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .compactMap { $0.isSuccessCreateDiary }
+        reactor.pulse(\.$isSuccessCreateDiary)
+            .compactMap { $0 }
             .subscribe(with: self) { owner, isSuccess in
                 // TODO: - 일기장 생성 성공여부에 따른 로직 구현
                 print("일기장 생성 성공여부: \(isSuccess)")
@@ -238,8 +237,7 @@ extension DiaryViewController {
     }
 
     private func bindDiaryKeywordCollectionView(reactor: DiaryViewReactor) {
-        reactor.state
-            .map { $0.keywords }
+        reactor.pulse(\.$keywords)
             .asDriver(onErrorJustReturn: [])
             .drive(diaryKeywordView.keywordCollectionView.rx.items(
                 cellIdentifier: DiaryKeywordCollectionViewCell.identifier,
