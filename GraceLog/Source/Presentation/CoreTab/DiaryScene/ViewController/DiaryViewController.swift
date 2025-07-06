@@ -15,8 +15,6 @@ import RxDataSources
 import YPImagePicker
 
 final class DiaryViewController: UIViewController, View {
-    typealias Reactor = DiaryViewReactor
-    
     var disposeBag = DisposeBag()
     
     private lazy var scrollView = UIScrollView().then {
@@ -47,6 +45,15 @@ final class DiaryViewController: UIViewController, View {
         $0.clipsToBounds = true
     }
     
+    init(reactor: DiaryViewReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayouts()
@@ -55,6 +62,7 @@ final class DiaryViewController: UIViewController, View {
     }
     
     private func setupStyles() {
+        view.backgroundColor = .white
         diaryKeywordView.keywordCollectionView.delegate = self
     }
     

@@ -39,7 +39,7 @@ final class ProfileEditCoordinator: Coordinator {
     
     func didFinishProfileEdit() {
         navigationController.popViewController(animated: true)
-        parentCoordinator?.childDidFinish(self)
+        parentCoordinator?.removeChildCoordinator(self)
     }
     
     func showImagePicker(completion: @escaping (UIImage?) -> Void) {

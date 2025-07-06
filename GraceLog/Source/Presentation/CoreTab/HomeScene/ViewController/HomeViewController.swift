@@ -68,11 +68,6 @@ final class HomeViewController: GraceLogBaseViewController, View {
         homeCommunityViewController
     ]
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.reactor = HomeViewReactor(homeUsecase: DefaultHomeUseCase(
@@ -95,6 +90,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
     }
     
     private func configureUI() {
+        view.backgroundColor = .white
         let safeArea = view.safeAreaLayoutGuide
         
         [navigationBar, pageViewController.view].forEach { view.addSubview($0) }

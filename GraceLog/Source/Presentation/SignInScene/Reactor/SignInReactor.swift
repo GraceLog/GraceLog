@@ -90,7 +90,8 @@ extension SignInReactor {
                 .asObservable()
                 .withUnretained(self)
                 .flatMap { owner, result -> Observable<Mutation> in
-                    owner.coordinator?.didFinishSignIn()
+                    // TODO: - 상준: 이 부분 Coordinator 리팩토링 이후 수정 필요
+//                    owner.coordinator?.didFinishSignIn()
                     return .empty()
                 }
                 .catch { error in
