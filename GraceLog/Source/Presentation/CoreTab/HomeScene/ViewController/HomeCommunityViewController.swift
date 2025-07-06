@@ -176,7 +176,7 @@ extension HomeCommunityViewController {
             }
         )
         
-        reactor.pulse(\.$communityDiarySections)
+        reactor.state.map { $0.communityDiarySections }
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
             .disposed(by: disposeBag)
