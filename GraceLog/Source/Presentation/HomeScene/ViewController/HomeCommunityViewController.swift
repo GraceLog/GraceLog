@@ -83,25 +83,29 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
 // MARK: - Bindings
 extension HomeCommunityViewController {
     private func bindCommunitySelectedCollectionView(reactor: HomeCommunityViewReactor) {
-        reactor.state.map { $0.communitys }
-            .asDriver(onErrorJustReturn: [])
-            .drive(communitySelectedView.communityListCollectionView.rx.items(
-                cellIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
-                cellType: HomeCommunityListCollectionViewCell.self)
-            ) { index, item, cell in
-                let selectedId = reactor.currentState.selectedCommunityId
-                let isSelected = item.id == selectedId
-                
-                cell.updateUI(
-                    imageUrl: item.imageName,
-                    community: item.title,
-                    isSelected: isSelected
-                )
-            }
-            .disposed(by: disposeBag)
+        Observable.combineLatest(
+            reactor.pulse(\.$communitys),
+            reactor.pulse(\.$selectedCommunityId)
+        )
+        .asDriver(onErrorJustReturn: ([], nil))
+        .map { $0.0 }
+        .drive(communitySelectedView.communityListCollectionView.rx.items(
+            cellIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
+            cellType: HomeCommunityListCollectionViewCell.self)
+        ) { index, item, cell in
+            let selectedId = reactor.currentState.selectedCommunityId
+            let isSelected = item.id == selectedId
+            
+            cell.updateUI(
+                imageUrl: item.imageName,
+                community: item.title,
+                isSelected: isSelected
+            )
+        }
+        .disposed(by: disposeBag)
         
         communitySelectedView.communityListCollectionView.rx.modelSelected(Community.self)
-            .map { HomeCommunityViewReactor.Action.didSelectCommuniy(selectedCommunityId: $0.id) }
+            .map { HomeCommunityViewReactor.Action.didSelectCommunity(communityId: $0.id) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
