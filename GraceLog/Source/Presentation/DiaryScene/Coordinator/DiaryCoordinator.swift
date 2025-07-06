@@ -24,7 +24,7 @@ final class DiaryCoordinator: Coordinator {
         let diaryVC = DiaryViewController()
         diaryVC.view.backgroundColor = .white
         diaryVC.title = "일기작성"
-        diaryVC.reactor = DiaryViewReactor()
+        diaryVC.reactor = DiaryViewReactor(usecase: DefaultDiaryUseCase())
         navigationController.setViewControllers([diaryVC], animated: false)
         return navigationController
     }

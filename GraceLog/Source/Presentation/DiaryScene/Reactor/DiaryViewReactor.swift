@@ -10,9 +10,13 @@ import RxSwift
 import RxCocoa
 
 final class DiaryViewReactor: Reactor {
+    private let usecase: DiaryCreatableUseCase
+    
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
     private var selectedShareOptions: Set<DiaryShareOption> = []
+    private var diaryTitle = ""
+    private var diaryContent = ""
     
     var initialState: State
     
@@ -20,31 +24,30 @@ final class DiaryViewReactor: Reactor {
         case updateImages([UIImage])
         case deleteImage(at: Int)
         case updateTitle(String)
-        case updateDescription(String)
-        case saveDiary
+        case updateContent(String)
+        case didTapShareButton
         case didSelectKeyword(DiaryKeywordState)
         case didSelectShareOption(DiaryShareState)
     }
     
     enum Mutation {
         case setImages([DiaryImage])
-        case setSaving(Bool)
-        case setSaveResult(Bool)
+        case setCreateDiaryResult(Bool)
     }
     
     struct State {
         @Pulse var images: [DiaryImage]
-        var keywords: [DiaryKeywordState]
-        var shareStates: [DiaryShareState]
-        var isSaving: Bool
+        @Pulse var keywords: [DiaryKeywordState]
+        @Pulse var shareStates: [DiaryShareState]
+        @Pulse var isSuccessCreateDiary: Bool?
     }
     
-    init() {
+    init(usecase: DiaryCreatableUseCase) {
+        self.usecase = usecase
         self.initialState = State(
             images: [], 
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
-            shareStates: DiaryShareOption.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) },
-            isSaving: false
+            shareStates: DiaryShareOption.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) }
         )
     }
 }
@@ -70,29 +73,37 @@ extension DiaryViewReactor {
             }
             return .just(.setImages(updatedImages))
         case .updateTitle(let title):
-            return .empty()
-        case .updateDescription(let description):
-            return .empty()
-        case .saveDiary:
-            return Observable.concat([
-                .just(.setSaving(true)),
-            ])
+            diaryTitle = title
+        case .updateContent(let content):
+            diaryContent = content
+        case .didTapShareButton:
+            usecase.createDiary(
+                title: diaryTitle,
+                content: diaryContent,
+                selectedKeywords: Array(selectedKeywords),
+                shareOptions: Array(selectedShareOptions)
+            )
         case .didSelectKeyword(let state):
             if state.isSelected {
                 selectedKeywords.insert(state.keyword)
             } else {
                 selectedKeywords.remove(state.keyword)
             }
-            return .empty()
-            
         case .didSelectShareOption(let state):
             if state.isSelected {
                 selectedShareOptions.insert(state.diaryOption)
             } else {
                 selectedShareOptions.remove(state.diaryOption)
             }
-            return .empty()
         }
+        return .empty()
+    }
+    
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        Observable.merge(
+            usecase.createDiaryResult.map { .setCreateDiaryResult($0) },
+            mutation
+        )
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -101,69 +112,25 @@ extension DiaryViewReactor {
         switch mutation {
         case .setImages(let images):
             newState.images = images
-        case .setSaving(let isSaving):
-            newState.isSaving = isSaving
-        case .setSaveResult:
-            break
+        case .setCreateDiaryResult(let isSuccess):
+            newState.isSuccessCreateDiary = isSuccess
         }
         
         return newState
     }
 }
 
-// MARK: - Diary Keyword State/Model
+// MARK: - Diary Model
 
 struct DiaryKeywordState {
     let keyword: DiaryKeyword
     let isSelected: Bool
 }
 
-enum DiaryKeyword: String, CaseIterable {
-    case obedience    = "순종"
-    case faith        = "믿음"
-    case love         = "사랑"
-    case vision       = "비전"
-    case guidance     = "인내"
-    case peace        = "평안"
-    case suffering    = "고난"
-    case perseverance = "끈기"
-}
-
-// MARK: - Diary Share State/Model
-
 struct DiaryShareState {
     let diaryOption: DiaryShareOption
     let isSelected: Bool
 }
-
-enum DiaryShareOption: String, CaseIterable {
-    case saeromchurch
-    case gracelog
-    case studio306
-    case studiocafe
-    case holyfire
-    
-    var title: String {
-        switch self {
-        case .saeromchurch:
-            return "새롬교회"
-        case .gracelog:
-            return "Grace_log"
-        case .studio306:
-            return "스튜디오306"
-        case .studiocafe:
-            return "스튜디오카페"
-        case .holyfire:
-            return "홀리파이어"
-        }
-    }
-    
-    var logoImageNamed: String {
-        return "diary_share_\(self)"
-    }
-}
-
-// MARK: - Diary Setting
 
 enum DiarySettingMenu: CaseIterable {
     case setting

@@ -127,17 +127,15 @@ final class DiaryViewController: UIViewController, View {
     }
     
     func bind(reactor: DiaryViewReactor) {
-        diaryEditView.titleInputView.didEndEditing
-            .withLatestFrom(diaryEditView.titleInputView.text)
-            .subscribe(with: self) { owner, text in
-                reactor.action.onNext(.updateTitle(text))
+        diaryEditView.titleInputView.text
+            .subscribe(with: self) { owner, title in
+                reactor.action.onNext(.updateTitle(title))
             }
             .disposed(by: disposeBag)
         
-        diaryEditView.descriptionInputView.didEndEditing
-            .withLatestFrom(diaryEditView.descriptionInputView.text)
-            .subscribe(with: self) { owner, text in
-                reactor.action.onNext(.updateDescription(text))
+        diaryEditView.descriptionInputView.text
+            .subscribe(with: self) { owner, content in
+                reactor.action.onNext(.updateContent(content))
             }
             .disposed(by: disposeBag)
         
@@ -148,8 +146,7 @@ final class DiaryViewController: UIViewController, View {
             }
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.shareStates }
+        reactor.pulse(\.$shareStates)
             .asDriver(onErrorJustReturn: [])
             .drive(diaryShareView.diaryShareTableView.rx.items(
                 cellIdentifier: DiaryShareTableViewCell.identifier,
@@ -175,9 +172,16 @@ final class DiaryViewController: UIViewController, View {
             .disposed(by: disposeBag)
         
         shareButton.rx.tap
-            .subscribe(with: self) { owner, _ in
-                // TODO: - 공유하기관련 액션 구현 필요
-                print("공유하기 버튼 클릭")
+            .throttle(.milliseconds(500), latest: false, scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
+            .map { DiaryViewReactor.Action.didTapShareButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessCreateDiary)
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 일기장 생성 성공여부에 따른 로직 구현
+                print("일기장 생성 성공여부: \(isSuccess)")
             }
             .disposed(by: disposeBag)
         
@@ -233,8 +237,7 @@ extension DiaryViewController {
     }
 
     private func bindDiaryKeywordCollectionView(reactor: DiaryViewReactor) {
-        reactor.state
-            .map { $0.keywords }
+        reactor.pulse(\.$keywords)
             .asDriver(onErrorJustReturn: [])
             .drive(diaryKeywordView.keywordCollectionView.rx.items(
                 cellIdentifier: DiaryKeywordCollectionViewCell.identifier,
