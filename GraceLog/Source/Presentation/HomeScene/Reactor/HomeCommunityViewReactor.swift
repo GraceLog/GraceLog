@@ -15,7 +15,7 @@ final class HomeCommunityViewReactor: Reactor {
     private let disposeBag = DisposeBag()
     
     enum Action {
-        case didSelectCommuniy(selectedCommunityId: Int)
+        case didSelectCommunity(communityId: Int)
         case didTapLike(diaryId: Int)
     }
     
@@ -30,6 +30,7 @@ final class HomeCommunityViewReactor: Reactor {
         var communitys: [Community] = []
         var communityDiarySections: [HomeCommunityDiarySection] = []
         var selectedCommunityId: Int?
+        @Pulse var communitys: [Community]
     }
     
     let initialState = State()
@@ -47,8 +48,8 @@ final class HomeCommunityViewReactor: Reactor {
 extension HomeCommunityViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .didSelectCommuniy(let selectedCommunityId):
-            return .just(.setSelectedCommunityId(selectedCommunityId))
+        case .didSelectCommunity(let communityId):
+            return .just(.setSelectedCommunityId(communityId))
         case .didTapLike(let diaryId):
             return .just(.setDiaryLike(diaryId: diaryId))
         }
