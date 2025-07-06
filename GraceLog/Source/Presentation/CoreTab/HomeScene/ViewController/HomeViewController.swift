@@ -63,10 +63,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
     private lazy var homeMyViewController = HomeMyViewController()
     private lazy var homeCommunityViewController = HomeCommunityViewController(
         reactor: HomeCommunityViewReactor(
-            homeUsecase: DefaultHomeUseCase(
-                userRepository: DefaultUserRepository(
-                    userService: UserService()
-                ),
+            usecase: DefaultHomeCommunityUseCase(
                 homeRepository: DefaultHomeRepository()
             )
         )
@@ -92,8 +89,8 @@ final class HomeViewController: GraceLogBaseViewController, View {
     }
     
     private func configurePageViewController() {
-        dataSource = nil
-        delegate = self
+        pageViewController.dataSource = nil
+        pageViewController.delegate = self
         
         pageViewController.setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
     }
