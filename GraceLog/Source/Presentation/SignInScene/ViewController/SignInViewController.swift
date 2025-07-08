@@ -23,7 +23,6 @@ import CryptoKit
 import AuthenticationServices
 
 final class SignInViewController: UIViewController {
-    typealias Reactor = SignInReactor
     var disposeBag = DisposeBag()
     fileprivate var currentNonce: String?
     
@@ -78,6 +77,15 @@ final class SignInViewController: UIViewController {
     
     private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: .black, padding: 0).then {
         $0.isHidden = true
+    }
+    
+    init(reactor: SignInReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {

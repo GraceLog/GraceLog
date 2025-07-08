@@ -16,10 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        appCoordinator = GraceLogAppCoordinator(window)
+        let navigationController = NavigationController()
+        appCoordinator = GraceLogAppCoordinator(navigationController: navigationController)
         appCoordinator?.start()
         
-        NavigationBarUtil.setupDefaultAppearance()
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

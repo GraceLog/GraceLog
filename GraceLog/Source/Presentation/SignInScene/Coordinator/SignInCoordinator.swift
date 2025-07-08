@@ -7,36 +7,19 @@
 
 import UIKit
 
-final class SignInCoordinator: Coordinator {
+final class SignInCoordinator: NavigationCoordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     
-    init() {
-        self.navigationController = .init()
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
     }
     
     func start() {
-        //
-    }
-    
-    func createSignInViewController() -> UIViewController {
-        let loginVC = SignInViewController()
-        let reactor = SignInReactor(
+        let signInViewController = SignInViewController(reactor: SignInReactor(
             signInUseCase: DefaultSignInUseCase(authRepository: DefaultAuthRepository(authService: AuthService()))
-        )
-        reactor.coordinator = self
-        loginVC.reactor = reactor
-        return loginVC
-    }
-    
-    func didFinishSignIn() {
-        if let appCoordinator = parentCoordinator as? GraceLogAppCoordinator {
-            appCoordinator.window?.rootViewController?.dismiss(animated: true) { [weak self] in
-                if let self = self {
-                    appCoordinator.removeChildCoordinator(self)
-                }
-            }
-        }
+        ))
+        navigationController.setViewControllers([signInViewController], animated: true)
     }
 }

@@ -55,6 +55,9 @@
 		70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */; };
 		70A97C482E18F61000F08DF6 /* DiaryShareOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C472E18F61000F08DF6 /* DiaryShareOption.swift */; };
 		70A97C4A2E191F0900F08DF6 /* DiaryDeletableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */; };
+		70A97C4D2E19500900F08DF6 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4C2E19500900F08DF6 /* MainTabbarController.swift */; };
+		70A97C4F2E1950DA00F08DF6 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */; };
+		70A97C512E196D4E00F08DF6 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C502E196D4E00F08DF6 /* NavigationController.swift */; };
 		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
@@ -242,6 +245,9 @@
 		70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeyword.swift; sourceTree = "<group>"; };
 		70A97C472E18F61000F08DF6 /* DiaryShareOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareOption.swift; sourceTree = "<group>"; };
 		70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDeletableUseCase.swift; sourceTree = "<group>"; };
+		70A97C4C2E19500900F08DF6 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
+		70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinator.swift; sourceTree = "<group>"; };
+		70A97C502E196D4E00F08DF6 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		70F006172E0EBA1900228C70 /* UIView+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Reactive.swift"; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -546,7 +552,6 @@
 			isa = PBXGroup;
 			children = (
 				DE3BFCD72D048B550076426D /* Coordinator.swift */,
-				DE3BFCD52D048B170076426D /* GraceLogAppCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -605,6 +610,18 @@
 				7048157D2DFFF95B009ECDBD /* FontName.swift */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		70A97C4B2E194FDC00F08DF6 /* CoreTab */ = {
+			isa = PBXGroup;
+			children = (
+				70A97C4C2E19500900F08DF6 /* MainTabbarController.swift */,
+				70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */,
+				DE3BFCC32D043D8B0076426D /* HomeScene */,
+				DE069B922D53A708007C2066 /* DiaryScene */,
+				02DC297F2DDC29C000662D8A /* MyInfoScene */,
+			);
+			path = CoreTab;
 			sourceTree = "<group>";
 		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
@@ -909,6 +926,7 @@
 		DE3BFCBE2D043C920076426D /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				DE3BFCD52D048B170076426D /* GraceLogAppCoordinator.swift */,
 				DE58FEB02D04284D008CADCD /* AppDelegate.swift */,
 				DE58FEB22D04284D008CADCD /* SceneDelegate.swift */,
 			);
@@ -929,11 +947,9 @@
 			isa = PBXGroup;
 			children = (
 				DE3BFCC42D043D9E0076426D /* Common */,
+				70A97C4B2E194FDC00F08DF6 /* CoreTab */,
 				DE2700442D1EFCF0005C9DCF /* SignInScene */,
-				DE3BFCC32D043D8B0076426D /* HomeScene */,
-				DE069B922D53A708007C2066 /* DiaryScene */,
 				DE3BFCC62D043DB70076426D /* SearchScene */,
-				02DC297F2DDC29C000662D8A /* MyInfoScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -995,6 +1011,7 @@
 			isa = PBXGroup;
 			children = (
 				0295ADFA2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift */,
+				70A97C502E196D4E00F08DF6 /* NavigationController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1577,8 +1594,10 @@
 				DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DE9A1FC62D69D62E0044F655 /* CommunityTableViewCell.swift in Sources */,
+				70A97C4F2E1950DA00F08DF6 /* MainTabCoordinator.swift in Sources */,
 				DE23873B2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
+				70A97C4D2E19500900F08DF6 /* MainTabbarController.swift in Sources */,
 				DE9A1FF22D7C065C0044F655 /* HomeContentDTO.swift in Sources */,
 				702D2B6E2E07107A00D5E71E /* AutoSizingTableView.swift in Sources */,
 				DE2700532D2113F2005C9DCF /* SignInReactor.swift in Sources */,
@@ -1604,6 +1623,7 @@
 				02DC29832DDC29C000662D8A /* ProfileEditViewController.swift in Sources */,
 				026656AB2DE7E9CA00541D96 /* NavigationBarUtil.swift in Sources */,
 				02DC29862DDC29C000662D8A /* MyInfoViewReactor.swift in Sources */,
+				70A97C512E196D4E00F08DF6 /* NavigationController.swift in Sources */,
 				02DC29872DDC29C000662D8A /* ProfileEditCoordinator.swift in Sources */,
 				02DC29882DDC29C000662D8A /* MyInfoTableViewCell.swift in Sources */,
 				02DC29892DDC29C000662D8A /* MyInfoViewController.swift in Sources */,

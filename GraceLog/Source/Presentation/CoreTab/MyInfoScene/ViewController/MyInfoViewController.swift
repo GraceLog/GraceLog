@@ -10,8 +10,6 @@ import RxDataSources
 import ReactorKit
 
 final class MyInfoViewController: GraceLogBaseViewController, View {
-    typealias Reactor = MyInfoViewReactor
-    
     var disposeBag = DisposeBag()
     
     private let navigationBar = GLNavigationBar().then {
@@ -54,8 +52,13 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
         }
     )
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(true, animated: false)
+    init(reactor: MyInfoViewReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -65,6 +68,8 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     }
     
     private func configureUI() {
+        view.backgroundColor = UIColor(hex: 0xF4F4F4)
+        
         let safeArea = view.safeAreaLayoutGuide
         
         view.addSubview(navigationBar)

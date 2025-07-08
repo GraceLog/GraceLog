@@ -1,13 +1,13 @@
 //
-//  SearchCoordinator.swift
+//  DiaryCoordinator.swift
 //  GraceLog
 //
-//  Created by 이상준 on 12/8/24.
+//  Created by 이상준 on 2/5/25.
 //
 
 import UIKit
 
-final class SearchCoordinator: NavigationCoordinator {
+final class DiaryCoordinator: NavigationCoordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -17,7 +17,7 @@ final class SearchCoordinator: NavigationCoordinator {
     }
     
     func start() {
-        let searchViewController = SearchViewController()
-        navigationController.setViewControllers([searchViewController], animated: false)
+        let diaryVC = DiaryViewController(reactor: DiaryViewReactor(usecase: DefaultDiaryUseCase()))
+        navigationController.setViewControllers([diaryVC], animated: false)
     }
 }
