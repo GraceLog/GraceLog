@@ -13,11 +13,6 @@ struct CommunityDiary {
     var items: [CommunityDiaryItem]
 }
 
-enum CommunityDiaryItemType: String {
-    case me
-    case others
-}
-
 struct CommunityDiaryItem {
     let id: Int
     let type: CommunityDiaryItemType
@@ -26,7 +21,7 @@ struct CommunityDiaryItem {
     let subtitle: String
     var likes: Int
     var comments: Int
-    var isLiked: Bool = false
+    var isLiked: Bool
 }
 
 enum HomeCommunityDiaryItem: Equatable {
