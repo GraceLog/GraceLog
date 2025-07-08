@@ -16,7 +16,11 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     
-    private let diaryType = PublishRelay<CommunityDiaryItemType>()
+    var diaryType: CommunityDiaryItemType = .others {
+        didSet {
+            setupConstraints(diaryType: diaryType)
+        }
+    }
     
     let profileImgView = UIImageView().then {
         $0.setDimensions(width: 40, height: 40)
@@ -108,7 +112,6 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayouts()
-        bind()
     }
     
     override func prepareForReuse() {
@@ -120,7 +123,6 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
         contentLabel.text = nil
         
         disposeBag = DisposeBag()
-        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -140,15 +142,6 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
         }
         
         overlayView.addSubview(contentStackView)
-    }
-    
-    private func bind() {
-        diaryType
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] type in
-                self?.setupConstraints(diaryType: type)
-            })
-            .disposed(by: disposeBag)
     }
     
     private func setupConstraints(diaryType: CommunityDiaryItemType) {
@@ -220,11 +213,8 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
         }
     }
     
-    func setDiaryType(_ type: CommunityDiaryItemType) {
-        diaryType.accept(type)
-    }
-    
     func updateUI(username: String, title: String, subtitle: String, likes: Int, comments: Int, isLiked: Bool) {
+        setupConstraints(diaryType: diaryType)
         usernameLabel.text = username
         titleLabel.text = title
         contentLabel .text = subtitle
@@ -232,9 +222,7 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
         commentButton.setTitle("\(comments)", for: .normal)
         
         let heartImage = isLiked ? UIImage(named: "home_heart_selected") : UIImage(named: "home_heart")
-        var config = likeButton.configuration
-        config?.image = heartImage
-        likeButton.configuration = config
+        likeButton.setImage(heartImage, for: .normal)
         
         cardImageView.image = UIImage(named: "diary2")
         profileImgView.image = UIImage(named: "profile")

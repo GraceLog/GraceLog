@@ -69,7 +69,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
             $0.bottom.lessThanOrEqualToSuperview()
         }
     }
-    
+     
     func bind(reactor: HomeCommunityViewReactor) {
         bindCommunitySelectedCollectionView(reactor: reactor)
         bindCommunityDiaryTableView(reactor: reactor)
@@ -116,7 +116,7 @@ extension HomeCommunityViewController {
                 guard let diaryItem = item.diaryItem else { return UITableViewCell() }
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityDiaryTableViewCell
-                cell.setDiaryType(diaryItem.type)
+                cell.diaryType = diaryItem.type
                 
                 cell.updateUI(
                     username: diaryItem.username,
