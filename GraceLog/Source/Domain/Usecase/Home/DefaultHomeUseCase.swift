@@ -10,7 +10,6 @@ import RxSwift
 
 final class DefaultHomeUseCase: HomeUseCase {
     var homeMyData = BehaviorSubject<HomeContent?>(value: nil)
-    var homeCommunityData = BehaviorSubject<HomeCommunityContent?>(value: nil)
     var user = BehaviorSubject<GraceLogUser?>(value: nil)
     var error = PublishSubject<Error>()
     private let disposeBag = DisposeBag()
@@ -31,19 +30,6 @@ final class DefaultHomeUseCase: HomeUseCase {
                 },
                 onFailure: { err in
                     self.error.onNext(err)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    func fetchHomeCommunityContent() {
-        homeRepository.fetchHomeCommunityContent()
-            .subscribe(
-                onSuccess: { data in
-                    self.homeCommunityData.onNext(data)
-                },
-                onFailure: { err in
-                    self.error.onError(err)
                 }
             )
             .disposed(by: disposeBag)

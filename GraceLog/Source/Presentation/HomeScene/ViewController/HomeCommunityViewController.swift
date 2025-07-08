@@ -159,8 +159,8 @@ extension HomeCommunityViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.likeButton.rx.tap
-                    .throttle(.seconds(2), scheduler: MainScheduler.instance)
-                    .map { HomeCommunityViewReactor.Action.didTapLike(diaryId: diaryItem.id)}
+                    .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
+                    .map { HomeCommunityViewReactor.Action.didTapLikeButton(diaryId: diaryItem.id)}
                     .bind(to: reactor.action)
                     .disposed(by: cell.disposeBag)
                 
@@ -180,9 +180,33 @@ extension HomeCommunityViewController {
             }
         )
         
-        reactor.state.map { $0.communityDiarySections }
+        reactor.pulse(\.$communityDiarySections)
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessLikeDiary)
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 좋아요 성공여부에 따른 로직 구현
+                if isSuccess {
+                    print("좋아요 성공!")
+                } else {
+                    print("좋아요 실패!")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessUnlikeResult)
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 좋아요 성공여부에 따른 로직 구현
+                if isSuccess {
+                    print("좋아요 해제 성공!")
+                } else {
+                    print("좋아요 해제 실패!")
+                }
+            }
             .disposed(by: disposeBag)
     }
 }

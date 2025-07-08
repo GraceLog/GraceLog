@@ -11,12 +11,9 @@ import RxCocoa
 
 protocol HomeUseCase {
     var homeMyData: BehaviorSubject<HomeContent?> { get }
-    var homeCommunityData: BehaviorSubject<HomeCommunityContent?> { get }
     var user: BehaviorSubject<GraceLogUser?> { get }
     var error: PublishSubject<Error> { get }
     
     func fetchUser()
     func fetchHomeMyContent()
-    func fetchHomeCommunityContent()
-//    func fetchCommunityDiary(communityID: Int)
 }

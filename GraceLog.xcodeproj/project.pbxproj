@@ -177,6 +177,8 @@
 		DEEFEACC2D2A5E8200699692 /* GraceLogUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEAC92D29270500699692 /* GraceLogUser.swift */; };
 		DEEFEACD2D2A5E8400699692 /* GraceLogUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEAC92D29270500699692 /* GraceLogUser.swift */; };
 		DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEACE2D2A64CF00699692 /* SignInCoordinator.swift */; };
+		DEF8D6742E1A91EF00685517 /* HomeCommunityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8D6732E1A91EF00685517 /* HomeCommunityUseCase.swift */; };
+		DEF8D6762E1A925100685517 /* DefaultHomeCommunityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8D6752E1A925100685517 /* DefaultHomeCommunityUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,6 +373,8 @@
 		DED5589E2DC4B12200137B10 /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		DEEFEAC92D29270500699692 /* GraceLogUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogUser.swift; sourceTree = "<group>"; };
 		DEEFEACE2D2A64CF00699692 /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
+		DEF8D6732E1A91EF00685517 /* HomeCommunityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityUseCase.swift; sourceTree = "<group>"; };
+		DEF8D6752E1A925100685517 /* DefaultHomeCommunityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHomeCommunityUseCase.swift; sourceTree = "<group>"; };
 		E2561CE1730A7CC76CC990A3 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE7CB138D1109187A996503 /* Pods-GraceLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1191,6 +1195,7 @@
 			children = (
 				DE9A1FF42D7C07F40044F655 /* Protocol */,
 				DE9A1FF72D7C08070044F655 /* DefaultHomeUseCase.swift */,
+				DEF8D6752E1A925100685517 /* DefaultHomeCommunityUseCase.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1199,6 +1204,7 @@
 			isa = PBXGroup;
 			children = (
 				DE9A1FF52D7C07FE0044F655 /* HomeUseCase.swift */,
+				DEF8D6732E1A91EF00685517 /* HomeCommunityUseCase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1666,6 +1672,7 @@
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
 				DE9A1FFA2D7C09350044F655 /* HomeRepository.swift in Sources */,
 				0295ADFB2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift in Sources */,
+				DEF8D6762E1A925100685517 /* DefaultHomeCommunityUseCase.swift in Sources */,
 				DE9A1FDA2D79AD660044F655 /* HomeDataSource.swift in Sources */,
 				DED5589D2DC4AD3700137B10 /* Crypto.swift in Sources */,
 				DED558712DBC6FA800137B10 /* AuthService.swift in Sources */,
@@ -1676,6 +1683,7 @@
 				DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */,
 				DED5587D2DBC7B3100137B10 /* SignInRequestDTO.swift in Sources */,
 				DED5589F2DC4B12200137B10 /* KeychainAccessible.swift in Sources */,
+				DEF8D6742E1A91EF00685517 /* HomeCommunityUseCase.swift in Sources */,
 				DE5638512DA147EA00A12192 /* CommonSectionHeaderView.swift in Sources */,
 				70A97C4A2E191F0900F08DF6 /* DiaryDeletableUseCase.swift in Sources */,
 				DE66C2FB2D96B39B009A983F /* DefaultDiaryUseCase.swift in Sources */,
