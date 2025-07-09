@@ -8,11 +8,15 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
     static let reuseIdentifier = String(describing: HomeCommunityUserDiaryTableViewCell.self)
     
-    private let profileImgView = UIImageView().then {
+    var disposeBag = DisposeBag()
+    
+    let profileImageView = UIImageView().then {
         $0.setDimensions(width: 40, height: 40)
         $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .graceLightGray
@@ -25,9 +29,9 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         $0.textColor = .graceGray
     }
     
-    private let diaryCardView = UIView().then {
+    let diaryCardView = UIView().then {
         $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 25
         $0.clipsToBounds = true
     }
     
@@ -49,7 +53,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         $0.textColor = .white
     }
     
-    private lazy var likeButton = UIButton().then {
+    lazy var likeButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "home_heart")
         config.title = "4"
@@ -65,7 +69,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         $0.configuration = config
     }
     
-    private lazy var commentButton = UIButton().then {
+    lazy var commentButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "comment")
         config.title = "4"
@@ -86,6 +90,17 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         configureUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImageView.image = nil
+        cardImageView.image = nil
+        usernameLabel.text = nil
+        titleLabel.text = nil
+        contentLabel.text = nil
+        
+        disposeBag = DisposeBag()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -94,7 +109,7 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
         
-        let userStack = UIStackView(arrangedSubviews: [profileImgView, usernameLabel])
+        let userStack = UIStackView(arrangedSubviews: [profileImageView, usernameLabel])
         userStack.axis = .vertical
         userStack.spacing = 4
         userStack.alignment = .center
@@ -120,15 +135,19 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         overlayView.addSubview(contentStack)
         
         userStack.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.leading.equalToSuperview().offset(21)
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(21)
         }
         
         diaryCardView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().inset(10)
             $0.leading.equalTo(userStack.snp.trailing).offset(12)
+<<<<<<<< HEAD:GraceLog/Source/Presentation/CoreTab/HomeScene/View/Community/HomeCommunityUserTableViewCell.swift
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(diaryCardView.snp.width).multipliedBy(110.0/300.0)
+========
+            $0.trailing.equalToSuperview().inset(20)
+>>>>>>>> 8b1a1ff3f837e43cd7e9eb00e702e73914c248d2:GraceLog/Source/Presentation/CoreTab/HomeScene/View/Community/Cells/HomeCommunityUserDiaryTableViewCell.swift
         }
         
         cardImageView.snp.makeConstraints {
@@ -151,14 +170,21 @@ final class HomeCommunityUserDiaryTableViewCell: UITableViewCell {
         }
     }
     
+<<<<<<<< HEAD:GraceLog/Source/Presentation/CoreTab/HomeScene/View/Community/HomeCommunityUserTableViewCell.swift
     func updateUI(username: String, title: String, subtitle: String, likes: Int, comments: Int) {
+========
+    func updateUI(username: String, title: String, subtitle: String, likes: Int, comments: Int, isLiked: Bool) {
+>>>>>>>> 8b1a1ff3f837e43cd7e9eb00e702e73914c248d2:GraceLog/Source/Presentation/CoreTab/HomeScene/View/Community/Cells/HomeCommunityUserDiaryTableViewCell.swift
         usernameLabel.text = username
         titleLabel.text = title
         contentLabel.text = subtitle
         likeButton.setTitle("\(likes)", for: .normal)
         commentButton.setTitle("\(comments)", for: .normal)
         
+        let heartImage = isLiked ? UIImage(named: "home_heart_selected") : UIImage(named: "home_heart")
+        likeButton.setImage(heartImage, for: .normal)
+        
         cardImageView.image = UIImage(named: "diary2")
-        profileImgView.image = UIImage(named: "profile")
+        profileImageView.image = UIImage(named: "profile")
     }
 }
