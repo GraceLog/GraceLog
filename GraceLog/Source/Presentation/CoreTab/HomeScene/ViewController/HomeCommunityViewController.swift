@@ -69,7 +69,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
             $0.bottom.lessThanOrEqualToSuperview()
         }
     }
-    
+     
     func bind(reactor: HomeCommunityViewReactor) {
         bindCommunitySelectedCollectionView(reactor: reactor)
         bindCommunityDiaryTableView(reactor: reactor)
@@ -83,25 +83,29 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
 // MARK: - Bindings
 extension HomeCommunityViewController {
     private func bindCommunitySelectedCollectionView(reactor: HomeCommunityViewReactor) {
-        reactor.state.map { $0.communitys }
-            .asDriver(onErrorJustReturn: [])
-            .drive(communitySelectedView.communityListCollectionView.rx.items(
-                cellIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
-                cellType: HomeCommunityListCollectionViewCell.self)
-            ) { index, item, cell in
-                let selectedId = reactor.currentState.selectedCommunityId
-                let isSelected = item.id == selectedId
-                
-                cell.updateUI(
-                    imageUrl: item.imageName,
-                    community: item.title,
-                    isSelected: isSelected
-                )
-            }
-            .disposed(by: disposeBag)
+        Observable.combineLatest(
+            reactor.pulse(\.$communitys),
+            reactor.pulse(\.$selectedCommunityId)
+        )
+        .asDriver(onErrorJustReturn: ([], nil))
+        .map { $0.0 }
+        .drive(communitySelectedView.communityListCollectionView.rx.items(
+            cellIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
+            cellType: HomeCommunityListCollectionViewCell.self)
+        ) { index, item, cell in
+            let selectedId = reactor.currentState.selectedCommunityId
+            let isSelected = item.id == selectedId
+            
+            cell.updateUI(
+                imageUrl: item.imageName,
+                community: item.title,
+                isSelected: isSelected
+            )
+        }
+        .disposed(by: disposeBag)
         
         communitySelectedView.communityListCollectionView.rx.modelSelected(Community.self)
-            .map { HomeCommunityViewReactor.Action.didSelectCommuniy(selectedCommunityId: $0.id) }
+            .map { HomeCommunityViewReactor.Action.didSelectCommunity(communityId: $0.id) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -112,7 +116,7 @@ extension HomeCommunityViewController {
                 guard let diaryItem = item.diaryItem else { return UITableViewCell() }
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityDiaryTableViewCell
-                cell.setDiaryType(diaryItem.type)
+                cell.diaryType = diaryItem.type
                 
                 cell.updateUI(
                     username: diaryItem.username,
@@ -155,8 +159,8 @@ extension HomeCommunityViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.likeButton.rx.tap
-                    .throttle(.seconds(2), scheduler: MainScheduler.instance)
-                    .map { HomeCommunityViewReactor.Action.didTapLike(diaryId: diaryItem.id)}
+                    .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
+                    .map { HomeCommunityViewReactor.Action.didTapLikeButton(diaryId: diaryItem.id)}
                     .bind(to: reactor.action)
                     .disposed(by: cell.disposeBag)
                 
@@ -176,9 +180,33 @@ extension HomeCommunityViewController {
             }
         )
         
-        reactor.state.map { $0.communityDiarySections }
+        reactor.pulse(\.$communityDiarySections)
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessLikeDiary)
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 좋아요 성공여부에 따른 로직 구현
+                if isSuccess {
+                    print("좋아요 성공!")
+                } else {
+                    print("좋아요 실패!")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessUnlikeResult)
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 좋아요 성공여부에 따른 로직 구현
+                if isSuccess {
+                    print("좋아요 해제 성공!")
+                } else {
+                    print("좋아요 해제 실패!")
+                }
+            }
             .disposed(by: disposeBag)
     }
 }

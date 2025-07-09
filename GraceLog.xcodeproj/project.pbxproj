@@ -56,7 +56,6 @@
 		70A97C482E18F61000F08DF6 /* DiaryShareOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C472E18F61000F08DF6 /* DiaryShareOption.swift */; };
 		70A97C4A2E191F0900F08DF6 /* DiaryDeletableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */; };
 		70A97C4D2E19500900F08DF6 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4C2E19500900F08DF6 /* MainTabbarController.swift */; };
-		70A97C4F2E1950DA00F08DF6 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */; };
 		70A97C512E196D4E00F08DF6 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C502E196D4E00F08DF6 /* NavigationController.swift */; };
 		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
@@ -104,6 +103,7 @@
 		DE3BFCE12D059DDC0076426D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BFCE02D059DDC0076426D /* HomeCoordinator.swift */; };
 		DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BFCE32D059E970076426D /* SearchCoordinator.swift */; };
 		DE3BFCEC2D0D3D390076426D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE3BFCEB2D0D3D390076426D /* GoogleService-Info.plist */; };
+		DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */; };
 		DE5638472D99785D00A12192 /* DiaryCreatableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5638462D99785D00A12192 /* DiaryCreatableUseCase.swift */; };
 		DE5638492D9DFD2E00A12192 /* DiaryCommunityData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE5638482D9DFD2E00A12192 /* DiaryCommunityData.json */; };
 		DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */; };
@@ -1625,6 +1625,7 @@
 				DE9A1FDE2D79B0A50044F655 /* HomeContent.swift in Sources */,
 				704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */,
 				702D2B5C2E02C3A000D5E71E /* GLInputTextView.swift in Sources */,
+				DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */,
 				DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */,
 				DE3BFCDA2D059A3B0076426D /* HomeViewController.swift in Sources */,
 				02DC29802DDC29C000662D8A /* MyInfoSectionHeaderView.swift in Sources */,
