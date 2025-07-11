@@ -640,10 +640,18 @@
 		70A97C582E215F0800F08DF6 /* DIContainer */ = {
 			isa = PBXGroup;
 			children = (
+				70A97C5D2E21637400F08DF6 /* PresentationDI */,
 				70A97C592E215F5700F08DF6 /* DomainAssembly.swift */,
 				70A97C5B2E21622400F08DF6 /* DataAssembly.swift */,
 			);
 			path = DIContainer;
+			sourceTree = "<group>";
+		};
+		70A97C5D2E21637400F08DF6 /* PresentationDI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PresentationDI;
 			sourceTree = "<group>";
 		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
