@@ -8,28 +8,10 @@
 import RxDataSources
 import UIKit
 
-struct Community: Equatable {
+struct CommunityItem {
     let id: Int
     let imageName: String
     let title: String
-}
-
-enum CommunityItem: Equatable {
-    case community(Community)
-    
-    static func == (lhs: CommunityItem, rhs: CommunityItem) -> Bool {
-        switch (lhs, rhs) {
-        case (.community(let lhsModel), .community(let rhsModel)):
-            return lhsModel.id == rhsModel.id
-        }
-    }
-    
-    var community: Community {
-        switch self {
-        case .community(let model):
-            return model
-        }
-    }
 }
 
 enum HomeCommunityListSection: SectionModelType {

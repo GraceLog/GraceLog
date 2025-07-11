@@ -15,6 +15,7 @@ final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
     private let dateLabel = UILabel().then {
         $0.font = GLFont.regular12.font
         $0.textColor = .themeColor
+        $0.textAlignment = .center
     }
     
     override init(reuseIdentifier: String?) {
@@ -24,10 +25,8 @@ final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
         
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(8)
-            $0.centerX.equalToSuperview()
-
+            $0.directionalVerticalEdges.equalToSuperview().inset(13)
+            $0.directionalHorizontalEdges.equalToSuperview()
         }
     }
     
@@ -35,7 +34,7 @@ final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateUI(date: String) {
-        dateLabel.text = date
+    func updateUI(editedDate: String) {
+        dateLabel.text = editedDate
     }
 }

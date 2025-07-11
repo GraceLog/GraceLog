@@ -14,9 +14,8 @@ import RxDataSources
 import ReactorKit
 
 final class HomeCommunityViewController: GraceLogBaseViewController, View {
-    typealias Reactor = HomeCommunityViewReactor
-    
     var disposeBag = DisposeBag()
+    private var diaryDataSource: RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>!
     
     private lazy var scrollView = UIScrollView().then {
         $0.backgroundColor = .clear
@@ -83,73 +82,89 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
 // MARK: - Bindings
 extension HomeCommunityViewController {
     private func bindCommunitySelectedCollectionView(reactor: HomeCommunityViewReactor) {
-        Observable.combineLatest(
-            reactor.pulse(\.$communitys),
-            reactor.pulse(\.$selectedCommunityId)
-        )
-        .asDriver(onErrorJustReturn: ([], nil))
-        .map { $0.0 }
-        .drive(communitySelectedView.communityListCollectionView.rx.items(
-            cellIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
-            cellType: HomeCommunityListCollectionViewCell.self)
-        ) { index, item, cell in
-            let selectedId = reactor.currentState.selectedCommunityId
-            let isSelected = item.id == selectedId
-            
-            cell.updateUI(
-                imageUrl: item.imageName,
-                community: item.title,
-                isSelected: isSelected
-            )
-        }
-        .disposed(by: disposeBag)
+        let communitySelectionEvent = communitySelectedView.communityListCollectionView.rx.itemSelected.asObservable()
+        let selectedCommunityModels = communitySelectedView.communityListCollectionView.rx.modelSelected(Community.self).asObservable()
+        let collectionView = communitySelectedView.communityListCollectionView
         
-        communitySelectedView.communityListCollectionView.rx.modelSelected(Community.self)
-            .map { HomeCommunityViewReactor.Action.didSelectCommunity(communityId: $0.id) }
-            .bind(to: reactor.action)
+        Observable.zip(communitySelectionEvent, selectedCommunityModels)
+            .subscribe(with: self) { owner, state in
+                let (indexPath, model) = state
+                guard let cell = collectionView.cellForItem(at: indexPath) as? HomeCommunityListCollectionViewCell else {
+                    return
+                }
+                
+                if cell.isSelected {
+                    collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+                    reactor.action.onNext(HomeCommunityViewReactor.Action.didSelectCommunity(model))
+                }
+                
+            }.disposed(by: disposeBag)
+        
+        let communityObservable = reactor.pulse(\.$communityList).share(replay: 1)
+        
+        communityObservable
+            .asDriver(onErrorJustReturn: [])
+            .drive(communitySelectedView.communityListCollectionView.rx.items(
+                cellIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier,
+                cellType: HomeCommunityListCollectionViewCell.self)
+            ) { index, item, cell in
+                cell.updateUI(
+                    imageNamed: item.logoImageNamed,
+                    communityName: item.title
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        communityObservable
+            .compactMap { $0.first }
+            .take(1)
+            .map { HomeCommunityViewReactor.Action.didSelectCommunity($0) }
+            .subscribe(with: self) { owner, selectFirstCommunityAction in
+                let indexPath = IndexPath(item: 0, section: 0)
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                
+                reactor.action.onNext(selectFirstCommunityAction)
+            }
             .disposed(by: disposeBag)
     }
     
     private func bindCommunityDiaryTableView(reactor: HomeCommunityViewReactor) {
-        let diaryDataSource = RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>(
+        diaryDataSource = RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>(
             configureCell: { _, tableView, indexPath, item in
-                guard let diaryItem = item.diaryItem else { return UITableViewCell() }
-                
                 let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityDiaryTableViewCell
-                cell.diaryType = diaryItem.type
-                
+
                 cell.updateUI(
-                    username: diaryItem.username,
-                    title: diaryItem.title,
-                    subtitle: diaryItem.subtitle,
-                    likes: diaryItem.likes,
-                    comments: diaryItem.comments,
-                    isLiked: diaryItem.isLiked
+                    username: item.username,
+                    title: item.title,
+                    content: item.content,
+                    likeCount: item.likeCount,
+                    commentCount: item.commentCount,
+                    isLiked: item.isLiked, 
+                    isCurrentUser: item.isCurrentUser,
+                    profileImageURL: item.profileImageURL,
+                    cardImageURL: item.cardImageURL
                 )
                 
-                cell.profileImgView.rx.gestureTap
+                cell.profileImageView.rx.gestureTap
                     .asDriver()
                     .drive(onNext: { [weak self] _ in
                         guard let self,
                               let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
+                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as CommunityDiaryItem else {
                             return
                         }
                         
                         // TODO: - 선택한 유저 정보로 이동
-                        if case .diary(let diaryItem) = selectedItem {
-                            let username = diaryItem.username
-                            print("선택된 유저 이름: \(username)")
-                        }
+                        print("선택된 유저 이름: \(selectedItem)")
                     })
                     .disposed(by: cell.disposeBag)
                 
-                cell.diaryCardView.rx.gestureTap
+                cell.cardImageView.rx.gestureTap
                     .asDriver()
                     .drive(onNext: { [weak self] _ in
                         guard let self,
                               let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
+                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as CommunityDiaryItem else {
                             return
                         }
                         
@@ -160,7 +175,7 @@ extension HomeCommunityViewController {
                 
                 cell.likeButton.rx.tap
                     .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
-                    .map { HomeCommunityViewReactor.Action.didTapLikeButton(diaryId: diaryItem.id)}
+                    .map { HomeCommunityViewReactor.Action.didTapLikeButton(item.id)}
                     .bind(to: reactor.action)
                     .disposed(by: cell.disposeBag)
                 
@@ -169,7 +184,7 @@ extension HomeCommunityViewController {
                     .drive(onNext: { [weak self] _ in
                         guard let self,
                               let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
-                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as HomeCommunityDiaryItem else {
+                              let selectedItem = try? self.communityDiaryListView.diaryTableView.rx.model(at: indexPath) as CommunityDiaryItem else {
                             return
                         }
                         print("선택한 댓글 아이템 \(selectedItem)")
@@ -179,8 +194,7 @@ extension HomeCommunityViewController {
                 return cell
             }
         )
-        
-        reactor.pulse(\.$communityDiarySections)
+        reactor.pulse(\.$sectionedDiaryList)
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
             .disposed(by: disposeBag)
@@ -213,15 +227,11 @@ extension HomeCommunityViewController {
 
 extension HomeCommunityViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sections = reactor?.currentState.communityDiarySections,
-              section < sections.count else {
-            return nil
-        }
-        
         let headerView = tableView.dequeueReusableHeaderFooterView(
             withIdentifier: HomeCommunityDateHeaderView.reuseIdentifier
         ) as! HomeCommunityDateHeaderView
-        headerView.updateUI(date: sections[section].date)
+        let sectionModel = diaryDataSource.sectionModels[section]
+        headerView.updateUI(editedDate: sectionModel.date)
         return headerView
     }
     

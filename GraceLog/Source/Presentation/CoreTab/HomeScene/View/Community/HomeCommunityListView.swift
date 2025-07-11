@@ -25,6 +25,7 @@ final class HomeCommunityListView: UIView {
         $0.isScrollEnabled = true
         $0.clipsToBounds = false
         $0.register(HomeCommunityListCollectionViewCell.self, forCellWithReuseIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier)
+        $0.allowsMultipleSelection = false
     }
     
     override init(frame: CGRect) {

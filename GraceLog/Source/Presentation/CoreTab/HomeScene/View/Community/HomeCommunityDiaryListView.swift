@@ -18,8 +18,8 @@ final class HomeCommunityDiaryListView: UIView {
         $0.sectionHeaderTopPadding = 0
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
-        $0.rowHeight = 150
-        $0.estimatedRowHeight = 150
+        $0.rowHeight = 132 + 24
+        $0.estimatedRowHeight = 132 + 24
         $0.register(HomeCommunityDateHeaderView.self, forHeaderFooterViewReuseIdentifier: HomeCommunityDateHeaderView.reuseIdentifier)
         $0.register(HomeCommunityDiaryTableViewCell.self, forCellReuseIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier)
     }
@@ -37,7 +37,8 @@ final class HomeCommunityDiaryListView: UIView {
         addSubview(diaryTableView)
         
         diaryTableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.directionalVerticalEdges.equalToSuperview().inset(12)
+            $0.directionalHorizontalEdges.equalToSuperview()
         }
     }
 }

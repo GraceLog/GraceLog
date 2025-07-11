@@ -10,5 +10,5 @@ import RxRelay
 protocol DiaryCreatableUseCase {
     var createDiaryResult: PublishRelay<Bool> { get }
     
-    func createDiary(title: String, content: String, selectedKeywords: [DiaryKeyword], shareOptions: [DiaryShareOption])
+    func createDiary(title: String, content: String, selectedKeywords: [DiaryKeyword], shareOptions: [Community])
 }

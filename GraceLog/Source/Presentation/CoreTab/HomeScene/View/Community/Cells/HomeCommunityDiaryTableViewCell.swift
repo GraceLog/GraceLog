@@ -16,13 +16,33 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     
-    var diaryType: CommunityDiaryItemType = .others {
-        didSet {
-            setupConstraints(diaryType: diaryType)
-        }
+    private let mainContainerStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.distribution = .fill
+        $0.alignment = .fill
+        $0.backgroundColor = .clear
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = .init(top: .zero, left: 20, bottom: .zero, right: 20)
+        $0.spacing = 10
     }
     
-    let profileImgView = UIImageView().then {
+    private let diaryContainerView = UIView().then {
+        $0.backgroundColor = .clear
+    }
+    
+    let cardImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 25
+    }
+    
+    // MARK: - User Info UI
+    
+    private lazy var userInfoContainerView = UIView().then {
+        $0.backgroundColor = .clear
+    }
+    
+    let profileImageView = UIImageView().then {
         $0.setDimensions(width: 40, height: 40)
         $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .graceLightGray
@@ -33,20 +53,23 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
     private let usernameLabel = UILabel().then {
         $0.font = GLFont.bold12.font
         $0.textColor = .graceGray
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
     }
     
-    let diaryCardView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 25
-        $0.clipsToBounds = true
+    // MARK: - Content UI
+    
+    private let overlayBackgroundView = UIView().then {
+        $0.backgroundColor = UIColor.black.withAlphaComponent(0.75)
     }
     
-    private let cardImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
+    private lazy var contentStackView = UIStackView(arrangedSubviews: [titleLabel, contentLabel]).then {
+        $0.axis = .vertical
+        $0.spacing = 4
+        $0.alignment = .leading
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = .init(top: 18, left: 21, bottom: 18, right: 21)
     }
-    
-    private let overlayView = UIView()
     
     private let titleLabel = UILabel().then {
         $0.font = GLFont.bold10.font
@@ -57,6 +80,19 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
     private let contentLabel = UILabel().then {
         $0.font = GLFont.regular18.font
         $0.textColor = .white
+    }
+    
+    // MARK: - Action Button UI
+    
+    private let flexibleView = UIView()
+    
+    private lazy var buttonStackView = UIStackView(arrangedSubviews: [likeButton, commentButton]).then {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.distribution = .fill
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = .init(top: .zero, left: 24, bottom: .zero, right: 24)
+        $0.backgroundColor = .clear
     }
     
     lazy var likeButton = UIButton().then {
@@ -91,37 +127,23 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
         $0.configuration = config
     }
     
-    private lazy var userStackView = UIStackView(arrangedSubviews: [profileImgView, usernameLabel]).then {
-        $0.axis = .vertical
-        $0.spacing = 4
-        $0.alignment = .center
-    }
-    
-    private lazy var contentStackView = UIStackView(arrangedSubviews: [titleLabel, contentLabel]).then {
-        $0.axis = .vertical
-        $0.spacing = 4
-        $0.alignment = .leading
-    }
-    
-    private lazy var interactionStackView = UIStackView(arrangedSubviews: [likeButton, commentButton]).then {
-        $0.axis = .horizontal
-        $0.spacing = 10
-        $0.distribution = .fillEqually
-    }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayouts()
+        setupConstraints()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        profileImgView.image = nil
+        profileImageView.image = nil
         cardImageView.image = nil
         usernameLabel.text = nil
         titleLabel.text = nil
         contentLabel.text = nil
-        
+        [userInfoContainerView, diaryContainerView].forEach { mainContainerStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview() }
+        buttonStackView.removeArrangedSubview(flexibleView)
+        flexibleView.removeFromSuperview()
         disposeBag = DisposeBag()
     }
     
@@ -129,102 +151,104 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: .init(top: .zero, left: .zero, bottom: 24, right: .zero))
+    }
+    
     private func setupLayouts() {
         backgroundColor = .clear
         selectionStyle = .none
         
-        [userStackView, diaryCardView, interactionStackView].forEach {
-            contentView.addSubview($0)
+        contentView.addSubview(mainContainerStackView)
+        
+        [userInfoContainerView, diaryContainerView].forEach {
+            mainContainerStackView.addArrangedSubview($0)
         }
         
-        [cardImageView, overlayView].forEach {
-            diaryCardView.addSubview($0)
+        [profileImageView, usernameLabel].forEach {
+            userInfoContainerView.addSubview($0)
         }
         
-        overlayView.addSubview(contentStackView)
+        [cardImageView, buttonStackView].forEach {
+            diaryContainerView.addSubview($0)
+        }
+        
+        [overlayBackgroundView, contentStackView].forEach { cardImageView.addSubview($0) }
     }
     
-    private func setupConstraints(diaryType: CommunityDiaryItemType) {
-        userStackView.snp.removeConstraints()
-        diaryCardView.snp.removeConstraints()
-        interactionStackView.snp.removeConstraints()
+    private func setupConstraints() {
+        mainContainerStackView.snp.makeConstraints {
+            $0.directionalEdges.equalToSuperview()
+        }
         
-        switch diaryType {
-        case .me:
-            userStackView.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(10)
-                $0.trailing.equalToSuperview().inset(20)
-            }
-            
-            diaryCardView.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(10)
-                $0.trailing.equalTo(userStackView.snp.leading).offset(-12)
-                $0.leading.equalToSuperview().inset(21)
-            }
-            
-            cardImageView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-            
-            overlayView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-            
-            contentStackView.snp.makeConstraints {
-                $0.top.bottom.equalToSuperview().inset(37)
-                $0.leading.trailing.equalToSuperview().inset(25)
-            }
-            
-            interactionStackView.snp.makeConstraints {
-                $0.top.equalTo(diaryCardView.snp.bottom).offset(8)
-                $0.trailing.equalTo(diaryCardView.snp.trailing).offset(-18)
-                $0.bottom.equalToSuperview().inset(10)
-            }
-        case .others:
-            userStackView.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(10)
-                $0.leading.equalToSuperview().inset(20)
-            }
-            
-            diaryCardView.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(10)
-                $0.leading.equalTo(userStackView.snp.trailing).offset(12)
-                $0.trailing.equalToSuperview().inset(20)
-            }
-            
-            cardImageView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-            
-            overlayView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-            
-            contentStackView.snp.makeConstraints {
-                $0.top.bottom.equalToSuperview().inset(37)
-                $0.leading.trailing.equalToSuperview().inset(25)
-            }
-            
-            interactionStackView.snp.makeConstraints {
-                $0.top.equalTo(diaryCardView.snp.bottom).offset(8)
-                $0.leading.equalTo(diaryCardView.snp.leading).offset(23)
-                $0.bottom.equalToSuperview().inset(10)
-            }
+        contentStackView.snp.makeConstraints {
+            $0.top.greaterThanOrEqualToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
+        }
+        
+        buttonStackView.snp.makeConstraints {
+            $0.height.equalTo(16)
+            $0.directionalHorizontalEdges.bottom.equalToSuperview()
+        }
+        
+        cardImageView.snp.makeConstraints {
+            $0.bottom.equalTo(buttonStackView.snp.top).offset(-6)
+            $0.directionalHorizontalEdges.top.equalToSuperview()
+        }
+        
+        overlayBackgroundView.snp.makeConstraints {
+            $0.directionalEdges.equalToSuperview()
+        }
+        
+        profileImageView.snp.makeConstraints {
+            $0.top.directionalHorizontalEdges.equalToSuperview()
+        }
+        
+        usernameLabel.snp.makeConstraints {
+            $0.top.equalTo(profileImageView.snp.bottom).offset(4)
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
     
-    func updateUI(username: String, title: String, subtitle: String, likes: Int, comments: Int, isLiked: Bool) {
-        setupConstraints(diaryType: diaryType)
+    func updateUI(
+        username: String,
+        title: String,
+        content: String,
+        likeCount: Int,
+        commentCount: Int,
+        isLiked: Bool,
+        isCurrentUser: Bool,
+        profileImageURL: URL?,
+        cardImageURL: URL?
+    ) {
         usernameLabel.text = username
         titleLabel.text = title
-        contentLabel .text = subtitle
-        likeButton.setTitle("\(likes)", for: .normal)
-        commentButton.setTitle("\(comments)", for: .normal)
+        contentLabel .text = content
+        likeButton.setTitle("\(likeCount)", for: .normal)
+        commentButton.setTitle("\(commentCount)", for: .normal)
         
         let heartImage = isLiked ? UIImage(named: "home_heart_selected") : UIImage(named: "home_heart")
         likeButton.setImage(heartImage, for: .normal)
         
-        cardImageView.image = UIImage(named: "diary2")
-        profileImgView.image = UIImage(named: "profile")
+        cardImageView.kf.setImage(with: cardImageURL)
+        profileImageView.kf.setImage(with: profileImageURL, placeholder: UIImage(named: "profile"))
+        
+        adjustLayoutForCurrentUser(isCurrentUser)
     }
+    
+    private func adjustLayoutForCurrentUser(_ isCurrentUser: Bool) {
+        let subviews = isCurrentUser ? [diaryContainerView, userInfoContainerView] : [userInfoContainerView, diaryContainerView]
+        subviews.forEach { mainContainerStackView.addArrangedSubview($0) }
+        
+        if isCurrentUser {
+            buttonStackView.addArrangedSubview(flexibleView)
+        } else {
+            buttonStackView.insertArrangedSubview(flexibleView, at: 0)
+        }
+    }
+
 }

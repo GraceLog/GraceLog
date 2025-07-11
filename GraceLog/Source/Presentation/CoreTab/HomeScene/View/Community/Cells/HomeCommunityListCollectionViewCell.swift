@@ -12,6 +12,13 @@ import Then
 final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: HomeCommunityListCollectionViewCell.self)
     
+    override var isSelected: Bool {
+        didSet {
+            containerView.layer.borderColor = isSelected ? UIColor.themeColor.cgColor : UIColor.graceLightGray.cgColor
+            communityLabel.textColor = isSelected ? .themeColor : .graceGray
+        }
+    }
+    
     private var communityStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 13
@@ -51,14 +58,14 @@ final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         communityImageView.image = nil
         communityLabel.text = nil
+        containerView.layer.borderColor = nil
         isSelected = false
     }
     
     private func setupLayout() {
         contentView.addSubview(communityStackView)
         containerView.addSubview(communityImageView)
-        communityStackView.addArrangedSubview(containerView)
-        communityStackView.addArrangedSubview(communityLabel)
+        [containerView, communityLabel].forEach { communityStackView.addArrangedSubview($0) }
     }
     
     private func setupConstraints() {
@@ -77,11 +84,9 @@ final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
 }
 
 extension HomeCommunityListCollectionViewCell {
-    func updateUI(imageUrl: String, community: String, isSelected: Bool) {
+    func updateUI(imageNamed: String, communityName: String) {
         // TODO: 현재는 이미지 이름으로 -> 추후 이미지 URL을 통해 불러온 데이터로 수정 해야함
-        communityImageView.image = UIImage(named: imageUrl)
-        communityLabel.text = community
-        containerView.layer.borderColor = isSelected ? UIColor.themeColor.cgColor : UIColor.graceLightGray.cgColor
-        communityLabel.textColor = isSelected ? .themeColor : .graceGray
+        communityImageView.image = UIImage(named: imageNamed)
+        communityLabel.text = communityName
     }
 }

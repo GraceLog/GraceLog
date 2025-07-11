@@ -53,10 +53,11 @@
 		704815822E018E30009ECDBD /* GLDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815812E018E30009ECDBD /* GLDividerView.swift */; };
 		704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815832E018F5A009ECDBD /* DiaryEditView.swift */; };
 		70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */; };
-		70A97C482E18F61000F08DF6 /* DiaryShareOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C472E18F61000F08DF6 /* DiaryShareOption.swift */; };
+		70A97C482E18F61000F08DF6 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C472E18F61000F08DF6 /* Community.swift */; };
 		70A97C4A2E191F0900F08DF6 /* DiaryDeletableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */; };
 		70A97C4D2E19500900F08DF6 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4C2E19500900F08DF6 /* MainTabbarController.swift */; };
 		70A97C512E196D4E00F08DF6 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C502E196D4E00F08DF6 /* NavigationController.swift */; };
+		70A97C532E1F8D5800F08DF6 /* DateFormatterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C522E1F8D5800F08DF6 /* DateFormatterFactory.swift */; };
 		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
@@ -246,11 +247,12 @@
 		704815812E018E30009ECDBD /* GLDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLDividerView.swift; sourceTree = "<group>"; };
 		704815832E018F5A009ECDBD /* DiaryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEditView.swift; sourceTree = "<group>"; };
 		70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeyword.swift; sourceTree = "<group>"; };
-		70A97C472E18F61000F08DF6 /* DiaryShareOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareOption.swift; sourceTree = "<group>"; };
+		70A97C472E18F61000F08DF6 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDeletableUseCase.swift; sourceTree = "<group>"; };
 		70A97C4C2E19500900F08DF6 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinator.swift; sourceTree = "<group>"; };
 		70A97C502E196D4E00F08DF6 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		70A97C522E1F8D5800F08DF6 /* DateFormatterFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterFactory.swift; sourceTree = "<group>"; };
 		70F006172E0EBA1900228C70 /* UIView+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Reactive.swift"; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -567,6 +569,7 @@
 			children = (
 				0220A0742DE7F57000D045F7 /* ImagePickerManager.swift */,
 				02F0DA502DDEAED900CD036A /* AuthManager.swift */,
+				70A97C522E1F8D5800F08DF6 /* DateFormatterFactory.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -810,7 +813,7 @@
 				DE9A1FDB2D79AFFA0044F655 /* MyDiaryItem.swift */,
 				DE9A1FDD2D79B0A50044F655 /* HomeContent.swift */,
 				70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */,
-				70A97C472E18F61000F08DF6 /* DiaryShareOption.swift */,
+				70A97C472E18F61000F08DF6 /* Community.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1632,6 +1635,7 @@
 				026656AB2DE7E9CA00541D96 /* NavigationBarUtil.swift in Sources */,
 				02DC29862DDC29C000662D8A /* MyInfoViewReactor.swift in Sources */,
 				70A97C512E196D4E00F08DF6 /* NavigationController.swift in Sources */,
+				70A97C532E1F8D5800F08DF6 /* DateFormatterFactory.swift in Sources */,
 				02DC29872DDC29C000662D8A /* ProfileEditCoordinator.swift in Sources */,
 				02DC29882DDC29C000662D8A /* MyInfoTableViewCell.swift in Sources */,
 				02DC29892DDC29C000662D8A /* MyInfoViewController.swift in Sources */,
@@ -1651,7 +1655,7 @@
 				DE2700492D1F9E6B005C9DCF /* UIColor+CustomColor.swift in Sources */,
 				DE5638472D99785D00A12192 /* DiaryCreatableUseCase.swift in Sources */,
 				DED558992DBFAEB200137B10 /* NetworkManager.swift in Sources */,
-				70A97C482E18F61000F08DF6 /* DiaryShareOption.swift in Sources */,
+				70A97C482E18F61000F08DF6 /* Community.swift in Sources */,
 				DE9A1FCA2D6AAC8C0044F655 /* HomeViewReactor.swift in Sources */,
 				0234461D2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift in Sources */,
 				DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */,

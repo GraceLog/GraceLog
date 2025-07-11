@@ -35,9 +35,6 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
         super.viewDidLoad()
         
         self.reactor = HomeMyViewReactor(homeUsecase: DefaultHomeUseCase(
-            userRepository: DefaultUserRepository(
-                userService: UserService()
-            ),
             homeRepository: DefaultHomeRepository()
         ))
         

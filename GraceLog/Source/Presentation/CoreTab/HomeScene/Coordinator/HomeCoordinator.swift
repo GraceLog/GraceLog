@@ -17,7 +17,7 @@ final class HomeCoordinator: NavigationCoordinator {
     }
     
     func start() {
-        let viewController = HomeViewController()
+        let viewController = HomeViewController(reactor: HomeViewReactor(homeUsecase: DefaultHomeUseCase(homeRepository: DefaultHomeRepository())))
         navigationController.setViewControllers([viewController], animated: false)
     }
 }

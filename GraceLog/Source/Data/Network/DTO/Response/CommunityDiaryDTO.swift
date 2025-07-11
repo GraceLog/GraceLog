@@ -18,7 +18,7 @@ enum CommunityDiaryItemType: String {
 }
 
 struct CommunityDiaryItemDTO: Decodable {
-    let id: Int
+    let id: String
     let type: CommunityDiaryItemType.RawValue
     let username: String
     let title: String

@@ -14,55 +14,44 @@ struct CommunityDiary {
 }
 
 struct CommunityDiaryItem {
-    let id: Int
-    let type: CommunityDiaryItemType
+    let id: String
+    let isCurrentUser: Bool
     let username: String
     let title: String
-    let subtitle: String
-    var likes: Int
-    var comments: Int
+    let content: String
+    var likeCount: Int
+    var commentCount: Int
     var isLiked: Bool
-}
-
-enum HomeCommunityDiaryItem: Equatable {
-    case diary(CommunityDiaryItem)
+    let profileImageURL: URL?
+    let cardImageURL: URL?
     
-    static func == (lhs: HomeCommunityDiaryItem, rhs: HomeCommunityDiaryItem) -> Bool {
-        switch (lhs, rhs) {
-        case (.diary(let lhsItem), .diary(let rhsItem)):
-            return lhsItem.id == rhsItem.id
-        }
-    }
-    
-    var diaryItem: CommunityDiaryItem? {
-        switch self {
-        case .diary(let item): return item
-        }
+    init(from: Diary) {
+        self.id = from.id
+        self.isCurrentUser = from.isCurrentUser
+        self.username = from.username
+        self.title = from.title
+        self.content = from.content
+        self.likeCount = from.likeCount
+        self.commentCount = from.commentCount
+        self.isLiked = from.isLiked
+        self.profileImageURL = from.profileImageURL
+        self.cardImageURL = from.diaryImageURL
     }
 }
 
 struct HomeCommunityDiarySection {
     let date: String
-    var items: [HomeCommunityDiaryItem]
+    var items: [CommunityDiaryItem]
     
-    init(date: String, items: [HomeCommunityDiaryItem]) {
+    init(date: String, items: [CommunityDiaryItem]) {
         self.date = date
         self.items = items
     }
 }
 
 extension HomeCommunityDiarySection: SectionModelType {
-    init(original: HomeCommunityDiarySection, items: [HomeCommunityDiaryItem]) {
+    init(original: HomeCommunityDiarySection, items: [CommunityDiaryItem]) {
         self = original
         self.items = items
-    }
-}
-
-extension HomeCommunityDiarySection {
-    static func makeSections(from diaryList: [CommunityDiary]) -> [HomeCommunityDiarySection] {
-        return diaryList.map { diary in
-            let items = diary.items.map { HomeCommunityDiaryItem.diary($0) }
-            return HomeCommunityDiarySection(date: diary.date, items: items)
-        }
     }
 }
