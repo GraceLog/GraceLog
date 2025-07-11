@@ -19,11 +19,13 @@ final class HomeMyViewReactor: Reactor {
     }
     
     private func loadData() {
-        homeUsecase.fetchHomeMyContent()
+        homeUsecase.fetchDiaryList()
+        homeUsecase.fetchVideoList()
     }
     
     enum Mutation {
-        case setHomeMyData(HomeContent)
+        case setDiaryList([MyDiaryItem])
+        case setVideoList([HomeVideoItem])
         case setError(Error)
     }
     
@@ -38,20 +40,23 @@ final class HomeMyViewReactor: Reactor {
 
 extension HomeMyViewReactor {
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let data = homeUsecase.homeMyData
-            .compactMap { $0 }
-            .map { Mutation.setHomeMyData($0) }
+        let diaryMutation = homeUsecase.diaryList
+            .map { Mutation.setDiaryList($0) }
         
-        return Observable.merge(mutation, data)
+        let videoMutation = homeUsecase.videoList
+            .map { Mutation.setVideoList($0) }
+        
+        return Observable.merge(mutation, diaryMutation, videoMutation)
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
         switch mutation {
-        case .setHomeMyData(let data):
-            newState.videoItems = data.videoList
-            newState.diaryItems = data.diaryList
+        case .setDiaryList(let diaryList):
+            newState.diaryItems = diaryList
+        case .setVideoList(let videoList):
+            newState.videoItems = videoList
         case .setError(let error):
             newState.errorMessage = error.localizedDescription
         }

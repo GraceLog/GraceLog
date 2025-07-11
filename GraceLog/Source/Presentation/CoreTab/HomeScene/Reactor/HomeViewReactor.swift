@@ -15,11 +15,6 @@ final class HomeViewReactor: Reactor {
     
     init(homeUsecase: HomeUseCase) {
         self.homeUsecase = homeUsecase
-        loadData()
-    }
-    
-    private func loadData() {
-        homeUsecase.fetchUser()
     }
     
     enum Action {
@@ -51,21 +46,6 @@ final class HomeViewReactor: Reactor {
 }
 
 extension HomeViewReactor {
-    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let userMutation = homeUsecase.user
-            .compactMap { $0 }
-            .map { Mutation.setUser($0) }
-        
-        let errorMutation = homeUsecase.error
-            .map { Mutation.setError($0) }
-        
-        return Observable.merge(
-            mutation,
-            userMutation,
-            errorMutation
-        )
-    }
-    
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .userButtonTapped:

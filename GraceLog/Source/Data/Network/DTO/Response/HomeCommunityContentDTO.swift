@@ -13,6 +13,7 @@ struct HomeCommunityContentDTO: Decodable {
 }
 
 struct CommunityItemDTO: Decodable {
+    let id: String
     let imageName: String
     let title: String
 }

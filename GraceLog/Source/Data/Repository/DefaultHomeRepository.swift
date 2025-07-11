@@ -45,43 +45,43 @@ final class DefaultHomeRepository: HomeRepository {
     }
     
     func fetchHomeCommunityContent() -> Single<HomeCommunityContent> {
-        return .create { single in
-            if let content = Bundle.main.decodeMockJSON(HomeCommunityContentDTO.self, from: "HomeCommunityData") {
-                let communityItems = content.communityList.map { dto in
-                    return CommunityItem(
-                        imageName: dto.imageName,
-                        title: dto.title
-                    )
-                }
-                
-                let communityDiaries = content.diaryList.map { diaryDTO in
-                    let diaryItems = diaryDTO.items.map { itemDTO in
-                        return CommunityDiaryItem(
-                            type: CommunityItemType(rawValue: itemDTO.type) ?? .regular,
-                            username: itemDTO.username,
-                            title: itemDTO.title,
-                            subtitle: itemDTO.subtitle,
-                            likes: itemDTO.likes,
-                            comments: itemDTO.comments
-                        )
-                    }
-                    
-                    return CommunityDiary(date: diaryDTO.date, items: diaryItems)
-                }
-                
-                let communityContent = HomeCommunityContent(
-                    communityList: communityItems,
-                    diaryList: communityDiaries
-                )
-                single(.success(communityContent))
-            } else {
-                single(.failure(NSError(domain: "com.gracelog.error", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Failed to load HomeCommunityData.json"])))
-            }
-            return Disposables.create()
-        }
+//        return .create { single in
+//            if let content = Bundle.main.decodeMockJSON(HomeCommunityContentDTO.self, from: "HomeCommunityData") {
+//                let communityItems = content.communityList.map { dto in
+//                    return Community(
+//                        id: dto.id,
+//                        imageName: dto.imageName,
+//                        title: dto.title
+//                    )
+//                }
+//                
+//                let communityDiaries = content.diaryList.map { diaryDTO in
+//                    let diaryItems = diaryDTO.items.map { itemDTO in
+//                        return CommunityDiaryItem(
+//                            id: itemDTO.id,
+//                            type: CommunityDiaryItemType(rawValue: itemDTO.type) ?? .others,
+//                            username: itemDTO.username,
+//                            title: itemDTO.title,
+//                            subtitle: itemDTO.subtitle,
+//                            likes: itemDTO.likes,
+//                            comments: itemDTO.comments,
+//                            isLiked: itemDTO.isLike
+//                        )
+//                    }
+//                    
+//                    return CommunityDiary(date: diaryDTO.date, items: diaryItems)
+//                }
+//                
+//                let communityContent = HomeCommunityContent(
+//                    communityList: communityItems,
+//                    diaryList: communityDiaries
+//                )
+//                single(.success(communityContent))
+//            } else {
+//                single(.failure(NSError(domain: "com.gracelog.error", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Failed to load HomeCommunityData.json"])))
+//            }
+//            return Disposables.create()
+//        }
+        return .never()
     }
-    
-    //    func fetchCommunityDiary(communityID: Int) -> Single<CommunityDiary> {
-    //        <#code#>
-    //    }
 }

@@ -12,16 +12,18 @@ struct CommunityDiaryDTO: Decodable {
     let items: [CommunityDiaryItemDTO]
 }
 
+enum CommunityDiaryItemType: String {
+    case me = "me"
+    case others = "others"
+}
+
 struct CommunityDiaryItemDTO: Decodable {
-    let type: String
+    let id: String
+    let type: CommunityDiaryItemType.RawValue
     let username: String
     let title: String
     let subtitle: String
     let likes: Int
     let comments: Int
-}
-
-enum CommunityItemType: String {
-    case regular
-    case my
+    let isLike: Bool
 }

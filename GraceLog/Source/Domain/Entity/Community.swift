@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DiaryShareOption: String, CaseIterable {
+enum Community: String, CaseIterable {
     case saeromchurch
     case gracelog
     case studio306

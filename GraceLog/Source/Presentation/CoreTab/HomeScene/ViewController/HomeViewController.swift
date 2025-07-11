@@ -26,7 +26,6 @@ enum HomeMenuItem: CaseIterable {
 }
 
 final class HomeViewController: GraceLogBaseViewController, View {
-    weak var coordinator: Coordinator?
     var disposeBag = DisposeBag()
     
     private let navigationBar = GLNavigationBar().then {
@@ -61,29 +60,37 @@ final class HomeViewController: GraceLogBaseViewController, View {
     )
     
     private lazy var homeMyViewController = HomeMyViewController()
-    private lazy var homeCommunityViewController = HomeCommunityViewController()
+    private lazy var homeCommunityViewController = HomeCommunityViewController(
+        reactor: HomeCommunityViewReactor(
+            usecase: DefaultHomeCommunityUseCase(
+                homeRepository: DefaultHomeRepository()
+            )
+        )
+    )
     
     private lazy var pages: [UIViewController] = [
         homeMyViewController,
         homeCommunityViewController
     ]
     
+    init(reactor: HomeViewReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = HomeViewReactor(homeUsecase: DefaultHomeUseCase(
-            userRepository: DefaultUserRepository(
-                userService: UserService()
-            ),
-            homeRepository: DefaultHomeRepository()
-        ))
-        
         configurePageViewController()
         configureUI()
         configureNavBar()
     }
     
     private func configurePageViewController() {
-        pageViewController.dataSource = self
+        pageViewController.dataSource = nil
         pageViewController.delegate = self
         
         pageViewController.setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)

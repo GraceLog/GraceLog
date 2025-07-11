@@ -14,7 +14,7 @@ final class DiaryViewReactor: Reactor {
     
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
-    private var selectedShareOptions: Set<DiaryShareOption> = []
+    private var selectedShareOptions: Set<Community> = []
     private var diaryTitle = ""
     private var diaryContent = ""
     
@@ -47,7 +47,7 @@ final class DiaryViewReactor: Reactor {
         self.initialState = State(
             images: [], 
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
-            shareStates: DiaryShareOption.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) }
+            shareStates: Community.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) }
         )
     }
 }
@@ -128,7 +128,7 @@ struct DiaryKeywordState {
 }
 
 struct DiaryShareState {
-    let diaryOption: DiaryShareOption
+    let diaryOption: Community
     let isSelected: Bool
 }
 

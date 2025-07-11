@@ -8,11 +8,15 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
     static let reuseIdentifier = String(describing: HomeCommunityMyDiaryTableViewCell.self)
     
-    private let profileImgView = UIImageView().then {
+    var disposeBag = DisposeBag()
+    
+    let profileImgView = UIImageView().then {
         $0.setDimensions(width: 40, height: 40)
         $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .graceLightGray
@@ -25,9 +29,9 @@ final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
         $0.textColor = .graceGray
     }
     
-    private let diaryCardView = UIView().then {
+    let diaryCardView = UIView().then {
         $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 25
         $0.clipsToBounds = true
     }
     
@@ -49,7 +53,7 @@ final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
         $0.textColor = .white
     }
     
-    private lazy var likeButton = UIButton().then {
+    lazy var likeButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "home_heart")
         config.title = "4"
@@ -65,7 +69,7 @@ final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
         $0.configuration = config
     }
     
-    private lazy var commentButton = UIButton().then {
+    lazy var commentButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "comment")
         config.title = "4"
@@ -84,6 +88,17 @@ final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImgView.image = nil
+        cardImageView.image = nil
+        usernameLabel.text = nil
+        titleLabel.text = nil
+        contentLabel.text = nil
+        
+        disposeBag = DisposeBag()
     }
     
     required init?(coder: NSCoder) {
@@ -120,15 +135,14 @@ final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
         overlayView.addSubview(contentStack)
         
         userStack.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         diaryCardView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().inset(10)
             $0.trailing.equalTo(userStack.snp.leading).offset(-12)
-            $0.leading.equalToSuperview().offset(21)
-            $0.height.equalTo(diaryCardView.snp.width).multipliedBy(110.0/300.0)
+            $0.leading.equalToSuperview().inset(21)
         }
         
         cardImageView.snp.makeConstraints {
@@ -147,15 +161,20 @@ final class HomeCommunityMyDiaryTableViewCell: UITableViewCell {
         interactionStack.snp.makeConstraints {
             $0.top.equalTo(diaryCardView.snp.bottom).offset(8)
             $0.trailing.equalTo(diaryCardView.snp.trailing).offset(-18)
-            $0.bottom.equalToSuperview().offset(-10)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
     
-    func updateUI(title: String, subtitle: String, likes: Int, comments: Int) {
+    func updateUI(title: String, subtitle: String, likes: Int, comments: Int, isLiked: Bool) {
         titleLabel.text = title
         contentLabel .text = subtitle
         likeButton.setTitle("\(likes)", for: .normal)
         commentButton.setTitle("\(comments)", for: .normal)
+        
+        let heartImage = isLiked ? UIImage(named: "home_heart_selected") : UIImage(named: "home_heart")
+        var config = likeButton.configuration
+        config?.image = heartImage
+        likeButton.configuration = config
         
         cardImageView.image = UIImage(named: "diary2")
         profileImgView.image = UIImage(named: "profile")

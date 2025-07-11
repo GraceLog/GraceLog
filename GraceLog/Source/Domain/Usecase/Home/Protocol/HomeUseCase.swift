@@ -10,13 +10,10 @@ import RxSwift
 import RxCocoa
 
 protocol HomeUseCase {
-    var homeMyData: BehaviorSubject<HomeContent?> { get }
-    var homeCommunityData: BehaviorSubject<HomeCommunityContent?> { get }
-    var user: BehaviorSubject<GraceLogUser?> { get }
+    var diaryList: BehaviorRelay<[MyDiaryItem]> { get }
+    var videoList: BehaviorRelay<[HomeVideoItem]> { get }
     var error: PublishSubject<Error> { get }
-    
-    func fetchUser()
-    func fetchHomeMyContent()
-    func fetchHomeCommunityContent()
-//    func fetchCommunityDiary(communityID: Int)
+        
+    func fetchDiaryList()
+    func fetchVideoList()
 }
