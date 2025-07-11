@@ -633,6 +633,13 @@
 			path = CoreTab;
 			sourceTree = "<group>";
 		};
+		70A97C582E215F0800F08DF6 /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DIContainer;
+			sourceTree = "<group>";
+		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -934,6 +941,7 @@
 		DE3BFCBE2D043C920076426D /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				70A97C582E215F0800F08DF6 /* DIContainer */,
 				DE3BFCD52D048B170076426D /* GraceLogAppCoordinator.swift */,
 				DE58FEB02D04284D008CADCD /* AppDelegate.swift */,
 				DE58FEB22D04284D008CADCD /* SceneDelegate.swift */,
