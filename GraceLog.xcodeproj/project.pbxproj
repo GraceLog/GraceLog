@@ -61,6 +61,7 @@
 		70A97C5A2E215F5700F08DF6 /* DomainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C592E215F5700F08DF6 /* DomainAssembly.swift */; };
 		70A97C5C2E21622400F08DF6 /* DataAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C5B2E21622400F08DF6 /* DataAssembly.swift */; };
 		70A97C602E2164C600F08DF6 /* HomePresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C5F2E2164C600F08DF6 /* HomePresentationAssembly.swift */; };
+		70A97C632E2167C200F08DF6 /* DiaryPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C622E2167C200F08DF6 /* DiaryPresentationAssembly.swift */; };
 		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
@@ -259,6 +260,7 @@
 		70A97C592E215F5700F08DF6 /* DomainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainAssembly.swift; sourceTree = "<group>"; };
 		70A97C5B2E21622400F08DF6 /* DataAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAssembly.swift; sourceTree = "<group>"; };
 		70A97C5F2E2164C600F08DF6 /* HomePresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresentationAssembly.swift; sourceTree = "<group>"; };
+		70A97C622E2167C200F08DF6 /* DiaryPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryPresentationAssembly.swift; sourceTree = "<group>"; };
 		70F006172E0EBA1900228C70 /* UIView+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Reactive.swift"; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -652,6 +654,7 @@
 		70A97C5D2E21637400F08DF6 /* PresentationDI */ = {
 			isa = PBXGroup;
 			children = (
+				70A97C612E2167B400F08DF6 /* Diary */,
 				70A97C5E2E21646000F08DF6 /* Home */,
 			);
 			path = PresentationDI;
@@ -663,6 +666,14 @@
 				70A97C5F2E2164C600F08DF6 /* HomePresentationAssembly.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		70A97C612E2167B400F08DF6 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				70A97C622E2167C200F08DF6 /* DiaryPresentationAssembly.swift */,
+			);
+			path = Diary;
 			sourceTree = "<group>";
 		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
@@ -1618,6 +1629,7 @@
 				DE3BFCE12D059DDC0076426D /* HomeCoordinator.swift in Sources */,
 				DEACFE6C2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift in Sources */,
 				DE58FEB12D04284D008CADCD /* AppDelegate.swift in Sources */,
+				70A97C632E2167C200F08DF6 /* DiaryPresentationAssembly.swift in Sources */,
 				024AEB672DF0171100DE94DE /* APIError.swift in Sources */,
 				704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */,
 				DED5588E2DBE26E600137B10 /* GraceLogAuthenticationCredential.swift in Sources */,
