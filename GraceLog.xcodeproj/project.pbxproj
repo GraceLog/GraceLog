@@ -58,6 +58,7 @@
 		70A97C4D2E19500900F08DF6 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4C2E19500900F08DF6 /* MainTabbarController.swift */; };
 		70A97C512E196D4E00F08DF6 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C502E196D4E00F08DF6 /* NavigationController.swift */; };
 		70A97C532E1F8D5800F08DF6 /* DateFormatterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C522E1F8D5800F08DF6 /* DateFormatterFactory.swift */; };
+		70A97C5A2E215F5700F08DF6 /* DomainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C592E215F5700F08DF6 /* DomainAssembly.swift */; };
 		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
@@ -253,6 +254,7 @@
 		70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinator.swift; sourceTree = "<group>"; };
 		70A97C502E196D4E00F08DF6 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		70A97C522E1F8D5800F08DF6 /* DateFormatterFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterFactory.swift; sourceTree = "<group>"; };
+		70A97C592E215F5700F08DF6 /* DomainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainAssembly.swift; sourceTree = "<group>"; };
 		70F006172E0EBA1900228C70 /* UIView+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Reactive.swift"; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -636,6 +638,7 @@
 		70A97C582E215F0800F08DF6 /* DIContainer */ = {
 			isa = PBXGroup;
 			children = (
+				70A97C592E215F5700F08DF6 /* DomainAssembly.swift */,
 			);
 			path = DIContainer;
 			sourceTree = "<group>";
@@ -1651,6 +1654,7 @@
 				7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */,
 				702D2B5A2E02B43700D5E71E /* GLInputFieldView.swift in Sources */,
 				02DC298B2DDC29C000662D8A /* MyInfoButtonTableViewCell.swift in Sources */,
+				70A97C5A2E215F5700F08DF6 /* DomainAssembly.swift in Sources */,
 				02DC298C2DDC29C000662D8A /* MyInfoDataSource.swift in Sources */,
 				02DC298D2DDC29C000662D8A /* ProfileTableViewCell.swift in Sources */,
 				DE9A1FF02D7C05720044F655 /* CommunityDiaryDTO.swift in Sources */,
