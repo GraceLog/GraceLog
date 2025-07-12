@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GraceLogResponseDTO<T: Decodable>: Decodable {
+struct GLResponseDTO<T: Decodable>: Decodable {
     let code: Int
     let message: String
     let data: T?
