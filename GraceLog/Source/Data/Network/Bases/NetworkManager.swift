@@ -10,32 +10,14 @@ import Alamofire
 import RxSwift
 
 final class NetworkManager {
-    private let authenticatedSession: Session
-    private let unauthenticatedSession: Session
-    private let interceptor: AuthenticationInterceptor<GLAuthenticator>
-    private let authenticator: GLAuthenticator
+    private let session: Session
     
     init() {
-        self.authenticator = GLAuthenticator()
-        
-        var credential: GLAuthenticationCredential?
-        
-        if let accessToken = KeychainServiceImpl.shared.accessToken,
-           let refreshToken = KeychainServiceImpl.shared.refreshToken {
-            credential = GLAuthenticationCredential(
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-                expiredAt: Date(timeIntervalSinceNow: 60 * 120)
-            )
-        }
-        
-        self.interceptor = AuthenticationInterceptor(
-            authenticator: authenticator,
-            credential: credential
+        self.session = Session(
+            configuration: .default,
+            interceptor: GLInterceptor(),
+            eventMonitors: [GLAPILogger()]
         )
-        
-        self.authenticatedSession = Session(interceptor: interceptor)
-        self.unauthenticatedSession = Session.default
     }
 }
 
@@ -44,54 +26,64 @@ extension NetworkManager {
         _ target: TargetType
     ) -> Single<T> {
         return .create { single in
-            let session = target.headers?.keys.contains(HTTPHeaderField.authenticationToken.rawValue) == true
-            ? self.authenticatedSession
-            : self.unauthenticatedSession
-            
-            session.request(target).responseDecodable(of: GLResponseDTO<T>.self) { response in
-                let result = self.handleResponse(response)
-                switch result {
-                case .success(let data):
-                    single(.success(data))
-                case .failure(let error):
-                    single(.failure(error))
+            self.session.request(target)
+                .responseDecodable(of: GLResponseDTO<T>.self) { response in
+                    switch response.result {
+                    case .success(let value):
+                        let result = self.judgeStatus(
+                            by: response.response?.statusCode ?? 0,
+                            response: value
+                        )
+                        
+                        switch result {
+                        case .success(let data):
+                            single(.success(data))
+                        case .failure(let error):
+                            single(.failure(error))
+                        }
+                        
+                    case .failure(let afError):
+                        let glError = self.convertToGLError(afError)
+                        single(.failure(glError))
+                    }
                 }
-            }
             return Disposables.create()
         }
     }
     
-    private func handleResponse<T: Decodable>(_ response: DataResponse<GLResponseDTO<T>, AFError>) -> Result<T, APIError> {
-        switch response.result {
-        case .success(let value):
-            if let data = value.data {
+    private func judgeStatus<T: Decodable>(
+        by statusCode: Int,
+        response: GLResponseDTO<T>
+    ) -> Result<T, GLError> {
+        
+        switch statusCode {
+        case 200..<300:
+            if let data = response.data {
                 return .success(data)
             } else {
-                return .failure(.network(message: value.message))
+                return .success(GLEmptyResponse() as! T)
             }
-        case .failure(let error):
-            return .failure(handleAFError(error))
+        case 400..<500:
+            let code = response.code
+            let errorMessage = response.message
+            return .failure(.requestError(code: code, message: errorMessage))
+            
+        case 500..<600:
+            return .failure(.serverError)
+            
+        default:
+            return .failure(.unknownError)
         }
     }
     
-    private func handleAFError(_ error: AFError) -> APIError {
-        switch error {
+    private func convertToGLError(_ afError: AFError) -> GLError {
+        switch afError {
+        case .sessionTaskFailed(let urlError as URLError) where urlError.code == .notConnectedToInternet:
+            return .networkError
         case .responseSerializationFailed:
-            return .decodingError
-        case .sessionTaskFailed(let sessionError):
-            if let urlError = sessionError as? URLError {
-                switch urlError.code {
-                case .notConnectedToInternet:
-                    return .network(message: "인터넷 연결을 확인해주세요")
-                case .timedOut:
-                    return .network(message: "요청 시간이 초과되었습니다")
-                default:
-                    return .network(message: urlError.localizedDescription)
-                }
-            }
-            return .unknown
+            return .decodedError
         default:
-            return .unknown
+            return .afError(afError)
         }
     }
 }
