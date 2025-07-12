@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-struct GraceLogAuthenticationCredential: AuthenticationCredential {
+struct GLAuthenticationCredential: AuthenticationCredential {
     let accessToken: String
     let refreshToken: String
     let expiredAt: Date
