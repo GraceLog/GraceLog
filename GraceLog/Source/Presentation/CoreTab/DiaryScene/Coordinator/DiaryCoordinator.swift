@@ -17,7 +17,7 @@ final class DiaryCoordinator: NavigationCoordinator {
     }
     
     func start() {
-        let diaryVC = DiaryViewController(reactor: DiaryViewReactor(usecase: DefaultDiaryUseCase()))
+        let diaryVC = DependencyContainer.shared.injector.resolve(DiaryViewController.self)
         navigationController.setViewControllers([diaryVC], animated: false)
     }
 }

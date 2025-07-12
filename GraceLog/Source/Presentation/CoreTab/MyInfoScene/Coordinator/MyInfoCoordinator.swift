@@ -17,7 +17,7 @@ final class MyInfoCoordinator: NavigationCoordinator {
     }
     
     func start() {
-        let myInfoVC = MyInfoViewController(reactor: MyInfoViewReactor())
+        let myInfoVC = DependencyContainer.shared.injector.resolve(MyInfoViewController.self)
         navigationController.setViewControllers([myInfoVC], animated: false)
     }
     

@@ -62,6 +62,9 @@
 		70A97C5C2E21622400F08DF6 /* DataAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C5B2E21622400F08DF6 /* DataAssembly.swift */; };
 		70A97C602E2164C600F08DF6 /* HomePresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C5F2E2164C600F08DF6 /* HomePresentationAssembly.swift */; };
 		70A97C632E2167C200F08DF6 /* DiaryPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C622E2167C200F08DF6 /* DiaryPresentationAssembly.swift */; };
+		70A97C662E2169D300F08DF6 /* MyInfoPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C652E2169D300F08DF6 /* MyInfoPresentationAssembly.swift */; };
+		70A97C682E226B3900F08DF6 /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C672E226B3900F08DF6 /* DependencyInjector.swift */; };
+		70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C6A2E2275B700F08DF6 /* DependencyContainer.swift */; };
 		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
@@ -261,6 +264,9 @@
 		70A97C5B2E21622400F08DF6 /* DataAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAssembly.swift; sourceTree = "<group>"; };
 		70A97C5F2E2164C600F08DF6 /* HomePresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresentationAssembly.swift; sourceTree = "<group>"; };
 		70A97C622E2167C200F08DF6 /* DiaryPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryPresentationAssembly.swift; sourceTree = "<group>"; };
+		70A97C652E2169D300F08DF6 /* MyInfoPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoPresentationAssembly.swift; sourceTree = "<group>"; };
+		70A97C672E226B3900F08DF6 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
+		70A97C6A2E2275B700F08DF6 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		70F006172E0EBA1900228C70 /* UIView+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Reactive.swift"; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -654,6 +660,7 @@
 		70A97C5D2E21637400F08DF6 /* PresentationDI */ = {
 			isa = PBXGroup;
 			children = (
+				70A97C642E2169C700F08DF6 /* MyInfo */,
 				70A97C612E2167B400F08DF6 /* Diary */,
 				70A97C5E2E21646000F08DF6 /* Home */,
 			);
@@ -674,6 +681,23 @@
 				70A97C622E2167C200F08DF6 /* DiaryPresentationAssembly.swift */,
 			);
 			path = Diary;
+			sourceTree = "<group>";
+		};
+		70A97C642E2169C700F08DF6 /* MyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				70A97C652E2169D300F08DF6 /* MyInfoPresentationAssembly.swift */,
+			);
+			path = MyInfo;
+			sourceTree = "<group>";
+		};
+		70A97C692E22755800F08DF6 /* Dependency */ = {
+			isa = PBXGroup;
+			children = (
+				70A97C672E226B3900F08DF6 /* DependencyInjector.swift */,
+				70A97C6A2E2275B700F08DF6 /* DependencyContainer.swift */,
+			);
+			path = Dependency;
 			sourceTree = "<group>";
 		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
@@ -1018,6 +1042,7 @@
 		DE3BFCC22D043D200076426D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				70A97C692E22755800F08DF6 /* Dependency */,
 				704815782DFFF2B5009ECDBD /* Font */,
 				026656A92DE7E9BD00541D96 /* UI */,
 				02F0DA4F2DDEAECC00CD036A /* Manager */,
@@ -1618,6 +1643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A97C662E2169D300F08DF6 /* MyInfoPresentationAssembly.swift in Sources */,
 				025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */,
 				70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */,
 				702D2B6C2E07008800D5E71E /* DiaryShareView.swift in Sources */,
@@ -1665,6 +1691,7 @@
 				DE9565032DC4B311006DD9CF /* KeychainService.swift in Sources */,
 				DE2700502D1FA03B005C9DCF /* UIView+Extension.swift in Sources */,
 				DE9A1FDC2D79AFFA0044F655 /* MyDiaryItem.swift in Sources */,
+				70A97C682E226B3900F08DF6 /* DependencyInjector.swift in Sources */,
 				DED558862DBE224300137B10 /* DefaultAuthRepository.swift in Sources */,
 				DE2700632D22D188005C9DCF /* DefaultUserRepository.swift in Sources */,
 				DE9A1FDE2D79B0A50044F655 /* HomeContent.swift in Sources */,
@@ -1716,6 +1743,7 @@
 				702D2B722E07F42500D5E71E /* DiarySettingTableViewCell.swift in Sources */,
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,
 				DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */,
+				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
 				DE9A1FFA2D7C09350044F655 /* HomeRepository.swift in Sources */,
