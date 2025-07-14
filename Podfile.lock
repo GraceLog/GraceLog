@@ -1256,6 +1256,7 @@ PODS:
   - SDWebImage/Core (4.4.8)
   - SnapKit (5.7.1)
   - SteviaLayout (5.1.2)
+  - Swinject (2.8.8)
   - Then (3.0.0)
   - Toast-Swift (5.1.1)
   - "UITextView+Placeholder (1.4.0)"
@@ -1291,6 +1292,7 @@ DEPENDENCIES:
   - RxTest
   - SDWebImage
   - SnapKit
+  - Swinject (~> 2.8.0)
   - Then
   - Toast-Swift (~> 5.1.1)
   - "UITextView+Placeholder"
@@ -1351,6 +1353,7 @@ SPEC REPOS:
     - SDWebImage
     - SnapKit
     - SteviaLayout
+    - Swinject
     - Then
     - Toast-Swift
     - "UITextView+Placeholder"
@@ -1411,12 +1414,13 @@ SPEC CHECKSUMS:
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SteviaLayout: 05424e528d643657d39ce72c786e4adf13cfc5f2
+  Swinject: 2943463cdd58b49f114213bf1ce4a09f374828e7
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   Toast-Swift: 7a03a532afe3a560d4044bc7c237e2864d295173
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
   YPImagePicker: afc81b3cffab05a6e7261c5daf80dc31b4e917b4
 
-PODFILE CHECKSUM: e8c11c4558a185a48c7244500e4c32eb5102f1b4
+PODFILE CHECKSUM: 7e6945b91ac3bb3bc279db50f6a1cb24265d07ef
 
 COCOAPODS: 1.16.2

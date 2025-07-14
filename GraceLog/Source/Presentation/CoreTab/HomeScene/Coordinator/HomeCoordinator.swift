@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Swinject
+
 final class HomeCoordinator: NavigationCoordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
@@ -17,7 +19,7 @@ final class HomeCoordinator: NavigationCoordinator {
     }
     
     func start() {
-        let viewController = HomeViewController(reactor: HomeViewReactor(homeUsecase: DefaultHomeUseCase(homeRepository: DefaultHomeRepository())))
+        let viewController = DependencyContainer.shared.injector.resolve(HomeViewController.self)
         navigationController.setViewControllers([viewController], animated: false)
     }
 }
