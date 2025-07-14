@@ -15,14 +15,3 @@ struct GraceLogUser: Equatable, Codable {
     let email: String
     let message: String
 }
-
-extension GraceLogUser {
-    func toRequestDTO() -> UserRequestDTO {
-        return UserRequestDTO(
-            name: name,
-            nickname: nickname,
-            profileImage: profileImage,
-            message: message
-        )
-    }
-}

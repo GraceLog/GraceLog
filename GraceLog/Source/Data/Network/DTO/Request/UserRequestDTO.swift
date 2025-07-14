@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserRequestDTO: Encodable {
+struct UpdateUserRequestDTO: Encodable {
     let name: String
     let nickname: String
     let profileImage: String
