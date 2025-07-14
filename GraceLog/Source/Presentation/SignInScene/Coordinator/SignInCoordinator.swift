@@ -18,7 +18,11 @@ final class SignInCoordinator: NavigationCoordinator {
     
     func start() {
         let signInViewController = SignInViewController(reactor: SignInReactor(
-            signInUseCase: DefaultSignInUseCase(authRepository: DefaultAuthRepository(authService: AuthService()))
+            signInUseCase: DefaultSignInUseCase(
+                authRepository: DefaultAuthRepository(
+                    network: NetworkManager()
+                )
+            )
         ))
         navigationController.setViewControllers([signInViewController], animated: true)
     }

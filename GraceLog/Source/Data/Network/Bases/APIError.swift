@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum APIError: Error {
-    case network(statusCode: Int, message: String)
+    case network(message: String)
     case notToken
     case decodingError
     case doNotRetryWithError
@@ -17,8 +17,8 @@ enum APIError: Error {
     
     var errorDescription: String? {
         switch self {
-        case .network(let statusCode, let message):
-            return "Error Code: \(statusCode) \nmessage: \(message)"
+        case .network(let message):
+            return "message: \(message)"
         case .notToken:
             return "유저 토큰이 존재하지 않습니다. 로그아웃됩니다."
         case .decodingError:
