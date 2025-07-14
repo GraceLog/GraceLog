@@ -9,15 +9,15 @@ import Foundation
 import RxSwift
 
 final class DefaultUserRepository: UserRepository {
-    private let userService: UserService
+    private let network: NetworkManager
     
-    init(userService: UserService) {
-        self.userService = userService
+    init(network: NetworkManager) {
+        self.network = network
     }
     
     func fetchUser() -> Single<GraceLogUser> {
-        return userService.fetchUser()
-            .map { responseDTO in
+        return network.request(UserAPI.fetchUser)
+            .map { (responseDTO: UserResponseDTO) in
                 return GraceLogUser(
                     id: responseDTO.memberId,
                     name: responseDTO.name,
@@ -29,9 +29,16 @@ final class DefaultUserRepository: UserRepository {
             }
     }
     
-    func updateUser(user: GraceLogUser) -> Single<GraceLogUser> {
-        return userService.updateUser(request: user.toRequestDTO())
-            .map { responseDTO in
+    func updateUser(name: String, nickname: String, profileImage: String, message: String) -> Single<GraceLogUser> {
+        let request = UpdateUserRequestDTO(
+            name: name,
+            nickname: nickname,
+            profileImage: profileImage,
+            message: message
+        )
+        
+        return network.request(UserAPI.updateUser(request))
+            .map { (responseDTO: UserResponseDTO) in
                 return GraceLogUser(
                     id: responseDTO.memberId,
                     name: responseDTO.name,

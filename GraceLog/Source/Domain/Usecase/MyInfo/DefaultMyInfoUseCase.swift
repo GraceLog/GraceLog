@@ -15,11 +15,21 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
         self.userRepository = userRepository
     }
     
-    func updateUser(user: GraceLogUser) -> Single<GraceLogUser> {
-        return userRepository.updateUser(user: user)
-            .map { updatedUser in
-                AuthManager.shared.saveUser(updatedUser)
-                return updatedUser
-            }
+    func updateUser(
+        name: String,
+        nickname: String,
+        profileImage: String,
+        message: String
+    ) -> Single<GraceLogUser> {
+        return userRepository.updateUser(
+            name: name,
+            nickname: nickname,
+            profileImage: profileImage,
+            message: message
+        )
+        .map { updatedUser in
+            AuthManager.shared.saveUser(updatedUser)
+            return updatedUser
+        }
     }
 }

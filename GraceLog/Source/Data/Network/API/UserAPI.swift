@@ -7,12 +7,12 @@
 
 import Alamofire
 
-enum UserTarget {
+enum UserAPI {
     case fetchUser
-    case updateUser(UserRequestDTO)
+    case updateUser(UpdateUserRequestDTO)
 }
 
-extension UserTarget: TargetType {
+extension UserAPI: TargetType {
     var baseURL: String {
         return "http://\(Const.baseURL)"
     }
@@ -28,6 +28,13 @@ extension UserTarget: TargetType {
         switch self {
         case .fetchUser, .updateUser: return "/member"
         }
+    }
+    
+    var headers: [String : String]? {
+        guard let token = KeychainServiceImpl.shared.accessToken else { return nil }
+        return [
+            HTTPHeaderField.authenticationToken.rawValue: "Bearer \(token)"
+        ]
     }
     
     var parameters: RequestParams {

@@ -9,14 +9,14 @@ import Swinject
 
 struct DataAssembly: Assembly {
     func assemble(container: Container) {
+        let network = NetworkManager()
+        
         container.register(AuthRepository.self) { resolver in
-            let authService = AuthService()
-            return DefaultAuthRepository(authService: authService)
+            return DefaultAuthRepository(network: network)
         }
         
         container.register(UserRepository.self) { resolver in
-            let userService = UserService()
-            return DefaultUserRepository(userService: userService)
+            return DefaultUserRepository(network: network)
         }
         
         container.register(HomeRepository.self) { resolver in

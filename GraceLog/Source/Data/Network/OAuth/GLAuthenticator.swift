@@ -19,9 +19,9 @@ class GLAuthenticator: Authenticator {
         urlRequest.addValue(credential.refreshToken, forHTTPHeaderField: "refresh-token")
     }
     
-    // MARK: API요청 후 error가 떨어진 경우, 401에러(인증에러), 403(권한 없음)인 경우만 refresh가 되도록 필터링
+    // MARK: API요청 후 error가 떨어진 경우, 401에러(인증에러)인 경우만 refresh가 되도록 필터링
     func didRequest(_ urlRequest: URLRequest, with response: HTTPURLResponse, failDueToAuthenticationError error: any Error) -> Bool {
-        return response.statusCode == 401 || response.statusCode == 403
+        return response.statusCode == 401
     }
     
     // MARK: 인증이 필요한 urlRequest에 대해서만 refresh가 되도록, 이 경우에만 true를 리턴하여 refresh 요청
@@ -31,36 +31,27 @@ class GLAuthenticator: Authenticator {
     }
     
     func refresh(_ credential: GLAuthenticationCredential, for session: Alamofire.Session, completion: @escaping (Result<GLAuthenticationCredential, any Error>) -> Void) {
-        let url = "\(Const.baseURL)/auth/refresh"
+        let request = RefreshTokenRequestDTO(refreshToken: credential.refreshToken)
         
-        let parameters: [String: String] = ["refreshToken": credential.refreshToken]
-        
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/json"
-        ]
-        
-        NetworkManager.shared.request(
-            url,
-            method: .post,
-            parameters: parameters,
-            encoding: JSONEncoding.default,
-            headers: headers
-        ).subscribe( onSuccess: { (data: SignInResponseDTO) in
-            let newCredential = GLAuthenticationCredential(
-                accessToken: data.accessToken,
-                refreshToken: data.refreshToken,
-                expiredAt: Date(timeIntervalSinceNow: 60 * 120)
-            )
-            
-            KeychainServiceImpl.shared.accessToken = data.accessToken
-            KeychainServiceImpl.shared.refreshToken = data.refreshToken
-            
-            completion(.success(newCredential))
-        }, onFailure: { _ in
-            let error = APIError.doNotRetryWithError
-            completion(.failure(error))
-            AuthManager.shared.handleAuthenticationFailure()
-        })
-        .disposed(by: disposeBag)
+        NetworkManager()
+            .request(
+                AuthAPI.refresh(request)
+            ).subscribe( onSuccess: { (data: SignInResponseDTO) in
+                let newCredential = GLAuthenticationCredential(
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
+                    expiredAt: Date(timeIntervalSinceNow: 60 * 120)
+                )
+                
+                KeychainServiceImpl.shared.accessToken = data.accessToken
+                KeychainServiceImpl.shared.refreshToken = data.refreshToken
+                
+                completion(.success(newCredential))
+            }, onFailure: { _ in
+                let error = APIError.doNotRetryWithError
+                completion(.failure(error))
+                AuthManager.shared.handleAuthenticationFailure()
+            })
+            .disposed(by: disposeBag)
     }
 }
