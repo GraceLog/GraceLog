@@ -25,7 +25,8 @@ struct HomePresentationAssembly: Assembly {
         }
         
         container.register(HomeMyViewController.self) { resolver in
-            return HomeMyViewController()
+            let reactor = container.resolve(HomeMyViewReactor.self)!
+            return HomeMyViewController(reactor: reactor)
         }
         
         container.register(HomeCommunityViewReactor.self) { resolver in
