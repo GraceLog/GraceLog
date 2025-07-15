@@ -47,8 +47,7 @@ class GLAuthenticator: Authenticator {
                 KeychainServiceImpl.shared.refreshToken = data.refreshToken
                 
                 completion(.success(newCredential))
-            }, onFailure: { _ in
-                let error = APIError.doNotRetryWithError
+            }, onFailure: { error in
                 completion(.failure(error))
                 AuthManager.shared.handleAuthenticationFailure()
             })

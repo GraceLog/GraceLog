@@ -13,11 +13,8 @@ final class NetworkManager {
     private let authenticatedSession: Session
     private let unauthenticatedSession: Session
     private let interceptor: AuthenticationInterceptor<GLAuthenticator>
-    private let authenticator: GLAuthenticator
     
     init() {
-        self.authenticator = GLAuthenticator()
-        
         var credential: GLAuthenticationCredential?
         
         if let accessToken = KeychainServiceImpl.shared.accessToken,
@@ -30,7 +27,7 @@ final class NetworkManager {
         }
         
         self.interceptor = AuthenticationInterceptor(
-            authenticator: authenticator,
+            authenticator: GLAuthenticator(),
             credential: credential
         )
         
@@ -48,20 +45,37 @@ extension NetworkManager {
             ? self.authenticatedSession
             : self.unauthenticatedSession
             
-            session.request(target).responseDecodable(of: GLResponseDTO<T>.self) { response in
-                let result = self.handleResponse(response)
-                switch result {
-                case .success(let data):
-                    single(.success(data))
-                case .failure(let error):
-                    single(.failure(error))
+            session.request(target)
+                .validate(statusCode: 200...500)
+                .responseDecodable(of: GLResponseDTO<T>.self) { response in
+                    let result = self.handleResponse(response)
+                    switch result {
+                    case .success(let data):
+                        single(.success(data))
+                    case .failure(let error):
+                        single(.failure(error))
+                    }
                 }
-            }
             return Disposables.create()
         }
     }
     
     private func handleResponse<T: Decodable>(_ response: DataResponse<GLResponseDTO<T>, AFError>) -> Result<T, APIError> {
+        if let statusCode = response.response?.statusCode {
+            switch statusCode {
+            case 200..<300:
+                break
+            case 400..<500:
+                let message = getErrorMessage(from: response) ?? "클라이언트 오류"
+                return .failure(.clientError(statusCode: statusCode, message: message))
+            case 500..<600:
+                let message = getErrorMessage(from: response) ?? "서버 오류"
+                return .failure(.serverError(statusCode: statusCode, message: message))
+            default:
+                return .failure(.unknown)
+            }
+        }
+        
         switch response.result {
         case .success(let value):
             if let data = value.data {
@@ -71,6 +85,15 @@ extension NetworkManager {
             }
         case .failure(let error):
             return .failure(handleAFError(error))
+        }
+    }
+    
+    private func getErrorMessage<T: Decodable>(from response: DataResponse<GLResponseDTO<T>, AFError>) -> String? {
+        switch response.result {
+        case .success(let value):
+            return value.message
+        case .failure:
+            return nil
         }
     }
     

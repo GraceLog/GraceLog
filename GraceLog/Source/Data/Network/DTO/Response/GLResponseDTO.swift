@@ -8,7 +8,7 @@
 import Foundation
 
 struct GLResponseDTO<T: Decodable>: Decodable {
-    let code: Int
+    let code: String
     let message: String
     let data: T?
 }
