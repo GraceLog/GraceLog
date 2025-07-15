@@ -132,7 +132,7 @@ extension HomeCommunityViewController {
         diaryDataSource = RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>(
             configureCell: { _, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityDiaryTableViewCell
-
+                
                 cell.updateUI(
                     username: item.username,
                     title: item.title,
