@@ -120,6 +120,7 @@
 		DE58FEBD2D04284D008CADCD /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DE58FEBC2D04284D008CADCD /* Base */; };
 		DE58FED22D04284E008CADCD /* GraceLogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FED12D04284E008CADCD /* GraceLogUITests.swift */; };
 		DE58FED42D04284E008CADCD /* GraceLogUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FED32D04284E008CADCD /* GraceLogUITestsLaunchTests.swift */; };
+		DE597A6E2E26141100B2CB5B /* AuthPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597A6D2E26141100B2CB5B /* AuthPresentationAssembly.swift */; };
 		DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */; };
 		DE655B212DA5EC480073B4F7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */; };
 		DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */; };
@@ -328,6 +329,7 @@
 		DE58FECD2D04284E008CADCD /* GraceLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraceLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE58FED12D04284E008CADCD /* GraceLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogUITests.swift; sourceTree = "<group>"; };
 		DE58FED32D04284E008CADCD /* GraceLogUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DE597A6D2E26141100B2CB5B /* AuthPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDivideTableViewCell.swift; sourceTree = "<group>"; };
 		DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareTableViewCell.swift; sourceTree = "<group>"; };
@@ -641,6 +643,7 @@
 		70A97C5D2E21637400F08DF6 /* PresentationDI */ = {
 			isa = PBXGroup;
 			children = (
+				DE597A6C2E26140300B2CB5B /* Auth */,
 				70A97C642E2169C700F08DF6 /* MyInfo */,
 				70A97C612E2167B400F08DF6 /* Diary */,
 				70A97C5E2E21646000F08DF6 /* Home */,
@@ -1200,6 +1203,14 @@
 			path = GraceLogUITests;
 			sourceTree = "<group>";
 		};
+		DE597A6C2E26140300B2CB5B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DE597A6D2E26141100B2CB5B /* AuthPresentationAssembly.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		DE66C2F82D96B380009A983F /* Diary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1616,6 +1627,7 @@
 				70A97C632E2167C200F08DF6 /* DiaryPresentationAssembly.swift in Sources */,
 				024AEB672DF0171100DE94DE /* APIError.swift in Sources */,
 				704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */,
+				DE597A6E2E26141100B2CB5B /* AuthPresentationAssembly.swift in Sources */,
 				DED5588E2DBE26E600137B10 /* GLAuthenticationCredential.swift in Sources */,
 				0220A0752DE7F57000D045F7 /* ImagePickerManager.swift in Sources */,
 				DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */,

@@ -19,7 +19,11 @@ struct DomainAssembly: Assembly {
         // Home
         container.register(HomeUseCase.self) { resolver in
             let homeRepository = resolver.resolve(HomeRepository.self)!
-            return DefaultHomeUseCase(homeRepository: homeRepository)
+            let userRepository = resolver.resolve(UserRepository.self)!
+            return DefaultHomeUseCase(
+                homeRepository: homeRepository,
+                userRepository: userRepository
+            )
         }
         
         container.register(HomeCommunityUseCase.self) { resolver in
