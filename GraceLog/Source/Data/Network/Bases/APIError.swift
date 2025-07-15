@@ -9,22 +9,22 @@ import Foundation
 import Alamofire
 
 enum APIError: Error {
-    case network(message: String)
-    case notToken
+    case clientError(statusCode: Int, message: String)
+    case serverError(statusCode: Int, message: String)
     case decodingError
-    case doNotRetryWithError
+    case network(message: String)
     case unknown
     
     var errorDescription: String? {
         switch self {
-        case .network(let message):
-            return "message: \(message)"
-        case .notToken:
-            return "유저 토큰이 존재하지 않습니다. 로그아웃됩니다."
+        case .clientError(let statusCode, let message):
+            return "클라이언트 에러 (\(statusCode)): \(message)"
+        case .serverError(let statusCode, let message):
+            return "서버 에러 (\(statusCode)): \(message)"
         case .decodingError:
             return "디코딩 에러"
-        case .doNotRetryWithError:
-            return "토큰 재발급에 실패했습니다. 로그인을 다시 시도해주세요"
+        case .network(let message):
+            return message
         case .unknown:
             return "알 수 없는 에러"
         }
