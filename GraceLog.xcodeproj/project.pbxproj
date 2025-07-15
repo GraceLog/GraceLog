@@ -65,6 +65,8 @@
 		70A97C662E2169D300F08DF6 /* MyInfoPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C652E2169D300F08DF6 /* MyInfoPresentationAssembly.swift */; };
 		70A97C682E226B3900F08DF6 /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C672E226B3900F08DF6 /* DependencyInjector.swift */; };
 		70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C6A2E2275B700F08DF6 /* DependencyContainer.swift */; };
+		70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C8E2E255E0100F08DF6 /* AppColor.swift */; };
+		70A97C912E255EA800F08DF6 /* GLColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C902E255EA800F08DF6 /* GLColor.swift */; };
 		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
@@ -267,6 +269,8 @@
 		70A97C652E2169D300F08DF6 /* MyInfoPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoPresentationAssembly.swift; sourceTree = "<group>"; };
 		70A97C672E226B3900F08DF6 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		70A97C6A2E2275B700F08DF6 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
+		70A97C8E2E255E0100F08DF6 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
+		70A97C902E255EA800F08DF6 /* GLColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLColor.swift; sourceTree = "<group>"; };
 		70F006172E0EBA1900228C70 /* UIView+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Reactive.swift"; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -700,6 +704,15 @@
 			path = Dependency;
 			sourceTree = "<group>";
 		};
+		70A97C8D2E255DEA00F08DF6 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				70A97C8E2E255E0100F08DF6 /* AppColor.swift */,
+				70A97C902E255EA800F08DF6 /* GLColor.swift */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1042,6 +1055,7 @@
 		DE3BFCC22D043D200076426D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				70A97C8D2E255DEA00F08DF6 /* Color */,
 				70A97C692E22755800F08DF6 /* Dependency */,
 				704815782DFFF2B5009ECDBD /* Font */,
 				026656A92DE7E9BD00541D96 /* UI */,
@@ -1697,6 +1711,7 @@
 				DE9A1FDE2D79B0A50044F655 /* HomeContent.swift in Sources */,
 				704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */,
 				702D2B5C2E02C3A000D5E71E /* GLInputTextView.swift in Sources */,
+				70A97C912E255EA800F08DF6 /* GLColor.swift in Sources */,
 				DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */,
 				DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */,
 				DE3BFCDA2D059A3B0076426D /* HomeViewController.swift in Sources */,
@@ -1786,6 +1801,7 @@
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserTarget.swift in Sources */,
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
+				70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */,
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,
 				0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */,
 				DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */,
