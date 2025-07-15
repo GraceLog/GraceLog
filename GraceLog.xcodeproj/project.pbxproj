@@ -67,7 +67,6 @@
 		70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C6A2E2275B700F08DF6 /* DependencyContainer.swift */; };
 		70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C8E2E255E0100F08DF6 /* AppColor.swift */; };
 		70A97C912E255EA800F08DF6 /* GLColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C902E255EA800F08DF6 /* GLColor.swift */; };
-		70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006172E0EBA1900228C70 /* UIView+Reactive.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
 		A88BF65DF907D86788F86BF8 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */; };
@@ -271,7 +270,6 @@
 		70A97C6A2E2275B700F08DF6 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		70A97C8E2E255E0100F08DF6 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		70A97C902E255EA800F08DF6 /* GLColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLColor.swift; sourceTree = "<group>"; };
-		70F006172E0EBA1900228C70 /* UIView+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Reactive.swift"; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E14D79ABA16C7A19244077 /* Pods-GraceLogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -855,7 +853,6 @@
 				DEA04FA62D69A8C000BA978A /* String+Extension.swift */,
 				7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */,
 				702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */,
-				70F006172E0EBA1900228C70 /* UIView+Reactive.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1769,7 +1766,6 @@
 				DED558712DBC6FA800137B10 /* AuthService.swift in Sources */,
 				DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */,
 				DED5589B2DBFB15400137B10 /* GraceLogAuthenticator.swift in Sources */,
-				70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */,
 				DED558762DBC73EC00137B10 /* TargetType.swift in Sources */,
 				DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */,
 				DED5587D2DBC7B3100137B10 /* SignInRequestDTO.swift in Sources */,
