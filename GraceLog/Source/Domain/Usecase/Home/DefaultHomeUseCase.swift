@@ -10,8 +10,8 @@ import RxSwift
 import RxRelay
 
 final class DefaultHomeUseCase: HomeUseCase {
-    var diaryList = BehaviorRelay<[MyDiaryItem]>(value: [])
-    var videoList = BehaviorRelay<[HomeVideoItem]>(value: [])
+    var diaryList = BehaviorRelay<[MyDiary]>(value: [])
+    var videoList = BehaviorRelay<[RecommendedVideo]>(value: [])
     var error = PublishSubject<Error>()
     
     private let disposeBag = DisposeBag()
@@ -24,42 +24,48 @@ final class DefaultHomeUseCase: HomeUseCase {
     
     func fetchDiaryList() {
         diaryList.accept([
-            MyDiaryItem(
-                date: "오늘\n2/14",
-                dateDesc: "오늘의 감사일기",
+            MyDiary(
+                editedDate: Date(),
                 title: "스터디 카페에 새로운 손님이?",
-                desc: "처음에는 한숨만 나오고 절망을 느꼈다. 하지만 하나님께서는 나의 시선을 바꾸셨다. 이후로...",
-                tags: ["#순종", "#도전", "#새해", "#스터디카페"],
-                image: UIImage(named: "diary1")
+                content: "처음에는 한숨만 나오고 절망을 느꼈다. 하지만 하나님께서는 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
             ),
-            MyDiaryItem(
-                date: "지난주\n2/7",
-                dateDesc: "지난주 이시간",
-                title: "어쩌다 보니 창업...",
-                desc: "",
-                tags: [],
-                image: UIImage(named: "diary2")
+            MyDiary(
+                editedDate: Date().addingTimeInterval(-86400 * 7),
+                title: "지난주 이시간",
+                content: "어쩌다 보니 창업어쩌다 보니 창업어쩌다 보니 창업",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
             ),
-            MyDiaryItem(
-                date: "작년\n12/1",
-                dateDesc: "작년 12월",
-                title: "그럼에도 불구하고",
-                desc: "",
-                tags: [],
-                image: UIImage(named: "diary3")
+            MyDiary(
+                editedDate: Date().addingTimeInterval(-86400 * 365),
+                title: "작년 12월",
+                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
+            ),
+            MyDiary(
+                editedDate: Date().addingTimeInterval(-86400 * 7 + 100),
+                title: "지난주 + 100",
+                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
+            ),
+            MyDiary(
+                editedDate: Date().addingTimeInterval(-86400 * 365 + 100),
+                title: "작년 + 100",
+                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
             )
         ])
     }
 
     func fetchVideoList() {
         videoList.accept([
-            HomeVideoItem(
+            RecommendedVideo(
                 title: "말씀노트",
-                imageName: "content1"
+                imageURL: URL(string: "https://pimg.mk.co.kr/meet/neds/2017/11/image_readmed_2017_740612_15101228583092607.jpg")
             ),
-            HomeVideoItem(
+            RecommendedVideo(
                 title: "더메세지 랩The Message LAB",
-                imageName: "content2"
+                imageURL: URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4sCVSr1te6gasrpW9pSDUrQ46cf9rP7t8w&s")
             )
         ])
     }

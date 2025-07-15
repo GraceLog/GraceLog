@@ -145,7 +145,7 @@ extension HomeCommunityViewController {
                     cardImageURL: item.cardImageURL
                 )
                 
-                cell.profileImageView.rx.gestureTap
+                cell.profileImageView.rx.tapGesture()
                     .asDriver()
                     .drive(onNext: { [weak self] _ in
                         guard let self,
@@ -159,7 +159,7 @@ extension HomeCommunityViewController {
                     })
                     .disposed(by: cell.disposeBag)
                 
-                cell.cardImageView.rx.gestureTap
+                cell.cardImageView.rx.tapGesture()
                     .asDriver()
                     .drive(onNext: { [weak self] _ in
                         guard let self,

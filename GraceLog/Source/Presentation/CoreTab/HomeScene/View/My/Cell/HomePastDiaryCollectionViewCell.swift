@@ -22,7 +22,7 @@ final class HomePastDiaryCollectionViewCell: DiaryTimelineCollectionViewCell {
         $0.spacing = 4
     }
     
-    private let dateLabel = UILabel().then {
+    private let titleLabel = UILabel().then {
         $0.textColor = .white
         $0.font = GLFont.medium10.font
         $0.numberOfLines = 1
@@ -38,15 +38,15 @@ final class HomePastDiaryCollectionViewCell: DiaryTimelineCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        dateLabel.text = nil
+        titleLabel.text = nil
         contentLabel.text = nil
     }
     
     override func setupAutoLayouts() {
         super.setupAutoLayouts()
-        backgroundImageView.addSubview(containerStackView)
+        overlayBackgroundView.addSubview(containerStackView)
         
-        [dateLabel, contentLabel].forEach { containerStackView.addArrangedSubview($0) }
+        [titleLabel, contentLabel].forEach { containerStackView.addArrangedSubview($0) }
         containerStackView.snp.makeConstraints {
             $0.top.greaterThanOrEqualToSuperview()
             $0.centerY.equalToSuperview()
@@ -59,21 +59,19 @@ final class HomePastDiaryCollectionViewCell: DiaryTimelineCollectionViewCell {
 extension HomePastDiaryCollectionViewCell {
     func setData(
         backgroundImageURL: URL?,
-        date: String,
+        title: String,
         content: String,
-        relativeDate: String,
-        exactDate: String,
+        editedDate: Date?,
         hideTopLine: Bool,
         hideBottomLine: Bool
     ) {
         super.configureUI(
             backgroundImageURL: backgroundImageURL,
-            relativeDate: relativeDate,
-            exactDate: exactDate,
+            editedDate: editedDate,
             hideTopLine: hideTopLine,
             hideBottomLine: hideBottomLine
         )
-        dateLabel.text = date
+        titleLabel.text = title
         contentLabel.text = content
     }
 }

@@ -20,8 +20,8 @@ enum CommunitySection: Int, CaseIterable {
 typealias HomeDataSource = RxTableViewSectionedReloadDataSource<HomeSectionModel>
 
 enum HomeSectionModel {
-    case diary([MyDiaryItem])
-    case contentList([HomeVideoItem])
+    case diary([MyDiary])
+    case contentList([RecommendedVideo])
     case communityButtons([CommunityItem])
     case communityPosts(String, [CommunityDiaryItem])
 }
@@ -45,9 +45,9 @@ extension HomeSectionModel: SectionModelType {
     init(original: HomeSectionModel, items: [Any]) {
         switch original {
         case .diary:
-            self = .diary(items as? [MyDiaryItem] ?? [])
+            self = .diary(items as? [MyDiary] ?? [])
         case .contentList:
-            self = .contentList(items as? [HomeVideoItem] ?? [])
+            self = .contentList(items as? [RecommendedVideo] ?? [])
         case .communityButtons:
             self = .communityButtons(items as? [CommunityItem] ?? [])
         case let .communityPosts(date, _):

@@ -6,14 +6,8 @@
 //
 
 import Foundation
-import UIKit
 
-struct HomeContent {
-    let diaryList: [MyDiaryItem]
-    let videoList: [HomeVideoItem]
-}
-
-struct HomeVideoItem {
+struct RecommendedVideo {
     let title: String
-    let imageName: String
+    let imageURL: URL?
 }

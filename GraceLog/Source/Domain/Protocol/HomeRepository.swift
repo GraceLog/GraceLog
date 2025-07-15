@@ -9,7 +9,6 @@ import Foundation
 import RxSwift
 
 protocol HomeRepository {
-    func fetchHomeMyContent() -> Single<HomeContent>
+    func fetchHomeMyContent() -> Single<Void>
     func fetchHomeCommunityContent() -> Single<HomeCommunityContent>
-//    func fetchCommunityDiary(communityID: Int) -> Single<CommunityDiary>
 }

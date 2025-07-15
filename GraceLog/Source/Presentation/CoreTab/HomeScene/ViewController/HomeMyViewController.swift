@@ -6,7 +6,9 @@
 //
 
 import UIKit
+
 import RxSwift
+import RxGesture
 import RxCocoa
 import RxDataSources
 import ReactorKit
@@ -109,11 +111,10 @@ extension HomeMyViewController {
                             ) as! HomeLatestDiaryCollectionViewCell
                             
                             latestCell.setData(
-                                backgroundImageURL: URL(string: "https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg"),
+                                backgroundImageURL: item.imageURL,
                                 title: item.title,
-                                content: item.desc,
-                                relativeDate: "오늘",
-                                exactDate: "2/14",
+                                content: item.content,
+                                editedDate: item.editedDate,
                                 hideTopLine: hideTop,
                                 hideBottomLine: hideBottom
                             )
@@ -125,23 +126,22 @@ extension HomeMyViewController {
                             ) as! HomePastDiaryCollectionViewCell
                             
                             pastCell.setData(
-                                backgroundImageURL: URL(string: "https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg"),
-                                date: item.dateDesc,
-                                content: item.title,
-                                relativeDate: "지난주",
-                                exactDate: "2/7",
+                                backgroundImageURL: item.imageURL,
+                                title: item.title,
+                                content: item.content,
+                                editedDate: item.editedDate,
                                 hideTopLine: false,
                                 hideBottomLine: isLast
                             )
                             cell = pastCell
                         }
 
-                        cell.backgroundImageView.rx.gestureTap
+                        cell.overlayBackgroundView.rx.tapGesture()
                             .asDriver()
                             .drive(onNext: { [weak self] _ in
                                 guard let self,
                                       let indexPath = self.myDiaryView.diaryCollectionView.indexPath(for: cell),
-                                      let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiaryItem else {
+                                      let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiary else {
                                     return
                                 }
                                 print("선택된 일기장 정보: \(selectedItem)\n선택된 일기장 인덱스: \(indexPath)")
@@ -164,12 +164,12 @@ extension HomeMyViewController {
                 cellIdentifier: HomeRecommendVideoTableViewCell.reuseIdentifier,
                 cellType: HomeRecommendVideoTableViewCell.self)
             ) { index, item, cell in
-                cell.configureUI(title: item.title, thumbnailImageURL: URL(string: "https://pimg.mk.co.kr/meet/neds/2017/11/image_readmed_2017_740612_15101228583092607.jpg"))
-                cell.thumbnailImageView.rx.gestureTap
+                cell.configureUI(title: item.title, thumbnailImageURL: item.imageURL)
+                cell.thumbnailImageView.rx.tapGesture()
                     .asDriver()
                     .drive(with: self) { owner, isOn in
                         guard let indexPath = owner.myRecommendVideoView.recommendVideoTableView.indexPath(for: cell),
-                              let selectedItem = try? owner.myRecommendVideoView.recommendVideoTableView.rx.model(at: indexPath) as HomeVideoItem else {
+                              let selectedItem = try? owner.myRecommendVideoView.recommendVideoTableView.rx.model(at: indexPath) as RecommendedVideo else {
                             return
                         }
                         print("선택된 비디오 정보: \(selectedItem)\n선택된 비디오 인덱스: \(indexPath)")

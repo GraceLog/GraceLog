@@ -10,8 +10,8 @@ import RxSwift
 import RxCocoa
 
 protocol HomeUseCase {
-    var diaryList: BehaviorRelay<[MyDiaryItem]> { get }
-    var videoList: BehaviorRelay<[HomeVideoItem]> { get }
+    var diaryList: BehaviorRelay<[MyDiary]> { get }
+    var videoList: BehaviorRelay<[RecommendedVideo]> { get }
     var error: PublishSubject<Error> { get }
         
     func fetchDiaryList()

@@ -6,13 +6,10 @@
 //
 
 import Foundation
-import UIKit
 
-struct MyDiaryItem {
-    let date: String
-    let dateDesc: String
+struct MyDiary {
+    let editedDate: Date?
     let title: String
-    let desc: String
-    let tags: [String]
-    let image: UIImage?
+    let content: String
+    let imageURL: URL?
 }

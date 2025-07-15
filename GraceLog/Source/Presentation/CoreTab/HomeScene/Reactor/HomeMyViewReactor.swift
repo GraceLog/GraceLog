@@ -24,14 +24,14 @@ final class HomeMyViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setDiaryList([MyDiaryItem])
-        case setVideoList([HomeVideoItem])
+        case setDiaryList([MyDiary])
+        case setVideoList([RecommendedVideo])
         case setError(Error)
     }
     
     struct State {
-        var videoItems: [HomeVideoItem] = []
-        var diaryItems: [MyDiaryItem] = []
+        var videoItems: [RecommendedVideo] = []
+        var diaryItems: [MyDiary] = []
         @Pulse var errorMessage: String?
     }
     
@@ -41,7 +41,15 @@ final class HomeMyViewReactor: Reactor {
 extension HomeMyViewReactor {
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
         let diaryMutation = homeUsecase.diaryList
-            .map { Mutation.setDiaryList($0) }
+            .map { diaryList in
+                let sortedList = diaryList.sorted {
+                    guard let firstDate = $0.editedDate, let secondDate = $1.editedDate else {
+                        return false
+                    }
+                    return firstDate > secondDate
+                }
+                return Mutation.setDiaryList(sortedList)
+            }
         
         let videoMutation = homeUsecase.videoList
             .map { Mutation.setVideoList($0) }
