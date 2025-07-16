@@ -15,7 +15,11 @@ class GLAuthenticator: Authenticator {
     
     // MARK: - API요청 시 AuthenticatorIndicator객체가 존재하면, 요청 전에 가로채서 apply에서 Header에 bearerToken 추가
     func apply(_ credential: GLAuthenticationCredential, to urlRequest: inout URLRequest) {
-        urlRequest.headers.add(.authorization(bearerToken: credential.accessToken))
+        guard urlRequest.headers["Authorization"] != nil else {
+            return
+        }
+        
+        urlRequest.headers.update(.authorization(bearerToken: credential.accessToken))
         urlRequest.addValue(credential.refreshToken, forHTTPHeaderField: "refresh-token")
     }
     
@@ -34,9 +38,14 @@ class GLAuthenticator: Authenticator {
         let request = RefreshTokenRequestDTO(refreshToken: credential.refreshToken)
         
         NetworkManager()
-            .request(
-                AuthAPI.refresh(request)
-            ).subscribe( onSuccess: { (data: SignInResponseDTO) in
+            .request(AuthAPI.refresh(request))
+            .subscribe(onSuccess: { (result: NetworkResult<SignInResponseDTO>) in
+                guard let data = result.successData else {
+                    completion(.failure(result.toError()))
+                    AuthManager.shared.handleAuthenticationFailure()
+                    return
+                }
+                
                 let newCredential = GLAuthenticationCredential(
                     accessToken: data.accessToken,
                     refreshToken: data.refreshToken,
@@ -47,6 +56,7 @@ class GLAuthenticator: Authenticator {
                 KeychainServiceImpl.shared.refreshToken = data.refreshToken
                 
                 completion(.success(newCredential))
+                
             }, onFailure: { error in
                 completion(.failure(error))
                 AuthManager.shared.handleAuthenticationFailure()
