@@ -10,8 +10,7 @@ import Alamofire
 import RxSwift
 
 final class NetworkManager {
-    private let authenticatedSession: Session
-    private let unauthenticatedSession: Session
+    private let session: Session
     private let interceptor: AuthenticationInterceptor<GLAuthenticator>
     
     init() {
@@ -31,27 +30,27 @@ final class NetworkManager {
             credential: credential
         )
         
-        self.authenticatedSession = Session(interceptor: interceptor)
-        self.unauthenticatedSession = Session.default
+        self.session = Session(interceptor: interceptor)
     }
 }
 
 extension NetworkManager {
     func request<T: Decodable>(
         _ target: TargetType
-    ) -> Single<T> {
+    ) -> Single<NetworkResult<T>> {
         return .create { single in
-            let session = target.headers?.keys.contains(HTTPHeaderField.authenticationToken.rawValue) == true
-            ? self.authenticatedSession
-            : self.unauthenticatedSession
-            
-            session.request(target)
-                .validate(statusCode: 200...500)
+            self.session.request(target)
                 .responseDecodable(of: GLResponseDTO<T>.self) { response in
-                    let result = self.handleResponse(response)
-                    switch result {
-                    case .success(let data):
-                        single(.success(data))
+                    switch response.result {
+                    case .success(let glResponse):
+                        guard let statusCode = response.response?.statusCode else {
+                            single(.success(.networkError))
+                            return
+                        }
+                        
+                        let result = self.judgeStatus(by: statusCode, response: glResponse)
+                        single(.success(result))
+                        
                     case .failure(let error):
                         single(.failure(error))
                     }
@@ -60,61 +59,30 @@ extension NetworkManager {
         }
     }
     
-    private func handleResponse<T: Decodable>(_ response: DataResponse<GLResponseDTO<T>, AFError>) -> Result<T, APIError> {
-        if let statusCode = response.response?.statusCode {
-            switch statusCode {
-            case 200..<300:
-                break
-            case 400..<500:
-                let message = getErrorMessage(from: response) ?? "클라이언트 오류"
-                return .failure(.clientError(statusCode: statusCode, message: message))
-            case 500..<600:
-                let message = getErrorMessage(from: response) ?? "서버 오류"
-                return .failure(.serverError(statusCode: statusCode, message: message))
-            default:
-                return .failure(.unknown)
-            }
-        }
+    private func judgeStatus<T: Decodable>(
+        by statusCode: Int,
+        response: GLResponseDTO<T>
+    ) -> NetworkResult<T> {
         
-        switch response.result {
-        case .success(let value):
-            if let data = value.data {
+        switch statusCode {
+        case 200..<300:
+            if let data = response.data {
                 return .success(data)
             } else {
-                return .failure(.network(message: value.message))
+                return .success(GLEmptyResponse() as! T)
             }
-        case .failure(let error):
-            return .failure(handleAFError(error))
-        }
-    }
-    
-    private func getErrorMessage<T: Decodable>(from response: DataResponse<GLResponseDTO<T>, AFError>) -> String? {
-        switch response.result {
-        case .success(let value):
-            return value.message
-        case .failure:
-            return nil
-        }
-    }
-    
-    private func handleAFError(_ error: AFError) -> APIError {
-        switch error {
-        case .responseSerializationFailed:
-            return .decodingError
-        case .sessionTaskFailed(let sessionError):
-            if let urlError = sessionError as? URLError {
-                switch urlError.code {
-                case .notConnectedToInternet:
-                    return .network(message: "인터넷 연결을 확인해주세요")
-                case .timedOut:
-                    return .network(message: "요청 시간이 초과되었습니다")
-                default:
-                    return .network(message: urlError.localizedDescription)
-                }
-            }
-            return .unknown
+        case 400..<500:
+            let errorMessage = response.message
+            print("📱 클라이언트 에러 (\(statusCode)): \(errorMessage)")
+            return .requestError(errorMessage)
+            
+        case 500..<600:
+            let errorMessage = response.message
+            print("🧑🏻‍💻 서버 에러 (\(statusCode)): \(errorMessage)")
+            return .serverError
         default:
-            return .unknown
+            print("📡 네트워크 오류")
+            return .networkError
         }
     }
 }

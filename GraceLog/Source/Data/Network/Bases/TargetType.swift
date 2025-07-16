@@ -11,21 +11,16 @@ protocol TargetType: URLRequestConvertible {
     var baseURL: String { get }
     var method: HTTPMethod { get }
     var path: String { get }
-    var headers: [String: String]? { get }
     var parameters: RequestParams { get }
+    var headers: HeaderType { get }
 }
 
 extension TargetType {
     func asURLRequest() throws -> URLRequest {
         let url = try baseURL.asURL()
         var urlRequest = try URLRequest(url: url.appendingPathComponent(path), method: method)
-        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
         
-        if let headers = headers {
-            for (key, value) in headers {
-                urlRequest.setValue(value, forHTTPHeaderField: key)
-            }
-        }
+        urlRequest.headers = headers.httpHeaders
         
         switch parameters {
         case .query(let request):

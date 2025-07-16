@@ -30,8 +30,8 @@ extension AuthAPI: TargetType {
         }
     }
     
-    var headers: [String: String]? {
-        return nil
+    var headers: HeaderType {
+        return .noAccessToken
     }
     
     var parameters: RequestParams {

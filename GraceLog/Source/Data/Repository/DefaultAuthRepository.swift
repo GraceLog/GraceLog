@@ -19,7 +19,11 @@ final class DefaultAuthRepository: AuthRepository {
         let request = SignInRequestDTO(provider: provider, token: token)
         
         return network.request(AuthAPI.signIn(request))
-            .map { (responseDTO: SignInResponseDTO) in
+            .map { (result: NetworkResult<SignInResponseDTO>) in
+                guard let responseDTO = result.successData else {
+                    throw result.toError()
+                }
+                
                 return SignInResult(
                     accessToken: responseDTO.accessToken,
                     refreshToken: responseDTO.refreshToken,
@@ -28,11 +32,16 @@ final class DefaultAuthRepository: AuthRepository {
             }
     }
     
+    
     func refresh(refreshToken: String) -> Single<SignInResult> {
         let request = RefreshTokenRequestDTO(refreshToken: refreshToken)
         
         return network.request(AuthAPI.refresh(request))
-            .map { (responseDTO: SignInResponseDTO) in
+            .map { (result: NetworkResult<SignInResponseDTO>) in
+                guard let responseDTO = result.successData else {
+                    throw result.toError()
+                }
+                
                 return SignInResult(
                     accessToken: responseDTO.accessToken,
                     refreshToken: responseDTO.refreshToken,

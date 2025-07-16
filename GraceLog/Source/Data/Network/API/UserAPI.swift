@@ -30,11 +30,8 @@ extension UserAPI: TargetType {
         }
     }
     
-    var headers: [String : String]? {
-        guard let token = KeychainServiceImpl.shared.accessToken else { return nil }
-        return [
-            HTTPHeaderField.authenticationToken.rawValue: "Bearer \(token)"
-        ]
+    var headers: HeaderType {
+        return .requireAccessToken
     }
     
     var parameters: RequestParams {

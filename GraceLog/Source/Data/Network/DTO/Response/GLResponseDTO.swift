@@ -12,3 +12,5 @@ struct GLResponseDTO<T: Decodable>: Decodable {
     let message: String
     let data: T?
 }
+
+struct GLEmptyResponse: Codable { }
