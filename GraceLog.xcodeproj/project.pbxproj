@@ -153,7 +153,9 @@
 		DEACFE6A2E0F81DE00AD4222 /* HomeCommunityListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE692E0F81DE00AD4222 /* HomeCommunityListSection.swift */; };
 		DEACFE6C2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE6B2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift */; };
 		DECF2A9F2E26A0AB000CAF42 /* HeaderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECF2A9E2E26A0AB000CAF42 /* HeaderType.swift */; };
-		DECF2AA12E27CDD4000CAF42 /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECF2AA02E27CDD4000CAF42 /* NetworkResult.swift */; };
+		DECF2AA32E286BB0000CAF42 /* GLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECF2AA22E286BB0000CAF42 /* GLError.swift */; };
+		DECF2AA52E28B4B9000CAF42 /* GLInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECF2AA42E28B4B9000CAF42 /* GLInterceptor.swift */; };
+		DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECF2AA62E2908C6000CAF42 /* GLAPILogger.swift */; };
 		DED558642DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */; };
 		DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558652DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift */; };
 		DED558762DBC73EC00137B10 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558752DBC73EC00137B10 /* TargetType.swift */; };
@@ -165,12 +167,10 @@
 		DED558892DBE226D00137B10 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558882DBE226D00137B10 /* AuthRepository.swift */; };
 		DED5588A2DBE226D00137B10 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558882DBE226D00137B10 /* AuthRepository.swift */; };
 		DED5588B2DBE226D00137B10 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558882DBE226D00137B10 /* AuthRepository.swift */; };
-		DED5588E2DBE26E600137B10 /* GLAuthenticationCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5588D2DBE26E600137B10 /* GLAuthenticationCredential.swift */; };
 		DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5588F2DBE3BE900137B10 /* SignInResult.swift */; };
 		DED558942DBE565300137B10 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DED558932DBE565300137B10 /* Config.xcconfig */; };
 		DED558962DBE576A00137B10 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558952DBE576A00137B10 /* Const.swift */; };
 		DED558992DBFAEB200137B10 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED558982DBFAEB200137B10 /* NetworkManager.swift */; };
-		DED5589B2DBFB15400137B10 /* GLAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5589A2DBFB15400137B10 /* GLAuthenticator.swift */; };
 		DED5589D2DC4AD3700137B10 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5589C2DC4AD3700137B10 /* Crypto.swift */; };
 		DED5589F2DC4B12200137B10 /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5589E2DC4B12200137B10 /* KeychainAccessible.swift */; };
 		DEEFEAC02D26D4B800699692 /* SignInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2700592D2125FF005C9DCF /* SignInUseCase.swift */; };
@@ -365,7 +365,9 @@
 		DEACFE692E0F81DE00AD4222 /* HomeCommunityListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityListSection.swift; sourceTree = "<group>"; };
 		DEACFE6B2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDiarySection.swift; sourceTree = "<group>"; };
 		DECF2A9E2E26A0AB000CAF42 /* HeaderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderType.swift; sourceTree = "<group>"; };
-		DECF2AA02E27CDD4000CAF42 /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
+		DECF2AA22E286BB0000CAF42 /* GLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLError.swift; sourceTree = "<group>"; };
+		DECF2AA42E28B4B9000CAF42 /* GLInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLInterceptor.swift; sourceTree = "<group>"; };
+		DECF2AA62E2908C6000CAF42 /* GLAPILogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLAPILogger.swift; sourceTree = "<group>"; };
 		DED558632DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeywordCollectionViewCell.swift; sourceTree = "<group>"; };
 		DED558652DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSectionWithDescHeaderView.swift; sourceTree = "<group>"; };
 		DED558752DBC73EC00137B10 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
@@ -375,12 +377,10 @@
 		DED558832DBE1E4000137B10 /* GLResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLResponseDTO.swift; sourceTree = "<group>"; };
 		DED558852DBE224300137B10 /* DefaultAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAuthRepository.swift; sourceTree = "<group>"; };
 		DED558882DBE226D00137B10 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
-		DED5588D2DBE26E600137B10 /* GLAuthenticationCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLAuthenticationCredential.swift; sourceTree = "<group>"; };
 		DED5588F2DBE3BE900137B10 /* SignInResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResult.swift; sourceTree = "<group>"; };
 		DED558932DBE565300137B10 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DED558952DBE576A00137B10 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		DED558982DBFAEB200137B10 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		DED5589A2DBFB15400137B10 /* GLAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLAuthenticator.swift; sourceTree = "<group>"; };
 		DED5589C2DC4AD3700137B10 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		DED5589E2DC4B12200137B10 /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		DEEFEAC92D29270500699692 /* GraceLogUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogUser.swift; sourceTree = "<group>"; };
@@ -928,7 +928,6 @@
 			isa = PBXGroup;
 			children = (
 				DED558742DBC73D600137B10 /* Bases */,
-				DED5588C2DBE26CB00137B10 /* OAuth */,
 				DED5586F2DBC6F9600137B10 /* API */,
 				DE2700642D22D40A005C9DCF /* DTO */,
 			);
@@ -1291,7 +1290,9 @@
 				DED558752DBC73EC00137B10 /* TargetType.swift */,
 				DECF2A9E2E26A0AB000CAF42 /* HeaderType.swift */,
 				DED558982DBFAEB200137B10 /* NetworkManager.swift */,
-				DECF2AA02E27CDD4000CAF42 /* NetworkResult.swift */,
+				DECF2AA22E286BB0000CAF42 /* GLError.swift */,
+				DECF2AA42E28B4B9000CAF42 /* GLInterceptor.swift */,
+				DECF2AA62E2908C6000CAF42 /* GLAPILogger.swift */,
 			);
 			path = Bases;
 			sourceTree = "<group>";
@@ -1318,15 +1319,6 @@
 				DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */,
 			);
 			path = Response;
-			sourceTree = "<group>";
-		};
-		DED5588C2DBE26CB00137B10 /* OAuth */ = {
-			isa = PBXGroup;
-			children = (
-				DED5588D2DBE26E600137B10 /* GLAuthenticationCredential.swift */,
-				DED5589A2DBFB15400137B10 /* GLAuthenticator.swift */,
-			);
-			path = OAuth;
 			sourceTree = "<group>";
 		};
 		DED558922DBE562600137B10 /* Configurations */ = {
@@ -1643,8 +1635,8 @@
 				DE58FEB12D04284D008CADCD /* AppDelegate.swift in Sources */,
 				70A97C632E2167C200F08DF6 /* DiaryPresentationAssembly.swift in Sources */,
 				704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */,
+				DECF2AA52E28B4B9000CAF42 /* GLInterceptor.swift in Sources */,
 				DE597A6E2E26141100B2CB5B /* AuthPresentationAssembly.swift in Sources */,
-				DED5588E2DBE26E600137B10 /* GLAuthenticationCredential.swift in Sources */,
 				0220A0752DE7F57000D045F7 /* ImagePickerManager.swift in Sources */,
 				DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */,
 				702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */,
@@ -1734,6 +1726,7 @@
 				702D2B722E07F42500D5E71E /* DiarySettingTableViewCell.swift in Sources */,
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,
 				DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */,
+				DECF2AA32E286BB0000CAF42 /* GLError.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
@@ -1742,7 +1735,6 @@
 				DEF8D6762E1A925100685517 /* DefaultHomeCommunityUseCase.swift in Sources */,
 				DED5589D2DC4AD3700137B10 /* Crypto.swift in Sources */,
 				DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */,
-				DED5589B2DBFB15400137B10 /* GLAuthenticator.swift in Sources */,
 				70F006182E0EBA1900228C70 /* UIView+Reactive.swift in Sources */,
 				DED558762DBC73EC00137B10 /* TargetType.swift in Sources */,
 				DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */,
@@ -1768,6 +1760,7 @@
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
 				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
+				DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,

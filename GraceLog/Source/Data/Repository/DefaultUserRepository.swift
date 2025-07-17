@@ -17,11 +17,7 @@ final class DefaultUserRepository: UserRepository {
     
     func fetchUser() -> Single<GraceLogUser> {
         return network.request(UserAPI.fetchUser)
-            .map { (result: NetworkResult<UserResponseDTO>) in
-                guard let responseDTO = result.successData else {
-                    throw result.toError()
-                }
-                
+            .map { (responseDTO: UserResponseDTO) in
                 return GraceLogUser(
                     id: responseDTO.memberId,
                     name: responseDTO.name,
@@ -42,11 +38,7 @@ final class DefaultUserRepository: UserRepository {
         )
         
         return network.request(UserAPI.updateUser(request))
-            .map { (result: NetworkResult<UserResponseDTO>) in
-                guard let responseDTO = result.successData else {
-                    throw result.toError()
-                }
-                
+            .map { (responseDTO: UserResponseDTO) in
                 return GraceLogUser(
                     id: responseDTO.memberId,
                     name: responseDTO.name,
