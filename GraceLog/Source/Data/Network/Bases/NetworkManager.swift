@@ -11,48 +11,41 @@ import RxSwift
 
 final class NetworkManager {
     private let session: Session
-    private let interceptor: AuthenticationInterceptor<GLAuthenticator>
     
     init() {
-        var credential: GLAuthenticationCredential?
-        
-        if let accessToken = KeychainServiceImpl.shared.accessToken,
-           let refreshToken = KeychainServiceImpl.shared.refreshToken {
-            credential = GLAuthenticationCredential(
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-                expiredAt: Date(timeIntervalSinceNow: 60 * 120)
-            )
-        }
-        
-        self.interceptor = AuthenticationInterceptor(
-            authenticator: GLAuthenticator(),
-            credential: credential
+        self.session = Session(
+            configuration: .default,
+            interceptor: GLInterceptor(),
+            eventMonitors: [GLAPILogger()]
         )
-        
-        self.session = Session(interceptor: interceptor)
     }
 }
 
 extension NetworkManager {
     func request<T: Decodable>(
         _ target: TargetType
-    ) -> Single<NetworkResult<T>> {
+    ) -> Single<T> {
         return .create { single in
             self.session.request(target)
                 .responseDecodable(of: GLResponseDTO<T>.self) { response in
                     switch response.result {
-                    case .success(let glResponse):
-                        guard let statusCode = response.response?.statusCode else {
-                            single(.success(.networkError))
-                            return
+                    case .success(let value):
+                        let result = self.judgeStatus(
+                            by: response.response?.statusCode ?? 0,
+                            response: value
+                        )
+                        
+                        switch result {
+                        case .success(let data):
+                            single(.success(data))
+                        case .failure(let error):
+                            single(.failure(error))
                         }
                         
-                        let result = self.judgeStatus(by: statusCode, response: glResponse)
-                        single(.success(result))
-                        
-                    case .failure(let error):
-                        single(.failure(error))
+                    case .failure(let afError):
+                        print(afError)
+                        let glError = self.convertToGLError(afError)
+                        single(.failure(glError))
                     }
                 }
             return Disposables.create()
@@ -62,26 +55,46 @@ extension NetworkManager {
     private func judgeStatus<T: Decodable>(
         by statusCode: Int,
         response: GLResponseDTO<T>
-    ) -> NetworkResult<T> {
+    ) -> Result<T, GLError> {
         
         switch statusCode {
         case 200..<300:
             if let data = response.data {
+                print("✅ 데이터 \(data)")
                 return .success(data)
             } else {
-                return .success(GLEmptyResponse() as! T)
+                if T.self == GLEmptyResponse.self {
+                    return .success(GLEmptyResponse() as! T)
+                } else {
+                    return .failure(.decodedError)
+                }
             }
         case 400..<500:
+            let code = response.code
             let errorMessage = response.message
-            print("📱 클라이언트 에러 (\(statusCode)): \(errorMessage)")
-            return .requestError(errorMessage)
+            print("📱 클라이언트 에러 (\(code)): \(errorMessage)")
+            return .failure(.requestError(code: code, message: errorMessage))
             
         case 500..<600:
             let errorMessage = response.message
             print("🧑🏻‍💻 서버 에러 (\(statusCode)): \(errorMessage)")
-            return .serverError
+            return .failure(.serverError)
+            
         default:
-            print("📡 네트워크 오류")
+            print("📡 요청 오류")
+            return .failure(.networkError)
+        }
+    }
+    
+    private func convertToGLError(_ afError: AFError) -> GLError {
+        switch afError {
+        case .responseValidationFailed:
+            return .networkError
+        case .responseSerializationFailed:
+            return .decodedError
+        case .sessionTaskFailed:
+            return .networkError
+        default:
             return .networkError
         }
     }
