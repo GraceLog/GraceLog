@@ -24,6 +24,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 25
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.isUserInteractionEnabled = true
     }
     
     // MARK: - Timeline Components

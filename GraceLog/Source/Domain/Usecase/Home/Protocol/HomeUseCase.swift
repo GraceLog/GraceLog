@@ -10,10 +10,13 @@ import RxSwift
 import RxCocoa
 
 protocol HomeUseCase {
+    var dailyVerse: BehaviorRelay<DailyVerse?> { get }
     var diaryList: BehaviorRelay<[MyDiary]> { get }
     var videoList: BehaviorRelay<[RecommendedVideo]> { get }
-    var error: PublishSubject<Error> { get }
+    var videoTagList: BehaviorRelay<[VideoTag]> { get }
+    var error: PublishRelay<Error> { get }
         
     func fetchDiaryList()
     func fetchVideoList()
+    func fetchDailyVerse()
 }

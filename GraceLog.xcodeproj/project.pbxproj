@@ -68,6 +68,8 @@
 		70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C8E2E255E0100F08DF6 /* AppColor.swift */; };
 		70A97C912E255EA800F08DF6 /* GLColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C902E255EA800F08DF6 /* GLColor.swift */; };
 		70A97C932E269DD200F08DF6 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C922E269DD200F08DF6 /* Date+Extension.swift */; };
+		70A97C952E27605D00F08DF6 /* DailyVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C942E27605D00F08DF6 /* DailyVerse.swift */; };
+		70A97C972E27677700F08DF6 /* VideoTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C962E27677700F08DF6 /* VideoTag.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
 		A88BF65DF907D86788F86BF8 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */; };
@@ -135,7 +137,6 @@
 		DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FCB2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift */; };
 		DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */; };
 		DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FD62D79AB8B0044F655 /* HomeCommunityContent.swift */; };
-		DE9A1FDA2D79AD660044F655 /* HomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FD92D79AD660044F655 /* HomeDataSource.swift */; };
 		DE9A1FDC2D79AFFA0044F655 /* MyDiaryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FDB2D79AFFA0044F655 /* MyDiaryItem.swift */; };
 		DE9A1FDE2D79B0A50044F655 /* HomeContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FDD2D79B0A50044F655 /* HomeContent.swift */; };
 		DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FE02D7BFD1A0044F655 /* MyDiaryDTO.swift */; };
@@ -272,6 +273,8 @@
 		70A97C8E2E255E0100F08DF6 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		70A97C902E255EA800F08DF6 /* GLColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLColor.swift; sourceTree = "<group>"; };
 		70A97C922E269DD200F08DF6 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		70A97C942E27605D00F08DF6 /* DailyVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerse.swift; sourceTree = "<group>"; };
+		70A97C962E27677700F08DF6 /* VideoTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTag.swift; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E14D79ABA16C7A19244077 /* Pods-GraceLogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -350,7 +353,6 @@
 		DE9A1FCB2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDiaryTableViewCell.swift; sourceTree = "<group>"; };
 		DE9A1FCF2D6C87E60044F655 /* HomeCommunityDateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDateHeaderView.swift; sourceTree = "<group>"; };
 		DE9A1FD62D79AB8B0044F655 /* HomeCommunityContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityContent.swift; sourceTree = "<group>"; };
-		DE9A1FD92D79AD660044F655 /* HomeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSource.swift; sourceTree = "<group>"; };
 		DE9A1FDB2D79AFFA0044F655 /* MyDiaryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDiaryItem.swift; sourceTree = "<group>"; };
 		DE9A1FDD2D79B0A50044F655 /* HomeContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContent.swift; sourceTree = "<group>"; };
 		DE9A1FE02D7BFD1A0044F655 /* MyDiaryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDiaryDTO.swift; sourceTree = "<group>"; };
@@ -894,6 +896,8 @@
 				DE9A1FDD2D79B0A50044F655 /* HomeContent.swift */,
 				70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */,
 				70A97C472E18F61000F08DF6 /* Community.swift */,
+				70A97C942E27605D00F08DF6 /* DailyVerse.swift */,
+				70A97C962E27677700F08DF6 /* VideoTag.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1256,7 +1260,6 @@
 		DE9A1FD82D79AD550044F655 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				DE9A1FD92D79AD660044F655 /* HomeDataSource.swift */,
 				DEACFE692E0F81DE00AD4222 /* HomeCommunityListSection.swift */,
 				DEACFE6B2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift */,
 			);
@@ -1716,6 +1719,7 @@
 				DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */,
 				DE3BFCDA2D059A3B0076426D /* HomeViewController.swift in Sources */,
 				02DC29802DDC29C000662D8A /* MyInfoSectionHeaderView.swift in Sources */,
+				70A97C972E27677700F08DF6 /* VideoTag.swift in Sources */,
 				02DC29812DDC29C000662D8A /* MyInfoCoordinator.swift in Sources */,
 				702D2B662E05185900D5E71E /* DiaryImageSection.swift in Sources */,
 				02DC29822DDC29C000662D8A /* ProfileEditViewReactor.swift in Sources */,
@@ -1748,6 +1752,7 @@
 				DE9A1FCA2D6AAC8C0044F655 /* HomeViewReactor.swift in Sources */,
 				0234461D2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift in Sources */,
 				DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */,
+				70A97C952E27605D00F08DF6 /* DailyVerse.swift in Sources */,
 				0234461B2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift in Sources */,
 				DEACFE662E0D016800AD4222 /* HomeCommunityDiaryListView.swift in Sources */,
 				70A97C932E269DD200F08DF6 /* Date+Extension.swift in Sources */,
@@ -1765,7 +1770,6 @@
 				DE9A1FFA2D7C09350044F655 /* HomeRepository.swift in Sources */,
 				0295ADFB2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift in Sources */,
 				DEF8D6762E1A925100685517 /* DefaultHomeCommunityUseCase.swift in Sources */,
-				DE9A1FDA2D79AD660044F655 /* HomeDataSource.swift in Sources */,
 				DED5589D2DC4AD3700137B10 /* Crypto.swift in Sources */,
 				DED558712DBC6FA800137B10 /* AuthService.swift in Sources */,
 				DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */,

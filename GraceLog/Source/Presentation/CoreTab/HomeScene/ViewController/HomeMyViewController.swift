@@ -70,11 +70,16 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
 extension HomeMyViewController {
     private func bindHomeMyBibleView(reactor: HomeMyViewReactor) {
         // TODO: 성경데이터 모델링 및 API 연동하여 Reactor의 데이터로 바인딩 필요
-        myBibleView.setData(
-            title: "오늘의 말씀",
-            content:"순종이 제사보다 낫고\n듣는 것이 숫양의 기름보다 나으니",
-            reference: "사무엘상 5:22"
-        )
+        reactor.pulse(\.$dailyVerse)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, dailyVerse in
+                owner.myBibleView.setData(
+                    content: dailyVerse.content,
+                    reference: dailyVerse.reference
+                )
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindHomeMyDiaryView(reactor: HomeMyViewReactor) {
@@ -82,8 +87,7 @@ extension HomeMyViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.diaryItems }
+        reactor.pulse(\.$diaryItems)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, diaryList in
                 Observable.just(diaryList)
@@ -136,8 +140,8 @@ extension HomeMyViewController {
                             cell = pastCell
                         }
 
-                        cell.overlayBackgroundView.rx.tapGesture()
-                            .asDriver()
+                        cell.overlayBackgroundView.rx.tapGesture().when(.recognized)
+                            .asDriver(onErrorDriveWith: .empty())
                             .drive(onNext: { [weak self] _ in
                                 guard let self,
                                       let indexPath = self.myDiaryView.diaryCollectionView.indexPath(for: cell),
@@ -157,16 +161,15 @@ extension HomeMyViewController {
     }
     
     private func bindHomeMyRecommendVideoView(reactor: HomeMyViewReactor) {
-        reactor.state
-            .map { $0.videoItems }
+        reactor.pulse(\.$videoItems)
             .asDriver(onErrorJustReturn: [])
             .drive(myRecommendVideoView.recommendVideoTableView.rx.items(
                 cellIdentifier: HomeRecommendVideoTableViewCell.reuseIdentifier,
                 cellType: HomeRecommendVideoTableViewCell.self)
             ) { index, item, cell in
                 cell.configureUI(title: item.title, thumbnailImageURL: item.imageURL)
-                cell.thumbnailImageView.rx.tapGesture()
-                    .asDriver()
+                cell.thumbnailImageView.rx.tapGesture().when(.recognized)
+                    .asDriver(onErrorDriveWith: .empty())
                     .drive(with: self) { owner, isOn in
                         guard let indexPath = owner.myRecommendVideoView.recommendVideoTableView.indexPath(for: cell),
                               let selectedItem = try? owner.myRecommendVideoView.recommendVideoTableView.rx.model(at: indexPath) as RecommendedVideo else {
@@ -178,7 +181,22 @@ extension HomeMyViewController {
             }
             .disposed(by: disposeBag)
         
-        myRecommendVideoView.recommendedTagLabel.text = "#순종 #도전"
+        reactor.pulse(\.$videoTagItems)
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, videoTagItems in
+                let recommendedTag = videoTagItems.map { "#\($0.name)" }.joined(separator: " ")
+                owner.myRecommendVideoView.configureUI(recommendedText: recommendedTag)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isVideoItemsEmpty)
+            .asDriver(onErrorJustReturn: true)
+            .filter { $0 }
+            .map { _ in "#앗! 아직 일기가 없어요" }
+            .drive(with: self) { owner, recommendedText in
+                owner.myRecommendVideoView.configureUI(isEmpty: true, recommendedText: recommendedText)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

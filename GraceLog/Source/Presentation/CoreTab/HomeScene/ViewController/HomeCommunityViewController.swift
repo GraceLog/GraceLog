@@ -145,8 +145,8 @@ extension HomeCommunityViewController {
                     cardImageURL: item.cardImageURL
                 )
                 
-                cell.profileImageView.rx.tapGesture()
-                    .asDriver()
+                cell.profileImageView.rx.tapGesture().when(.recognized)
+                    .asDriver(onErrorDriveWith: .empty())
                     .drive(onNext: { [weak self] _ in
                         guard let self,
                               let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
@@ -159,8 +159,8 @@ extension HomeCommunityViewController {
                     })
                     .disposed(by: cell.disposeBag)
                 
-                cell.cardImageView.rx.tapGesture()
-                    .asDriver()
+                cell.cardImageView.rx.tapGesture().when(.recognized)
+                    .asDriver(onErrorDriveWith: .empty())
                     .drive(onNext: { [weak self] _ in
                         guard let self,
                               let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),

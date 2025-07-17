@@ -14,6 +14,7 @@ final class HomeMyBibleView: UIView {
     private let titleLabel = UILabel().then {
         $0.textColor = .themeColor
         $0.font = GLFont.bold14.font
+        $0.text = "오늘의 말씀"
     }
     
     private let bibleContentLabel = UILabel().then {
@@ -56,9 +57,10 @@ final class HomeMyBibleView: UIView {
         
         containerStackView.setCustomSpacing(8, after: bibleContentLabel)
     }
-    
-    func setData(title: String, content: String, reference: String) {
-        titleLabel.text = title
+}
+
+extension HomeMyBibleView {
+    func setData(content: String, reference: String) {
         bibleContentLabel.text = content
         bibleReferenceLabel.text = reference
     }
