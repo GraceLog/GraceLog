@@ -50,6 +50,10 @@
 		704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */; };
 		704815822E018E30009ECDBD /* GLDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815812E018E30009ECDBD /* GLDividerView.swift */; };
 		704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815832E018F5A009ECDBD /* DiaryEditView.swift */; };
+		709CBB562E2AAC2200F68457 /* ChattingBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB552E2AAC2200F68457 /* ChattingBottomSheetViewController.swift */; };
+		709CBB582E2AAC6D00F68457 /* ChattingBottomSheetViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB572E2AAC6D00F68457 /* ChattingBottomSheetViewReactor.swift */; };
+		709CBB5B2E2AACB600F68457 /* DefaultChattingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB5A2E2AACB600F68457 /* DefaultChattingUseCase.swift */; };
+		709CBB5E2E2AACDC00F68457 /* ChattingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB5D2E2AACDC00F68457 /* ChattingUseCase.swift */; };
 		70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */; };
 		70A97C482E18F61000F08DF6 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C472E18F61000F08DF6 /* Community.swift */; };
 		70A97C4A2E191F0900F08DF6 /* DiaryDeletableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */; };
@@ -250,6 +254,10 @@
 		7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
 		704815812E018E30009ECDBD /* GLDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLDividerView.swift; sourceTree = "<group>"; };
 		704815832E018F5A009ECDBD /* DiaryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEditView.swift; sourceTree = "<group>"; };
+		709CBB552E2AAC2200F68457 /* ChattingBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingBottomSheetViewController.swift; sourceTree = "<group>"; };
+		709CBB572E2AAC6D00F68457 /* ChattingBottomSheetViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingBottomSheetViewReactor.swift; sourceTree = "<group>"; };
+		709CBB5A2E2AACB600F68457 /* DefaultChattingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChattingUseCase.swift; sourceTree = "<group>"; };
+		709CBB5D2E2AACDC00F68457 /* ChattingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingUseCase.swift; sourceTree = "<group>"; };
 		70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeyword.swift; sourceTree = "<group>"; };
 		70A97C472E18F61000F08DF6 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDeletableUseCase.swift; sourceTree = "<group>"; };
@@ -624,6 +632,31 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		709CBB542E2AAC0E00F68457 /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				709CBB552E2AAC2200F68457 /* ChattingBottomSheetViewController.swift */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		709CBB592E2AACA300F68457 /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				709CBB5C2E2AACCF00F68457 /* Protocol */,
+				709CBB5A2E2AACB600F68457 /* DefaultChattingUseCase.swift */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		709CBB5C2E2AACCF00F68457 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				709CBB5D2E2AACDC00F68457 /* ChattingUseCase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		70A97C4B2E194FDC00F08DF6 /* CoreTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -724,6 +757,7 @@
 			children = (
 				DE66C2F42D96B0E4009A983F /* DiaryViewReactor.swift */,
 				0234461E2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift */,
+				709CBB572E2AAC6D00F68457 /* ChattingBottomSheetViewReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -740,6 +774,7 @@
 		DE069B962D53A82B007C2066 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				709CBB542E2AAC0E00F68457 /* Chatting */,
 				DE069B992D53A884007C2066 /* DiaryViewController.swift */,
 				023446162DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift */,
 			);
@@ -889,6 +924,7 @@
 		DE2700562D211F61005C9DCF /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				709CBB592E2AACA300F68457 /* Chatting */,
 				DE2700572D211F82005C9DCF /* SignIn */,
 				DE9A1FF32D7C07DD0044F655 /* Home */,
 				DE66C2F82D96B380009A983F /* Diary */,
@@ -1727,6 +1763,7 @@
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,
 				DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */,
 				DECF2AA32E286BB0000CAF42 /* GLError.swift in Sources */,
+				709CBB5B2E2AACB600F68457 /* DefaultChattingUseCase.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
@@ -1766,13 +1803,17 @@
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserAPI.swift in Sources */,
+				02C5861C2DD736D600E1F626 /* UserTarget.swift in Sources */,
+				709CBB582E2AAC6D00F68457 /* ChattingBottomSheetViewReactor.swift in Sources */,
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
 				70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */,
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,
 				0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */,
 				DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */,
 				704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */,
+				709CBB562E2AAC2200F68457 /* ChattingBottomSheetViewController.swift in Sources */,
 				DE27005F2D212770005C9DCF /* UserRepository.swift in Sources */,
+				709CBB5E2E2AACDC00F68457 /* ChattingUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
