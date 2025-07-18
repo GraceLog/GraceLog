@@ -81,21 +81,17 @@ extension NetworkManager {
             return .failure(.serverError)
             
         default:
-            print("📡 요청 오류")
-            return .failure(.networkError)
+            print("❓ 알 수 없는 오류")
+            return .failure(.unknownError)
         }
     }
     
     private func convertToGLError(_ afError: AFError) -> GLError {
         switch afError {
-        case .responseValidationFailed:
-            return .networkError
-        case .responseSerializationFailed:
-            return .decodedError
-        case .sessionTaskFailed:
+        case .sessionTaskFailed(let urlError as URLError) where urlError.code == .notConnectedToInternet:
             return .networkError
         default:
-            return .networkError
+            return .afError(afError)
         }
     }
 }
