@@ -37,8 +37,7 @@ final class HomeCommunityDiaryListView: UIView {
         addSubview(diaryTableView)
         
         diaryTableView.snp.makeConstraints {
-            $0.directionalVerticalEdges.equalToSuperview().inset(12)
-            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
     }
 }

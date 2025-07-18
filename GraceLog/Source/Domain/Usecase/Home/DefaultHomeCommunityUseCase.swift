@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
-    var diaryList = BehaviorRelay<[Diary]>(value: [])
+    var diaryList = BehaviorRelay<[CommunityDiary]>(value: [])
     var communityList = BehaviorRelay<[Community]>(value: [])
     
     var likeDiaryResult = PublishRelay<Bool>()
@@ -58,7 +58,7 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     }
 }
 
-struct Diary {
+struct CommunityDiary {
     let id: String
     let title: String
     let content: String

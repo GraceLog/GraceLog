@@ -6,7 +6,9 @@
 //
 
 import UIKit
+
 import RxSwift
+import RxGesture
 import RxCocoa
 import RxDataSources
 import ReactorKit
@@ -68,11 +70,16 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
 extension HomeMyViewController {
     private func bindHomeMyBibleView(reactor: HomeMyViewReactor) {
         // TODO: 성경데이터 모델링 및 API 연동하여 Reactor의 데이터로 바인딩 필요
-        myBibleView.setData(
-            title: "오늘의 말씀",
-            content:"순종이 제사보다 낫고\n듣는 것이 숫양의 기름보다 나으니",
-            reference: "사무엘상 5:22"
-        )
+        reactor.pulse(\.$dailyVerse)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, dailyVerse in
+                owner.myBibleView.setData(
+                    content: dailyVerse.content,
+                    reference: dailyVerse.reference
+                )
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindHomeMyDiaryView(reactor: HomeMyViewReactor) {
@@ -80,8 +87,7 @@ extension HomeMyViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.diaryItems }
+        reactor.pulse(\.$diaryItems)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, diaryList in
                 Observable.just(diaryList)
@@ -109,11 +115,10 @@ extension HomeMyViewController {
                             ) as! HomeLatestDiaryCollectionViewCell
                             
                             latestCell.setData(
-                                backgroundImageURL: URL(string: "https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg"),
+                                backgroundImageURL: item.imageURL,
                                 title: item.title,
-                                content: item.desc,
-                                relativeDate: "오늘",
-                                exactDate: "2/14",
+                                content: item.content,
+                                editedDate: item.editedDate,
                                 hideTopLine: hideTop,
                                 hideBottomLine: hideBottom
                             )
@@ -125,23 +130,22 @@ extension HomeMyViewController {
                             ) as! HomePastDiaryCollectionViewCell
                             
                             pastCell.setData(
-                                backgroundImageURL: URL(string: "https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg"),
-                                date: item.dateDesc,
-                                content: item.title,
-                                relativeDate: "지난주",
-                                exactDate: "2/7",
+                                backgroundImageURL: item.imageURL,
+                                title: item.title,
+                                content: item.content,
+                                editedDate: item.editedDate,
                                 hideTopLine: false,
                                 hideBottomLine: isLast
                             )
                             cell = pastCell
                         }
 
-                        cell.backgroundImageView.rx.gestureTap
-                            .asDriver()
+                        cell.overlayBackgroundView.rx.tapGesture().when(.recognized)
+                            .asDriver(onErrorDriveWith: .empty())
                             .drive(onNext: { [weak self] _ in
                                 guard let self,
                                       let indexPath = self.myDiaryView.diaryCollectionView.indexPath(for: cell),
-                                      let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiaryItem else {
+                                      let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiary else {
                                     return
                                 }
                                 print("선택된 일기장 정보: \(selectedItem)\n선택된 일기장 인덱스: \(indexPath)")
@@ -157,19 +161,18 @@ extension HomeMyViewController {
     }
     
     private func bindHomeMyRecommendVideoView(reactor: HomeMyViewReactor) {
-        reactor.state
-            .map { $0.videoItems }
+        reactor.pulse(\.$videoItems)
             .asDriver(onErrorJustReturn: [])
             .drive(myRecommendVideoView.recommendVideoTableView.rx.items(
                 cellIdentifier: HomeRecommendVideoTableViewCell.reuseIdentifier,
                 cellType: HomeRecommendVideoTableViewCell.self)
             ) { index, item, cell in
-                cell.configureUI(title: item.title, thumbnailImageURL: URL(string: "https://pimg.mk.co.kr/meet/neds/2017/11/image_readmed_2017_740612_15101228583092607.jpg"))
-                cell.thumbnailImageView.rx.gestureTap
-                    .asDriver()
+                cell.configureUI(title: item.title, thumbnailImageURL: item.imageURL)
+                cell.thumbnailImageView.rx.tapGesture().when(.recognized)
+                    .asDriver(onErrorDriveWith: .empty())
                     .drive(with: self) { owner, isOn in
                         guard let indexPath = owner.myRecommendVideoView.recommendVideoTableView.indexPath(for: cell),
-                              let selectedItem = try? owner.myRecommendVideoView.recommendVideoTableView.rx.model(at: indexPath) as HomeVideoItem else {
+                              let selectedItem = try? owner.myRecommendVideoView.recommendVideoTableView.rx.model(at: indexPath) as RecommendedVideo else {
                             return
                         }
                         print("선택된 비디오 정보: \(selectedItem)\n선택된 비디오 인덱스: \(indexPath)")
@@ -178,7 +181,22 @@ extension HomeMyViewController {
             }
             .disposed(by: disposeBag)
         
-        myRecommendVideoView.recommendedTagLabel.text = "#순종 #도전"
+        reactor.pulse(\.$videoTagItems)
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, videoTagItems in
+                let recommendedTag = videoTagItems.map { "#\($0.name)" }.joined(separator: " ")
+                owner.myRecommendVideoView.configureUI(recommendedText: recommendedTag)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isVideoItemsEmpty)
+            .asDriver(onErrorJustReturn: true)
+            .filter { $0 }
+            .map { _ in "#앗! 아직 일기가 없어요" }
+            .drive(with: self) { owner, recommendedText in
+                owner.myRecommendVideoView.configureUI(isEmpty: true, recommendedText: recommendedText)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

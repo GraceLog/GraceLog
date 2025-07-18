@@ -35,7 +35,7 @@ final class HomeLatestDiaryCollectionViewCell: DiaryTimelineCollectionViewCell {
     private let contentLabel = UILabel().then {
         $0.textColor = .white
         $0.font = GLFont.regular18.font
-        $0.numberOfLines = 0
+        $0.numberOfLines = 3
         $0.lineBreakMode = .byTruncatingTail
     }
     
@@ -47,7 +47,7 @@ final class HomeLatestDiaryCollectionViewCell: DiaryTimelineCollectionViewCell {
     
     override func setupAutoLayouts() {
         super.setupAutoLayouts()
-        backgroundImageView.addSubview(containerView)
+        overlayBackgroundView.addSubview(containerView)
         containerView.snp.makeConstraints {
             $0.directionalVerticalEdges.equalToSuperview().inset(18)
             $0.directionalHorizontalEdges.equalToSuperview().inset(21)
@@ -77,15 +77,13 @@ extension HomeLatestDiaryCollectionViewCell {
         backgroundImageURL: URL?,
         title: String,
         content: String,
-        relativeDate: String,
-        exactDate: String,
+        editedDate: Date?,
         hideTopLine: Bool,
         hideBottomLine: Bool
     ) {
         super.configureUI(
             backgroundImageURL: backgroundImageURL,
-            relativeDate: relativeDate,
-            exactDate: exactDate,
+            editedDate: editedDate,
             hideTopLine: hideTopLine,
             hideBottomLine: hideBottomLine
         )

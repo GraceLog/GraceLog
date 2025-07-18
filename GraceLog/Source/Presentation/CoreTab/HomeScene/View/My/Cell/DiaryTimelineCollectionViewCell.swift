@@ -15,11 +15,16 @@ import Then
 class DiaryTimelineCollectionViewCell: UICollectionViewCell {
     var disposeBag = DisposeBag()
     
-    let backgroundImageView = UIImageView().then {
+    let overlayBackgroundView = UIView().then {
+        $0.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+    }
+    
+    private let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 25
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.isUserInteractionEnabled = true
     }
     
     // MARK: - Timeline Components
@@ -77,7 +82,6 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         backgroundImageView.image = nil
@@ -89,6 +93,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
     
     func setupAutoLayouts() {
         [timelineContainerStackView, backgroundImageView].forEach { contentView.addSubview($0) }
+        backgroundImageView.addSubview(overlayBackgroundView)
         [topLineContainer, editedDateLabel, bottomLineContainer].forEach { timelineContainerStackView.addArrangedSubview($0) }
         
         timelineContainerStackView.snp.makeConstraints {
@@ -100,6 +105,10 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
             $0.leading.greaterThanOrEqualTo(timelineContainerStackView.snp.trailing)
             $0.top.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(Metric.backgroundImageBottomInset)
+        }
+        
+        overlayBackgroundView.snp.makeConstraints {
+            $0.directionalEdges.equalToSuperview()
         }
         
         topLineContainer.addSubview(topLineView)
@@ -127,8 +136,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
 extension DiaryTimelineCollectionViewCell {
     func configureUI(
         backgroundImageURL: URL?,
-        relativeDate: String,
-        exactDate: String,
+        editedDate: Date?,
         hideTopLine: Bool,
         hideBottomLine: Bool
     ) {
@@ -136,12 +144,29 @@ extension DiaryTimelineCollectionViewCell {
         topLineView.isHidden = hideTopLine
         bottomLineView.isHidden = hideBottomLine
         
-        let relativeDateString = NSAttributedString(string: relativeDate + "\n", attributes: [.font: GLFont.regular14.font])
-        let exactDateString = NSAttributedString(string: exactDate, attributes: [.font: GLFont.regular14.font])
-        
-        editedDateLabel.attributedText = NSMutableAttributedString(attributedString: relativeDateString).then {
-            $0.append(exactDateString)
+        if let editedDate = editedDate {
+            let exactDate = DateformatterFactory.monthDaySlash.string(from: editedDate)
+            var relativeDate = ""
+            
+            if editedDate.hasElapsed(days: 0) {
+                relativeDate = "오늘"
+            } else if editedDate.isLastYear() {
+                relativeDate = "작년"
+            } else if editedDate.hasElapsed(days: 7) {
+                relativeDate = "지난주"
+            } else {
+                // TODO: - 해당 안되는 날짜인 경우 처리 필요
+                relativeDate = ""
+            }
+            
+            let relativeDateString = NSAttributedString(string: relativeDate + "\n", attributes: [.font: GLFont.regular14.font])
+            let exactDateString = NSAttributedString(string: exactDate, attributes: [.font: GLFont.regular14.font])
+            
+            editedDateLabel.attributedText = NSMutableAttributedString(attributedString: relativeDateString).then {
+                $0.append(exactDateString)
+            }
         }
+        
         contentView.layoutIfNeeded()
     }
 }

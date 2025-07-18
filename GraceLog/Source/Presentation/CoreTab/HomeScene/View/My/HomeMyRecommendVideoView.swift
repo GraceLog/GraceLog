@@ -25,8 +25,7 @@ final class HomeMyRecommendVideoView: UIView {
         $0.text = "추천영상"
     }
     
-    let recommendedTagLabel = UILabel().then {
-        $0.textColor = .graceGray
+    private let recommendedTagLabel = UILabel().then {
         $0.font = GLFont.regular24.font
         $0.numberOfLines = 0
     }
@@ -64,5 +63,12 @@ final class HomeMyRecommendVideoView: UIView {
         }
         
         containerStackView.setCustomSpacing(7, after: recommendedTagLabel)
+    }
+}
+
+extension HomeMyRecommendVideoView {
+    func configureUI(isEmpty: Bool = false, recommendedText: String) {
+        recommendedTagLabel.textColor = isEmpty ? UIColor(hex: 0xD8D8D8) : .graceGray
+        recommendedTagLabel.text = recommendedText
     }
 }

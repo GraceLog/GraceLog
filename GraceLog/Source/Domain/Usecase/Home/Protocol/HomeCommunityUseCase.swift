@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 protocol HomeCommunityUseCase {
-    var diaryList: BehaviorRelay<[Diary]> { get }
+    var diaryList: BehaviorRelay<[CommunityDiary]> { get }
     var communityList: BehaviorRelay<[Community]> { get }
     var likeDiaryResult: PublishRelay<Bool> { get }
     var unlikeDiaryResult: PublishRelay<Bool> { get }

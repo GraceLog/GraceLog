@@ -132,7 +132,7 @@ extension HomeCommunityViewController {
         diaryDataSource = RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>(
             configureCell: { _, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: HomeCommunityDiaryTableViewCell.reuseIdentifier, for: indexPath) as! HomeCommunityDiaryTableViewCell
-
+                
                 cell.updateUI(
                     username: item.username,
                     title: item.title,
@@ -145,8 +145,8 @@ extension HomeCommunityViewController {
                     cardImageURL: item.cardImageURL
                 )
                 
-                cell.profileImageView.rx.gestureTap
-                    .asDriver()
+                cell.profileImageView.rx.tapGesture().when(.recognized)
+                    .asDriver(onErrorDriveWith: .empty())
                     .drive(onNext: { [weak self] _ in
                         guard let self,
                               let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
@@ -159,8 +159,8 @@ extension HomeCommunityViewController {
                     })
                     .disposed(by: cell.disposeBag)
                 
-                cell.cardImageView.rx.gestureTap
-                    .asDriver()
+                cell.cardImageView.rx.tapGesture().when(.recognized)
+                    .asDriver(onErrorDriveWith: .empty())
                     .drive(onNext: { [weak self] _ in
                         guard let self,
                               let indexPath = self.communityDiaryListView.diaryTableView.indexPath(for: cell),
