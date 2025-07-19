@@ -7,30 +7,37 @@
 
 import Alamofire
 
-enum AuthTarget {
+enum AuthAPI {
     case signIn(SignInRequestDTO)
+    case refresh(RefreshTokenRequestDTO)
 }
 
-extension AuthTarget: TargetType {
+extension AuthAPI: TargetType {
     var baseURL: String {
         return "http://\(Const.baseURL)/auth"
     }
     
     var method: HTTPMethod {
         switch self {
-        case .signIn: return .post
+        case .signIn, .refresh: return .post
         }
     }
     
     var path: String {
         switch self {
         case .signIn: return "/signin"
+        case .refresh: return "/refresh"
         }
+    }
+    
+    var headers: HeaderType {
+        return .noAccessToken
     }
     
     var parameters: RequestParams {
         switch self {
         case .signIn(let request): return .body(request)
+        case .refresh(let request): return .body(request)
         }
     }
 }

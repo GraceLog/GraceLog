@@ -12,13 +12,15 @@ protocol TargetType: URLRequestConvertible {
     var method: HTTPMethod { get }
     var path: String { get }
     var parameters: RequestParams { get }
+    var headers: HeaderType { get }
 }
 
 extension TargetType {
     func asURLRequest() throws -> URLRequest {
         let url = try baseURL.asURL()
         var urlRequest = try URLRequest(url: url.appendingPathComponent(path), method: method)
-        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
+        
+        urlRequest.headers = headers.httpHeaders
         
         switch parameters {
         case .query(let request):

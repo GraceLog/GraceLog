@@ -17,3 +17,7 @@ struct SignInRequestDTO: Encodable {
     let provider: SignInProvider
     let token: String
 }
+
+struct RefreshTokenRequestDTO: Encodable {
+    let refreshToken: String
+}

@@ -9,17 +9,31 @@ import Foundation
 import RxSwift
 
 final class DefaultAuthRepository: AuthRepository {
-    private let authService: AuthService
+    private let network: NetworkManager
     
-    init(authService: AuthService) {
-        self.authService = authService
+    init(network: NetworkManager) {
+        self.network = network
     }
     
     func signIn(provider: SignInProvider, token: String) -> Single<SignInResult> {
         let request = SignInRequestDTO(provider: provider, token: token)
         
-        return authService.signIn(request: request)
-            .map { responseDTO in
+        return network.request(AuthAPI.signIn(request))
+            .map { (responseDTO: SignInResponseDTO) in
+                return SignInResult(
+                    accessToken: responseDTO.accessToken,
+                    refreshToken: responseDTO.refreshToken,
+                    isExist: responseDTO.isExist
+                )
+            }
+    }
+    
+    
+    func refresh(refreshToken: String) -> Single<SignInResult> {
+        let request = RefreshTokenRequestDTO(refreshToken: refreshToken)
+        
+        return network.request(AuthAPI.refresh(request))
+            .map { (responseDTO: SignInResponseDTO) in
                 return SignInResult(
                     accessToken: responseDTO.accessToken,
                     refreshToken: responseDTO.refreshToken,

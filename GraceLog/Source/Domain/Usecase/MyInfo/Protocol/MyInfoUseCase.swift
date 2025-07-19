@@ -9,5 +9,10 @@ import Foundation
 import RxSwift
 
 protocol MyInfoUseCase {
-    func updateUser(user: GraceLogUser) -> Single<GraceLogUser>
+    func updateUser(
+        name: String,
+        nickname: String,
+        profileImage: String,
+        message: String
+    ) -> Single<GraceLogUser>
 }

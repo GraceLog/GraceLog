@@ -121,9 +121,14 @@ extension ProfileEditViewReactor {
         
         return Observable.concat([
             .just(.setLoading(true)),
-            useCase.updateUser(user: updateUser)
-                .asObservable()
-                .map { _ in .setSaveSuccess(true) }
+            useCase.updateUser(
+                name: updateUser.name,
+                nickname: updateUser.nickname,
+                profileImage: updateUser.profileImage,
+                message: updateUser.message
+            )
+            .asObservable()
+            .map { _ in .setSaveSuccess(true) }
                 .catch { error in
                     .just(.setError(error)) },
             .just(.setLoading(false))

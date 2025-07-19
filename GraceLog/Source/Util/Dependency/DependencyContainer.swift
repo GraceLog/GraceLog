@@ -17,6 +17,7 @@ final class DependencyContainer {
         injector.assemble([
             DataAssembly(),
             DomainAssembly(),
+            AuthPresentationAssembly(),
             HomePresentationAssembly(),
             DiaryPresentationAssembly(),
             MyInfoPresentationAssembly()

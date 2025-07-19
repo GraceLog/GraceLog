@@ -7,12 +7,12 @@
 
 import Alamofire
 
-enum UserTarget {
+enum UserAPI {
     case fetchUser
-    case updateUser(UserRequestDTO)
+    case updateUser(UpdateUserRequestDTO)
 }
 
-extension UserTarget: TargetType {
+extension UserAPI: TargetType {
     var baseURL: String {
         return "http://\(Const.baseURL)"
     }
@@ -28,6 +28,10 @@ extension UserTarget: TargetType {
         switch self {
         case .fetchUser, .updateUser: return "/member"
         }
+    }
+    
+    var headers: HeaderType {
+        return .requireAccessToken
     }
     
     var parameters: RequestParams {
