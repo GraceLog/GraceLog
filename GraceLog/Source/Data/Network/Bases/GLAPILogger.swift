@@ -26,9 +26,18 @@ final class GLAPILogger: EventMonitor {
     
     func request<Value>(_ request: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
         print("🛰 NETWORK Response LOG")
+        
+        let resultString: String
+        switch response.result {
+        case .success:
+            resultString = "✅ SUCCESS"
+        case .failure(let error):
+            resultString = "❌ FAILURE - \(error.localizedDescription)"
+        }
+        
         print(
             "URL: " + (request.request?.url?.absoluteString ?? "") + "\n"
-            + "Result: " + "\(response.result)" + "\n"
+            + "Result: " + resultString + "\n"
             + "StatusCode: " + "\(response.response?.statusCode ?? 0)" + "\n"
             + "Data: \(response.data?.toPrettyPrintedString ?? "")"
         )
