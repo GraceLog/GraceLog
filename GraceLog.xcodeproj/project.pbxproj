@@ -1030,7 +1030,6 @@
 		DE3BFCC12D043D0C0076426D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				DED558972DBFACB800137B10 /* KeyChain */,
 				DE2700602D22D165005C9DCF /* Network */,
 				DE2700612D22D177005C9DCF /* Repository */,
 			);
