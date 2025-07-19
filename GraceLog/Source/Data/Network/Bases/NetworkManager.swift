@@ -63,11 +63,7 @@ extension NetworkManager {
                 print("✅ 데이터 \(data)")
                 return .success(data)
             } else {
-                if T.self == GLEmptyResponse.self {
-                    return .success(GLEmptyResponse() as! T)
-                } else {
-                    return .failure(.decodedError)
-                }
+                return .success(GLEmptyResponse() as! T)
             }
         case 400..<500:
             let code = response.code
@@ -90,6 +86,8 @@ extension NetworkManager {
         switch afError {
         case .sessionTaskFailed(let urlError as URLError) where urlError.code == .notConnectedToInternet:
             return .networkError
+        case .responseSerializationFailed:
+            return .decodedError
         default:
             return .afError(afError)
         }
