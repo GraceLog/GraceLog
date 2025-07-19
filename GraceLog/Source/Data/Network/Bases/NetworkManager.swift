@@ -43,7 +43,6 @@ extension NetworkManager {
                         }
                         
                     case .failure(let afError):
-                        print(afError)
                         let glError = self.convertToGLError(afError)
                         single(.failure(glError))
                     }
@@ -60,7 +59,6 @@ extension NetworkManager {
         switch statusCode {
         case 200..<300:
             if let data = response.data {
-                print("✅ 데이터 \(data)")
                 return .success(data)
             } else {
                 return .success(GLEmptyResponse() as! T)
@@ -68,16 +66,12 @@ extension NetworkManager {
         case 400..<500:
             let code = response.code
             let errorMessage = response.message
-            print("📱 클라이언트 에러 (\(code)): \(errorMessage)")
             return .failure(.requestError(code: code, message: errorMessage))
             
         case 500..<600:
-            let errorMessage = response.message
-            print("🧑🏻‍💻 서버 에러 (\(statusCode)): \(errorMessage)")
             return .failure(.serverError)
             
         default:
-            print("❓ 알 수 없는 오류")
             return .failure(.unknownError)
         }
     }
