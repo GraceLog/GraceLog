@@ -50,6 +50,17 @@
 		704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */; };
 		704815822E018E30009ECDBD /* GLDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815812E018E30009ECDBD /* GLDividerView.swift */; };
 		704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704815832E018F5A009ECDBD /* DiaryEditView.swift */; };
+		709CBB562E2AAC2200F68457 /* CommentBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB552E2AAC2200F68457 /* CommentBottomSheetViewController.swift */; };
+		709CBB582E2AAC6D00F68457 /* CommentBottomSheetViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB572E2AAC6D00F68457 /* CommentBottomSheetViewReactor.swift */; };
+		709CBB5B2E2AACB600F68457 /* DefaultCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB5A2E2AACB600F68457 /* DefaultCommentUseCase.swift */; };
+		709CBB5E2E2AACDC00F68457 /* CommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB5D2E2AACDC00F68457 /* CommentUseCase.swift */; };
+		709CBB612E2AAE4500F68457 /* CommentEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB602E2AAE4500F68457 /* CommentEditView.swift */; };
+		709CBB632E2AC2A200F68457 /* CommentTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB622E2AC2A200F68457 /* CommentTableHeaderView.swift */; };
+		709CBB652E2AC3A300F68457 /* CommentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB642E2AC3A300F68457 /* CommentInfoView.swift */; };
+		709CBB672E2AC8E900F68457 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB662E2AC8E900F68457 /* CommentTableViewCell.swift */; };
+		709CBB692E2ACB5100F68457 /* CommentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB682E2ACB5100F68457 /* CommentSection.swift */; };
+		709CBB6B2E2AD2C400F68457 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB6A2E2AD2C400F68457 /* Comment.swift */; };
+		709CBB6D2E2B8CA100F68457 /* CommentToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB6C2E2B8CA100F68457 /* CommentToggleButton.swift */; };
 		70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */; };
 		70A97C482E18F61000F08DF6 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C472E18F61000F08DF6 /* Community.swift */; };
 		70A97C4A2E191F0900F08DF6 /* DiaryDeletableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */; };
@@ -250,6 +261,17 @@
 		7048157F2E018D72009ECDBD /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
 		704815812E018E30009ECDBD /* GLDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLDividerView.swift; sourceTree = "<group>"; };
 		704815832E018F5A009ECDBD /* DiaryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEditView.swift; sourceTree = "<group>"; };
+		709CBB552E2AAC2200F68457 /* CommentBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentBottomSheetViewController.swift; sourceTree = "<group>"; };
+		709CBB572E2AAC6D00F68457 /* CommentBottomSheetViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentBottomSheetViewReactor.swift; sourceTree = "<group>"; };
+		709CBB5A2E2AACB600F68457 /* DefaultCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCommentUseCase.swift; sourceTree = "<group>"; };
+		709CBB5D2E2AACDC00F68457 /* CommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentUseCase.swift; sourceTree = "<group>"; };
+		709CBB602E2AAE4500F68457 /* CommentEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentEditView.swift; sourceTree = "<group>"; };
+		709CBB622E2AC2A200F68457 /* CommentTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableHeaderView.swift; sourceTree = "<group>"; };
+		709CBB642E2AC3A300F68457 /* CommentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInfoView.swift; sourceTree = "<group>"; };
+		709CBB662E2AC8E900F68457 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		709CBB682E2ACB5100F68457 /* CommentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSection.swift; sourceTree = "<group>"; };
+		709CBB6A2E2AD2C400F68457 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		709CBB6C2E2B8CA100F68457 /* CommentToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentToggleButton.swift; sourceTree = "<group>"; };
 		70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeyword.swift; sourceTree = "<group>"; };
 		70A97C472E18F61000F08DF6 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		70A97C492E191F0900F08DF6 /* DiaryDeletableUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDeletableUseCase.swift; sourceTree = "<group>"; };
@@ -624,6 +646,43 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		709CBB542E2AAC0E00F68457 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				709CBB552E2AAC2200F68457 /* CommentBottomSheetViewController.swift */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
+		709CBB592E2AACA300F68457 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				709CBB5C2E2AACCF00F68457 /* Protocol */,
+				709CBB5A2E2AACB600F68457 /* DefaultCommentUseCase.swift */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
+		709CBB5C2E2AACCF00F68457 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				709CBB5D2E2AACDC00F68457 /* CommentUseCase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		709CBB5F2E2AAE2800F68457 /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				709CBB602E2AAE4500F68457 /* CommentEditView.swift */,
+				709CBB622E2AC2A200F68457 /* CommentTableHeaderView.swift */,
+				709CBB642E2AC3A300F68457 /* CommentInfoView.swift */,
+				709CBB662E2AC8E900F68457 /* CommentTableViewCell.swift */,
+				709CBB6C2E2B8CA100F68457 /* CommentToggleButton.swift */,
+			);
+			path = Comment;
+			sourceTree = "<group>";
+		};
 		70A97C4B2E194FDC00F08DF6 /* CoreTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -724,6 +783,7 @@
 			children = (
 				DE66C2F42D96B0E4009A983F /* DiaryViewReactor.swift */,
 				0234461E2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift */,
+				709CBB572E2AAC6D00F68457 /* CommentBottomSheetViewReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -731,6 +791,7 @@
 		DE069B952D53A826007C2066 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				709CBB5F2E2AAE2800F68457 /* Comment */,
 				023446182DB61C8500F21439 /* Diary */,
 				023446192DB61C9A00F21439 /* Settings */,
 			);
@@ -740,6 +801,7 @@
 		DE069B962D53A82B007C2066 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				709CBB542E2AAC0E00F68457 /* Comment */,
 				DE069B992D53A884007C2066 /* DiaryViewController.swift */,
 				023446162DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift */,
 			);
@@ -882,6 +944,7 @@
 				70A97C472E18F61000F08DF6 /* Community.swift */,
 				70A97C942E27605D00F08DF6 /* DailyVerse.swift */,
 				70A97C962E27677700F08DF6 /* VideoTag.swift */,
+				709CBB6A2E2AD2C400F68457 /* Comment.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -889,6 +952,7 @@
 		DE2700562D211F61005C9DCF /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				709CBB592E2AACA300F68457 /* Comment */,
 				DE2700572D211F82005C9DCF /* SignIn */,
 				DE9A1FF32D7C07DD0044F655 /* Home */,
 				DE66C2F82D96B380009A983F /* Diary */,
@@ -1175,6 +1239,7 @@
 			children = (
 				0234461C2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift */,
 				702D2B652E05185900D5E71E /* DiaryImageSection.swift */,
+				709CBB682E2ACB5100F68457 /* CommentSection.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -1625,6 +1690,7 @@
 				025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */,
 				70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */,
 				702D2B6C2E07008800D5E71E /* DiaryShareView.swift in Sources */,
+				709CBB632E2AC2A200F68457 /* CommentTableHeaderView.swift in Sources */,
 				DE3BFCD62D048B170076426D /* GraceLogAppCoordinator.swift in Sources */,
 				025019CA2DE04410003FD48D /* MyInfoUseCase.swift in Sources */,
 				702D2B682E05674B00D5E71E /* AutoSizingCollectionView.swift in Sources */,
@@ -1634,6 +1700,8 @@
 				DEACFE6C2E0F9C9500AD4222 /* HomeCommunityDiarySection.swift in Sources */,
 				DE58FEB12D04284D008CADCD /* AppDelegate.swift in Sources */,
 				70A97C632E2167C200F08DF6 /* DiaryPresentationAssembly.swift in Sources */,
+				709CBB652E2AC3A300F68457 /* CommentInfoView.swift in Sources */,
+				024AEB672DF0171100DE94DE /* APIError.swift in Sources */,
 				704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */,
 				DECF2AA52E28B4B9000CAF42 /* GLInterceptor.swift in Sources */,
 				DE597A6E2E26141100B2CB5B /* AuthPresentationAssembly.swift in Sources */,
@@ -1644,6 +1712,7 @@
 				DE3BFCD82D048B550076426D /* Coordinator.swift in Sources */,
 				DE23873D2E0BB4B200893D8C /* HomeMyBibleView.swift in Sources */,
 				DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */,
+				709CBB6B2E2AD2C400F68457 /* Comment.swift in Sources */,
 				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
 				DED5588A2DBE226D00137B10 /* AuthRepository.swift in Sources */,
@@ -1656,6 +1725,7 @@
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DEACFE682E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift in Sources */,
 				DE23873B2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift in Sources */,
+				709CBB6D2E2B8CA100F68457 /* CommentToggleButton.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
 				70A97C4D2E19500900F08DF6 /* MainTabbarController.swift in Sources */,
 				DE9A1FF22D7C065C0044F655 /* HomeContentDTO.swift in Sources */,
@@ -1679,6 +1749,7 @@
 				DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */,
 				DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */,
 				DE3BFCDA2D059A3B0076426D /* HomeViewController.swift in Sources */,
+				709CBB692E2ACB5100F68457 /* CommentSection.swift in Sources */,
 				02DC29802DDC29C000662D8A /* MyInfoSectionHeaderView.swift in Sources */,
 				70A97C972E27677700F08DF6 /* VideoTag.swift in Sources */,
 				02DC29812DDC29C000662D8A /* MyInfoCoordinator.swift in Sources */,
@@ -1727,6 +1798,8 @@
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,
 				DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */,
 				DECF2AA32E286BB0000CAF42 /* GLError.swift in Sources */,
+				709CBB5B2E2AACB600F68457 /* DefaultCommentUseCase.swift in Sources */,
+				709CBB672E2AC8E900F68457 /* CommentTableViewCell.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
@@ -1766,13 +1839,18 @@
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserAPI.swift in Sources */,
+				02C5861C2DD736D600E1F626 /* UserTarget.swift in Sources */,
+				709CBB582E2AAC6D00F68457 /* CommentBottomSheetViewReactor.swift in Sources */,
+				709CBB612E2AAE4500F68457 /* CommentEditView.swift in Sources */,
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
 				70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */,
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,
 				0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */,
 				DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */,
 				704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */,
+				709CBB562E2AAC2200F68457 /* CommentBottomSheetViewController.swift in Sources */,
 				DE27005F2D212770005C9DCF /* UserRepository.swift in Sources */,
+				709CBB5E2E2AACDC00F68457 /* CommentUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
