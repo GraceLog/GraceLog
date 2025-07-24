@@ -71,13 +71,11 @@ extension MyInfoViewReactor {
     }
     
     private func createSections() -> [MyInfoSection] {
-        let user = AuthManager.shared.getUser()
-        
         let profileItems = [
             ProfileItem(
-                imageUrl: user?.profileImage ?? "",
-                name: user?.name ?? "",
-                email: user?.email ?? ""
+                imageUrl: UserManager.shared.userProfileImageUrl ?? "",
+                name: UserManager.shared.username ?? "",
+                email: UserManager.shared.userEmail ?? ""
             )
         ]
         
@@ -113,7 +111,7 @@ extension MyInfoViewReactor {
         
         return [
             .profile(items: profileItems),
-            .myInfo(title: "\(AuthManager.shared.getUser()?.name ?? "")님의 Grace Log", items: myInfoItems),
+            .myInfo(title: "\(UserManager.shared.username ?? "")님의 Grace Log", items: myInfoItems),
             .community(title: "공동체 및 친구관리", items: communityItems),
             .notification(title: "푸시 알림 설정", items: notificationItems),
             .customerService(title: "고객센터", items: customerServiceItems),

@@ -11,7 +11,6 @@ import RxCocoa
 
 final class ProfileEditViewReactor: Reactor {
     enum Action {
-        case viewDidLoad
         case updateProfileImage(UIImage?)
         case updateNickname(String)
         case updateName(String)
@@ -32,37 +31,40 @@ final class ProfileEditViewReactor: Reactor {
     }
     
     struct State {
-        var profileImageURL: String = AuthManager.shared.getUser()?.profileImage ?? ""
-        var selectedImage: UIImage? = nil
-        var nickname: String = AuthManager.shared.getUser()?.nickname ?? ""
-        var name: String = AuthManager.shared.getUser()?.name ?? ""
-        var message: String = AuthManager.shared.getUser()?.message ?? ""
-        var isLoading: Bool = false
-        var saveSuccess: Bool = false
-        var error: Error? = nil
+        var profileImageURL: String?
+        var selectedImage: UIImage?
+        var nickname: String?
+        var name: String?
+        var message: String?
+        var isLoading: Bool
+        var saveSuccess: Bool
+        var error: Error?
     }
     
-    let initialState: State = State()
+    var initialState: State
     weak var coordinator: ProfileEditCoordinator?
     private let useCase: DefaultMyInfoUseCase
     
     init(coordinator: ProfileEditCoordinator? = nil, useCase: DefaultMyInfoUseCase) {
         self.coordinator = coordinator
         self.useCase = useCase
+        
+        self.initialState = State(
+            profileImageURL: UserManager.shared.userProfileImageUrl,
+            selectedImage: nil,
+            nickname: UserManager.shared.userNickname,
+            name: UserManager.shared.username,
+            message: UserManager.shared.userMessage,
+            isLoading: false,
+            saveSuccess: false,
+            error: nil
+        )
     }
 }
 
 extension ProfileEditViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad:
-            let user = AuthManager.shared.getUser()
-            return Observable.from([
-                .setNickname(user?.nickname ?? ""),
-                .setName(user?.name ?? ""),
-                .setMessage(user?.message ?? ""),
-                .setProfileImageURL(user?.profileImage ?? "")
-            ])
         case .updateProfileImage(let image):
             return .just(.setSelectedImage(image))
         case .updateNickname(let nickname):
@@ -108,15 +110,15 @@ extension ProfileEditViewReactor {
     }
     
     private func saveProfile() -> Observable<Mutation> {
-        guard let user = AuthManager.shared.getUser() else { return .empty() }
-        
+        guard let userId = UserManager.shared.userId else { return .empty()}
+ 
         let updateUser = GraceLogUser(
-            id: user.id,
-            name: currentState.name,
-            nickname: currentState.nickname,
-            profileImage: user.profileImage,
-            email: user.email,
-            message: currentState.message
+            id: userId,
+            name: currentState.name ?? "",
+            nickname: currentState.nickname ?? "",
+            profileImage: currentState.profileImageURL ?? "",
+            email: UserManager.shared.username ?? "",
+            message: currentState.message ?? ""
         )
         
         return Observable.concat([
