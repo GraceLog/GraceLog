@@ -18,7 +18,7 @@ enum HomeMenuItem: CaseIterable {
         switch self {
         case .user:
             // TODO: - User관련 정보 처리 필요
-            return "승렬"
+            return "사용자"
         case .group:
             return "공동체"
         }
@@ -131,11 +131,25 @@ final class HomeViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         reactor.state
-            .map { $0.user }
+            .map { $0.username }
             .distinctUntilChanged()
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, user in
-                // TODO: - 상준 네비게이션바 사용자 이름 및 프로필 이미지 등록
+            .filter { !$0.isEmpty }
+            .asDriver(onErrorJustReturn: "사용자")
+            .drive(with: self) { owner, username in
+                owner.homeMenuView.setTitle(username, forSegmentAt: 0)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.profileImageUrl }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, imageUrl in
+                if imageUrl.isEmpty {
+                    owner.profileButton.setBackgroundImage(UIImage(named: "profile"), for: .normal)
+                } else {
+                    owner.profileButton.kf.setBackgroundImage(with: URL(string: imageUrl), for: .normal)
+                }
             }
             .disposed(by: disposeBag)
         

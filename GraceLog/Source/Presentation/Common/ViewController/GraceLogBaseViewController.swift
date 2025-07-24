@@ -18,22 +18,6 @@ import NVActivityIndicatorView
 class GraceLogBaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNotifications()
-    }
-    
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleUserProfileUpdate),
-            name: .userProfileUpdated,
-            object: nil
-        )
-    }
-    
-    @objc private func handleUserProfileUpdate(_ notification: Notification) {
-        if let user = notification.object as? GraceLogUser {
-            onUserProfileUpdated(user)
-        }
     }
     
     func onUserProfileUpdated(_ user: GraceLogUser) {
