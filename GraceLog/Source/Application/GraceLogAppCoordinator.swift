@@ -18,17 +18,6 @@ final class GraceLogAppCoordinator: NavigationCoordinator {
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleAuthenticationFailure),
-            name: .authenticationFailed,
-            object: nil
-        )
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     func start() {
@@ -39,17 +28,25 @@ final class GraceLogAppCoordinator: NavigationCoordinator {
         showLoginFlow()
     }
     
-    private func showLoginFlow() {
+    func showLoginFlow() {
         let signInCoordinator = SignInCoordinator(navigationController: navigationController)
         signInCoordinator.parentCoordinator = self
         childCoordinators.append(signInCoordinator)
+        signInCoordinator.delegate = self
         signInCoordinator.start()
     }
     
-    private func showMainTabFlow() {
+    func showMainTabFlow() {
         let mainTabCoordinator = MainTabCoordinator(navigationController: navigationController)
         mainTabCoordinator.parentCoordinator = self
         childCoordinators.append(mainTabCoordinator)
         mainTabCoordinator.start()
+    }
+}
+
+extension GraceLogAppCoordinator: SignInCoordinatorDelegate {
+    func didSignIn(_ coordinator: SignInCoordinator) {
+        self.childCoordinators = self.childCoordinators.filter { $0 !== coordinator }
+        self.showMainTabFlow()
     }
 }
