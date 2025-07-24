@@ -32,7 +32,7 @@ final class SignInReactor: Reactor {
     enum Mutation {
         case setLoading(Bool)
         case setError(Error)
-        case setLoginSuccess(GraceLogUser)
+        case setUser(GraceLogUser)
         case setAgree(Bool)
     }
     
@@ -72,13 +72,36 @@ extension SignInReactor {
             newState.isLoading = isLoading
         case .setError(let error):
             newState.error = error
-        case .setLoginSuccess(let user):
+        case .setUser(let user):
             newState.user = user
         case .setAgree(let isAgreed):
             newState.isAgreed = isAgreed
         }
         
         return newState
+    }
+    
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        let signInMutation = signInUseCase.isSuccessSignIn
+            .filter { $0 == true }
+            .flatMap { [weak self] _ -> Observable<Mutation> in
+                guard let self = self else { return .empty() }
+                return self.signInUseCase.fetchUser()
+                    .asObservable()
+                    .map { user -> Mutation in .setUser(user) }
+                    .catch { error in
+                        return Observable.just(.setError(error))
+                    }
+            }
+        
+        let userMutation = signInUseCase.user
+            .compactMap { $0 }
+            .do(onNext: { [weak self] _ in
+                self?.coordinator?.didSignIn()
+            })
+            .flatMap { _ in Observable<Mutation>.empty() }
+        
+        return .merge(mutation, signInMutation, userMutation)
     }
 }
 
@@ -88,15 +111,11 @@ extension SignInReactor {
             Observable.just(Mutation.setLoading(true)),
             signInUseCase.signIn(provider: .kakao, token: token)
                 .asObservable()
-                .withUnretained(self)
-                .flatMap { owner, result -> Observable<Mutation> in
-                    // TODO: - 상준: 이 부분 Coordinator 리팩토링 이후 수정 필요
-//                    owner.coordinator?.didFinishSignIn()
-                    return .empty()
-                }
+                .flatMap { _ in Observable<Mutation>.empty() }
                 .catch { error in
                     return Observable.just(.setError(error))
                 },
+            
             Observable.just(.setLoading(false))
         ])
     }
