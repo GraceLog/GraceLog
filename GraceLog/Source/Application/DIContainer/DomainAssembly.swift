@@ -12,7 +12,11 @@ struct DomainAssembly: Assembly {
         // Auth
         container.register(SignInUseCase.self) { resolver in
             let authRepository = resolver.resolve(AuthRepository.self)!
-            return DefaultSignInUseCase(authRepository: authRepository)
+            let userReportRepository = resolver.resolve(UserRepository.self)!
+            return DefaultSignInUseCase(
+                authRepository: authRepository,
+                userRepository: userReportRepository
+            )
         }
         
         // CoreTab 
