@@ -24,14 +24,14 @@ final class ProfileTableViewCell: UITableViewCell {
         $0.textColor = .themeColor
         $0.font = GLFont.bold20.font
         $0.textAlignment = .center
-        $0.text = AuthManager.shared.getUser()?.name
+        $0.text = UserManager.shared.username
     }
     
     private let emailLabel = UILabel().then {
         $0.textColor = .graceGray
         $0.font = GLFont.regular12.font
         $0.textAlignment = .center
-        $0.text = AuthManager.shared.getUser()?.email
+        $0.text = UserManager.shared.userEmail
     }
     
     

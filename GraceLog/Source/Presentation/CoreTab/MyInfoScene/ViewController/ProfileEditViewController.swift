@@ -106,25 +106,25 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     
     func bind(reactor: ProfileEditViewReactor) {
         // State
-        reactor.state
-            .map { ($0.selectedImage, $0.profileImageURL) }
-            .distinctUntilChanged { lhs, rhs in
-                return lhs.0 === rhs.0 && lhs.1 == rhs.1
-            }
-            .bind(onNext: { [weak self] selectedImage, profileImageURL in
-                if let selectedImage = selectedImage {
-                    self?.profileImgView.image = selectedImage
-                } else if !profileImageURL.isEmpty, let url = URL(string: profileImageURL) {
-                    self?.profileImgView.sd_setImage(
-                        with: url,
-                        placeholderImage: UIImage(named: "profile")
-                    )
-                } else {
-                    self?.profileImgView.image = UIImage(named: "profile")
-                }
-            })
-            .disposed(by: disposeBag)
-        
+//        reactor.state
+//            .map { ($0.selectedImage, $0.profileImageURL) }
+//            .distinctUntilChanged { lhs, rhs in
+//                return lhs.0 === rhs.0 && lhs.1 == rhs.1
+//            }
+//            .bind(onNext: { [weak self] selectedImage, profileImageURL in
+//                if let selectedImage = selectedImage {
+//                    self?.profileImgView.image = selectedImage
+//                } else if !profileImageURL?.isEmpty, let url = URL(string: profileImageURL) {
+//                    self?.profileImgView.sd_setImage(
+//                        with: url,
+//                        placeholderImage: UIImage(named: "profile")
+//                    )
+//                } else {
+//                    self?.profileImgView.image = UIImage(named: "profile")
+//                }
+//            })
+//            .disposed(by: disposeBag)
+//        
         reactor.state
             .map { $0.nickname }
             .distinctUntilChanged()
@@ -177,8 +177,6 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         // Action
-        reactor.action.onNext(.viewDidLoad)
-        
         editButton.rx.tap
             .map { Reactor.Action.didTapProfileImageEdit }
             .bind(to: reactor.action)
