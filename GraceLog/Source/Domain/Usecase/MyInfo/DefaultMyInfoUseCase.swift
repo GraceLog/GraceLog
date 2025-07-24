@@ -28,7 +28,14 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
             message: message
         )
         .map { updatedUser in
-            AuthManager.shared.saveUser(updatedUser)
+            UserManager.shared.saveUserInfo(
+                userId: updatedUser.id,
+                username: updatedUser.name,
+                userNickname: updatedUser.nickname,
+                userMessage: updatedUser.message,
+                userEmail: updatedUser.email,
+                userProfileImageUrl: updatedUser.profileImage
+            )
             return updatedUser
         }
     }
