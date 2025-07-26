@@ -28,7 +28,7 @@ final class GraceLogAppCoordinator: NavigationCoordinator {
         showLoginFlow()
     }
     
-    func showLoginFlow() {
+    private func showLoginFlow() {
         let signInCoordinator = SignInCoordinator(navigationController: navigationController)
         signInCoordinator.parentCoordinator = self
         childCoordinators.append(signInCoordinator)
@@ -36,7 +36,7 @@ final class GraceLogAppCoordinator: NavigationCoordinator {
         signInCoordinator.start()
     }
     
-    func showMainTabFlow() {
+    private func showMainTabFlow() {
         let mainTabCoordinator = MainTabCoordinator(navigationController: navigationController)
         mainTabCoordinator.parentCoordinator = self
         childCoordinators.append(mainTabCoordinator)
