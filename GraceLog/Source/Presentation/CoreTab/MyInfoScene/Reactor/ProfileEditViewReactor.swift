@@ -33,9 +33,9 @@ final class ProfileEditViewReactor: Reactor {
     struct State {
         var profileImageURL: URL?
         var selectedImage: UIImage?
-        var nickname: String?
-        var name: String?
-        var message: String?
+        var nickname: String
+        var name: String
+        var message: String
         var isLoading: Bool
         var saveSuccess: Bool
         var error: Error?
@@ -114,11 +114,11 @@ extension ProfileEditViewReactor {
  
         let updateUser = GraceLogUser(
             id: userId,
-            name: currentState.name ?? "",
-            nickname: currentState.nickname ?? "",
-            profileImage: currentState.profileImageURL ?? "",
-            email: UserManager.shared.username ?? "",
-            message: currentState.message ?? ""
+            name: currentState.name,
+            nickname: currentState.nickname,
+            profileImage: currentState.profileImageURL,
+            email: UserManager.shared.username,
+            message: currentState.message
         )
         
         return Observable.concat([

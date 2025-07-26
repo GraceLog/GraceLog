@@ -52,19 +52,19 @@ final class UserManager {
         userId: Int,
         username: String,
         userNickname: String,
-        userMessage: String,
+        userMessage: String, 
         userEmail: String,
-        userProfileImageUrl: String
+        userProfileImageUrl: URL?
     ) {
         self.userId = userId
         self.username = username
         self.userNickname = userNickname
         self.userMessage = userMessage
         self.userEmail = userEmail
-        self.userProfileImageUrl = userProfileImageUrl
+        self.userProfileImageUrl = userProfileImageUrl?.absoluteString ?? ""
     }
     
-    func logout() {
+    func clearUserInfo() {
         self.userId = nil
         self.username = ""
         self.userNickname = ""

@@ -37,6 +37,7 @@ final class HomeMyViewReactor: Reactor {
     struct State {
         @Pulse var videoItems: [RecommendedVideo] = []
         @Pulse var isVideoItemsEmpty: Bool = true
+        @Pulse var username: String = UserManager.shared.username
         @Pulse var diaryItems: [MyDiary] = []
         @Pulse var videoTagItems: [VideoTag] = []
         @Pulse var dailyVerse: DailyVerse?

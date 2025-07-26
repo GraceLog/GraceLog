@@ -34,15 +34,18 @@ final class HomeViewReactor: Reactor {
         var currentSegment: HomeModeSegment
         var error: Error?
         var profileImageUrl: URL?
+        var segmentTitles: [String]
     }
     
     let initialState: State
+    let user = UserManager.shared
     
     init(homeUsecase: HomeUseCase) {
         self.homeUsecase = homeUsecase
         self.initialState = State(
             currentSegment: .user,
             profileImageUrl: URL(string: user.userProfileImageUrl),
+            segmentTitles: [user.username, "공동체"]
         )
     }
 }

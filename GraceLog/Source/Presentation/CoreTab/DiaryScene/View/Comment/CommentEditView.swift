@@ -44,7 +44,7 @@ final class CommentEditView: UIView {
     
     lazy var commentTextField = UITextField().then {
         $0.attributedPlaceholder = NSAttributedString(
-            string: "승렬님을 위해서 댓글 달기",
+            string: "\(UserManager.shared.username)님을 위해서 댓글 달기",
             attributes: [
                 .foregroundColor : UIColor(hex: 0x8C8C8C),
                 .font : GLFont.regular14.font

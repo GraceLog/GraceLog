@@ -10,21 +10,6 @@ import UIKit
 import RxDataSources
 import ReactorKit
 
-enum HomeMenuItem: CaseIterable {
-    case user
-    case group
-    
-    var title: String {
-        switch self {
-        case .user:
-            // TODO: - User관련 정보 처리 필요
-            return "사용자"
-        case .group:
-            return "공동체"
-        }
-    }
-}
-
 final class HomeViewController: GraceLogBaseViewController, View {
     var disposeBag = DisposeBag()
     
@@ -32,7 +17,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
         $0.backgroundColor = .white
     }
     
-    private let homeMenuView = GLUnderlineSegmentedControl(items: HomeMenuItem.allCases.map { $0.title }).then {
+    private let homeMenuView = GLUnderlineSegmentedControl(items: []).then {
         $0.setHeight(50)
         $0.selectedSegmentIndex = 0
         $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
@@ -116,7 +101,9 @@ final class HomeViewController: GraceLogBaseViewController, View {
     func bind(reactor: HomeViewReactor) {
         // Action
         homeMenuView.rx.value
-            .map { HomeMenuItem.allCases[$0] }
+            .map { index -> HomeViewReactor.State.HomeModeSegment in
+                return index == 0 ? .user : .group
+            }
             .bind(with: self) { owner, selectedMenu in
                 let targetIndex = selectedMenu == .user ? 0 : 1
                 owner.moveToPage(at: targetIndex, animated: true)
@@ -131,25 +118,27 @@ final class HomeViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         reactor.state
-            .map { $0.username }
+            .map { $0.segmentTitles }
             .distinctUntilChanged()
-            .filter { !$0.isEmpty }
-            .asDriver(onErrorJustReturn: "사용자")
-            .drive(with: self) { owner, username in
-                owner.homeMenuView.setTitle(username, forSegmentAt: 0)
+            .asDriver(onErrorJustReturn: ["사용자", "공동체"])
+            .drive(with: self) { owner, titles in
+                titles.enumerated().forEach { index, title in
+                    owner.homeMenuView.insertSegment(withTitle: title, at: index, animated: false)
+                }
+                owner.homeMenuView.selectedSegmentIndex = 0
             }
             .disposed(by: disposeBag)
         
         reactor.state
             .map { $0.profileImageUrl }
             .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: "")
+            .asDriver(onErrorJustReturn: nil)
             .drive(with: self) { owner, imageUrl in
-                if imageUrl.isEmpty {
-                    owner.profileButton.setBackgroundImage(UIImage(named: "profile"), for: .normal)
-                } else {
-                    owner.profileButton.kf.setBackgroundImage(with: URL(string: imageUrl), for: .normal)
-                }
+                owner.profileButton.kf.setBackgroundImage(
+                    with: imageUrl,
+                    for: .normal,
+                    placeholder: UIImage(named: "profile")
+                )
             }
             .disposed(by: disposeBag)
         

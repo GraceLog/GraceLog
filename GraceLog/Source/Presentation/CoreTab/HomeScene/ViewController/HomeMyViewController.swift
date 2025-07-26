@@ -91,6 +91,13 @@ extension HomeMyViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
+        reactor.pulse(\.$username)
+            .asDriver(onErrorJustReturn: "사용자")
+            .drive(with: self) { owner, username in
+                owner.myDiaryView.updateUI(username: username)
+            }
+            .disposed(by: disposeBag)
+        
         reactor.pulse(\.$diaryItems)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, diaryList in
