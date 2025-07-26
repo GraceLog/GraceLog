@@ -25,10 +25,9 @@ final class DefaultSignInUseCase: SignInUseCase {
     
     func signIn(provider: SignInProvider, token: String) -> Single<SignInResult> {
         return authRepository.signIn(provider: provider, token: token)
-            .do(onSuccess: { [weak self] result in
+            .do(onSuccess: { result in
                 KeychainServiceImpl.shared.accessToken = result.accessToken
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
-                self?.isSuccessSignIn.accept(true)
             },onError: { error in
                 print(error.localizedDescription)
             })
