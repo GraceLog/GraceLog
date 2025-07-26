@@ -29,7 +29,7 @@ final class DefaultUserRepository: UserRepository {
             }
     }
     
-    func updateUser(name: String, nickname: String, profileImage: String, message: String) -> Single<GraceLogUser> {
+    func updateUser(name: String, nickname: String, profileImage: URL?, message: String) -> Single<GraceLogUser> {
         let request = UpdateUserRequestDTO(
             name: name,
             nickname: nickname,

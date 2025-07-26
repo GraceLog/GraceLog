@@ -33,8 +33,7 @@ final class HomeViewReactor: Reactor {
         
         var currentSegment: HomeModeSegment
         var error: Error?
-        var username: String
-        var profileImageUrl: String
+        var profileImageUrl: URL?
     }
     
     let initialState: State
@@ -43,8 +42,7 @@ final class HomeViewReactor: Reactor {
         self.homeUsecase = homeUsecase
         self.initialState = State(
             currentSegment: .user,
-            username: UserManager.shared.username,
-            profileImageUrl: UserManager.shared.userProfileImageUrl
+            profileImageUrl: URL(string: user.userProfileImageUrl),
         )
     }
 }

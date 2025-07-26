@@ -73,9 +73,9 @@ extension MyInfoViewReactor {
     private func createSections() -> [MyInfoSection] {
         let profileItems = [
             ProfileItem(
-                imageUrl: UserManager.shared.userProfileImageUrl ?? "",
                 name: UserManager.shared.username ?? "",
                 email: UserManager.shared.userEmail ?? ""
+                imageUrl: URL(string: user.userProfileImageUrl),
             )
         ]
         

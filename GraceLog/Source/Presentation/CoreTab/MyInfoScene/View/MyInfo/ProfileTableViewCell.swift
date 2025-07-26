@@ -69,7 +69,7 @@ final class ProfileTableViewCell: UITableViewCell {
     }
     
     func updateUI(with profileItem: ProfileItem) {
-        if let imageUrl = URL(string: profileItem.imageUrl) {
+        if let imageUrl = profileItem.imageUrl {
             profileImgView.sd_setImage(with: imageUrl)
         } else {
             profileImgView.image = UIImage(named: "profile")

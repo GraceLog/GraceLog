@@ -12,7 +12,7 @@ protocol MyInfoUseCase {
     func updateUser(
         name: String,
         nickname: String,
-        profileImage: String,
+        profileImage: URL?,
         message: String
     ) -> Single<GraceLogUser>
 }

@@ -20,7 +20,7 @@ final class ProfileEditViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setProfileImageURL(String)
+        case setProfileImageURL(URL?)
         case setSelectedImage(UIImage?)
         case setNickname(String)
         case setName(String)
@@ -31,7 +31,7 @@ final class ProfileEditViewReactor: Reactor {
     }
     
     struct State {
-        var profileImageURL: String?
+        var profileImageURL: URL?
         var selectedImage: UIImage?
         var nickname: String?
         var name: String?
@@ -50,7 +50,7 @@ final class ProfileEditViewReactor: Reactor {
         self.useCase = useCase
         
         self.initialState = State(
-            profileImageURL: UserManager.shared.userProfileImageUrl,
+            profileImageURL: URL(string: UserManager.shared.userProfileImageUrl),
             selectedImage: nil,
             nickname: UserManager.shared.userNickname,
             name: UserManager.shared.username,
