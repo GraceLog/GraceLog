@@ -28,6 +28,7 @@ final class DefaultSignInUseCase: SignInUseCase {
             .do(onSuccess: { result in
                 KeychainServiceImpl.shared.accessToken = result.accessToken
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
+                self.isSuccessSignIn.accept(true)
             },onError: { error in
                 print(error.localizedDescription)
             })
@@ -37,12 +38,12 @@ final class DefaultSignInUseCase: SignInUseCase {
         return userRepository.fetchUser()
             .do(onSuccess: { [weak self] result in
                 UserManager.shared.saveUserInfo(
-                    userId: result.id,
-                    username: result.name,
-                    userNickname: result.nickname,
-                    userMessage: result.message,
-                    userEmail: result.email,
-                    userProfileImageUrl: result.profileImage
+                    id: result.id,
+                    name: result.name,
+                    nickname: result.nickname,
+                    message: result.message,
+                    email: result.email,
+                    profileImageURL: result.profileImageURL
                 )
                 self?.user.accept(result)
             })
