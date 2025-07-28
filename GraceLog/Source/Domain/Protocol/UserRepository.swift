@@ -13,7 +13,7 @@ protocol UserRepository {
     func updateUser(
         name: String,
         nickname: String,
-        profileImage: URL?,
+        profileImageURL: URL?,
         message: String
     ) -> Single<GraceLogUser>
 }

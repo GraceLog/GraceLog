@@ -10,6 +10,6 @@ import Foundation
 struct UpdateUserRequestDTO: Encodable {
     let name: String
     let nickname: String
-    let profileImage: URL?
+    let profileImage: String?
     let message: String
 }

@@ -22,18 +22,24 @@ final class DefaultUserRepository: UserRepository {
                     id: responseDTO.memberId,
                     name: responseDTO.name,
                     nickname: responseDTO.nickname,
-                    profileImage: responseDTO.profileImage,
+                    profileImageURL: URL(string: responseDTO.profileImage ?? ""),
                     email: responseDTO.email,
                     message: responseDTO.message
                 )
             }
     }
     
-    func updateUser(name: String, nickname: String, profileImage: URL?, message: String) -> Single<GraceLogUser> {
+    // TODO: - Multipart Form Data로 호출하도록 수정
+    func updateUser(
+        name: String,
+        nickname: String,
+        profileImageURL: URL?,
+        message: String
+    ) -> Single<GraceLogUser> {
         let request = UpdateUserRequestDTO(
             name: name,
             nickname: nickname,
-            profileImage: profileImage,
+            profileImage: String(describing: profileImageURL),
             message: message
         )
         
@@ -43,7 +49,7 @@ final class DefaultUserRepository: UserRepository {
                     id: responseDTO.memberId,
                     name: responseDTO.name,
                     nickname: responseDTO.nickname,
-                    profileImage: responseDTO.profileImage,
+                    profileImageURL: URL(string: responseDTO.profileImage ?? ""),
                     email: responseDTO.email,
                     message: responseDTO.message
                 )

@@ -18,23 +18,23 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
     func updateUser(
         name: String,
         nickname: String,
-        profileImage: URL?,
+        profileImageURL: URL?,
         message: String
     ) -> Single<GraceLogUser> {
         return userRepository.updateUser(
             name: name,
             nickname: nickname,
-            profileImage: profileImage,
+            profileImageURL: profileImageURL,
             message: message
         )
         .map { updatedUser in
             UserManager.shared.saveUserInfo(
-                userId: updatedUser.id,
-                username: updatedUser.name,
-                userNickname: updatedUser.nickname,
-                userMessage: updatedUser.message,
-                userEmail: updatedUser.email,
-                userProfileImageUrl: updatedUser.profileImage
+                id: updatedUser.id,
+                name: updatedUser.name,
+                nickname: updatedUser.nickname,
+                message: updatedUser.message,
+                email: updatedUser.email,
+                profileImageURL: updatedUser.profileImageURL
             )
             return updatedUser
         }
