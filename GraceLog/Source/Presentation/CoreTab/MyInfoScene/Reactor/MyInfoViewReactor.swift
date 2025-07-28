@@ -75,9 +75,9 @@ extension MyInfoViewReactor {
     private func createSections() -> [MyInfoSection] {
         let profileItems = [
             ProfileItem(
-                imageUrl: URL(string: user.userProfileImageUrl),
-                name: user.username,
-                email: user.userEmail
+                imageUrl: user.profileImageURL,
+                name: user.name,
+                email: user.email
             )
         ]
         
@@ -113,7 +113,7 @@ extension MyInfoViewReactor {
         
         return [
             .profile(items: profileItems),
-            .myInfo(title: "\(user.username)님의 Grace Log", items: myInfoItems),
+            .myInfo(title: "\(user.name)님의 Grace Log", items: myInfoItems),
             .community(title: "공동체 및 친구관리", items: communityItems),
             .notification(title: "푸시 알림 설정", items: notificationItems),
             .customerService(title: "고객센터", items: customerServiceItems),

@@ -50,11 +50,11 @@ final class ProfileEditViewReactor: Reactor {
         self.useCase = useCase
         
         self.initialState = State(
-            profileImageURL: URL(string: UserManager.shared.userProfileImageUrl),
+            profileImageURL: UserManager.shared.profileImageURL,
             selectedImage: nil,
-            nickname: UserManager.shared.userNickname,
-            name: UserManager.shared.username,
-            message: UserManager.shared.userMessage,
+            nickname: UserManager.shared.nickname,
+            name: UserManager.shared.name,
+            message: UserManager.shared.message,
             isLoading: false,
             saveSuccess: false,
             error: nil
@@ -110,14 +110,14 @@ extension ProfileEditViewReactor {
     }
     
     private func saveProfile() -> Observable<Mutation> {
-        guard let userId = UserManager.shared.userId else { return .empty()}
+        guard let userId = UserManager.shared.id else { return .empty()}
  
         let updateUser = GraceLogUser(
             id: userId,
             name: currentState.name,
             nickname: currentState.nickname,
-            profileImage: currentState.profileImageURL,
-            email: UserManager.shared.username,
+            profileImageURL: currentState.profileImageURL,
+            email: UserManager.shared.name,
             message: currentState.message
         )
         
@@ -126,7 +126,7 @@ extension ProfileEditViewReactor {
             useCase.updateUser(
                 name: updateUser.name,
                 nickname: updateUser.nickname,
-                profileImage: updateUser.profileImage,
+                profileImageURL: updateUser.profileImageURL,
                 message: updateUser.message
             )
             .asObservable()

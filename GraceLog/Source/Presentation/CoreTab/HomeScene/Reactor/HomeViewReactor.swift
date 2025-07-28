@@ -24,7 +24,7 @@ final class HomeViewReactor: Reactor {
     }
     
     struct State {
-        
+
         // FIXME: - 추후 다른 Reactor통해 구분지을 예정, 이후 삭제
         enum HomeModeSegment {
             case user
@@ -44,8 +44,8 @@ final class HomeViewReactor: Reactor {
         self.homeUsecase = homeUsecase
         self.initialState = State(
             currentSegment: .user,
-            profileImageUrl: URL(string: user.userProfileImageUrl),
-            segmentTitles: [user.username, "공동체"]
+            profileImageUrl: user.profileImageURL,
+            segmentTitles: [user.name, "공동체"]
         )
     }
 }

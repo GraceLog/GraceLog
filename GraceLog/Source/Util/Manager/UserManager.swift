@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 @propertyWrapper
 struct UserDefault<T> {
@@ -31,45 +32,45 @@ final class UserManager {
     private init() {}
     
     @UserDefault(key: "userId", defaultValue: nil, storage: .standard)
-    var userId: Int?
+    var id: Int?
     
     @UserDefault(key: "username", defaultValue: "", storage: .standard)
-    var username: String
+    var name: String
     
     @UserDefault(key: "userNickname", defaultValue: "", storage: .standard)
-    var userNickname: String
+    var nickname: String
     
     @UserDefault(key: "userMessage", defaultValue: "", storage: .standard)
-    var userMessage: String
+    var message: String
     
     @UserDefault(key: "userEmail", defaultValue: "", storage: .standard)
-    var userEmail: String
+    var email: String
     
-    @UserDefault(key: "userProfileImageUrl", defaultValue: "", storage: .standard)
-    var userProfileImageUrl: String
+    @UserDefault(key: "userProfileImageUrl", defaultValue: nil, storage: .standard)
+    var profileImageURL: URL?
     
     func saveUserInfo(
-        userId: Int,
-        username: String,
-        userNickname: String,
-        userMessage: String, 
-        userEmail: String,
-        userProfileImageUrl: URL?
+        id: Int,
+        name: String,
+        nickname: String,
+        message: String, 
+        email: String,
+        profileImageURL: URL?
     ) {
-        self.userId = userId
-        self.username = username
-        self.userNickname = userNickname
-        self.userMessage = userMessage
-        self.userEmail = userEmail
-        self.userProfileImageUrl = userProfileImageUrl?.absoluteString ?? ""
+        self.id = id
+        self.name = name
+        self.nickname = nickname
+        self.message = message
+        self.email = email
+        self.profileImageURL = profileImageURL
     }
     
     func clearUserInfo() {
-        self.userId = nil
-        self.username = ""
-        self.userNickname = ""
-        self.userMessage = ""
-        self.userEmail = ""
-        self.userProfileImageUrl = ""
+        self.id = nil
+        self.name = ""
+        self.nickname = ""
+        self.message = ""
+        self.email = ""
+        self.profileImageURL = nil
     }
 }
