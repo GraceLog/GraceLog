@@ -94,7 +94,7 @@ extension HomeMyViewController {
         reactor.pulse(\.$username)
             .asDriver(onErrorJustReturn: "사용자")
             .drive(with: self) { owner, username in
-                owner.myDiaryView.updateUI(username: username)
+                owner.myDiaryView.greetingLabel.text = "\(username)님, 오늘도 하나님과 동행하세요"
             }
             .disposed(by: disposeBag)
         
@@ -105,20 +105,20 @@ extension HomeMyViewController {
                     .bind(to: owner.myDiaryView.diaryCollectionView.rx.items) { collectionView, index, item in
                         let indexPath = IndexPath(item: index, section: 0)
                         let diaryCount = diaryList.count
-
+                        
                         guard diaryCount > 0 else {
                             // TODO: - 일기장 목록이 없을 경우 처리 필요
                             return UICollectionViewCell()
                         }
-
+                        
                         let isFirst = index == 0
                         let isLast = index == diaryCount - 1
                         let isSingleItem = diaryCount == 1
                         let hideTop = true
                         let hideBottom = isSingleItem
-
+                        
                         let cell: DiaryTimelineCollectionViewCell
-
+                        
                         if isSingleItem || isFirst {
                             let latestCell = collectionView.dequeueReusableCell(
                                 withReuseIdentifier: HomeLatestDiaryCollectionViewCell.reuseIdentifier,
@@ -150,7 +150,7 @@ extension HomeMyViewController {
                             )
                             cell = pastCell
                         }
-
+                        
                         cell.overlayBackgroundView.rx.tapGesture().when(.recognized)
                             .asDriver(onErrorDriveWith: .empty())
                             .drive(onNext: { [weak self] _ in
@@ -162,13 +162,13 @@ extension HomeMyViewController {
                                 print("선택된 일기장 정보: \(selectedItem)\n선택된 일기장 인덱스: \(indexPath)")
                             })
                             .disposed(by: cell.disposeBag)
-
+                        
                         return cell
                     }
                     .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
-
+        
     }
     
     private func bindHomeMyRecommendVideoView(reactor: HomeMyViewReactor) {

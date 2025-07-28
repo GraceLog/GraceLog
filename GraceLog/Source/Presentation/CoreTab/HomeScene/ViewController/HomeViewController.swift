@@ -125,12 +125,11 @@ final class HomeViewController: GraceLogBaseViewController, View {
                 titles.enumerated().forEach { index, title in
                     owner.homeMenuView.insertSegment(withTitle: title, at: index, animated: false)
                 }
-                owner.homeMenuView.selectedSegmentIndex = 0
             }
             .disposed(by: disposeBag)
         
         reactor.state
-            .map { $0.profileImageUrl }
+            .compactMap { $0.profileImageUrl }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self) { owner, imageUrl in

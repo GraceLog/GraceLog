@@ -16,7 +16,7 @@ final class HomeMyDiaryView: UIView {
         $0.setDimensions(width: 20, height: 20)
     }
     
-    private let greetingLabel = UILabel().then {
+    let greetingLabel = UILabel().then {
         $0.font = GLFont.bold14.font
         $0.textColor = .themeColor
     }
@@ -66,9 +66,5 @@ final class HomeMyDiaryView: UIView {
             $0.trailing.equalToSuperview().inset(23)
             $0.bottom.equalToSuperview().inset(31)
         }
-    }
-    
-    func updateUI(username: String) {
-        greetingLabel.text = "\(username)님, 오늘도 하나님과 동행하세요"
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import Then
-import SDWebImage
+import Kingfisher
 
 final class ProfileTableViewCell: UITableViewCell {
     static let identifier = "ProfileTableViewCell"
@@ -67,11 +67,10 @@ final class ProfileTableViewCell: UITableViewCell {
     }
     
     func updateUI(with profileItem: ProfileItem) {
-        if let imageUrl = profileItem.imageUrl {
-            profileImgView.sd_setImage(with: imageUrl)
-        } else {
-            profileImgView.image = UIImage(named: "profile")
-        }
+        profileImgView.kf.setImage(
+            with: profileItem.imageUrl,
+            placeholder: UIImage(named: "profile")
+        )
         
         nameLabel.text = profileItem.name
         emailLabel.text = profileItem.email
