@@ -19,7 +19,6 @@ final class HomeViewController: GraceLogBaseViewController, View {
     
     private let homeMenuView = GLUnderlineSegmentedControl(items: []).then {
         $0.setHeight(50)
-        $0.selectedSegmentIndex = 0
         $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
         $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: GLFont.bold18.font], for: .selected)
     }
@@ -125,6 +124,7 @@ final class HomeViewController: GraceLogBaseViewController, View {
                 titles.enumerated().forEach { index, title in
                     owner.homeMenuView.insertSegment(withTitle: title, at: index, animated: false)
                 }
+                owner.homeMenuView.selectedSegmentIndex = 0
             }
             .disposed(by: disposeBag)
         
