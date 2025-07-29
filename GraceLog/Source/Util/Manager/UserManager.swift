@@ -15,8 +15,19 @@ struct UserDefault<T> {
     let storage: UserDefaults
     
     var wrappedValue: T {
-        get { UserDefaults.standard.object(forKey: self.key) as? T ?? self.defaultValue }
-        set { UserDefaults.standard.set(newValue, forKey: self.key) }
+        get {
+            if T.self == URL?.self {
+                return (storage.url(forKey: self.key) as? T) ?? self.defaultValue
+            }
+            return storage.object(forKey: self.key) as? T ?? self.defaultValue
+        }
+        set {
+            if let url = newValue as? URL? {
+                storage.set(url, forKey: self.key)
+            } else {
+                storage.set(newValue, forKey: self.key)
+            }
+        }
     }
     
     init(key: String, defaultValue: T, storage: UserDefaults = .standard) {
@@ -31,29 +42,29 @@ final class UserManager {
     
     private init() {}
     
-    @UserDefault(key: "userId", defaultValue: nil, storage: .standard)
+    @UserDefault(key: "id", defaultValue: nil, storage: .standard)
     var id: Int?
     
-    @UserDefault(key: "username", defaultValue: "", storage: .standard)
+    @UserDefault(key: "name", defaultValue: "", storage: .standard)
     var name: String
     
-    @UserDefault(key: "userNickname", defaultValue: "", storage: .standard)
+    @UserDefault(key: "nickname", defaultValue: "", storage: .standard)
     var nickname: String
     
-    @UserDefault(key: "userMessage", defaultValue: "", storage: .standard)
+    @UserDefault(key: "message", defaultValue: "", storage: .standard)
     var message: String
     
-    @UserDefault(key: "userEmail", defaultValue: "", storage: .standard)
+    @UserDefault(key: "email", defaultValue: "", storage: .standard)
     var email: String
     
-    @UserDefault(key: "userProfileImageUrl", defaultValue: nil, storage: .standard)
+    @UserDefault(key: "profileImageURL", defaultValue: nil, storage: .standard)
     var profileImageURL: URL?
     
     func saveUserInfo(
         id: Int,
         name: String,
         nickname: String,
-        message: String, 
+        message: String,
         email: String,
         profileImageURL: URL?
     ) {

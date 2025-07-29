@@ -22,7 +22,7 @@ final class DefaultUserRepository: UserRepository {
                     id: responseDTO.memberId,
                     name: responseDTO.name,
                     nickname: responseDTO.nickname,
-                    profileImageURL: URL(string: responseDTO.profileImage ?? ""),
+                    profileImageURL: responseDTO.profileImage.flatMap { URL(string: $0) },
                     email: responseDTO.email,
                     message: responseDTO.message
                 )
@@ -49,7 +49,7 @@ final class DefaultUserRepository: UserRepository {
                     id: responseDTO.memberId,
                     name: responseDTO.name,
                     nickname: responseDTO.nickname,
-                    profileImageURL: URL(string: responseDTO.profileImage ?? ""),
+                    profileImageURL: responseDTO.profileImage.flatMap { URL(string: $0) },
                     email: responseDTO.email,
                     message: responseDTO.message
                 )
