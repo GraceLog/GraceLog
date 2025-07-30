@@ -22,7 +22,7 @@ final class DefaultUserRepository: UserRepository {
                     id: responseDTO.memberId,
                     name: responseDTO.name,
                     nickname: responseDTO.nickname,
-                    profileImageURL: responseDTO.profileImage.flatMap { URL(string: $0) },
+                    profileImageURL: URL(string: responseDTO.profileImage ?? ""),
                     email: responseDTO.email,
                     message: responseDTO.message
                 )
@@ -39,7 +39,7 @@ final class DefaultUserRepository: UserRepository {
         let request = UpdateUserRequestDTO(
             name: name,
             nickname: nickname,
-            profileImage: String(describing: profileImageURL),
+            profileImage: profileImageURL?.absoluteString,
             message: message
         )
         
@@ -49,7 +49,7 @@ final class DefaultUserRepository: UserRepository {
                     id: responseDTO.memberId,
                     name: responseDTO.name,
                     nickname: responseDTO.nickname,
-                    profileImageURL: responseDTO.profileImage.flatMap { URL(string: $0) },
+                    profileImageURL: URL(string: responseDTO.profileImage ?? ""),
                     email: responseDTO.email,
                     message: responseDTO.message
                 )
