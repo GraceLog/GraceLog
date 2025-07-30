@@ -30,13 +30,14 @@ final class DefaultSignInUseCase: SignInUseCase {
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
                 self.isSuccessSignIn.accept(true)
             },onError: { error in
-                print(error.localizedDescription)
+                // TODO: - 에러 처리 필요
+                print("signIn Error \(error.localizedDescription)")
             })
     }
     
     func fetchUser() -> Single<GraceLogUser> {
         return userRepository.fetchUser()
-            .do(onSuccess: { [weak self] result in
+            .do(onSuccess: { result in
                 UserManager.shared.saveUserInfo(
                     id: result.id,
                     name: result.name,
@@ -45,7 +46,10 @@ final class DefaultSignInUseCase: SignInUseCase {
                     email: result.email,
                     profileImageURL: result.profileImageURL
                 )
-                self?.user.accept(result)
+                self.user.accept(result)
+            }, onError: { error in
+                // TODO: - 에러 처리 필요
+                print("fetchUser Error \(error.localizedDescription)")
             })
     }
 }
