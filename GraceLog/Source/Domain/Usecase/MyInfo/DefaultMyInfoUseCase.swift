@@ -18,9 +18,11 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
     func updateUser(
         name: String,
         nickname: String,
-        profileImage: String,
+        profileImage: Data?,
         message: String
     ) -> Single<GraceLogUser> {
+        print("유저 정보 수정 데이터: ", name, nickname, profileImage, message)
+        
         return userRepository.updateUser(
             name: name,
             nickname: nickname,
@@ -28,7 +30,14 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
             message: message
         )
         .map { updatedUser in
-            AuthManager.shared.saveUser(updatedUser)
+            UserManager.shared.saveUserInfo(
+                id: updatedUser.id,
+                name: updatedUser.name,
+                nickname: updatedUser.nickname,
+                message: updatedUser.message,
+                email: updatedUser.email,
+                profileImageURL: updatedUser.profileImageURL
+            )
             return updatedUser
         }
     }

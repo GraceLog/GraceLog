@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import Then
-import SDWebImage
+import Kingfisher
 
 final class ProfileTableViewCell: UITableViewCell {
     static let identifier = "ProfileTableViewCell"
@@ -24,14 +24,12 @@ final class ProfileTableViewCell: UITableViewCell {
         $0.textColor = .themeColor
         $0.font = GLFont.bold20.font
         $0.textAlignment = .center
-        $0.text = AuthManager.shared.getUser()?.name
     }
     
     private let emailLabel = UILabel().then {
         $0.textColor = .graceGray
         $0.font = GLFont.regular12.font
         $0.textAlignment = .center
-        $0.text = AuthManager.shared.getUser()?.email
     }
     
     
@@ -69,11 +67,10 @@ final class ProfileTableViewCell: UITableViewCell {
     }
     
     func updateUI(with profileItem: ProfileItem) {
-        if let imageUrl = URL(string: profileItem.imageUrl) {
-            profileImgView.sd_setImage(with: imageUrl)
-        } else {
-            profileImgView.image = UIImage(named: "profile")
-        }
+        profileImgView.kf.setImage(
+            with: profileItem.imageUrl,
+            placeholder: UIImage(named: "profile")
+        )
         
         nameLabel.text = profileItem.name
         emailLabel.text = profileItem.email

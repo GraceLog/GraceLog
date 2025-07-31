@@ -11,7 +11,7 @@ struct GraceLogUser: Equatable, Codable {
     let id: Int
     let name: String
     let nickname: String
-    let profileImage: String
+    let profileImageURL: URL?
     let email: String
     let message: String
 }

@@ -16,12 +16,9 @@ final class HomeMyDiaryView: UIView {
         $0.setDimensions(width: 20, height: 20)
     }
     
-    private let greetingLabel = UILabel().then {
+    let greetingLabel = UILabel().then {
         $0.font = GLFont.bold14.font
         $0.textColor = .themeColor
-        
-        // TODO: - 유저 정보 처리 필요
-        $0.text = "승렬님, 오늘도 하나님과 동행하세요"
     }
     
     lazy var diaryCollectionView = AutoSizingCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {

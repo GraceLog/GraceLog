@@ -8,6 +8,7 @@
 import UIKit
 import NVActivityIndicatorView
 import ReactorKit
+import Kingfisher
 
 final class ProfileEditViewController: GraceLogBaseViewController, View {
     typealias Reactor = ProfileEditViewReactor
@@ -105,7 +106,7 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     }
     
     func bind(reactor: ProfileEditViewReactor) {
-        // State
+        // State        
         reactor.state
             .map { ($0.selectedImage, $0.profileImageURL) }
             .distinctUntilChanged { lhs, rhs in
@@ -114,17 +115,16 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             .bind(onNext: { [weak self] selectedImage, profileImageURL in
                 if let selectedImage = selectedImage {
                     self?.profileImgView.image = selectedImage
-                } else if !profileImageURL.isEmpty, let url = URL(string: profileImageURL) {
-                    self?.profileImgView.sd_setImage(
-                        with: url,
-                        placeholderImage: UIImage(named: "profile")
+                } else if let profileImageURL = profileImageURL {
+                    self?.profileImgView.kf.setImage(
+                        with: profileImageURL
                     )
                 } else {
                     self?.profileImgView.image = UIImage(named: "profile")
                 }
             })
             .disposed(by: disposeBag)
-        
+      
         reactor.state
             .map { $0.nickname }
             .distinctUntilChanged()
@@ -177,8 +177,6 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         // Action
-        reactor.action.onNext(.viewDidLoad)
-        
         editButton.rx.tap
             .map { Reactor.Action.didTapProfileImageEdit }
             .bind(to: reactor.action)

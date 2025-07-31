@@ -13,36 +13,41 @@ final class HomeViewReactor: Reactor {
     private let homeUsecase: HomeUseCase
     private let disposeBag = DisposeBag()
     
-    init(homeUsecase: HomeUseCase) {
-        self.homeUsecase = homeUsecase
-    }
-    
     enum Action {
         case userButtonTapped
         case groupButtonTapped
-        case updateUser(GraceLogUser)
     }
     
     enum Mutation {
         case setSegment(State.HomeModeSegment)
         case setError(Error)
-        case setUser(GraceLogUser)
     }
     
     struct State {
-        
+
         // FIXME: - 추후 다른 Reactor통해 구분지을 예정, 이후 삭제
         enum HomeModeSegment {
             case user
             case group
         }
         
-        var currentSegment: HomeModeSegment = .user
+        var currentSegment: HomeModeSegment
         var error: Error?
-        var user: GraceLogUser? = nil
+        var profileImageUrl: URL?
+        var segmentTitles: [String]
     }
     
-    let initialState: State = State()
+    let initialState: State
+    let user = UserManager.shared
+    
+    init(homeUsecase: HomeUseCase) {
+        self.homeUsecase = homeUsecase
+        self.initialState = State(
+            currentSegment: .user,
+            profileImageUrl: user.profileImageURL,
+            segmentTitles: [user.name, "공동체"]
+        )
+    }
 }
 
 extension HomeViewReactor {
@@ -52,8 +57,6 @@ extension HomeViewReactor {
             return .just(.setSegment(.user))
         case .groupButtonTapped:
             return .just(.setSegment(.group))
-        case .updateUser(let user):
-            return .just(.setUser(user))
         }
     }
     
@@ -65,8 +68,6 @@ extension HomeViewReactor {
             newState.currentSegment = segment
         case .setError(let error):
             newState.error = error
-        case .setUser(let user):
-            newState.user = user
         }
         return newState
     }

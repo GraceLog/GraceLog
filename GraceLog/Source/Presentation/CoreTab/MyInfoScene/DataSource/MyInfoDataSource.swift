@@ -10,7 +10,7 @@ import RxDataSources
 import UIKit
 
 struct ProfileItem {
-    let imageUrl: String
+    let imageUrl: URL?
     let name: String
     let email: String
 }

@@ -10,21 +10,6 @@ import UIKit
 import RxDataSources
 import ReactorKit
 
-enum HomeMenuItem: CaseIterable {
-    case user
-    case group
-    
-    var title: String {
-        switch self {
-        case .user:
-            // TODO: - User관련 정보 처리 필요
-            return "승렬"
-        case .group:
-            return "공동체"
-        }
-    }
-}
-
 final class HomeViewController: GraceLogBaseViewController, View {
     var disposeBag = DisposeBag()
     
@@ -32,9 +17,8 @@ final class HomeViewController: GraceLogBaseViewController, View {
         $0.backgroundColor = .white
     }
     
-    private let homeMenuView = GLUnderlineSegmentedControl(items: HomeMenuItem.allCases.map { $0.title }).then {
+    private let homeMenuView = GLUnderlineSegmentedControl(items: []).then {
         $0.setHeight(50)
-        $0.selectedSegmentIndex = 0
         $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
         $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: GLFont.bold18.font], for: .selected)
     }
@@ -116,7 +100,9 @@ final class HomeViewController: GraceLogBaseViewController, View {
     func bind(reactor: HomeViewReactor) {
         // Action
         homeMenuView.rx.value
-            .map { HomeMenuItem.allCases[$0] }
+            .map { index -> HomeViewReactor.State.HomeModeSegment in
+                return index == 0 ? .user : .group
+            }
             .bind(with: self) { owner, selectedMenu in
                 let targetIndex = selectedMenu == .user ? 0 : 1
                 owner.moveToPage(at: targetIndex, animated: true)
@@ -131,11 +117,27 @@ final class HomeViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         reactor.state
-            .map { $0.user }
+            .map { $0.segmentTitles }
             .distinctUntilChanged()
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, user in
-                // TODO: - 상준 네비게이션바 사용자 이름 및 프로필 이미지 등록
+            .asDriver(onErrorJustReturn: ["사용자", "공동체"])
+            .drive(with: self) { owner, titles in
+                titles.enumerated().forEach { index, title in
+                    owner.homeMenuView.insertSegment(withTitle: title, at: index, animated: false)
+                }
+                owner.homeMenuView.selectedSegmentIndex = 0
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { $0.profileImageUrl }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self) { owner, imageUrl in
+                owner.profileButton.kf.setBackgroundImage(
+                    with: imageUrl,
+                    for: .normal,
+                    placeholder: UIImage(named: "profile")
+                )
             }
             .disposed(by: disposeBag)
         

@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol SignInCoordinatorDelegate {
+    func didSignIn(_ coordinator: SignInCoordinator)
+}
+
 final class SignInCoordinator: NavigationCoordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
+    
+    var delegate: SignInCoordinatorDelegate?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -18,6 +24,15 @@ final class SignInCoordinator: NavigationCoordinator {
     
     func start() {
         let signInViewController = DependencyContainer.shared.injector.resolve(SignInViewController.self)
+        if let reactor = signInViewController.reactor {
+            reactor.coordinator = self
+        }
         navigationController.setViewControllers([signInViewController], animated: true)
+    }
+}
+
+extension SignInCoordinator {
+    func didSignIn() {
+        self.delegate?.didSignIn(self)
     }
 }
