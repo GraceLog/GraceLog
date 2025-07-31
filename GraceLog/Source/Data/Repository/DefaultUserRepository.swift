@@ -33,13 +33,13 @@ final class DefaultUserRepository: UserRepository {
     func updateUser(
         name: String,
         nickname: String,
-        profileImageURL: URL?,
+        profileImage: Data?,
         message: String
     ) -> Single<GraceLogUser> {
         let request = UpdateUserRequestDTO(
             name: name,
             nickname: nickname,
-            profileImage: profileImageURL?.absoluteString,
+            profileImage: profileImage,
             message: message
         )
         

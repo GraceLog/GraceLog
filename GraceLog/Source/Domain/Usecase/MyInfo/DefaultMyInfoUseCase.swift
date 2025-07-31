@@ -18,13 +18,15 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
     func updateUser(
         name: String,
         nickname: String,
-        profileImageURL: URL?,
+        profileImage: Data?,
         message: String
     ) -> Single<GraceLogUser> {
+        print("유저 정보 수정 데이터: ", name, nickname, profileImage, message)
+        
         return userRepository.updateUser(
             name: name,
             nickname: nickname,
-            profileImageURL: profileImageURL,
+            profileImage: profileImage,
             message: message
         )
         .map { updatedUser in

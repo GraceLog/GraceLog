@@ -121,12 +121,13 @@ extension ProfileEditViewReactor {
             message: currentState.message
         )
         
+        // MARK: - profilImage 선택한 이미지 데이터로 수정 필요
         return Observable.concat([
             .just(.setLoading(true)),
             useCase.updateUser(
                 name: updateUser.name,
                 nickname: updateUser.nickname,
-                profileImageURL: updateUser.profileImageURL,
+                profileImage: Data(),
                 message: updateUser.message
             )
             .asObservable()
