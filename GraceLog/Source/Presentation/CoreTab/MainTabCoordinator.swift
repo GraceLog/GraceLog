@@ -29,6 +29,9 @@ final class MainTabCoordinator: Coordinator {
             searchCoordinator,
             myInfoCoordinator
         ]
+        
+        self.childCoordinators = tabCoordinators
+        
         let viewControllers = tabCoordinators.map { $0.navigationController }
         
         viewControllers[0].tabBarItem = UITabBarItem(
