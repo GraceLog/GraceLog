@@ -122,10 +122,3 @@ extension MyInfoViewReactor {
         ]
     }
 }
-
-// MARK: - For Coordinator
-extension MyInfoViewReactor {
-    func pushMyInfoEdit() {
-        self.coordinator?.showProfileEditVC()
-    }
-}

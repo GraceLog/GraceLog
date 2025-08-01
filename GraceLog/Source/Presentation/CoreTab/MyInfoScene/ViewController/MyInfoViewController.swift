@@ -91,8 +91,6 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
         tableView.register(MyInfoTableViewCell.self, forCellReuseIdentifier: MyInfoTableViewCell.identifier)
         tableView.register(MyInfoButtonTableViewCell.self, forCellReuseIdentifier: MyInfoButtonTableViewCell.identifier)
-        
-        tableView.delegate = self
     }
     
     override func onUserProfileUpdated(_ user: GraceLogUser) {
@@ -105,22 +103,12 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
         tableView.rx.itemSelected
             .map { Reactor.Action.itemSelected(at: $0) }
             .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        reactor.state
-            .compactMap { $0.selectedItem }
-            .withUnretained(self)
-            .subscribe(onNext: { owner, itemType in
-                switch itemType {
-                case .myProfile:
-                    reactor.pushMyInfoEdit()
-                default:
-                    break
-                }
-            })
             .disposed(by: disposeBag)
         
         // State
