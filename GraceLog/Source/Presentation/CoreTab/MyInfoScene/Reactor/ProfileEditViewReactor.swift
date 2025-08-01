@@ -25,38 +25,36 @@ final class ProfileEditViewReactor: Reactor {
         case setNickname(String)
         case setName(String)
         case setMessage(String)
-        case setLoading(Bool)
-        case setSaveSuccess(Bool)
         case setError(Error)
+        case setUpdateUserResult(Bool)
     }
     
     struct State {
         var profileImageURL: URL?
-        var selectedImage: UIImage?
         var nickname: String
         var name: String
         var message: String
-        var isLoading: Bool
-        var saveSuccess: Bool
-        var error: Error?
+        
+        @Pulse var selectedImage: UIImage?
+        @Pulse var isSuccessUpdateUser: Bool?
+        @Pulse var error: Error?
     }
     
     var initialState: State
     weak var coordinator: ProfileEditCoordinator?
-    private let useCase: DefaultMyInfoUseCase
+    private let usecase: DefaultMyInfoUseCase
     
     init(coordinator: ProfileEditCoordinator? = nil, useCase: DefaultMyInfoUseCase) {
         self.coordinator = coordinator
-        self.useCase = useCase
+        self.usecase = useCase
         
         self.initialState = State(
             profileImageURL: UserManager.shared.profileImageURL,
-            selectedImage: nil,
             nickname: UserManager.shared.nickname,
             name: UserManager.shared.name,
             message: UserManager.shared.message,
-            isLoading: false,
-            saveSuccess: false,
+            selectedImage: nil,
+            isSuccessUpdateUser: nil,
             error: nil
         )
     }
@@ -79,8 +77,21 @@ extension ProfileEditViewReactor {
             }
             return .empty()
         case .didTapSaveButton:
-            return saveProfile()
+            usecase.updateUser(
+                name: currentState.name,
+                nickname: currentState.nickname,
+                profileImage: currentState.selectedImage?.pngData(),
+                message: currentState.message
+            )
+            return .empty()
         }
+    }
+    
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        Observable.merge(
+            usecase.updateUserResult.map { .setUpdateUserResult($0) },
+            mutation
+        )
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -98,43 +109,12 @@ extension ProfileEditViewReactor {
             newState.name = name
         case .setMessage(let message):
             newState.message = message
-        case .setLoading(let isLoading):
-            newState.isLoading = isLoading
-        case .setSaveSuccess(let success):
-            newState.saveSuccess = success
         case .setError(let error):
             newState.error = error
+        case .setUpdateUserResult(let isSuccess):
+            newState.isSuccessUpdateUser = isSuccess
         }
         
         return newState
-    }
-    
-    private func saveProfile() -> Observable<Mutation> {
-        guard let userId = UserManager.shared.id else { return .empty()}
- 
-        let updateUser = GraceLogUser(
-            id: userId,
-            name: currentState.name,
-            nickname: currentState.nickname,
-            profileImageURL: currentState.profileImageURL,
-            email: UserManager.shared.name,
-            message: currentState.message
-        )
-        
-        // MARK: - profilImage 선택한 이미지 데이터로 수정 필요
-        return Observable.concat([
-            .just(.setLoading(true)),
-            useCase.updateUser(
-                name: updateUser.name,
-                nickname: updateUser.nickname,
-                profileImage: Data(),
-                message: updateUser.message
-            )
-            .asObservable()
-            .map { _ in .setSaveSuccess(true) }
-                .catch { error in
-                    .just(.setError(error)) },
-            .just(.setLoading(false))
-        ])
     }
 }
