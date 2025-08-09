@@ -30,10 +30,6 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
         $0.titleLabel?.font = GLFont.regular16.font
     }
     
-    private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: .black, padding: 0).then {
-        $0.isHidden = true
-    }
-    
     private let profileImgView = UIImageView().then {
         $0.setDimensions(width: 112, height: 112)
         $0.layer.cornerRadius = 56
@@ -54,11 +50,11 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        configureNavBar()
+        setupUI()
+        setupNavBar()
     }
     
-    private func configureUI() {
+    private func setupUI() {
         let safeArea = view.safeAreaLayoutGuide
         
         [navigationBar, profileImgView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
@@ -100,89 +96,61 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
         messageContainerView.configure(title: "메시지", placeholder: "ex. 잠언 16:9")
     }
     
-    private func configureNavBar() {
+    private func setupNavBar() {
         navigationBar.addLeftItem(backButton)
         navigationBar.addRightItem(saveButton)
     }
     
     func bind(reactor: ProfileEditViewReactor) {
-        // State        
-        reactor.state
-            .map { ($0.selectedImage, $0.profileImageURL) }
-            .distinctUntilChanged { lhs, rhs in
-                return lhs.0 === rhs.0 && lhs.1 == rhs.1
-            }
-            .bind(onNext: { [weak self] selectedImage, profileImageURL in
-                if let selectedImage = selectedImage {
-                    self?.profileImgView.image = selectedImage
-                } else if let profileImageURL = profileImageURL {
-                    self?.profileImgView.kf.setImage(
-                        with: profileImageURL
-                    )
-                } else {
-                    self?.profileImgView.image = UIImage(named: "profile")
-                }
-            })
+        // State
+        reactor.pulse(\.$profileImage)
+            .bind(to: profileImgView.rx.image)
             .disposed(by: disposeBag)
-      
-        reactor.state
-            .map { $0.nickname }
+        
+        reactor.pulse(\.$nickname)
             .distinctUntilChanged()
             .bind(to: nicknameContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.name }
+        reactor.pulse(\.$name)
             .distinctUntilChanged()
             .bind(to: nameContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.message }
+        reactor.pulse(\.$message)
             .distinctUntilChanged()
             .bind(to: messageContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.isLoading }
-            .bind(onNext: { [weak self] isLoading in
-                if isLoading {
-                    self?.activityIndicator.isHidden = false
-                    self?.activityIndicator.startAnimating()
-                } else {
-                    self?.activityIndicator.stopAnimating()
-                    self?.activityIndicator.isHidden = true
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        reactor.state
-            .map { $0.error }
+        reactor.pulse(\.$error)
+            .compactMap { $0 }
             .subscribe(onNext: { [weak self] error in
                 self?.view.makeToast(error?.localizedDescription)
             })
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.saveSuccess }
-            .filter { $0 }
+        reactor.pulse(\.$isSuccessUpdateUser)
+            .compactMap { $0 }
             .withUnretained(self)
-            .bind(onNext: { owner, _ in
-                owner.view.makeToast("프로필이 성공적으로 수정되었습니다")
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    owner.reactor?.coordinator?.didFinishProfileEdit()
-                }
+            .bind(onNext: { owner, isSuccess in
+                // TODO: - 유저 업데이트 성공 여부에 따른 구현
+                print("유저 업데이트 성공 여부 \(isSuccess)")
             })
             .disposed(by: disposeBag)
         
         // Action
+        backButton.rx.tap
+            .map { Reactor.Action.didTapBackButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         editButton.rx.tap
             .map { Reactor.Action.didTapProfileImageEdit }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         saveButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
             .map { Reactor.Action.didTapSaveButton }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

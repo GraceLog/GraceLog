@@ -31,10 +31,6 @@ final class MyInfoViewReactor: Reactor {
     weak var coordinator: MyInfoCoordinator?
     
     private let user = UserManager.shared
-    
-    init(coordinator: MyInfoCoordinator? = nil) {
-        self.coordinator = coordinator
-    }
 }
 
 extension MyInfoViewReactor {
@@ -120,12 +116,5 @@ extension MyInfoViewReactor {
             .logout(title: "계정 설정", items: logoutItems),
             .withdrawal(title: "", items: withdrawalItem)
         ]
-    }
-}
-
-// MARK: - For Coordinator
-extension MyInfoViewReactor {
-    func pushMyInfoEdit() {
-        self.coordinator?.showProfileEditVC()
     }
 }

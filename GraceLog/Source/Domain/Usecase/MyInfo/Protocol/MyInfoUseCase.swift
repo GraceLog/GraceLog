@@ -7,12 +7,15 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 protocol MyInfoUseCase {
+    var updateUserResult: PublishRelay<Bool> { get }
+    
     func updateUser(
         name: String,
         nickname: String,
         profileImage: Data?,
         message: String
-    ) -> Single<GraceLogUser>
+    )
 }
