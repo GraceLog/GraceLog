@@ -93,10 +93,6 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
         tableView.register(MyInfoButtonTableViewCell.self, forCellReuseIdentifier: MyInfoButtonTableViewCell.identifier)
     }
     
-    override func onUserProfileUpdated(_ user: GraceLogUser) {
-        reactor?.action.onNext(.refreshData)
-    }
-    
     func bind(reactor: MyInfoViewReactor) {
         // Action
         Observable.just(Reactor.Action.viewDidLoad)

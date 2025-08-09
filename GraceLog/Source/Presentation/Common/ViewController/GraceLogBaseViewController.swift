@@ -20,19 +20,11 @@ class GraceLogBaseViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    func onUserProfileUpdated(_ user: GraceLogUser) {
-        
-    }
-    
     func showToast(_ message: String) {
         view.makeToast(message)
     }
     
     func showErrorToast(_ error: Error) {
         view.makeToast(error.localizedDescription)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }
