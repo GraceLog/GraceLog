@@ -50,11 +50,11 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        configureNavBar()
+        setupUI()
+        setupNavBar()
     }
     
-    private func configureUI() {
+    private func setupUI() {
         let safeArea = view.safeAreaLayoutGuide
         
         [navigationBar, profileImgView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
@@ -96,59 +96,28 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
         messageContainerView.configure(title: "메시지", placeholder: "ex. 잠언 16:9")
     }
     
-    private func configureNavBar() {
+    private func setupNavBar() {
         navigationBar.addLeftItem(backButton)
         navigationBar.addRightItem(saveButton)
     }
     
     func bind(reactor: ProfileEditViewReactor) {
         // State
-        reactor.state.map { $0.profileImageURL }
-            .take(1)
-            .bind(with: self) { owner, url in
-                owner.profileImgView.kf.setImage(with: url)
-            }
-            .disposed(by: disposeBag)
-       
-        reactor.pulse(\.$selectedImage)
-            .asDriver(onErrorJustReturn: UIImage(named: "profile"))
-            .drive(with: self) { owner, image in
-                owner.profileImgView.image = image
-            }
+        reactor.pulse(\.$profileImage)
+            .bind(to: profileImgView.rx.image)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { ($0.selectedImage, $0.profileImageURL) }
-            .distinctUntilChanged { lhs, rhs in
-                return lhs.0 === rhs.0 && lhs.1 == rhs.1
-            }
-            .bind(onNext: { [weak self] selectedImage, profileImageURL in
-                if let selectedImage = selectedImage {
-                    self?.profileImgView.image = selectedImage
-                } else if let profileImageURL = profileImageURL {
-                    self?.profileImgView.kf.setImage(
-                        with: profileImageURL
-                    )
-                } else {
-                    self?.profileImgView.image = UIImage(named: "profile")
-                }
-            })
-            .disposed(by: disposeBag)
-      
-        reactor.state
-            .map { $0.nickname }
+        reactor.pulse(\.$nickname)
             .distinctUntilChanged()
             .bind(to: nicknameContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.name }
+        reactor.pulse(\.$name)
             .distinctUntilChanged()
             .bind(to: nameContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.message }
+        reactor.pulse(\.$message)
             .distinctUntilChanged()
             .bind(to: messageContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
@@ -170,6 +139,11 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         // Action
+        backButton.rx.tap
+            .map { Reactor.Action.didTapBackButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         editButton.rx.tap
             .map { Reactor.Action.didTapProfileImageEdit }
             .bind(to: reactor.action)

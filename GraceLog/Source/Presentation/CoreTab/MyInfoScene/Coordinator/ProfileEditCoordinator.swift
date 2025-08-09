@@ -37,7 +37,7 @@ final class ProfileEditCoordinator: Coordinator {
         self.navigationController.pushViewController(profileEditVC, animated: true)
     }
     
-    func didFinishProfileEdit() {
+    func popProfileEditViewController() {
         navigationController.popViewController(animated: true)
         parentCoordinator?.removeChildCoordinator(self)
     }
