@@ -8,8 +8,14 @@
 import ReactorKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class ProfileEditViewReactor: Reactor {
+    weak var coordinator: ProfileEditCoordinator?
+    private let usecase: DefaultMyInfoUseCase
+    
+    var initialState: State
+    
     enum Action {
         case updateProfileImage(UIImage?)
         case updateNickname(String)
@@ -17,11 +23,11 @@ final class ProfileEditViewReactor: Reactor {
         case updateMessage(String)
         case didTapProfileImageEdit
         case didTapSaveButton
+        case didTapBackButton
     }
     
     enum Mutation {
-        case setProfileImageURL(URL?)
-        case setSelectedImage(UIImage?)
+        case setImage(UIImage?)
         case setNickname(String)
         case setName(String)
         case setMessage(String)
@@ -30,33 +36,38 @@ final class ProfileEditViewReactor: Reactor {
     }
     
     struct State {
-        var profileImageURL: URL?
-        var nickname: String
-        var name: String
-        var message: String
-        
-        @Pulse var selectedImage: UIImage?
+        @Pulse var profileImage: UIImage?
+        @Pulse var nickname: String
+        @Pulse var name: String
+        @Pulse var message: String
         @Pulse var isSuccessUpdateUser: Bool?
         @Pulse var error: Error?
     }
     
-    var initialState: State
-    weak var coordinator: ProfileEditCoordinator?
-    private let usecase: DefaultMyInfoUseCase
-    
-    init(coordinator: ProfileEditCoordinator? = nil, useCase: DefaultMyInfoUseCase) {
+    init(coordinator: ProfileEditCoordinator, useCase: DefaultMyInfoUseCase) {
         self.coordinator = coordinator
         self.usecase = useCase
         
         self.initialState = State(
-            profileImageURL: UserManager.shared.profileImageURL,
+            profileImage: UIImage(named: "profile"),
             nickname: UserManager.shared.nickname,
             name: UserManager.shared.name,
             message: UserManager.shared.message,
-            selectedImage: nil,
             isSuccessUpdateUser: nil,
             error: nil
         )
+        
+        if let profileURL = UserManager.shared.profileImageURL {
+            loadProfileImage(from: profileURL)
+        }
+    }
+    
+    private func loadProfileImage(from url: URL) {
+        KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
+            if case .success(let value) = result {
+                self?.action.onNext(.updateProfileImage(value.image))
+            }
+        }
     }
 }
 
@@ -64,7 +75,7 @@ extension ProfileEditViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .updateProfileImage(let image):
-            return .just(.setSelectedImage(image))
+            return .just(.setImage(image))
         case .updateNickname(let nickname):
             return .just(.setNickname(nickname))
         case .updateName(let name):
@@ -80,9 +91,12 @@ extension ProfileEditViewReactor {
             usecase.updateUser(
                 name: currentState.name,
                 nickname: currentState.nickname,
-                profileImage: currentState.selectedImage?.pngData(),
+                profileImage: currentState.profileImage?.pngData(),
                 message: currentState.message
             )
+            return .empty()
+        case .didTapBackButton:
+            coordinator?.popProfileEditViewController()
             return .empty()
         }
     }
@@ -98,11 +112,8 @@ extension ProfileEditViewReactor {
         var newState = state
         
         switch mutation {
-        case .setProfileImageURL(let url):
-            newState.profileImageURL = url
-            newState.selectedImage = nil
-        case .setSelectedImage(let image):
-            newState.selectedImage = image
+        case .setImage(let image):
+            newState.profileImage = image
         case .setNickname(let nickname):
             newState.nickname = nickname
         case .setName(let name):
