@@ -9,12 +9,6 @@ import Foundation
 import RxDataSources
 import UIKit
 
-struct ProfileItem {
-    let imageUrl: URL?
-    let name: String
-    let email: String
-}
-
 struct MyInfoItem {
     let icon: String
     let title: String
@@ -37,11 +31,9 @@ enum MyInfoItemType {
 }
 
 protocol SectionItem {}
-extension ProfileItem: SectionItem {}
 extension MyInfoItem: SectionItem {}
 
 enum MyInfoSection {
-    case profile(items: [ProfileItem])
     case myInfo(title: String, items: [MyInfoItem])
     case community(title: String, items: [MyInfoItem])
     case notification(title: String, items: [MyInfoItem])
@@ -55,8 +47,6 @@ extension MyInfoSection: SectionModelType {
     
     var items: [SectionItem] {
         switch self {
-        case .profile(let items):
-            return items
         case .myInfo(_, let items),
                 .community(_, let items),
                 .notification(_, let items),
@@ -69,8 +59,6 @@ extension MyInfoSection: SectionModelType {
     
     var title: String? {
         switch self {
-        case .profile:
-            return nil
         case .myInfo(let title, _),
                 .community(let title, _),
                 .notification(let title, _),
@@ -83,8 +71,6 @@ extension MyInfoSection: SectionModelType {
     
     init(original: MyInfoSection, items: [SectionItem]) {
         switch original {
-        case .profile:
-            self = .profile(items: items as! [ProfileItem])
         case .myInfo(let title, _):
             self = .myInfo(title: title, items: items as! [MyInfoItem])
         case .community(let title, _):

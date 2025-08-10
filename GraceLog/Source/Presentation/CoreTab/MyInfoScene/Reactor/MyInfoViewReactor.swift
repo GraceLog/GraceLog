@@ -10,6 +10,9 @@ import ReactorKit
 import RxSwift
 
 final class MyInfoViewReactor: Reactor {
+    weak var coordinator: MyInfoCoordinator?
+    private let user = UserManager.shared
+    
     enum Action {
         case viewDidLoad
         case refreshData
@@ -22,15 +25,19 @@ final class MyInfoViewReactor: Reactor {
     }
     
     struct State {
-        var sections: [MyInfoSection] = []
+        @Pulse var user: UserManager
+        @Pulse var sections: [MyInfoSection]
         var selectedItem: MyInfoItemType?
     }
     
-    let initialState = State()
+    let initialState: State
     
-    weak var coordinator: MyInfoCoordinator?
-    
-    private let user = UserManager.shared
+    init() {
+        self.initialState = State(
+            user: user,
+            sections: []
+        )
+    }
 }
 
 extension MyInfoViewReactor {
@@ -69,14 +76,6 @@ extension MyInfoViewReactor {
     }
     
     private func createSections() -> [MyInfoSection] {
-        let profileItems = [
-            ProfileItem(
-                imageUrl: user.profileImageURL,
-                name: user.name,
-                email: user.email
-            )
-        ]
-        
         let myInfoItems = [
             MyInfoItem(icon: "user", title: "프로필 조회 및 수정", type: .myProfile),
             MyInfoItem(icon: "coffee", title: "나의 감사일기", type: .myGraceLog),
@@ -108,7 +107,6 @@ extension MyInfoViewReactor {
         ]
         
         return [
-            .profile(items: profileItems),
             .myInfo(title: "\(user.name)님의 Grace Log", items: myInfoItems),
             .community(title: "공동체 및 친구관리", items: communityItems),
             .notification(title: "푸시 알림 설정", items: notificationItems),

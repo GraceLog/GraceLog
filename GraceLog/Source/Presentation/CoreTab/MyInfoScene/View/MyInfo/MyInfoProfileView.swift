@@ -1,8 +1,8 @@
 //
-//  ProfileHeaderView.swift
+//  MyInfoHeaderView.swift
 //  GraceLog
 //
-//  Created by 이상준 on 3/15/25.
+//  Created by 이상준 on 8/10/25.
 //
 
 import UIKit
@@ -10,9 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-final class ProfileTableViewCell: UITableViewCell {
-    static let identifier = "ProfileTableViewCell"
-    
+final class MyInfoProfileView: UIView {
     private let profileImgView = UIImageView().then {
         $0.setDimensions(width: 112, height: 112)
         $0.backgroundColor = UIColor.init(hex: 0xF0F0F0)
@@ -32,25 +30,25 @@ final class ProfileTableViewCell: UITableViewCell {
         $0.textAlignment = .center
     }
     
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureUI()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupLayouts()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureUI() {
-        backgroundColor = UIColor(hex: 0xF4F4F4)
-        
+    private func setupLayouts() {
         [profileImgView, nameLabel, emailLabel].forEach {
             addSubview($0)
         }
-        
+    }
+    
+    private func setupConstraints() {
         profileImgView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(27)
+            $0.top.equalToSuperview().inset(27)
             $0.centerX.equalToSuperview()
         }
         
@@ -66,13 +64,16 @@ final class ProfileTableViewCell: UITableViewCell {
         }
     }
     
-    func updateUI(with profileItem: ProfileItem) {
+    func updateUI(
+        imageURL: URL?,
+        name: String,
+        email: String
+    ) {
         profileImgView.kf.setImage(
-            with: profileItem.imageUrl,
+            with: imageURL,
             placeholder: UIImage(named: "profile")
         )
-        
-        nameLabel.text = profileItem.name
-        emailLabel.text = profileItem.email
+        nameLabel.text = name
+        emailLabel.text = email
     }
 }
