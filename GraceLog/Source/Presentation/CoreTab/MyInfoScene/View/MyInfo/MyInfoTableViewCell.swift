@@ -10,7 +10,7 @@ import SnapKit
 import Then
 
 final class MyInfoTableViewCell: UITableViewCell {
-    static let identifier = "MyInfoTableViewCell"
+    static let identifier = String(describing: MyInfoTableViewCell.self)
     
     private let imgView = UIImageView().then {
         $0.setDimensions(width: 20, height: 20)
@@ -28,32 +28,38 @@ final class MyInfoTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureUI()
+        setupStyles()
+        setupLayouts()
+        setupConstarints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func setupStyles() {
         backgroundColor = .white
-        
+    }
+    
+    private func setupLayouts() {
         [imgView, titleLabel, disclosureView].forEach {
             contentView.addSubview($0)
         }
-        
+    }
+    
+    private func setupConstarints() {
         imgView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().offset(20)
+            $0.directionalVerticalEdges.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(20)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(10)
+            $0.directionalVerticalEdges.equalToSuperview().inset(10)
             $0.leading.equalTo(imgView.snp.trailing).offset(21)
         }
         
         disclosureView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(10)
+            $0.directionalVerticalEdges.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(13)
         }
     }

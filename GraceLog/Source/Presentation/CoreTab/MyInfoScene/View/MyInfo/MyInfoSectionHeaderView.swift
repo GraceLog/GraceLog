@@ -10,7 +10,7 @@ import Then
 import SnapKit
 
 final class MyInfoSectionHeaderView: UITableViewHeaderFooterView {
-    static let identifier = "MyInfoSectionHeaderView"
+    static let identifier = String(describing: MyInfoSectionHeaderView.self)
     
     private let titleLabel = UILabel().then {
         $0.textColor = .themeColor
@@ -19,19 +19,23 @@ final class MyInfoSectionHeaderView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        configureUI()
+        setupLayouts()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureUI() {        
+    private func setupLayouts() {
         addSubview(titleLabel)
+    }
+    
+    private func setupConstraints() {
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(8)
-            $0.leading.equalToSuperview().offset(40)
+            $0.leading.equalToSuperview().inset(40)
         }
     }
     

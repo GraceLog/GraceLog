@@ -10,7 +10,7 @@ import Then
 import SnapKit
 
 final class MyInfoButtonTableViewCell: UITableViewCell {
-    static let identifier = "MyInfoButtonTableViewCell"
+    static let identifier = String(describing: MyInfoButtonTableViewCell.self)
     
     private let button = UIButton().then {
         $0.backgroundColor = .white
@@ -20,17 +20,21 @@ final class MyInfoButtonTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureUI()
+        setupLayouts()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureUI() {
+    private func setupLayouts() {
         contentView.addSubview(button)
+    }
+    
+    private func setupConstraints() {
         button.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
     }
     
