@@ -49,19 +49,23 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setupNavBar()
+        setupLayouts()
+        setupConsraints()
+        setupStyles()
     }
     
-    private func setupUI() {
-        let safeArea = view.safeAreaLayoutGuide
-        
+    private func setupLayouts() {
         [navigationBar, profileImgView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
             view.addSubview($0)
         }
         
+        navigationBar.addLeftItem(backButton)
+        navigationBar.addRightItem(saveButton)
+    }
+    
+    private func setupConsraints() {
         navigationBar.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(44)
         }
@@ -89,15 +93,12 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             $0.top.equalTo(nameContainerView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
         }
-        
+    }
+    
+    private func setupStyles() {
         nicknameContainerView.configure(title: "닉네임", placeholder: "ex. Peter")
         nameContainerView.configure(title: "이름", placeholder: "ex. 베드로")
         messageContainerView.configure(title: "메시지", placeholder: "ex. 잠언 16:9")
-    }
-    
-    private func setupNavBar() {
-        navigationBar.addLeftItem(backButton)
-        navigationBar.addRightItem(saveButton)
     }
     
     func bind(reactor: ProfileEditViewReactor) {
