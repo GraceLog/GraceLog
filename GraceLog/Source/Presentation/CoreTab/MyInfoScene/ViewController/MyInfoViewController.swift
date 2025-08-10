@@ -8,28 +8,43 @@
 import UIKit
 import RxDataSources
 import ReactorKit
+import RxSwift
+import Kingfisher
 
 final class MyInfoViewController: GraceLogBaseViewController, View {
     var disposeBag = DisposeBag()
     
     private let navigationBar = GLNavigationBar().then {
-        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.backgroundColor = .white
         $0.setupTitleLabel(text: "내 계정")
     }
     
-    private lazy var tableView = UITableView(frame: .zero, style: .insetGrouped).then {
+    private lazy var scrollView = UIScrollView().then {
+        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.showsHorizontalScrollIndicator = false
+        $0.alwaysBounceVertical = true
+    }
+    
+    private lazy var containerStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.backgroundColor = .clear
+        $0.distribution = .fill
+        $0.alignment = .fill
+    }
+    
+    private let profileView = MyInfoProfileView()
+    private lazy var tableView = AutoSizingTableView(frame: .zero, style: .insetGrouped).then {
         $0.backgroundColor = UIColor(hex: 0xF4F4F4)
         $0.layoutMargins = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
+        
+        $0.register(MyInfoSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MyInfoSectionHeaderView.identifier)
+        $0.register(MyInfoTableViewCell.self, forCellReuseIdentifier: MyInfoTableViewCell.identifier)
+        $0.register(MyInfoButtonTableViewCell.self, forCellReuseIdentifier: MyInfoButtonTableViewCell.identifier)
     }
     
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<MyInfoSection>(
         configureCell: { [weak self] dataSource, tableView, indexPath, item in
-            if let profileItem = item as? ProfileItem {
-                let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
-                cell.selectionStyle = .none
-                cell.updateUI(with: profileItem)
-                return cell
-            } else if let myInfoItem = item as? MyInfoItem {
+            if let myInfoItem = item as? MyInfoItem {
                 let section = dataSource[indexPath.section]
                 
                 if case .logout = section, let myInfoItem = item as? MyInfoItem {
@@ -63,37 +78,45 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        configureTableView()
+        setupStyles()
+        setupLayouts()
+        setupConstraints()
     }
     
-    private func configureUI() {
-        view.backgroundColor = UIColor(hex: 0xF4F4F4)
-        
-        let safeArea = view.safeAreaLayoutGuide
-        
+    private func setupStyles() {
+        view.backgroundColor = .white
+    }
+    
+    private func setupLayouts() {
         view.addSubview(navigationBar)
+        view.addSubview(scrollView)
+        scrollView.addSubview(containerStackView)
+        
+        let subviews = [profileView, tableView]
+        containerStackView.arrangedSubviews(subviews)
+    }
+    
+    private func setupConstraints() {
         navigationBar.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
-            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.directionalHorizontalEdges.equalToSuperview()
             $0.height.equalTo(44)
         }
         
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
-            $0.leading.trailing.bottom.equalTo(safeArea)
+            $0.directionalHorizontalEdges.bottom.equalToSuperview()
+        }
+        
+        containerStackView.snp.makeConstraints {
+            $0.top.directionalHorizontalEdges.width.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
     
-    private func configureTableView() {
-        tableView.register(MyInfoSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MyInfoSectionHeaderView.identifier)
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
-        tableView.register(MyInfoTableViewCell.self, forCellReuseIdentifier: MyInfoTableViewCell.identifier)
-        tableView.register(MyInfoButtonTableViewCell.self, forCellReuseIdentifier: MyInfoButtonTableViewCell.identifier)
-    }
-    
     func bind(reactor: MyInfoViewReactor) {
+        bindMyInfoProfileView(reactor: reactor)
+        
         // Action
         Observable.just(Reactor.Action.viewDidLoad)
             .bind(to: reactor.action)
@@ -115,6 +138,22 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     }
 }
 
+// MARK: - Bindings
+extension MyInfoViewController {
+    func bindMyInfoProfileView(reactor: MyInfoViewReactor) {
+        reactor.pulse(\.$user)
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, user in
+                owner.profileView.updateUI(
+                    imageURL: user.profileImageURL,
+                    name: user.name,
+                    email: user.email
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
 // MARK: - UITableViewDelegate
 extension MyInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -130,7 +169,7 @@ extension MyInfoViewController: UITableViewDelegate {
         let sectionModel = dataSource[section]
         
         switch sectionModel {
-        case .profile, .withdrawal:
+        case .withdrawal:
             return .leastNonzeroMagnitude
         default:
             return 40
@@ -138,13 +177,6 @@ extension MyInfoViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let sectionModel = dataSource[indexPath.section]
-        
-        switch sectionModel {
-        case .profile:
-            return UITableView.automaticDimension
-        default:
-            return 40
-        }
+        return 40
     }
 }
