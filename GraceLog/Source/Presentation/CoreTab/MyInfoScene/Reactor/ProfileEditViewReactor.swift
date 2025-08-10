@@ -57,9 +57,8 @@ final class ProfileEditViewReactor: Reactor {
             error: nil
         )
         
-        if let profileURL = UserManager.shared.profileImageURL {
-            loadProfileImage(from: profileURL)
-        }
+        guard let profileImageURL = UserManager.shared.profileImageURL else { return }
+        loadProfileImage(from: profileImageURL)
     }
     
     private func loadProfileImage(from url: URL) {
