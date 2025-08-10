@@ -8,7 +8,6 @@
 import UIKit
 import NVActivityIndicatorView
 import ReactorKit
-import Kingfisher
 
 final class ProfileEditViewController: GraceLogBaseViewController, View {
     typealias Reactor = ProfileEditViewReactor

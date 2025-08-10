@@ -8,12 +8,12 @@
 import ReactorKit
 import RxSwift
 import RxCocoa
-import Kingfisher
 
 final class ProfileEditViewReactor: Reactor {
     weak var coordinator: ProfileEditCoordinator?
     private let usecase: DefaultMyInfoUseCase
     
+    let user = UserManager.shared
     var initialState: State
     
     enum Action {
@@ -44,29 +44,20 @@ final class ProfileEditViewReactor: Reactor {
         @Pulse var error: Error?
     }
     
-    init(coordinator: ProfileEditCoordinator, useCase: DefaultMyInfoUseCase) {
+    init(coordinator: ProfileEditCoordinator, usecase: DefaultMyInfoUseCase) {
         self.coordinator = coordinator
-        self.usecase = useCase
+        self.usecase = usecase
         
         self.initialState = State(
-            profileImage: UIImage(named: "profile"),
-            nickname: UserManager.shared.nickname,
-            name: UserManager.shared.name,
-            message: UserManager.shared.message,
+            profileImage: nil,
+            nickname: user.nickname,
+            name: user.name,
+            message: user.message,
             isSuccessUpdateUser: nil,
             error: nil
         )
         
-        guard let profileImageURL = UserManager.shared.profileImageURL else { return }
-        loadProfileImage(from: profileImageURL)
-    }
-    
-    private func loadProfileImage(from url: URL) {
-        KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
-            if case .success(let value) = result {
-                self?.action.onNext(.updateProfileImage(value.image))
-            }
-        }
+        usecase.loadProfileImageData()
     }
 }
 
@@ -101,8 +92,19 @@ extension ProfileEditViewReactor {
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        Observable.merge(
-            usecase.updateUserResult.map { .setUpdateUserResult($0) },
+        let imageDataMutation = usecase.profileImageData
+            .map { data -> UIImage? in
+                guard let data = data else { return UIImage(named: "profile") }
+                return UIImage(data: data)
+            }
+            .map { Mutation.setImage($0) }
+        
+        let updateResultMutation = usecase.updateUserResult
+            .map { Mutation.setUpdateUserResult($0) }
+        
+        return Observable.merge(
+            imageDataMutation,
+            updateResultMutation,
             mutation
         )
     }

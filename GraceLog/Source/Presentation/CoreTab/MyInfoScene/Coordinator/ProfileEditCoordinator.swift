@@ -28,7 +28,7 @@ final class ProfileEditCoordinator: Coordinator {
             )
         )
         
-        let reactor = ProfileEditViewReactor(coordinator: self, useCase: useCase)
+        let reactor = ProfileEditViewReactor(coordinator: self, usecase: useCase)
         let profileEditVC = ProfileEditViewController()
         profileEditVC.view.backgroundColor = .white
         profileEditVC.reactor = reactor
