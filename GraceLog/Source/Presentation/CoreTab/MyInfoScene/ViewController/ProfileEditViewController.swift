@@ -29,7 +29,7 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
         $0.titleLabel?.font = GLFont.regular16.font
     }
     
-    private let profileImgView = UIImageView().then {
+    private let profileImageView = UIImageView().then {
         $0.setDimensions(width: 112, height: 112)
         $0.layer.cornerRadius = 56
         $0.clipsToBounds = true
@@ -55,7 +55,7 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     }
     
     private func setupLayouts() {
-        [navigationBar, profileImgView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
+        [navigationBar, profileImageView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
             view.addSubview($0)
         }
         
@@ -70,17 +70,17 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             $0.height.equalTo(44)
         }
         
-        profileImgView.snp.makeConstraints {
+        profileImageView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom).offset(27)
             $0.centerX.equalToSuperview()
         }
         
         editButton.snp.makeConstraints {
-            $0.trailing.bottom.equalTo(profileImgView)
+            $0.trailing.bottom.equalTo(profileImageView)
         }
         
         nicknameContainerView.snp.makeConstraints {
-            $0.top.equalTo(profileImgView.snp.bottom).offset(32)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(32)
             $0.leading.trailing.equalToSuperview()
         }
         
@@ -103,22 +103,30 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     
     func bind(reactor: ProfileEditViewReactor) {
         // State
-        reactor.pulse(\.$profileImage)
-            .bind(to: profileImgView.rx.image)
+        reactor.pulse(\.$profileImageData)
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self) { owner, imageData in
+                guard let data = imageData,
+                      let profileImage = UIImage(data: data) else {
+                    owner.profileImageView.image = UIImage(named: "profile")
+                    return
+                }
+                owner.profileImageView.image = profileImage
+            }
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$nickname)
-            .distinctUntilChanged()
+            .take(1)
             .bind(to: nicknameContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$name)
-            .distinctUntilChanged()
+            .take(1)
             .bind(to: nameContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$message)
-            .distinctUntilChanged()
+            .take(1)
             .bind(to: messageContainerView.infoField.rx.text)
             .disposed(by: disposeBag)
         
@@ -139,38 +147,31 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         // Action
-        backButton.rx.tap
-            .map { Reactor.Action.didTapBackButton }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+        Observable.merge(
+            backButton.rx.tap.map { Reactor.Action.didTapBackButton },
+            editButton.rx.tap.map { Reactor.Action.didTapProfileImageEdit },
+            saveButton.rx.tap
+                .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
+                .map { Reactor.Action.didTapSaveButton }
+        )
+        .bind(to: reactor.action)
+        .disposed(by: disposeBag)
         
-        editButton.rx.tap
-            .map { Reactor.Action.didTapProfileImageEdit }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+        Observable.merge(
+            nicknameContainerView.infoField.rx.text.orEmpty
+                .distinctUntilChanged()
+                .map { Reactor.Action.updateNickname($0) },
+            
+            nameContainerView.infoField.rx.text.orEmpty
+                .distinctUntilChanged()
+                .map { Reactor.Action.updateName($0) },
+            
+            messageContainerView.infoField.rx.text.orEmpty
+                .distinctUntilChanged()
+                .map { Reactor.Action.updateMessage($0) }
+        )
+        .bind(to: reactor.action)
+        .disposed(by: disposeBag)
         
-        saveButton.rx.tap
-            .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
-            .map { Reactor.Action.didTapSaveButton }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        nicknameContainerView.infoField.rx.text.orEmpty
-            .distinctUntilChanged()
-            .map { Reactor.Action.updateNickname($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        nameContainerView.infoField.rx.text.orEmpty
-            .distinctUntilChanged()
-            .map { Reactor.Action.updateName($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        messageContainerView.infoField.rx.text.orEmpty
-            .distinctUntilChanged()
-            .map { Reactor.Action.updateMessage($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
     }
 }
