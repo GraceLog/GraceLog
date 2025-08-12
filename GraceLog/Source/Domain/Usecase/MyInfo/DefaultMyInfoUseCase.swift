@@ -11,7 +11,6 @@ import RxRelay
 
 final class DefaultMyInfoUseCase: MyInfoUseCase {
     var updateUserResult = PublishRelay<Bool>()
-    var profileImageData = PublishRelay<Data?>()
     
     private let userRepository: UserRepository
     private let disposeBag = DisposeBag()
@@ -20,25 +19,7 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
         self.userRepository = userRepository
     }
     
-    func loadProfileImageData() {
-        guard let profileImageURL = UserManager.shared.profileImageURL else {
-            profileImageData.accept(nil)
-            return
-        }
-        
-        GLImageUtil.shared.loadImageData(from: profileImageURL)
-            .subscribe(
-                onSuccess: { [weak self] data in
-                    self?.profileImageData.accept(data)
-                },
-                onFailure: { [weak self] _ in
-                    self?.profileImageData.accept(nil)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    func updateUser(
+    func updateUserInfo(
         name: String,
         nickname: String,
         profileImage: Data?,
@@ -62,7 +43,6 @@ final class DefaultMyInfoUseCase: MyInfoUseCase {
                 self.updateUserResult.accept(true)
             },
             onFailure: { error in
-                print("❌ 유저 정보 수정 실패: \(error)")
                 self.updateUserResult.accept(false)
             }
         )

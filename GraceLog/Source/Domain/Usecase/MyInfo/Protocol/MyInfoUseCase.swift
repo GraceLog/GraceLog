@@ -11,10 +11,8 @@ import RxRelay
 
 protocol MyInfoUseCase {
     var updateUserResult: PublishRelay<Bool> { get }
-    var profileImageData: PublishRelay<Data?> { get }
     
-    func loadProfileImageData()
-    func updateUser(
+    func updateUserInfo(
         name: String,
         nickname: String,
         profileImage: Data?,

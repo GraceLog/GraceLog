@@ -10,14 +10,14 @@ import RxSwift
 import RxCocoa
 
 final class ProfileEditViewReactor: Reactor {
-    weak var coordinator: ProfileEditCoordinator?
+    private let coordinator: ProfileEditCoordinator
     private let usecase: DefaultMyInfoUseCase
+    private let userManager = UserManager.shared
     
-    let user = UserManager.shared
     var initialState: State
     
     enum Action {
-        case updateProfileImage(UIImage?)
+        //        case updateProfileImage(UIImage?)
         case updateNickname(String)
         case updateName(String)
         case updateMessage(String)
@@ -27,7 +27,7 @@ final class ProfileEditViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setImage(UIImage?)
+        case setImage(Data?)
         case setNickname(String)
         case setName(String)
         case setMessage(String)
@@ -36,7 +36,7 @@ final class ProfileEditViewReactor: Reactor {
     }
     
     struct State {
-        @Pulse var profileImage: UIImage?
+        @Pulse var profileImageData: Data?
         @Pulse var nickname: String
         @Pulse var name: String
         @Pulse var message: String
@@ -49,23 +49,37 @@ final class ProfileEditViewReactor: Reactor {
         self.usecase = usecase
         
         self.initialState = State(
-            profileImage: nil,
-            nickname: user.nickname,
-            name: user.name,
-            message: user.message,
+            profileImageData: nil,
+            nickname: userManager.nickname,
+            name: userManager.name,
+            message: userManager.message,
             isSuccessUpdateUser: nil,
             error: nil
         )
+    }
+    
+    private func createProfileImageMutation() -> Observable<Mutation> {
+        guard let imageURL = userManager.profileImageURL else { return .empty() }
         
-        usecase.loadProfileImageData()
+        return Observable.create { observer in
+            Task {
+                do {
+                    let data = try await imageURL.fetchData()
+                    observer.onNext(.setImage(data))
+                } catch {
+                    observer.onNext(.setImage(nil))
+                }
+                observer.onCompleted()
+            }
+            
+            return Disposables.create()
+        }
     }
 }
 
 extension ProfileEditViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .updateProfileImage(let image):
-            return .just(.setImage(image))
         case .updateNickname(let nickname):
             return .just(.setNickname(nickname))
         case .updateName(let name):
@@ -73,37 +87,38 @@ extension ProfileEditViewReactor {
         case .updateMessage(let message):
             return .just(.setMessage(message))
         case .didTapProfileImageEdit:
-            coordinator?.showImagePicker { [weak self] image in
-                self?.action.onNext(.updateProfileImage(image))
+            return Observable.create { [weak self] observer in
+                self?.coordinator.showImagePicker { image in
+                    if let image = image {
+                        observer.onNext(.setImage(image.pngData()))
+                    } else {
+                        observer.onNext(.setImage(nil))
+                    }
+                    observer.onCompleted()
+                }
+                return Disposables.create()
             }
-            return .empty()
         case .didTapSaveButton:
-            usecase.updateUser(
+            usecase.updateUserInfo(
                 name: currentState.name,
                 nickname: currentState.nickname,
-                profileImage: currentState.profileImage?.pngData(),
+                profileImage: currentState.profileImageData,
                 message: currentState.message
             )
-            return .empty()
         case .didTapBackButton:
-            coordinator?.popProfileEditViewController()
-            return .empty()
+            coordinator.popViewController()
         }
+        return .empty()
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let imageDataMutation = usecase.profileImageData
-            .map { data -> UIImage? in
-                guard let data = data else { return UIImage(named: "profile") }
-                return UIImage(data: data)
-            }
-            .map { Mutation.setImage($0) }
+        let profileImageMutation = createProfileImageMutation()
         
         let updateResultMutation = usecase.updateUserResult
             .map { Mutation.setUpdateUserResult($0) }
         
         return Observable.merge(
-            imageDataMutation,
+            profileImageMutation,
             updateResultMutation,
             mutation
         )
@@ -113,8 +128,8 @@ extension ProfileEditViewReactor {
         var newState = state
         
         switch mutation {
-        case .setImage(let image):
-            newState.profileImage = image
+        case .setImage(let profileImageData):
+            newState.profileImageData = profileImageData
         case .setNickname(let nickname):
             newState.nickname = nickname
         case .setName(let name):
