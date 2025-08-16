@@ -46,12 +46,10 @@ final class SignInViewController: UIViewController {
     
     private let leftLine = UIView().then {
         $0.backgroundColor = .themeColor
-        $0.setDimensions(width: 78, height: 1)
     }
     
     private let rightLine = UIView().then {
         $0.backgroundColor = .themeColor
-        $0.setDimensions(width: 78, height: 1)
     }
     
     private lazy var appleLoginButton = UIButton().then {
@@ -67,6 +65,14 @@ final class SignInViewController: UIViewController {
     private lazy var kakaoLoginButton = UIButton().then {
         $0.setImage(UIImage(named: "kakao"), for: .normal)
         $0.setDimensions(width: 60, height: 60)
+    }
+    
+    private lazy var loginStack = UIStackView(
+        arrangedSubviews: [appleLoginButton, googleLoginButton, kakaoLoginButton]
+    ).then {
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.spacing = 27
     }
     
     private let copyrightLabel = UILabel().then {
@@ -90,7 +96,9 @@ final class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
+        setupStyles()
+        setupLayouts()
+        setupConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,25 +114,27 @@ final class SignInViewController: UIViewController {
         }
     }
     
-    private func configureUI() {
+    private func setupStyles() {
         view.backgroundColor = .white
         
-        let safeArea = view.safeAreaLayoutGuide
-        
-        let loginStack = UIStackView(arrangedSubviews: [appleLoginButton, googleLoginButton, kakaoLoginButton])
-        loginStack.axis = .horizontal
-        loginStack.distribution = .fillEqually
-        loginStack.spacing = 27
-        
+        [startLabel, leftLine, rightLine, appleLoginButton, googleLoginButton, kakaoLoginButton].forEach {
+            $0.alpha = 0
+        }
+    }
+    
+    private func setupLayouts() {
         [sloganLabel, logoImgView, startLabel, leftLine, rightLine, loginStack, copyrightLabel, activityIndicator].forEach {
             view.addSubview($0)
         }
+    }
+    
+    private func setupConstraints() {
+        let safeArea = view.safeAreaLayoutGuide
         
         logoImgView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-30)
-            $0.width.equalTo(163)
-            $0.height.equalTo(142)
+            $0.directionalHorizontalEdges.equalToSuperview().inset(115)
+            $0.height.equalTo(logoImgView.snp.width).multipliedBy(142.0 / 163.0)
         }
         
         sloganLabel.snp.makeConstraints {
@@ -138,13 +148,17 @@ final class SignInViewController: UIViewController {
         }
         
         leftLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.equalToSuperview().inset(80)
             $0.centerY.equalTo(startLabel)
-            $0.right.equalTo(startLabel.snp.left)
+            $0.trailing.equalTo(startLabel.snp.leading)
         }
         
         rightLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.trailing.equalToSuperview().inset(80)
             $0.centerY.equalTo(startLabel)
-            $0.left.equalTo(startLabel.snp.right)
+            $0.leading.equalTo(startLabel.snp.trailing)
         }
         
         
@@ -161,10 +175,6 @@ final class SignInViewController: UIViewController {
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.height.equalTo(40)
-        }
-        
-        [startLabel, leftLine, rightLine, appleLoginButton, googleLoginButton, kakaoLoginButton].forEach {
-            $0.alpha = 0
         }
     }
 }
