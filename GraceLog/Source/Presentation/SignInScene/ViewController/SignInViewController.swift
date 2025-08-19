@@ -183,55 +183,40 @@ extension SignInViewController: View {
     func bind(reactor: SignInReactor) {
         // Action
         googleLoginButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
-                
+            .bind(with: self) { owner, _ in
+                owner.handleGoogleLogin()
             }
             .disposed(by: disposeBag)
         
         appleLoginButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
+            .bind(with: self) { owner, _ in
                 owner.handleAppleLogin()
             }
             .disposed(by: disposeBag)
         
         kakaoLoginButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
+            .bind(with: self) { owner, _ in
                 owner.handleKakaoLogin()
             }
             .disposed(by: disposeBag)
         
         // State
         reactor.state
-            .map { $0.user }
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] user in
-                if let user = user {
-                    print("받은 유저 정보: \(user)")
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        reactor.state
             .map { $0.isLoading }
             .bind(onNext: { [weak self] isLoading in
                 if isLoading {
-                    self?.activityIndicator.isHidden = false
                     self?.activityIndicator.startAnimating()
                 } else {
                     self?.activityIndicator.stopAnimating()
-                    self?.activityIndicator.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { $0.error }
-            .subscribe(onNext: { [weak self] error in
-                self?.view.makeToast(error?.localizedDescription)
-            })
+        reactor.pulse(\.$error)
+            .asDriver(onErrorJustReturn: nil)
+            .drive(with: self) { owner, error in
+                owner.view.makeToast(error?.localizedDescription)
+            }
             .disposed(by: disposeBag)
     }
 }
@@ -262,13 +247,31 @@ extension SignInViewController {
                     print("카카오 계정 로그인 에러: \(error)")
                     return
                 }
-                
+                 
                 guard let token = oauthToken?.accessToken else {
                     print("카카오 액세스 토큰을 가져오지 못했습니다")
                     return
                 }
-                
                 self?.reactor?.action.onNext(.kakaoLogin(token: token))
+            }
+        }
+    }
+    
+    private func handleGoogleLogin() {
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
+            guard error == nil else { return }
+            guard let signInResult = signInResult else { return }
+            
+            signInResult.user.refreshTokensIfNeeded { [weak self] user, error in
+                guard error == nil else { return }
+                guard let user = user else { return }
+                
+                guard let token = user.idToken?.tokenString else {
+                    print("구글 토큰을 가져오지 못했습니다.")
+                    return
+                }
+                
+                self?.reactor?.action.onNext(.googleLogin(token: token))
             }
         }
     }
@@ -335,7 +338,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
             return
         }
         
-        reactor?.action.onNext(.appleLogin)
+        reactor?.action.onNext(.appleLogin(token: idTokenString))
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {

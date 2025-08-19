@@ -12,6 +12,7 @@ import RxRelay
 final class DefaultSignInUseCase: SignInUseCase {
     var isSuccessSignIn = BehaviorRelay<Bool>(value: false)
     var user = BehaviorRelay<GraceLogUser?>(value: nil)
+    var error = PublishRelay<Error>()
     private let authRepository: AuthRepository
     private let userRepository: UserRepository
     
@@ -30,8 +31,7 @@ final class DefaultSignInUseCase: SignInUseCase {
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
                 self.isSuccessSignIn.accept(true)
             },onError: { error in
-                // TODO: - 에러 처리 필요
-                print("signIn Error \(error.localizedDescription)")
+                self.error.accept(error)
             })
     }
     
@@ -48,8 +48,7 @@ final class DefaultSignInUseCase: SignInUseCase {
                 )
                 self.user.accept(result)
             }, onError: { error in
-                // TODO: - 에러 처리 필요
-                print("fetchUser Error \(error.localizedDescription)")
+                self.error.accept(error)
             })
     }
 }
