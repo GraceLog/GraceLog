@@ -26,6 +26,10 @@ final class SignInViewController: UIViewController {
     var disposeBag = DisposeBag()
     fileprivate var currentNonce: String?
     
+    private let animationContainerView = UIView().then {
+        $0.alpha = 0
+    }
+    
     private let sloganLabel = UILabel().then {
         $0.text = "감사가 채우는 하루"
         $0.textColor = .themeColor
@@ -37,6 +41,7 @@ final class SignInViewController: UIViewController {
     }
     
     private let startLabel = UILabel().then {
+        $0.backgroundColor = .white
         $0.text = "시작하기"
         $0.textColor = .themeColor
         $0.font = GLFont.regular14.font
@@ -44,11 +49,7 @@ final class SignInViewController: UIViewController {
         $0.setDimensions(width: 74, height: 38)
     }
     
-    private let leftLine = UIView().then {
-        $0.backgroundColor = .themeColor
-    }
-    
-    private let rightLine = UIView().then {
+    private let lineView = UIView().then {
         $0.backgroundColor = .themeColor
     }
     
@@ -81,7 +82,12 @@ final class SignInViewController: UIViewController {
         $0.font = GLFont.regular12.font
     }
     
-    private let activityIndicator = NVActivityIndicatorView(frame: .zero, type: .ballSpinFadeLoader, color: .black, padding: 0).then {
+    private let activityIndicator = NVActivityIndicatorView(
+        frame: .zero,
+        type: .ballSpinFadeLoader,
+        color: .black,
+        padding: 0
+    ).then {
         $0.isHidden = true
     }
     
@@ -107,29 +113,30 @@ final class SignInViewController: UIViewController {
             delay: 0.3,
             options: .curveEaseIn
         ) {
-            [self.startLabel, self.leftLine, self.rightLine,
-             self.appleLoginButton, self.googleLoginButton, self.kakaoLoginButton].forEach {
-                $0.alpha = 1
-            }
+            self.animationContainerView.alpha = 1
         }
     }
     
     private func setupStyles() {
         view.backgroundColor = .white
-        
-        [startLabel, leftLine, rightLine, appleLoginButton, googleLoginButton, kakaoLoginButton].forEach {
-            $0.alpha = 0
-        }
     }
     
     private func setupLayouts() {
-        [sloganLabel, logoImgView, startLabel, leftLine, rightLine, loginStack, copyrightLabel, activityIndicator].forEach {
+        [sloganLabel, logoImgView, animationContainerView, copyrightLabel, activityIndicator].forEach {
             view.addSubview($0)
+        }
+        
+        [lineView, startLabel, loginStack].forEach {
+            animationContainerView.addSubview($0)
         }
     }
     
     private func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
+        
+        animationContainerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         logoImgView.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-30)
@@ -147,20 +154,11 @@ final class SignInViewController: UIViewController {
             $0.bottom.equalTo(logoImgView.snp.bottom).offset(50)
         }
         
-        leftLine.snp.makeConstraints {
+        lineView.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.equalToSuperview().inset(80)
+            $0.directionalHorizontalEdges.equalToSuperview().inset(80)
             $0.centerY.equalTo(startLabel)
-            $0.trailing.equalTo(startLabel.snp.leading)
         }
-        
-        rightLine.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.trailing.equalToSuperview().inset(80)
-            $0.centerY.equalTo(startLabel)
-            $0.leading.equalTo(startLabel.snp.trailing)
-        }
-        
         
         loginStack.snp.makeConstraints {
             $0.centerX.equalToSuperview()
