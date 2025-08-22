@@ -201,13 +201,8 @@ extension SignInViewController: View {
         // State
         reactor.state
             .map { $0.isLoading }
-            .bind(onNext: { [weak self] isLoading in
-                if isLoading {
-                    self?.activityIndicator.startAnimating()
-                } else {
-                    self?.activityIndicator.stopAnimating()
-                }
-            })
+            .asDriver(onErrorJustReturn: false)
+            .drive(activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$error)
@@ -245,7 +240,7 @@ extension SignInViewController {
                     print("카카오 계정 로그인 에러: \(error)")
                     return
                 }
-                 
+                
                 guard let token = oauthToken?.accessToken else {
                     print("카카오 액세스 토큰을 가져오지 못했습니다")
                     return
