@@ -83,10 +83,10 @@ extension SignInReactor {
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let userMutation = usecase.user
+        let userMutation = usecase.isSuccessFetchUser
             .compactMap { $0 }
             .do(onNext: { [weak self] _ in
-                self?.coordinator?.didSignIn()
+                self?.coordinator?.showHomeFlow()
             })
             .flatMap { _ in Observable<Mutation>.empty() }
         

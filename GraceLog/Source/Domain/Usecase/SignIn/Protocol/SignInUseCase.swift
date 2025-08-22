@@ -11,7 +11,7 @@ import RxRelay
 
 protocol SignInUseCase {
     var isSuccessSignIn: BehaviorRelay<Bool> { get }
-    var user: BehaviorRelay<GraceLogUser?> { get }
+    var isSuccessFetchUser: BehaviorRelay<Bool> { get }
     var error: PublishRelay<Error> { get }
     
     func signIn(provider: SignInProvider, token: String) -> Single<SignInResult>
