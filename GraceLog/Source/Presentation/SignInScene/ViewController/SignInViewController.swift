@@ -107,7 +107,9 @@ final class SignInViewController: UIViewController {
         setupConstraints()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         UIView.animate(
             withDuration: 1.0,
             delay: 0.3,
@@ -215,10 +217,19 @@ extension SignInViewController: View {
 }
 
 extension SignInViewController {
+    // MARK: 애플 로그인 - https://developer.apple.com/documentation/AuthenticationServices/implementing-user-authentication-with-sign-in-with-apple
     private func handleAppleLogin() {
-        startSignInWithAppleFlow()
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
     
+    // MARK: 카카오 로그인 - https://developers.kakao.com/docs/latest/ko/kakaologin/ios#login-with-kakao-talk-sample
     private func handleKakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
             UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
@@ -250,6 +261,7 @@ extension SignInViewController {
         }
     }
     
+    // MARK: 구글 로그인 - https://developers.google.com/identity/sign-in/ios/backend-auth?hl=ko
     private func handleGoogleLogin() {
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
             guard error == nil else { return }
@@ -270,77 +282,26 @@ extension SignInViewController {
     }
 }
 
-extension SignInViewController {
-    func startSignInWithAppleFlow() {
-        let nonce = randomNonceString()
-        currentNonce = nonce
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        request.nonce = sha256(nonce)
-        
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
-    
-    private func randomNonceString(length: Int = 32) -> String {
-        precondition(length > 0)
-        var randomBytes = [UInt8](repeating: 0, count: length)
-        let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
-        if errorCode != errSecSuccess {
-            fatalError(
-                "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-            )
-        }
-        
-        let charset: [Character] =
-        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-        
-        let nonce = randomBytes.map { byte in
-            // Pick a random character from the set, wrapping around if needed.
-            charset[Int(byte) % charset.count]
-        }
-        
-        return String(nonce)
-    }
-    
-    private func sha256(_ input: String) -> String {
-        let inputData = Data(input.utf8)
-        let hashedData = SHA256.hash(data: inputData)
-        let hashString = hashedData.compactMap {
-            String(format: "%02x", $0)
-        }.joined()
-        
-        return hashString
-    }
-}
-
 extension SignInViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
-              let nonce = currentNonce else { return }
-        
-        guard let appleIDToken = appleIDCredential.identityToken else {
-            print("Unable to fetch identity token")
-            return
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let identityToken = appleIDCredential.identityToken,
+                  let idTokenString = String(data: identityToken, encoding: .utf8) else {
+                print("애플 토큰을 가져오지 못했습니다")
+                return
+            }
+            reactor?.action.onNext(.appleLogin(token: idTokenString))
         }
-        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-            print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-            return
-        }
-        
-        reactor?.action.onNext(.appleLogin(token: idTokenString))
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Apple Sign In failed: \(error.localizedDescription)")
+        print("애플 로그인 실패: \(error.localizedDescription)")
     }
 }
 
 extension SignInViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window ?? UIWindow()
+        return self.view.window!
     }
 }
+
