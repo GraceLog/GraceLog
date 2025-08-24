@@ -10,8 +10,8 @@ import RxSwift
 import RxRelay
 
 final class DefaultSignInUseCase: SignInUseCase {
-    var isSuccessSignIn = BehaviorRelay<Bool>(value: false)
-    var isSuccessFetchUser = BehaviorRelay<Bool>(value: false)
+    var isSuccessSignIn = PublishRelay<Bool>()
+    var isSuccessFetchUser = PublishRelay<Bool>()
     var error = PublishRelay<Error>()
     private let authRepository: AuthRepository
     private let userRepository: UserRepository
@@ -30,6 +30,7 @@ final class DefaultSignInUseCase: SignInUseCase {
                 KeychainServiceImpl.shared.accessToken = result.accessToken
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
                 self.isSuccessSignIn.accept(true)
+                
             },onError: { error in
                 self.error.accept(error)
             })

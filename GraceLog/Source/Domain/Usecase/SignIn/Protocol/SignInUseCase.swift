@@ -10,8 +10,8 @@ import RxSwift
 import RxRelay
 
 protocol SignInUseCase {
-    var isSuccessSignIn: BehaviorRelay<Bool> { get }
-    var isSuccessFetchUser: BehaviorRelay<Bool> { get }
+    var isSuccessSignIn: PublishRelay<Bool> { get }
+    var isSuccessFetchUser: PublishRelay<Bool> { get }
     var error: PublishRelay<Error> { get }
     
     func signIn(provider: SignInProvider, token: String) -> Single<SignInResult>
