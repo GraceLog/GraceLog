@@ -45,7 +45,7 @@ final class GraceLogAppCoordinator: NavigationCoordinator {
 }
 
 extension GraceLogAppCoordinator: SignInCoordinatorDelegate {
-    func showHomeFlow(_ coordinator: SignInCoordinator) {
+    func didSignIn(_ coordinator: SignInCoordinator) {
         self.childCoordinators = self.childCoordinators.filter { $0 !== coordinator }
         self.showMainTabFlow()
     }

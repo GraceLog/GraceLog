@@ -86,7 +86,7 @@ extension SignInReactor {
         let userMutation = usecase.isSuccessFetchUser
             .compactMap { $0 }
             .do(onNext: { [weak self] _ in
-                self?.coordinator?.showHomeFlow()
+                self?.coordinator?.showMainTabFlow()
             })
             .flatMap { _ in Observable<Mutation>.empty() }
         
