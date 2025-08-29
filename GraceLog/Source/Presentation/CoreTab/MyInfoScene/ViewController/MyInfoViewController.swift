@@ -20,7 +20,7 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     }
     
     private lazy var scrollView = UIScrollView().then {
-        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.backgroundColor = GLColor.backgroundMain.lightModeColor
         $0.showsHorizontalScrollIndicator = false
         $0.alwaysBounceVertical = true
     }
@@ -34,36 +34,43 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
     
     private let profileView = MyInfoProfileView()
     private lazy var tableView = AutoSizingTableView(frame: .zero, style: .insetGrouped).then {
-        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.backgroundColor = GLColor.backgroundMain.lightModeColor
         $0.layoutMargins = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         
         $0.register(MyInfoSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: MyInfoSectionHeaderView.identifier)
         $0.register(MyInfoTableViewCell.self, forCellReuseIdentifier: MyInfoTableViewCell.identifier)
+        $0.register(MyInfoSwitchTableViewCell.self, forCellReuseIdentifier: MyInfoSwitchTableViewCell.identifier)
         $0.register(MyInfoButtonTableViewCell.self, forCellReuseIdentifier: MyInfoButtonTableViewCell.identifier)
     }
     
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<MyInfoSection>(
         configureCell: { [weak self] dataSource, tableView, indexPath, item in
-            if let myInfoItem = item as? MyInfoItem {
-                let section = dataSource[indexPath.section]
-                
-                if case .logout = section, let myInfoItem = item as? MyInfoItem {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoButtonTableViewCell.identifier, for: indexPath) as! MyInfoButtonTableViewCell
-                    cell.updateUI(title: myInfoItem.title, textColor: .black)
-                    return cell
-                } else if case .withdrawal = section, let myInfoItem = item as? MyInfoItem {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoButtonTableViewCell.identifier, for: indexPath) as! MyInfoButtonTableViewCell
-                    cell.updateUI(title: myInfoItem.title, textColor: .themeColor)
-                    return cell
-                } else {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoTableViewCell.identifier, for: indexPath) as! MyInfoTableViewCell
-                    cell.selectionStyle = .none
-                    cell.separatorInset = .init(top: 0, left: 61, bottom: 0, right: 0)
-                    cell.updateUI(imgName: myInfoItem.icon, title: myInfoItem.title)
-                    return cell
-                }
+            guard let myInfoItem = item as? MyInfoItem else {
+                return UITableViewCell()
             }
-            return UITableViewCell()
+            
+            let section = dataSource[indexPath.section]
+            
+            switch section {
+            case .notification:
+                let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoSwitchTableViewCell.identifier, for: indexPath) as! MyInfoSwitchTableViewCell
+                cell.updateUI(imgName: myInfoItem.icon, title: myInfoItem.title, isOn: false)
+                return cell
+            case .logout:
+                let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoButtonTableViewCell.identifier, for: indexPath) as! MyInfoButtonTableViewCell
+                cell.updateUI(title: myInfoItem.title, textColor: .black)
+                return cell
+            case .withdrawal:
+                let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoButtonTableViewCell.identifier, for: indexPath) as! MyInfoButtonTableViewCell
+                cell.updateUI(title: myInfoItem.title, textColor: .themeColor)
+                return cell
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoTableViewCell.identifier, for: indexPath) as! MyInfoTableViewCell
+                cell.selectionStyle = .none
+                cell.separatorInset = .init(top: 0, left: 61, bottom: 0, right: 0)
+                cell.updateUI(imgName: myInfoItem.icon, title: myInfoItem.title)
+                return cell
+            }
         }
     )
     
