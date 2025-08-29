@@ -39,7 +39,7 @@ final class GLNavigationBar: UIView {
     }
     
     private func setupUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = GLColor.backgroundSub.color
         
         [leftStackView, titleContainerView, rightStackView].forEach {
             addSubview($0)

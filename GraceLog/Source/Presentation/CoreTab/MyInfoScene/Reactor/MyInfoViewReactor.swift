@@ -77,24 +77,18 @@ extension MyInfoViewReactor {
     
     private func createSections() -> [MyInfoSection] {
         let myInfoItems = [
-            MyInfoItem(icon: "user", title: "프로필 조회 및 수정", type: .myProfile),
+            MyInfoItem(icon: "user", title: "프로필 편집", type: .myProfile),
             MyInfoItem(icon: "coffee", title: "나의 감사일기", type: .myGraceLog),
             MyInfoItem(icon: "heart", title: "좋아요 및 댓글 단 감사일기", type: .favoriteVerse)
         ]
         
-        let communityItems = [
-            MyInfoItem(icon: "home", title: "공동체 관리", type: .communityManagement),
-            MyInfoItem(icon: "users", title: "친구 관리", type: .memberManagement)
-        ]
-        
         let notificationItems = [
             MyInfoItem(icon: "notification", title: "알림 설정", type: .pushSetting),
-            MyInfoItem(icon: "list", title: "알림 목록", type: .pushList)
+            MyInfoItem(icon: "list", title: "일기 작성 알림 (밤 9시)", type: .pushList)
         ]
         
         let customerServiceItems = [
             MyInfoItem(icon: "flag", title: "공지사항", type: .noticeBoard),
-            MyInfoItem(icon: "info", title: "버전 정보", type: .versionInfo),
             MyInfoItem(icon: "message", title: "문의하기", type: .inquiry)
         ]
         
@@ -108,7 +102,6 @@ extension MyInfoViewReactor {
         
         return [
             .myInfo(title: "\(user.name)님의 Grace Log", items: myInfoItems),
-            .community(title: "공동체 및 친구관리", items: communityItems),
             .notification(title: "푸시 알림 설정", items: notificationItems),
             .customerService(title: "고객센터", items: customerServiceItems),
             .logout(title: "계정 설정", items: logoutItems),

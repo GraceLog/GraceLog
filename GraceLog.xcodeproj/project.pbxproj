@@ -15,6 +15,7 @@
 		025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025019C52DE03F73003FD48D /* UserRequestDTO.swift */; };
 		025019CA2DE04410003FD48D /* MyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025019C92DE04410003FD48D /* MyInfoUseCase.swift */; };
 		025019CC2DE0469B003FD48D /* DefaultMyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025019CB2DE0469B003FD48D /* DefaultMyInfoUseCase.swift */; };
+		0252A6202E6159BB002BA0D8 /* MyInfoSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252A61F2E6159BB002BA0D8 /* MyInfoSwitchTableViewCell.swift */; };
 		026656AB2DE7E9CA00541D96 /* NavigationBarUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026656AA2DE7E9CA00541D96 /* NavigationBarUtil.swift */; };
 		0295ADFB2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0295ADFA2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift */; };
 		02C5861C2DD736D600E1F626 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C5861B2DD736D600E1F626 /* UserAPI.swift */; };
@@ -225,6 +226,7 @@
 		025019C52DE03F73003FD48D /* UserRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestDTO.swift; sourceTree = "<group>"; };
 		025019C92DE04410003FD48D /* MyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoUseCase.swift; sourceTree = "<group>"; };
 		025019CB2DE0469B003FD48D /* DefaultMyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyInfoUseCase.swift; sourceTree = "<group>"; };
+		0252A61F2E6159BB002BA0D8 /* MyInfoSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		026656AA2DE7E9CA00541D96 /* NavigationBarUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarUtil.swift; sourceTree = "<group>"; };
 		0295ADFA2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogBaseViewController.swift; sourceTree = "<group>"; };
 		02C5861B2DD736D600E1F626 /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				02DC29742DDC29C000662D8A /* MyInfoSectionHeaderView.swift */,
 				02DC29752DDC29C000662D8A /* MyInfoTableViewCell.swift */,
 				DE47E9782E48790300C379C3 /* MyInfoProfileView.swift */,
+				0252A61F2E6159BB002BA0D8 /* MyInfoSwitchTableViewCell.swift */,
 			);
 			path = MyInfo;
 			sourceTree = "<group>";
@@ -1602,13 +1605,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1623,13 +1622,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1666,13 +1661,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1850,6 +1841,7 @@
 				DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
+				0252A6202E6159BB002BA0D8 /* MyInfoSwitchTableViewCell.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserAPI.swift in Sources */,
