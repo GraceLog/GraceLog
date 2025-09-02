@@ -16,9 +16,10 @@ final class MyInfoSwitchTableViewCell: UITableViewCell {
         $0.backgroundColor = .clear
         $0.axis = .horizontal
         $0.distribution = .fill
+        $0.alignment = .center
     }
     
-    private let imgView = UIImageView().then {
+    private let iconImageView = UIImageView().then {
         $0.setDimensions(width: 20, height: 20)
     }
     
@@ -34,6 +35,7 @@ final class MyInfoSwitchTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupStyles()
         setupLayouts()
         setupConstraints()
     }
@@ -44,26 +46,24 @@ final class MyInfoSwitchTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 13))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 15))
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imgView.image = nil
+        iconImageView.image = nil
         titleLabel.text = nil
         alarmSwitch.isOn = false
     }
     
-    private func setupLayouts() {
+    private func setupStyles() {
         backgroundColor = .white
         selectionStyle = .none
-//        [imgView, titleLabel, alarmSwitch].forEach {
-//            contentView.addSubview($0)
-//        }
-        
+    }
+    
+    private func setupLayouts() {
         contentView.addSubview(containerStackView)
-        [imgView, titleLabel, alarmSwitch].forEach { containerStackView.addArrangedSubview($0) }
-        
+        [iconImageView, titleLabel, alarmSwitch].forEach { containerStackView.addArrangedSubview($0) }
     }
     
     private func setupConstraints() {
@@ -71,29 +71,15 @@ final class MyInfoSwitchTableViewCell: UITableViewCell {
             $0.directionalEdges.equalToSuperview()
         }
         
-        containerStackView.setCustomSpacing(18, after: imgView)
-        
-//        imgView.snp.makeConstraints {
-//            $0.directionalVerticalEdges.equalToSuperview().inset(10)
-//            $0.leading.equalToSuperview().inset(20)
-//        }
-//        
-//        titleLabel.snp.makeConstraints {
-//            $0.directionalVerticalEdges.equalToSuperview().inset(10)
-//            $0.leading.equalTo(imgView.snp.trailing).offset(21)
-//        }
-//        
-//        alarmSwitch.snp.makeConstraints {
-//            $0.
-//        }
+        containerStackView.setCustomSpacing(20, after: iconImageView)
     }
     
     func updateUI(
-        imgName: String,
+        imageName: String,
         title: String,
         isOn: Bool
     ) {
-        imgView.image = UIImage(named: imgName)
+        iconImageView.image = UIImage(named: imageName)
         titleLabel.text = title
         alarmSwitch.isOn = isOn
     }

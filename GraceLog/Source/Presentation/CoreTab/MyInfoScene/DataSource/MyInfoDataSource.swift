@@ -32,7 +32,7 @@ extension MyInfoItem: SectionItem {}
 
 enum MyInfoSection {
     case myInfo(title: String, items: [MyInfoItem])
-    case notification(title: String, items: [MyInfoItem])
+    case pushNotification(title: String, items: [MyInfoItem])
     case customerService(title: String, items: [MyInfoItem])
     case logout(title: String, items: [MyInfoItem])
     case withdrawal(title: String, items: [MyInfoItem])
@@ -44,7 +44,7 @@ extension MyInfoSection: SectionModelType {
     var items: [SectionItem] {
         switch self {
         case .myInfo(_, let items),
-                .notification(_, let items),
+                .pushNotification(_, let items),
                 .customerService(_, let items),
                 .logout(_, let items),
                 .withdrawal(_, let items):
@@ -55,7 +55,7 @@ extension MyInfoSection: SectionModelType {
     var title: String? {
         switch self {
         case .myInfo(let title, _),
-                .notification(let title, _),
+                .pushNotification(let title, _),
                 .customerService(let title, _),
                 .logout(let title, _),
                 .withdrawal(let title, items: _):
@@ -67,8 +67,8 @@ extension MyInfoSection: SectionModelType {
         switch original {
         case .myInfo(let title, _):
             self = .myInfo(title: title, items: items as! [MyInfoItem])
-        case .notification(let title, _):
-            self = .notification(title: title, items: items as! [MyInfoItem])
+        case .pushNotification(let title, _):
+            self = .pushNotification(title: title, items: items as! [MyInfoItem])
         case .customerService(let title, _):
             self = .customerService(title: title, items: items as! [MyInfoItem])
         case .logout(let title, _):

@@ -12,7 +12,14 @@ import Then
 final class MyInfoTableViewCell: UITableViewCell {
     static let identifier = String(describing: MyInfoTableViewCell.self)
     
-    private let imgView = UIImageView().then {
+    private let containerStackView = UIStackView().then {
+        $0.backgroundColor = .clear
+        $0.axis = .horizontal
+        $0.distribution = .fill
+        $0.alignment = .center
+    }
+    
+    private let iconImageView = UIImageView().then {
         $0.setDimensions(width: 20, height: 20)
     }
     
@@ -37,35 +44,40 @@ final class MyInfoTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 15))
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconImageView.image = nil
+        titleLabel.text = nil
+    }
+    
     private func setupStyles() {
         backgroundColor = .white
+        selectionStyle = .none
     }
     
     private func setupLayouts() {
-        [imgView, titleLabel, disclosureView].forEach {
-            contentView.addSubview($0)
-        }
+        contentView.addSubview(containerStackView)
+        [iconImageView, titleLabel, disclosureView].forEach { containerStackView.addArrangedSubview($0) }
     }
     
     private func setupConstarints() {
-        imgView.snp.makeConstraints {
-            $0.directionalVerticalEdges.equalToSuperview().inset(10)
-            $0.leading.equalToSuperview().inset(20)
+        containerStackView.snp.makeConstraints {
+            $0.directionalEdges.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints {
-            $0.directionalVerticalEdges.equalToSuperview().inset(10)
-            $0.leading.equalTo(imgView.snp.trailing).offset(21)
-        }
-        
-        disclosureView.snp.makeConstraints {
-            $0.directionalVerticalEdges.equalToSuperview().inset(10)
-            $0.trailing.equalToSuperview().inset(13)
-        }
+        containerStackView.setCustomSpacing(20, after: iconImageView)
     }
     
-    func updateUI(imgName: String, title: String) {
-        imgView.image = UIImage(named: imgName)
+    func updateUI(
+        imageName: String,
+        title: String
+    ) {
+        iconImageView.image = UIImage(named: imageName)
         titleLabel.text = title
     }
 }

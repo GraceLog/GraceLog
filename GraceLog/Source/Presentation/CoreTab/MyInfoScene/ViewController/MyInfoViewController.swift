@@ -52,9 +52,9 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
             let section = dataSource[indexPath.section]
             
             switch section {
-            case .notification:
+            case .pushNotification:
                 let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoSwitchTableViewCell.identifier, for: indexPath) as! MyInfoSwitchTableViewCell
-                cell.updateUI(imgName: myInfoItem.icon, title: myInfoItem.title, isOn: false)
+                cell.updateUI(imageName: myInfoItem.icon, title: myInfoItem.title, isOn: false)
                 return cell
             case .logout:
                 let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoButtonTableViewCell.identifier, for: indexPath) as! MyInfoButtonTableViewCell
@@ -68,7 +68,7 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
                 let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoTableViewCell.identifier, for: indexPath) as! MyInfoTableViewCell
                 cell.selectionStyle = .none
                 cell.separatorInset = .init(top: 0, left: 61, bottom: 0, right: 0)
-                cell.updateUI(imgName: myInfoItem.icon, title: myInfoItem.title)
+                cell.updateUI(imageName: myInfoItem.icon, title: myInfoItem.title)
                 return cell
             }
         }
@@ -184,6 +184,13 @@ extension MyInfoViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        let sectionModel = dataSource[indexPath.section]
+        
+        switch sectionModel {
+        case .pushNotification:
+            return 45.0
+        default:
+            return 40
+        }
     }
 }

@@ -102,7 +102,7 @@ extension MyInfoViewReactor {
         
         return [
             .myInfo(title: "\(user.name)님의 Grace Log", items: myInfoItems),
-            .notification(title: "푸시 알림 설정", items: notificationItems),
+            .pushNotification(title: "푸시 알림 설정", items: notificationItems),
             .customerService(title: "고객센터", items: customerServiceItems),
             .logout(title: "계정 설정", items: logoutItems),
             .withdrawal(title: "", items: withdrawalItem)
