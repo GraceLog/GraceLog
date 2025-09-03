@@ -12,8 +12,7 @@ import RxRelay
 protocol SignInUseCase {
     var isSuccessSignIn: PublishRelay<Bool> { get }
     var isSuccessFetchUser: PublishRelay<Bool> { get }
-    var error: PublishRelay<Error> { get }
     
-    func signIn(provider: SignInProvider, token: String) -> Single<SignInResult>
-    func fetchUser() -> Single<GraceLogUser>
+    func signIn(provider: SignInProvider, token: String)
+    func fetchUser()
 }

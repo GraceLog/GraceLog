@@ -12,17 +12,14 @@ import RxCocoa
 import GoogleSignIn
 
 final class SignInReactor: Reactor {
+    private var disposeBag = DisposeBag()
     weak var coordinator: SignInCoordinator?
     private let usecase: SignInUseCase
-    private var isAgreed: Bool = false
-    private let disposeBag = DisposeBag()
     
     init(usecase: SignInUseCase) {
         self.usecase = usecase
         self.initialState = State(
-            isLoading: false,
-            isAgreed: false,
-            error: nil
+            isLoading: false
         )
     }
     
@@ -30,20 +27,18 @@ final class SignInReactor: Reactor {
         case googleLogin(token: String)
         case appleLogin(token: String)
         case kakaoLogin(token: String)
-        case toggleAgree
-        case showTerms
     }
     
     enum Mutation {
         case setLoading(Bool)
-        case setAgree(Bool)
-        case setError(Error)
+        case setFetchUserResult(Bool)
+        case setSignInResult(Bool)
     }
     
     struct State {
         var isLoading: Bool
-        var isAgreed: Bool
-        @Pulse var error: Error?
+        @Pulse var isSuccessFetchUser: Bool?
+        @Pulse var isSuccessSignIn: Bool?
     }
     
     let initialState: State
@@ -55,15 +50,9 @@ extension SignInReactor {
         case .googleLogin(let token):
             return handleSignIn(provider: .google, token: token)
         case .appleLogin(let token):
-            return handleSignIn(provider: .apple, token: token)
+            return handleSignIn(provider: .google, token: token)
         case .kakaoLogin(let token):
-            return handleSignIn(provider: .kakao, token: token)
-        case .toggleAgree:
-            isAgreed = !isAgreed
-            return .just(.setAgree(isAgreed))
-        case .showTerms:
-            // TODO: - 등록되지 않은 유저(회원가입)인 경우 가입 약관으로 이동 처리
-            return .empty()
+            return handleSignIn(provider: .google, token: token)
         }
     }
     
@@ -73,42 +62,47 @@ extension SignInReactor {
         switch mutation {
         case .setLoading(let isLoading):
             newState.isLoading = isLoading
-        case .setError(let error):
-            newState.error = error
-        case .setAgree(let isAgreed):
-            newState.isAgreed = isAgreed
+        case .setFetchUserResult(let result):
+            newState.isSuccessFetchUser = result
+        case .setSignInResult(let result):
+            newState.isSuccessSignIn = result
         }
         
         return newState
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let userMutation = usecase.isSuccessFetchUser
-            .compactMap { $0 }
-            .do(onNext: { [weak self] _ in
-                self?.coordinator?.showMainTabFlow()
-            })
-            .flatMap { _ in Observable<Mutation>.empty() }
+        let signInResultMutation = usecase.isSuccessSignIn
+            .flatMap { [weak self] isSuccess -> Observable<Mutation> in
+                guard let self else { return .empty() }
+                
+                if isSuccess { self.usecase.fetchUser() }
+                return .just(.setSignInResult(isSuccess))
+            }
         
-        let errorMutation = usecase.error
-            .map { error in Mutation.setError(error) }
+        let fetchUserResultMutation = usecase.isSuccessFetchUser
+            .flatMap { [weak self] isSuccess -> Observable<Mutation> in
+                guard let self else { return .empty() }
+                
+                if isSuccess { self.coordinator?.showMainTabFlow() }
+                return .just(.setFetchUserResult(isSuccess))
+                
+            }
         
-        return .merge(mutation, userMutation, errorMutation)
+        return .merge(mutation, signInResultMutation, fetchUserResultMutation)
     }
 }
 
 extension SignInReactor {
     private func handleSignIn(provider: SignInProvider, token: String) -> Observable<Mutation> {
         return Observable.concat([
-            Observable.just(Mutation.setLoading(true)),
-            usecase.signIn(provider: provider, token: token)
-                .flatMap { _ in
-                    return self.usecase.fetchUser()
-                }
-                .asObservable()
-                .flatMap { _ in Observable<Mutation>.empty() }
-                .catch { _ in Observable<Mutation>.empty() },
-            Observable.just(.setLoading(false))
+            .just(.setLoading(true)),
+            Observable.create { [weak self] observer in
+                self?.usecase.signIn(provider: provider, token: token)
+                observer.onCompleted()
+                return Disposables.create()
+            },
+            .just(.setLoading(false))
         ])
     }
 }

@@ -10,11 +10,12 @@ import RxSwift
 import RxRelay
 
 final class DefaultSignInUseCase: SignInUseCase {
-    var isSuccessSignIn = PublishRelay<Bool>()
-    var isSuccessFetchUser = PublishRelay<Bool>()
-    var error = PublishRelay<Error>()
     private let authRepository: AuthRepository
     private let userRepository: UserRepository
+    private let disposeBag = DisposeBag()
+    
+    var isSuccessSignIn = PublishRelay<Bool>()
+    var isSuccessFetchUser = PublishRelay<Bool>()
     
     init(
         authRepository: AuthRepository,
@@ -24,21 +25,21 @@ final class DefaultSignInUseCase: SignInUseCase {
         self.userRepository = userRepository
     }
     
-    func signIn(provider: SignInProvider, token: String) -> Single<SignInResult> {
-        return authRepository.signIn(provider: provider, token: token)
-            .do(onSuccess: { result in
+    func signIn(provider: SignInProvider, token: String) {
+        authRepository.signIn(provider: provider, token: token)
+            .subscribe(with: self, onSuccess: { owner, result in
                 KeychainServiceImpl.shared.accessToken = result.accessToken
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
-                self.isSuccessSignIn.accept(true)
-                
-            },onError: { error in
-                self.error.accept(error)
+                owner.isSuccessSignIn.accept(true)
+            }, onFailure: { owner, error in
+                owner.isSuccessSignIn.accept(false)
             })
+            .disposed(by: disposeBag)
     }
     
-    func fetchUser() -> Single<GraceLogUser> {
-        return userRepository.fetchUser()
-            .do(onSuccess: { result in
+    func fetchUser() {
+        userRepository.fetchUser()
+            .subscribe(with: self, onSuccess: { owner, result in
                 UserManager.shared.saveUserInfo(
                     id: result.id,
                     name: result.name,
@@ -47,9 +48,10 @@ final class DefaultSignInUseCase: SignInUseCase {
                     email: result.email,
                     profileImageURL: result.profileImageURL
                 )
-                self.isSuccessFetchUser.accept(true)
-            }, onError: { error in
-                self.error.accept(error)
+                owner.isSuccessFetchUser.accept(true)
+            }, onFailure: { owner, error in
+                owner.isSuccessFetchUser.accept(false)
             })
+            .disposed(by: disposeBag)
     }
 }
