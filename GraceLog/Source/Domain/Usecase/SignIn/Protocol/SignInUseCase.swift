@@ -11,7 +11,6 @@ import RxRelay
 
 protocol SignInUseCase {
     var isSuccessSignIn: PublishRelay<Bool> { get }
-    var isSuccessFetchUser: PublishRelay<Bool> { get }
     
     func signIn(provider: SignInProvider, token: String)
     func fetchUser()

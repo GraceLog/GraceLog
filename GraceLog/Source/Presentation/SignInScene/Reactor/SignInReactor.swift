@@ -6,10 +6,11 @@
 //
 
 import Foundation
+
+import GoogleSignIn
 import ReactorKit
 import RxSwift
 import RxCocoa
-import GoogleSignIn
 
 final class SignInReactor: Reactor {
     private var disposeBag = DisposeBag()
@@ -31,13 +32,11 @@ final class SignInReactor: Reactor {
     
     enum Mutation {
         case setLoading(Bool)
-        case setFetchUserResult(Bool)
         case setSignInResult(Bool)
     }
     
     struct State {
         var isLoading: Bool
-        @Pulse var isSuccessFetchUser: Bool?
         @Pulse var isSuccessSignIn: Bool?
     }
     
@@ -50,9 +49,9 @@ extension SignInReactor {
         case .googleLogin(let token):
             return handleSignIn(provider: .google, token: token)
         case .appleLogin(let token):
-            return handleSignIn(provider: .google, token: token)
+            return handleSignIn(provider: .apple, token: token)
         case .kakaoLogin(let token):
-            return handleSignIn(provider: .google, token: token)
+            return handleSignIn(provider: .kakao, token: token)
         }
     }
     
@@ -62,8 +61,6 @@ extension SignInReactor {
         switch mutation {
         case .setLoading(let isLoading):
             newState.isLoading = isLoading
-        case .setFetchUserResult(let result):
-            newState.isSuccessFetchUser = result
         case .setSignInResult(let result):
             newState.isSuccessSignIn = result
         }
@@ -73,23 +70,17 @@ extension SignInReactor {
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
         let signInResultMutation = usecase.isSuccessSignIn
-            .flatMap { [weak self] isSuccess -> Observable<Mutation> in
-                guard let self else { return .empty() }
-                
-                if isSuccess { self.usecase.fetchUser() }
-                return .just(.setSignInResult(isSuccess))
-            }
-        
-        let fetchUserResultMutation = usecase.isSuccessFetchUser
-            .flatMap { [weak self] isSuccess -> Observable<Mutation> in
+            .flatMapLatest { [weak self] isSuccess -> Observable<Mutation> in
                 guard let self else { return .empty() }
                 
                 if isSuccess { self.coordinator?.showMainTabFlow() }
-                return .just(.setFetchUserResult(isSuccess))
-                
+                return Observable.concat([
+                    .just(.setSignInResult(isSuccess)),
+                    .just(.setLoading(false))
+                ])
             }
         
-        return .merge(mutation, signInResultMutation, fetchUserResultMutation)
+        return .merge(mutation, signInResultMutation)
     }
 }
 
@@ -102,7 +93,6 @@ extension SignInReactor {
                 observer.onCompleted()
                 return Disposables.create()
             },
-            .just(.setLoading(false))
         ])
     }
 }

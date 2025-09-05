@@ -6,38 +6,39 @@
 //
 
 import UIKit
-import SnapKit
-import Then
-import ReactorKit
-import Toast_Swift
-import NVActivityIndicatorView
 
+import AuthenticationServices
 import GoogleSignIn
-import RxSwift
-import RxCocoa
-
 import KakaoSDKAuth
 import KakaoSDKUser
-
-import CryptoKit
-import AuthenticationServices
+import NVActivityIndicatorView
+import ReactorKit
+import SnapKit
+import Then
 
 final class SignInViewController: UIViewController {
     var disposeBag = DisposeBag()
-    fileprivate var currentNonce: String?
     
-    private let animationContainerView = UIView().then {
-        $0.alpha = 0
+    private let containerStackView = UIStackView().then {
+        $0.backgroundColor = .clear
+        $0.axis = .vertical
+        $0.distribution = .fill
+        $0.alignment = .center
+        $0.spacing = 27
     }
+    
+    private let lineContainerView = UIView()
     
     private let sloganLabel = UILabel().then {
         $0.text = "감사가 채우는 하루"
         $0.textColor = .themeColor
         $0.font = GLFont.regular24.font
+        $0.textAlignment = .center
     }
     
-    private let logoImgView = UIImageView().then {
+    private let logoImageView = UIImageView().then {
         $0.image = UIImage(named: "logo")
+        $0.contentMode = .scaleAspectFit
     }
     
     private let startLabel = UILabel().then {
@@ -53,33 +54,35 @@ final class SignInViewController: UIViewController {
         $0.backgroundColor = .themeColor
     }
     
-    private lazy var appleLoginButton = UIButton().then {
+    private let appleLoginButton = UIButton().then {
         $0.setImage(UIImage(named: "apple"), for: .normal)
         $0.setDimensions(width: 60, height: 60)
     }
     
-    private lazy var googleLoginButton = UIButton().then {
+    private let googleLoginButton = UIButton().then {
         $0.setImage(UIImage(named: "google"), for: .normal)
         $0.setDimensions(width: 60, height: 60)
     }
     
-    private lazy var kakaoLoginButton = UIButton().then {
+    private let kakaoLoginButton = UIButton().then {
         $0.setImage(UIImage(named: "kakao"), for: .normal)
         $0.setDimensions(width: 60, height: 60)
     }
     
-    private lazy var loginStack = UIStackView(
+    private lazy var buttonStackView = UIStackView(
         arrangedSubviews: [appleLoginButton, googleLoginButton, kakaoLoginButton]
     ).then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
         $0.spacing = 27
+        $0.alpha = 0
     }
     
     private let copyrightLabel = UILabel().then {
         $0.text = "Copyright Ⓒ 에끌레시아 All Rights Reserved."
         $0.textColor = .themeColor
         $0.font = GLFont.regular12.font
+        $0.textAlignment = .center
     }
     
     private let activityIndicator = NVActivityIndicatorView(
@@ -87,9 +90,7 @@ final class SignInViewController: UIViewController {
         type: .ballSpinFadeLoader,
         color: .black,
         padding: 0
-    ).then {
-        $0.isHidden = true
-    }
+    )
     
     init(reactor: SignInReactor) {
         super.init(nibName: nil, bundle: nil)
@@ -115,7 +116,7 @@ final class SignInViewController: UIViewController {
             delay: 0.3,
             options: .curveEaseIn
         ) {
-            self.animationContainerView.alpha = 1
+            self.buttonStackView.alpha = 1
         }
     }
     
@@ -124,36 +125,31 @@ final class SignInViewController: UIViewController {
     }
     
     private func setupLayouts() {
-        [sloganLabel, logoImgView, animationContainerView, copyrightLabel, activityIndicator].forEach {
-            view.addSubview($0)
-        }
-        
-        [lineView, startLabel, loginStack].forEach {
-            animationContainerView.addSubview($0)
-        }
+        [sloganLabel, logoImageView, lineContainerView, buttonStackView].forEach { containerStackView.addArrangedSubview($0) }
+        [containerStackView, copyrightLabel, activityIndicator].forEach { view.addSubview($0) }
+        [lineView, startLabel].forEach { lineContainerView.addSubview($0) }
     }
     
     private func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
-        
-        animationContainerView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        containerStackView.snp.makeConstraints {
+            $0.center.equalTo(safeArea)
+            $0.directionalHorizontalEdges.equalToSuperview()
         }
         
-        logoImgView.snp.makeConstraints {
-            $0.centerY.equalToSuperview().offset(-30)
-            $0.directionalHorizontalEdges.equalToSuperview().inset(115)
-            $0.height.equalTo(logoImgView.snp.width).multipliedBy(142.0 / 163.0)
+        copyrightLabel.snp.makeConstraints {
+            $0.top.greaterThanOrEqualTo(containerStackView.snp.bottom)
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(safeArea).offset(-20)
         }
         
-        sloganLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(logoImgView.snp.top).offset(-27)
+        lineContainerView.snp.makeConstraints {
+            $0.height.equalTo(38)
+            $0.width.equalToSuperview()
         }
         
         startLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(logoImgView.snp.bottom).offset(50)
+            $0.center.equalToSuperview()
         }
         
         lineView.snp.makeConstraints {
@@ -162,19 +158,11 @@ final class SignInViewController: UIViewController {
             $0.centerY.equalTo(startLabel)
         }
         
-        loginStack.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(startLabel.snp.bottom).offset(16)
-        }
-        
-        copyrightLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(safeArea).inset(20)
-        }
+        containerStackView.setCustomSpacing(18, after: lineContainerView)
         
         activityIndicator.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.width.height.equalTo(40)
+            $0.size.equalTo(40)
         }
     }
 }
@@ -183,18 +171,21 @@ extension SignInViewController: View {
     func bind(reactor: SignInReactor) {
         // Action
         googleLoginButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
             .bind(with: self) { owner, _ in
                 owner.handleGoogleLogin()
             }
             .disposed(by: disposeBag)
         
         appleLoginButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
             .bind(with: self) { owner, _ in
                 owner.handleAppleLogin()
             }
             .disposed(by: disposeBag)
         
         kakaoLoginButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
             .bind(with: self) { owner, _ in
                 owner.handleKakaoLogin()
             }
@@ -207,10 +198,13 @@ extension SignInViewController: View {
             .drive(activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$error)
-            .asDriver(onErrorJustReturn: nil)
-            .drive(with: self) { owner, error in
-                owner.view.makeToast(error?.localizedDescription)
+        reactor.pulse(\.$isSuccessSignIn)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, isSuccess in
+                if !isSuccess {
+                    owner.view.makeToast("로그인에 실패했습니다, 다시 시도해주세요.")
+                }
             }
             .disposed(by: disposeBag)
     }

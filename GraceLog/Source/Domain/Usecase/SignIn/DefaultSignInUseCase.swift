@@ -15,7 +15,6 @@ final class DefaultSignInUseCase: SignInUseCase {
     private let disposeBag = DisposeBag()
     
     var isSuccessSignIn = PublishRelay<Bool>()
-    var isSuccessFetchUser = PublishRelay<Bool>()
     
     init(
         authRepository: AuthRepository,
@@ -30,7 +29,7 @@ final class DefaultSignInUseCase: SignInUseCase {
             .subscribe(with: self, onSuccess: { owner, result in
                 KeychainServiceImpl.shared.accessToken = result.accessToken
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
-                owner.isSuccessSignIn.accept(true)
+                owner.fetchUser()
             }, onFailure: { owner, error in
                 owner.isSuccessSignIn.accept(false)
             })
@@ -48,9 +47,9 @@ final class DefaultSignInUseCase: SignInUseCase {
                     email: result.email,
                     profileImageURL: result.profileImageURL
                 )
-                owner.isSuccessFetchUser.accept(true)
+                owner.isSuccessSignIn.accept(true)
             }, onFailure: { owner, error in
-                owner.isSuccessFetchUser.accept(false)
+                owner.isSuccessSignIn.accept(false)
             })
             .disposed(by: disposeBag)
     }
