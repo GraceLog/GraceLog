@@ -33,7 +33,6 @@ final class MyInfoSectionHeaderView: UITableViewHeaderFooterView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview().inset(8)
             $0.leading.equalToSuperview().inset(40)
         }

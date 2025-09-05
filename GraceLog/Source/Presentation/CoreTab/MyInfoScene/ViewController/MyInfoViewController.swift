@@ -176,11 +176,39 @@ extension MyInfoViewController: UITableViewDelegate {
         let sectionModel = dataSource[section]
         
         switch sectionModel {
+        case .logout:
+            return 22 + 60
         case .withdrawal:
-            return .leastNonzeroMagnitude
+            return 15
         default:
-            return 40
+            return 22 + 30
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard section == dataSource.sectionModels.count - 1 else { return nil }
+        
+        let footerView = UIView()
+        let versionLabel = UILabel().then {
+            $0.text = "Ver 0.0.1"
+            $0.textAlignment = .center
+            $0.numberOfLines = 0
+            $0.font = GLFont.regular12.font
+            $0.textColor = .graceGray
+        }
+        
+        footerView.addSubview(versionLabel)
+        versionLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(70)
+            $0.bottom.equalToSuperview().inset(30)
+        }
+        
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return section == dataSource.sectionModels.count - 1 ? 110 : 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
