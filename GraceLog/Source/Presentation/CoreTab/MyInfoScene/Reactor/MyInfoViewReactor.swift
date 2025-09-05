@@ -84,7 +84,7 @@ extension MyInfoViewReactor {
         
         let notificationItems = [
             MyInfoItem(icon: "notification", title: "알림 설정", type: .pushSetting),
-            MyInfoItem(icon: "list", title: "일기 작성 알림 (밤 9시)", type: .pushList)
+            MyInfoItem(icon: "night_notification", title: "일기 작성 알림 (밤 9시)", type: .nightPush)
         ]
         
         let customerServiceItems = [

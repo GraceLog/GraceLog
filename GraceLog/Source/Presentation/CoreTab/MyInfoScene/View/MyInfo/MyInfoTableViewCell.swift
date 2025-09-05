@@ -30,7 +30,7 @@ final class MyInfoTableViewCell: UITableViewCell {
     
     private let disclosureView = UIImageView().then {
         $0.setDimensions(width: 20, height: 20)
-        $0.image = UIImage(named: "chevron_right_black")
+        $0.image = UIImage(named: "chevron_right")
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

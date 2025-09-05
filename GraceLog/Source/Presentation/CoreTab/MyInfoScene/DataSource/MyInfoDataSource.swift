@@ -20,7 +20,7 @@ enum MyInfoItemType {
     case myGraceLog
     case favoriteVerse
     case pushSetting
-    case pushList
+    case nightPush
     case noticeBoard
     case inquiry
     case logout

@@ -68,7 +68,7 @@ final class MyInfoSwitchTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         containerStackView.snp.makeConstraints {
-            $0.directionalEdges.equalToSuperview()
+            $0.directionalHorizontalEdges.centerY.equalToSuperview()
         }
         
         containerStackView.setCustomSpacing(20, after: iconImageView)
