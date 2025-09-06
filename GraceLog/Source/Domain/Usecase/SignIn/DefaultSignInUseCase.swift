@@ -10,10 +10,11 @@ import RxSwift
 import RxRelay
 
 final class DefaultSignInUseCase: SignInUseCase {
-    var isSuccessSignIn = BehaviorRelay<Bool>(value: false)
-    var user = BehaviorRelay<GraceLogUser?>(value: nil)
     private let authRepository: AuthRepository
     private let userRepository: UserRepository
+    private let disposeBag = DisposeBag()
+    
+    var isSuccessSignIn = PublishRelay<Bool>()
     
     init(
         authRepository: AuthRepository,
@@ -23,21 +24,21 @@ final class DefaultSignInUseCase: SignInUseCase {
         self.userRepository = userRepository
     }
     
-    func signIn(provider: SignInProvider, token: String) -> Single<SignInResult> {
-        return authRepository.signIn(provider: provider, token: token)
-            .do(onSuccess: { result in
+    func signIn(provider: SignInProvider, token: String) {
+        authRepository.signIn(provider: provider, token: token)
+            .subscribe(with: self, onSuccess: { owner, result in
                 KeychainServiceImpl.shared.accessToken = result.accessToken
                 KeychainServiceImpl.shared.refreshToken = result.refreshToken
-                self.isSuccessSignIn.accept(true)
-            },onError: { error in
-                // TODO: - 에러 처리 필요
-                print("signIn Error \(error.localizedDescription)")
+                owner.fetchUser()
+            }, onFailure: { owner, error in
+                owner.isSuccessSignIn.accept(false)
             })
+            .disposed(by: disposeBag)
     }
     
-    func fetchUser() -> Single<GraceLogUser> {
-        return userRepository.fetchUser()
-            .do(onSuccess: { result in
+    func fetchUser() {
+        userRepository.fetchUser()
+            .subscribe(with: self, onSuccess: { owner, result in
                 UserManager.shared.saveUserInfo(
                     id: result.id,
                     name: result.name,
@@ -46,10 +47,10 @@ final class DefaultSignInUseCase: SignInUseCase {
                     email: result.email,
                     profileImageURL: result.profileImageURL
                 )
-                self.user.accept(result)
-            }, onError: { error in
-                // TODO: - 에러 처리 필요
-                print("fetchUser Error \(error.localizedDescription)")
+                owner.isSuccessSignIn.accept(true)
+            }, onFailure: { owner, error in
+                owner.isSuccessSignIn.accept(false)
             })
+            .disposed(by: disposeBag)
     }
 }

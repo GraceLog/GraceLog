@@ -86,6 +86,7 @@
 		DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B992D53A884007C2066 /* DiaryViewController.swift */; };
 		DE069B9C2D5711D3007C2066 /* HomeCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */; };
 		DE069BA22D571485007C2066 /* HomeRecommendVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069BA12D571485007C2066 /* HomeRecommendVideoTableViewCell.swift */; };
+		DE1B04FA2E5886760083A7EA /* NVActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1B04F92E5886760083A7EA /* NVActivityIndicatorView+Extension.swift */; };
 		DE23872A2E003BDE00893D8C /* GLNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2387292E003BDE00893D8C /* GLNavigationBar.swift */; };
 		DE23872C2E07C28500893D8C /* HomeCommunityViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872B2E07C28500893D8C /* HomeCommunityViewReactor.swift */; };
 		DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23872D2E07C2DC00893D8C /* HomeMyViewController.swift */; };
@@ -303,6 +304,7 @@
 		DE069B992D53A884007C2066 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityViewController.swift; sourceTree = "<group>"; };
 		DE069BA12D571485007C2066 /* HomeRecommendVideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendVideoTableViewCell.swift; sourceTree = "<group>"; };
+		DE1B04F92E5886760083A7EA /* NVActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NVActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
 		DE2387292E003BDE00893D8C /* GLNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLNavigationBar.swift; sourceTree = "<group>"; };
 		DE23872B2E07C28500893D8C /* HomeCommunityViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityViewReactor.swift; sourceTree = "<group>"; };
 		DE23872D2E07C2DC00893D8C /* HomeMyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyViewController.swift; sourceTree = "<group>"; };
@@ -907,6 +909,7 @@
 				702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */,
 				70A97C922E269DD200F08DF6 /* Date+Extension.swift */,
 				70062C552E4AF8FA0096C1F7 /* URL+Extension.swift */,
+				DE1B04F92E5886760083A7EA /* NVActivityIndicatorView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1602,13 +1605,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1623,13 +1622,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1666,13 +1661,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1850,6 +1841,7 @@
 				DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
+				DE1B04FA2E5886760083A7EA /* NVActivityIndicatorView+Extension.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
 				DE9A1FCC2D6C7D890044F655 /* HomeCommunityDiaryTableViewCell.swift in Sources */,
 				02C5861C2DD736D600E1F626 /* UserAPI.swift in Sources */,

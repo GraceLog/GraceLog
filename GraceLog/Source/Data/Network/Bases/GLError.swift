@@ -21,7 +21,7 @@ extension GLError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .requestError(let code, let message):
-            return "\(code)\n\(message)"
+            return message
         case .serverError:
             return "서버에서 오류가 발생했습니다."
         case .decodedError:

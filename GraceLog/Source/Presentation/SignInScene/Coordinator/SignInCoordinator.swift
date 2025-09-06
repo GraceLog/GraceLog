@@ -32,7 +32,7 @@ final class SignInCoordinator: NavigationCoordinator {
 }
 
 extension SignInCoordinator {
-    func didSignIn() {
+    func showMainTabFlow() {
         self.delegate?.didSignIn(self)
     }
 }

@@ -10,9 +10,8 @@ import RxSwift
 import RxRelay
 
 protocol SignInUseCase {
-    var isSuccessSignIn: BehaviorRelay<Bool> { get }
-    var user: BehaviorRelay<GraceLogUser?> { get } 
+    var isSuccessSignIn: PublishRelay<Bool> { get }
     
-    func signIn(provider: SignInProvider, token: String) -> Single<SignInResult>
-    func fetchUser() -> Single<GraceLogUser>
+    func signIn(provider: SignInProvider, token: String)
+    func fetchUser()
 }

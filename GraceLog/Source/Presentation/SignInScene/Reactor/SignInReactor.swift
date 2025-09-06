@@ -6,61 +6,52 @@
 //
 
 import Foundation
+
+import GoogleSignIn
 import ReactorKit
 import RxSwift
 import RxCocoa
-import GoogleSignIn
 
 final class SignInReactor: Reactor {
+    private var disposeBag = DisposeBag()
     weak var coordinator: SignInCoordinator?
-    private let signInUseCase: SignInUseCase
-    private var isAgreed: Bool = false
-    private let disposeBag = DisposeBag()
+    private let usecase: SignInUseCase
     
-    init(signInUseCase: SignInUseCase) {
-        self.signInUseCase = signInUseCase
+    init(usecase: SignInUseCase) {
+        self.usecase = usecase
+        self.initialState = State(
+            isLoading: false
+        )
     }
     
     enum Action {
-        case googleLogin
-        case appleLogin
+        case googleLogin(token: String)
+        case appleLogin(token: String)
         case kakaoLogin(token: String)
-        case toggleAgree
-        case showTerms
     }
     
     enum Mutation {
         case setLoading(Bool)
-        case setError(Error)
-        case setUser(GraceLogUser)
-        case setAgree(Bool)
+        case setSignInResult(Bool)
     }
     
     struct State {
-        var isLoading: Bool = false
-        var error: Error? = nil
-        var user: GraceLogUser? = nil
-        var isAgreed: Bool = false
+        var isLoading: Bool
+        @Pulse var isSuccessSignIn: Bool?
     }
     
-    let initialState: State = State()
+    let initialState: State
 }
 
 extension SignInReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .googleLogin:
-            return .empty()
-        case .appleLogin:
-            return .empty()
+        case .googleLogin(let token):
+            return handleSignIn(provider: .google, token: token)
+        case .appleLogin(let token):
+            return handleSignIn(provider: .apple, token: token)
         case .kakaoLogin(let token):
-            return handleKakaoLogin(token: token)
-        case .toggleAgree:
-            isAgreed = !isAgreed
-            return .just(.setAgree(isAgreed))
-        case .showTerms:
-            //             coordinator?.showTerms()
-            return .empty()
+            return handleSignIn(provider: .kakao, token: token)
         }
     }
     
@@ -70,53 +61,38 @@ extension SignInReactor {
         switch mutation {
         case .setLoading(let isLoading):
             newState.isLoading = isLoading
-        case .setError(let error):
-            newState.error = error
-        case .setUser(let user):
-            newState.user = user
-        case .setAgree(let isAgreed):
-            newState.isAgreed = isAgreed
+        case .setSignInResult(let result):
+            newState.isSuccessSignIn = result
         }
         
         return newState
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let signInMutation = signInUseCase.isSuccessSignIn
-            .filter { $0 == true }
-            .flatMap { [weak self] _ -> Observable<Mutation> in
-                guard let self = self else { return .empty() }
-                return self.signInUseCase.fetchUser()
-                    .asObservable()
-                    .map { user -> Mutation in .setUser(user) }
-                    .catch { error in
-                        return Observable.just(.setError(error))
-                    }
+        let signInResultMutation = usecase.isSuccessSignIn
+            .flatMapLatest { [weak self] isSuccess -> Observable<Mutation> in
+                guard let self else { return .empty() }
+                
+                if isSuccess { self.coordinator?.showMainTabFlow() }
+                return Observable.concat([
+                    .just(.setSignInResult(isSuccess)),
+                    .just(.setLoading(false))
+                ])
             }
         
-        let userMutation = signInUseCase.user
-            .compactMap { $0 }
-            .do(onNext: { [weak self] _ in
-                self?.coordinator?.didSignIn()
-            })
-            .flatMap { _ in Observable<Mutation>.empty() }
-        
-        return .merge(mutation, signInMutation, userMutation)
+        return .merge(mutation, signInResultMutation)
     }
 }
 
 extension SignInReactor {
-    private func handleKakaoLogin(token: String) -> Observable<Mutation> {
+    private func handleSignIn(provider: SignInProvider, token: String) -> Observable<Mutation> {
         return Observable.concat([
-            Observable.just(Mutation.setLoading(true)),
-            signInUseCase.signIn(provider: .kakao, token: token)
-                .asObservable()
-                .flatMap { _ in Observable<Mutation>.empty() }
-                .catch { error in
-                    return Observable.just(.setError(error))
-                },
-            
-            Observable.just(.setLoading(false))
+            .just(.setLoading(true)),
+            Observable.create { [weak self] observer in
+                self?.usecase.signIn(provider: provider, token: token)
+                observer.onCompleted()
+                return Disposables.create()
+            },
         ])
     }
 }

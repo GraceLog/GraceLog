@@ -12,7 +12,7 @@ struct AuthPresentationAssembly: Assembly {
         container.register(SignInReactor.self) { resolver in
             let signInUsecase = resolver.resolve(SignInUseCase.self)!
             return SignInReactor(
-                signInUseCase: signInUsecase
+                usecase: signInUsecase
             )
         }
         
