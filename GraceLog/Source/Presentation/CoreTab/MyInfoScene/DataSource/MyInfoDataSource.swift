@@ -20,7 +20,7 @@ enum MyInfoItemType {
     case myGraceLog
     case favoriteVerse
     case pushSetting
-    case nightPush
+    case diaryReminder
     case noticeBoard
     case inquiry
     case logout
@@ -32,9 +32,9 @@ extension MyInfoItem: SectionItem {}
 
 enum MyInfoSection {
     case myInfo(title: String, items: [MyInfoItem])
-    case pushNotification(title: String, items: [MyInfoItem])
+    case notificationSettings(title: String, items: [MyInfoItem])
     case customerService(title: String, items: [MyInfoItem])
-    case logout(title: String, items: [MyInfoItem])
+    case accountSettings(title: String, items: [MyInfoItem])
     case withdrawal(title: String, items: [MyInfoItem])
 }
 
@@ -44,9 +44,9 @@ extension MyInfoSection: SectionModelType {
     var items: [SectionItem] {
         switch self {
         case .myInfo(_, let items),
-                .pushNotification(_, let items),
+                .notificationSettings(_, let items),
                 .customerService(_, let items),
-                .logout(_, let items),
+                .accountSettings(_, let items),
                 .withdrawal(_, let items):
             return items
         }
@@ -55,9 +55,9 @@ extension MyInfoSection: SectionModelType {
     var title: String? {
         switch self {
         case .myInfo(let title, _),
-                .pushNotification(let title, _),
+                .notificationSettings(let title, _),
                 .customerService(let title, _),
-                .logout(let title, _),
+                .accountSettings(let title, _),
                 .withdrawal(let title, items: _):
             return title
         }
@@ -67,12 +67,12 @@ extension MyInfoSection: SectionModelType {
         switch original {
         case .myInfo(let title, _):
             self = .myInfo(title: title, items: items as! [MyInfoItem])
-        case .pushNotification(let title, _):
-            self = .pushNotification(title: title, items: items as! [MyInfoItem])
+        case .notificationSettings(let title, _):
+            self = .notificationSettings(title: title, items: items as! [MyInfoItem])
         case .customerService(let title, _):
             self = .customerService(title: title, items: items as! [MyInfoItem])
-        case .logout(let title, _):
-            self = .logout(title: title, items: items as! [MyInfoItem])
+        case .accountSettings(let title, _):
+            self = .accountSettings(title: title, items: items as! [MyInfoItem])
         case .withdrawal(let title, _):
             self = .withdrawal(title: title, items: items as! [MyInfoItem])
         }

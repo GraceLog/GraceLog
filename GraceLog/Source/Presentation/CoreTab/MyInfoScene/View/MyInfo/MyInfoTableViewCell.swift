@@ -58,6 +58,7 @@ final class MyInfoTableViewCell: UITableViewCell {
     private func setupStyles() {
         backgroundColor = .white
         selectionStyle = .none
+        separatorInset = .init(top: 0, left: 61, bottom: 0, right: 0)
     }
     
     private func setupLayouts() {

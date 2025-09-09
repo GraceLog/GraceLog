@@ -84,7 +84,7 @@ extension MyInfoViewReactor {
         
         let notificationItems = [
             MyInfoItem(icon: "notification", title: "알림 설정", type: .pushSetting),
-            MyInfoItem(icon: "night_notification", title: "일기 작성 알림 (밤 9시)", type: .nightPush)
+            MyInfoItem(icon: "night_notification", title: "일기 작성 알림 (밤 9시)", type: .diaryReminder)
         ]
         
         let customerServiceItems = [
@@ -102,9 +102,9 @@ extension MyInfoViewReactor {
         
         return [
             .myInfo(title: "\(user.name)님의 Grace Log", items: myInfoItems),
-            .pushNotification(title: "푸시 알림 설정", items: notificationItems),
+            .notificationSettings(title: "푸시 알림 설정", items: notificationItems),
             .customerService(title: "고객센터", items: customerServiceItems),
-            .logout(title: "계정 설정", items: logoutItems),
+            .accountSettings(title: "계정 설정", items: logoutItems),
             .withdrawal(title: "", items: withdrawalItem)
         ]
     }
