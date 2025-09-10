@@ -1,16 +1,16 @@
 //
-//  MyInfoTableViewCell.swift
+//  MyInfoSwitchTableViewCell.swift
 //  GraceLog
 //
-//  Created by 이상준 on 3/15/25.
+//  Created by 이상준 on 8/29/25.
 //
 
 import UIKit
 import SnapKit
 import Then
 
-final class MyInfoTableViewCell: UITableViewCell {
-    static let identifier = String(describing: MyInfoTableViewCell.self)
+final class MyInfoSwitchTableViewCell: UITableViewCell {
+    static let identifier = String(describing: MyInfoSwitchTableViewCell.self)
     
     private let containerStackView = UIStackView().then {
         $0.backgroundColor = .clear
@@ -28,16 +28,16 @@ final class MyInfoTableViewCell: UITableViewCell {
         $0.font = GLFont.regular15.font
     }
     
-    private let disclosureView = UIImageView().then {
-        $0.setDimensions(width: 20, height: 20)
-        $0.image = UIImage(named: "chevron_right")
+    let alarmSwitch = UISwitch().then {
+        $0.onTintColor = .themeColor
+        $0.setDimensions(width: 51, height: 31)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupStyles()
         setupLayouts()
-        setupConstarints()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -46,29 +46,29 @@ final class MyInfoTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 15))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 15))
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         iconImageView.image = nil
         titleLabel.text = nil
+        alarmSwitch.isOn = false
     }
     
     private func setupStyles() {
         backgroundColor = .white
         selectionStyle = .none
-        separatorInset = .init(top: 0, left: 61, bottom: 0, right: 0)
     }
     
     private func setupLayouts() {
         contentView.addSubview(containerStackView)
-        [iconImageView, titleLabel, disclosureView].forEach { containerStackView.addArrangedSubview($0) }
+        [iconImageView, titleLabel, alarmSwitch].forEach { containerStackView.addArrangedSubview($0) }
     }
     
-    private func setupConstarints() {
+    private func setupConstraints() {
         containerStackView.snp.makeConstraints {
-            $0.directionalEdges.equalToSuperview()
+            $0.directionalHorizontalEdges.centerY.equalToSuperview()
         }
         
         containerStackView.setCustomSpacing(20, after: iconImageView)
@@ -76,9 +76,11 @@ final class MyInfoTableViewCell: UITableViewCell {
     
     func updateUI(
         imageName: String,
-        title: String
+        title: String,
+        isOn: Bool
     ) {
         iconImageView.image = UIImage(named: imageName)
         titleLabel.text = title
+        alarmSwitch.isOn = isOn
     }
 }
