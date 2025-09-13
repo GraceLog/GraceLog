@@ -82,7 +82,7 @@ final class AnnouncementViewController: GraceLogBaseViewController, View {
         let safeArea = view.safeAreaLayoutGuide
         
         navigationBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(safeArea)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(44)
         }
@@ -104,7 +104,7 @@ final class AnnouncementViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         annuncementTableView.rx.modelSelected(Announcement.self)
-            .map { Reactor.Action.didTapAnnouncement($0.id) }
+            .map { Reactor.Action.didTapAnnouncement($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -116,6 +116,7 @@ final class AnnouncementViewController: GraceLogBaseViewController, View {
                 cellIdentifier: AnnouncementTableViewCell.reuseIdentifier,
                 cellType: AnnouncementTableViewCell.self)
             ) { row, item, cell in
+                cell.selectionStyle = .none
                 cell.configureUI(
                     title: item.title,
                     createdAt: item.createdAt,

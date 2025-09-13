@@ -27,8 +27,14 @@ final class AnnouncementCoordinator: Coordinator {
         self.navigationController.pushViewController(announcementVC, animated: true)
     }
     
-    func showAnnouncementDetail(id: Int) {
-        // TODO: 공지사항 상세로 이동
+    func showAnnouncementDetail(announcement: Announcement) {
+        let detailVC = AnnouncementDetailViewController(
+            reactor: AnnouncementDetailViewReactor(
+                coordinator: self,
+                announcement: announcement
+            )
+        )
+        navigationController.pushViewController(detailVC, animated: true)
     }
     
     func popViewController() {

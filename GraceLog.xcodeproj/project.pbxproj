@@ -134,6 +134,8 @@
 		DE4D0F4E2E7510D900827EDE /* AnnouncementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F4D2E7510D900827EDE /* AnnouncementUseCase.swift */; };
 		DE4D0F502E7510E500827EDE /* DefaultAnnouncementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementUseCase.swift */; };
 		DE4D0F532E751D6800827EDE /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F522E751D6800827EDE /* AnnouncementTableViewCell.swift */; };
+		DE4D0F552E753ADE00827EDE /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */; };
+		DE4D0F592E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */; };
 		DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */; };
 		DE5638472D99785D00A12192 /* DiaryCreatableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5638462D99785D00A12192 /* DiaryCreatableUseCase.swift */; };
 		DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */; };
@@ -360,6 +362,8 @@
 		DE4D0F4D2E7510D900827EDE /* AnnouncementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementUseCase.swift; sourceTree = "<group>"; };
 		DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnnouncementUseCase.swift; sourceTree = "<group>"; };
 		DE4D0F522E751D6800827EDE /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
+		DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
+		DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewReactor.swift; sourceTree = "<group>"; };
 		DE4D8B772D85646500533276 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		DE4D8B792D856A4A00533276 /* MyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		DE4D8B822D8C419700533276 /* MyInfoSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -550,6 +554,7 @@
 				02DC29702DDC29C000662D8A /* MyInfoViewReactor.swift */,
 				02DC29712DDC29C000662D8A /* ProfileEditViewReactor.swift */,
 				DE4D0F472E750D1400827EDE /* AnnouncementViewReactor.swift */,
+				DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -590,6 +595,7 @@
 				02DC297C2DDC29C000662D8A /* MyInfoViewController.swift */,
 				02DC297D2DDC29C000662D8A /* ProfileEditViewController.swift */,
 				DE4D0F432E71D47600827EDE /* AnnouncementViewController.swift */,
+				DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1773,6 +1779,7 @@
 				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
 				DED5588A2DBE226D00137B10 /* AuthRepository.swift in Sources */,
+				DE4D0F552E753ADE00827EDE /* AnnouncementDetailViewController.swift in Sources */,
 				DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */,
 				DE58FEB32D04284D008CADCD /* SceneDelegate.swift in Sources */,
 				DEEFEACA2D29270500699692 /* GraceLogUser.swift in Sources */,
@@ -1801,6 +1808,7 @@
 				DE2700632D22D188005C9DCF /* DefaultUserRepository.swift in Sources */,
 				DE9A1FDE2D79B0A50044F655 /* RecommendedVideo.swift in Sources */,
 				704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */,
+				DE4D0F592E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift in Sources */,
 				702D2B5C2E02C3A000D5E71E /* GLInputTextView.swift in Sources */,
 				70A97C912E255EA800F08DF6 /* GLColor.swift in Sources */,
 				DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */,
