@@ -21,7 +21,7 @@ enum MyInfoItemType {
     case favoriteVerse
     case pushSetting
     case diaryReminder
-    case noticeBoard
+    case announcement
     case inquiry
     case logout
     case withdrawal
