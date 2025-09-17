@@ -108,7 +108,7 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.announcement }
+        reactor.pulse(\.$announcement)
             .asDriver(onErrorJustReturn: nil)
             .drive(with: self) { owner, announcement in
                 guard let announcement else { return }

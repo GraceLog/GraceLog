@@ -10,12 +10,12 @@ import RxSwift
 
 final class AnnouncementViewReactor: Reactor {
     private let coordinator: AnnouncementCoordinator
-    private let usecase: DefaultAnnouncementUseCase
+    private let usecase: AnnouncementListUseCase
     
     var initialState: State
     
     enum Action {
-        case didTapAnnouncement(Announcement)
+        case didTapAnnouncement(Int)
         case didTapBackButton
     }
     
@@ -29,7 +29,7 @@ final class AnnouncementViewReactor: Reactor {
     
     init(
         coordinator: AnnouncementCoordinator,
-        usecase: DefaultAnnouncementUseCase
+        usecase: AnnouncementListUseCase
     ) {
         self.coordinator = coordinator
         self.usecase = usecase
@@ -45,9 +45,9 @@ final class AnnouncementViewReactor: Reactor {
 extension AnnouncementViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .didTapAnnouncement(let announcement):
-            print("선택된 공지사항 아이디: \(announcement)")
-            coordinator.showAnnouncementDetail(announcement: announcement)
+        case .didTapAnnouncement(let announcementId):
+            print("선택된 공지사항 아이디: \(announcementId)")
+            coordinator.showAnnouncementDetail(announcementId: announcementId)
         case .didTapBackButton:
             coordinator.popViewController()
         }

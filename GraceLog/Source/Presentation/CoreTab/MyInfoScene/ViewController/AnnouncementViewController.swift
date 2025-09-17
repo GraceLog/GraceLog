@@ -104,7 +104,7 @@ final class AnnouncementViewController: GraceLogBaseViewController, View {
             .disposed(by: disposeBag)
         
         annuncementTableView.rx.modelSelected(Announcement.self)
-            .map { Reactor.Action.didTapAnnouncement($0) }
+            .map { Reactor.Action.didTapAnnouncement($0.id) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         

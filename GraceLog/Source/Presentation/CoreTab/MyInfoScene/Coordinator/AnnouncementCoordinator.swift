@@ -27,11 +27,12 @@ final class AnnouncementCoordinator: Coordinator {
         self.navigationController.pushViewController(announcementVC, animated: true)
     }
     
-    func showAnnouncementDetail(announcement: Announcement) {
+    func showAnnouncementDetail(announcementId: Int) {
         let detailVC = AnnouncementDetailViewController(
             reactor: AnnouncementDetailViewReactor(
                 coordinator: self,
-                announcement: announcement
+                usecase: DefaultAnnouncementUseCase(),
+                announcementId: announcementId
             )
         )
         navigationController.pushViewController(detailVC, animated: true)
