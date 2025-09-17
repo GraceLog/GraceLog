@@ -113,7 +113,7 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController, View {
             .drive(with: self) { owner, announcement in
                 guard let announcement else { return }
                 owner.titleLabel.text = announcement.title
-                owner.createdAtLabel.text = announcement.createdAt
+                owner.createdAtLabel.text = DateformatterFactory.dateWithDot.string(from: announcement.createdAt)
                 owner.contentsLabel.text = announcement.contents
             }
             .disposed(by: disposeBag)

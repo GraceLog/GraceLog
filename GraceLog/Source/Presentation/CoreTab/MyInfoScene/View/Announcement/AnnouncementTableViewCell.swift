@@ -72,11 +72,11 @@ final class AnnouncementTableViewCell: UITableViewCell {
 extension AnnouncementTableViewCell {
     func configureUI(
         title: String,
-        createdAt: String,
+        createdAt: Date,
         contents: String
     ) {
         titleLabel.text = title
-        createdAtLabel.text = createdAt
+        createdAtLabel.text = DateformatterFactory.dateWithDot.string(from: createdAt)
         contentsLabel.text = contents
     }
 }

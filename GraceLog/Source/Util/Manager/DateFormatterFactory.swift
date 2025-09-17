@@ -23,4 +23,9 @@ enum DateformatterFactory {
     static var monthDaySlash: DateFormatter {
         formatter.then { $0.dateFormat = "M/d" }
     }
+    
+    /// yyyy.MM.dd 형식 (예: 2025.09.07)
+    static var dateWithDot: DateFormatter {
+        formatter.then { $0.dateFormat = "yyyy.MM.dd" }
+    }
 }
