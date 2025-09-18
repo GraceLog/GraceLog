@@ -103,6 +103,8 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController, View {
     }
     
     func bind(reactor: AnnouncementDetailViewReactor) {
+        reactor.action.onNext(.fetchAnnouncement)
+        
         backButton.rx.tap
             .map { Reactor.Action.didTapBackButton }
             .bind(to: reactor.action)

@@ -8,7 +8,7 @@
 import RxRelay
 
 protocol AnnouncementDetailUseCase {
-    var announcement: BehaviorRelay<Announcement?> { get }
+    var announcement: PublishRelay<Announcement> { get }
     
-    func fetchAnnouncementDetail(_ id: Int)
+    func fetchAnnouncementDetail()
 }

@@ -11,11 +11,11 @@ import RxSwift
 final class AnnouncementDetailViewReactor: Reactor {
     private let coordinator: AnnouncementCoordinator
     private let usecase: AnnouncementDetailUseCase
-    private let announcementId: Int
     
     var initialState: State
     
     enum Action {
+        case fetchAnnouncement
         case didTapBackButton
     }
     
@@ -29,28 +29,24 @@ final class AnnouncementDetailViewReactor: Reactor {
     
     init(
         coordinator: AnnouncementCoordinator,
-        usecase: AnnouncementDetailUseCase,
-        announcementId: Int
+        usecase: AnnouncementDetailUseCase
     ) {
         self.coordinator = coordinator
         self.usecase = usecase
-        self.announcementId = announcementId
         
-        self.initialState = State(
-            announcement: nil
-        )
-        
-        usecase.fetchAnnouncementDetail(announcementId)
+        self.initialState = State()
     }
 }
 
 extension AnnouncementDetailViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .fetchAnnouncement:
+            usecase.fetchAnnouncementDetail()
         case .didTapBackButton:
             coordinator.popViewController()
-            return .empty()
         }
+        return .empty()
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -65,13 +61,9 @@ extension AnnouncementDetailViewReactor {
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let announcementMutation = usecase.announcement
-            .compactMap { $0 }
-            .map { Mutation.setAnnouncement($0) }
-        
         return Observable.merge(
-            mutation,
-            announcementMutation
+            usecase.announcement.map { .setAnnouncement($0) },
+            mutation
         )
     }
 }

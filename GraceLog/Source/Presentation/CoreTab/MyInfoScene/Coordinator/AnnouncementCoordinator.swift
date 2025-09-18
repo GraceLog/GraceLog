@@ -21,7 +21,7 @@ final class AnnouncementCoordinator: Coordinator {
         let announcementVC = AnnouncementViewController(
             reactor: AnnouncementViewReactor(
                 coordinator: self,
-                usecase: DefaultAnnouncementUseCase()
+                usecase: DefaultAnnouncementListUseCase()
             )
         )
         self.navigationController.pushViewController(announcementVC, animated: true)
@@ -31,8 +31,9 @@ final class AnnouncementCoordinator: Coordinator {
         let detailVC = AnnouncementDetailViewController(
             reactor: AnnouncementDetailViewReactor(
                 coordinator: self,
-                usecase: DefaultAnnouncementUseCase(),
-                announcementId: announcementId
+                usecase: DefaultAnnouncementDetailUseCase(
+                    announcementId: announcementId
+                )
             )
         )
         navigationController.pushViewController(detailVC, animated: true)

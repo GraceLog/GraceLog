@@ -132,11 +132,12 @@
 		DE4D0F482E750D1400827EDE /* AnnouncementViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F472E750D1400827EDE /* AnnouncementViewReactor.swift */; };
 		DE4D0F4A2E750EC300827EDE /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F492E750EC300827EDE /* Announcement.swift */; };
 		DE4D0F4E2E7510D900827EDE /* AnnouncementDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F4D2E7510D900827EDE /* AnnouncementDetailUseCase.swift */; };
-		DE4D0F502E7510E500827EDE /* DefaultAnnouncementUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementUseCase.swift */; };
+		DE4D0F502E7510E500827EDE /* DefaultAnnouncementListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementListUseCase.swift */; };
 		DE4D0F532E751D6800827EDE /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F522E751D6800827EDE /* AnnouncementTableViewCell.swift */; };
 		DE4D0F552E753ADE00827EDE /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */; };
 		DE4D0F592E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */; };
 		DE4D0F5B2E7ACB7B00827EDE /* AnnouncementListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F5A2E7ACB7B00827EDE /* AnnouncementListUseCase.swift */; };
+		DE4D0F5D2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F5C2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift */; };
 		DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */; };
 		DE5638472D99785D00A12192 /* DiaryCreatableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5638462D99785D00A12192 /* DiaryCreatableUseCase.swift */; };
 		DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */; };
@@ -361,11 +362,12 @@
 		DE4D0F472E750D1400827EDE /* AnnouncementViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewReactor.swift; sourceTree = "<group>"; };
 		DE4D0F492E750EC300827EDE /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		DE4D0F4D2E7510D900827EDE /* AnnouncementDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailUseCase.swift; sourceTree = "<group>"; };
-		DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnnouncementUseCase.swift; sourceTree = "<group>"; };
+		DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnnouncementListUseCase.swift; sourceTree = "<group>"; };
 		DE4D0F522E751D6800827EDE /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
 		DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewReactor.swift; sourceTree = "<group>"; };
 		DE4D0F5A2E7ACB7B00827EDE /* AnnouncementListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementListUseCase.swift; sourceTree = "<group>"; };
+		DE4D0F5C2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnnouncementDetailUseCase.swift; sourceTree = "<group>"; };
 		DE4D8B772D85646500533276 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		DE4D8B792D856A4A00533276 /* MyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		DE4D8B822D8C419700533276 /* MyInfoSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -1275,7 +1277,8 @@
 			isa = PBXGroup;
 			children = (
 				DE4D0F4C2E7510CB00827EDE /* Protocol */,
-				DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementUseCase.swift */,
+				DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementListUseCase.swift */,
+				DE4D0F5C2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift */,
 			);
 			path = Announcement;
 			sourceTree = "<group>";
@@ -1777,7 +1780,7 @@
 				DE4D0F4E2E7510D900827EDE /* AnnouncementDetailUseCase.swift in Sources */,
 				DE23873D2E0BB4B200893D8C /* HomeMyBibleView.swift in Sources */,
 				DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */,
-				DE4D0F502E7510E500827EDE /* DefaultAnnouncementUseCase.swift in Sources */,
+				DE4D0F502E7510E500827EDE /* DefaultAnnouncementListUseCase.swift in Sources */,
 				709CBB6B2E2AD2C400F68457 /* Comment.swift in Sources */,
 				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
@@ -1799,6 +1802,7 @@
 				702D2B6E2E07107A00D5E71E /* AutoSizingTableView.swift in Sources */,
 				DE2700532D2113F2005C9DCF /* SignInReactor.swift in Sources */,
 				023446172DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift in Sources */,
+				DE4D0F5D2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift in Sources */,
 				70A97C5C2E21622400F08DF6 /* DataAssembly.swift in Sources */,
 				025019CC2DE0469B003FD48D /* DefaultMyInfoUseCase.swift in Sources */,
 				DED5587A2DBC798A00137B10 /* AuthAPI.swift in Sources */,
