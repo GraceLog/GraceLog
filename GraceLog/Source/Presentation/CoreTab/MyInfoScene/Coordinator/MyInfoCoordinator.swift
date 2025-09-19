@@ -22,10 +22,17 @@ final class MyInfoCoordinator: NavigationCoordinator {
         navigationController.setViewControllers([myInfoVC], animated: false)
     }
     
-    func showProfileEditVC() {
+    func showProfileEdit() {
         let profileEditCoordinator = ProfileEditCoordinator(self.navigationController)
         profileEditCoordinator.parentCoordinator = self
         self.childCoordinators.append(profileEditCoordinator)
         profileEditCoordinator.start()
+    }
+    
+    func showAnnouncement() {
+        let announcementCoordinator = AnnouncementCoordinator(self.navigationController)
+        announcementCoordinator.parentCoordinator = self
+        self.childCoordinators.append(announcementCoordinator)
+        announcementCoordinator.start()
     }
 }

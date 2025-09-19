@@ -52,8 +52,9 @@ extension MyInfoViewReactor {
             if let myInfoItem = item as? MyInfoItem {
                 switch myInfoItem.type {
                 case .myProfile:
-                    coordinator?.showProfileEditVC()
-                    return .empty()
+                    coordinator?.showProfileEdit()
+                case .announcement:
+                    coordinator?.showAnnouncement()
                 default:
                     return .empty()
                 }
@@ -88,7 +89,7 @@ extension MyInfoViewReactor {
         ]
         
         let customerServiceItems = [
-            MyInfoItem(icon: "flag", title: "공지사항", type: .noticeBoard),
+            MyInfoItem(icon: "flag", title: "공지사항", type: .announcement),
             MyInfoItem(icon: "message", title: "문의하기", type: .inquiry)
         ]
         

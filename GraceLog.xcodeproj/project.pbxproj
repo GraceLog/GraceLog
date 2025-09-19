@@ -127,6 +127,17 @@
 		DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BFCE32D059E970076426D /* SearchCoordinator.swift */; };
 		DE3BFCEC2D0D3D390076426D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE3BFCEB2D0D3D390076426D /* GoogleService-Info.plist */; };
 		DE47E9792E48790300C379C3 /* MyInfoProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE47E9782E48790300C379C3 /* MyInfoProfileView.swift */; };
+		DE4D0F442E71D47600827EDE /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F432E71D47600827EDE /* AnnouncementViewController.swift */; };
+		DE4D0F462E7423B000827EDE /* AnnouncementCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F452E7423B000827EDE /* AnnouncementCoordinator.swift */; };
+		DE4D0F482E750D1400827EDE /* AnnouncementViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F472E750D1400827EDE /* AnnouncementViewReactor.swift */; };
+		DE4D0F4A2E750EC300827EDE /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F492E750EC300827EDE /* Announcement.swift */; };
+		DE4D0F4E2E7510D900827EDE /* AnnouncementDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F4D2E7510D900827EDE /* AnnouncementDetailUseCase.swift */; };
+		DE4D0F502E7510E500827EDE /* DefaultAnnouncementListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementListUseCase.swift */; };
+		DE4D0F532E751D6800827EDE /* AnnouncementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F522E751D6800827EDE /* AnnouncementTableViewCell.swift */; };
+		DE4D0F552E753ADE00827EDE /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */; };
+		DE4D0F592E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */; };
+		DE4D0F5B2E7ACB7B00827EDE /* AnnouncementListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F5A2E7ACB7B00827EDE /* AnnouncementListUseCase.swift */; };
+		DE4D0F5D2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F5C2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift */; };
 		DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C4E2E1950DA00F08DF6 /* MainTabCoordinator.swift */; };
 		DE5638472D99785D00A12192 /* DiaryCreatableUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5638462D99785D00A12192 /* DiaryCreatableUseCase.swift */; };
 		DE56384C2D9DFDDF00A12192 /* CommunityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */; };
@@ -346,6 +357,17 @@
 		DE3BFCE32D059E970076426D /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		DE3BFCEB2D0D3D390076426D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE47E9782E48790300C379C3 /* MyInfoProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoProfileView.swift; sourceTree = "<group>"; };
+		DE4D0F432E71D47600827EDE /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
+		DE4D0F452E7423B000827EDE /* AnnouncementCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCoordinator.swift; sourceTree = "<group>"; };
+		DE4D0F472E750D1400827EDE /* AnnouncementViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewReactor.swift; sourceTree = "<group>"; };
+		DE4D0F492E750EC300827EDE /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
+		DE4D0F4D2E7510D900827EDE /* AnnouncementDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailUseCase.swift; sourceTree = "<group>"; };
+		DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnnouncementListUseCase.swift; sourceTree = "<group>"; };
+		DE4D0F522E751D6800827EDE /* AnnouncementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTableViewCell.swift; sourceTree = "<group>"; };
+		DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
+		DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewReactor.swift; sourceTree = "<group>"; };
+		DE4D0F5A2E7ACB7B00827EDE /* AnnouncementListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementListUseCase.swift; sourceTree = "<group>"; };
+		DE4D0F5C2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnnouncementDetailUseCase.swift; sourceTree = "<group>"; };
 		DE4D8B772D85646500533276 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		DE4D8B792D856A4A00533276 /* MyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		DE4D8B822D8C419700533276 /* MyInfoSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -517,6 +539,7 @@
 			children = (
 				02DC296A2DDC29C000662D8A /* MyInfoCoordinator.swift */,
 				02DC296B2DDC29C000662D8A /* ProfileEditCoordinator.swift */,
+				DE4D0F452E7423B000827EDE /* AnnouncementCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -534,6 +557,8 @@
 			children = (
 				02DC29702DDC29C000662D8A /* MyInfoViewReactor.swift */,
 				02DC29712DDC29C000662D8A /* ProfileEditViewReactor.swift */,
+				DE4D0F472E750D1400827EDE /* AnnouncementViewReactor.swift */,
+				DE4D0F582E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -563,6 +588,7 @@
 			children = (
 				02DC29772DDC29C000662D8A /* MyInfo */,
 				02DC297A2DDC29C000662D8A /* ProfileEdit */,
+				DE4D0F512E751D5200827EDE /* Announcement */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -572,6 +598,8 @@
 			children = (
 				02DC297C2DDC29C000662D8A /* MyInfoViewController.swift */,
 				02DC297D2DDC29C000662D8A /* ProfileEditViewController.swift */,
+				DE4D0F432E71D47600827EDE /* AnnouncementViewController.swift */,
+				DE4D0F542E753ADE00827EDE /* AnnouncementDetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -954,6 +982,7 @@
 				70A97C942E27605D00F08DF6 /* DailyVerse.swift */,
 				70A97C962E27677700F08DF6 /* VideoTag.swift */,
 				709CBB6A2E2AD2C400F68457 /* Comment.swift */,
+				DE4D0F492E750EC300827EDE /* Announcement.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -966,6 +995,7 @@
 				DE9A1FF32D7C07DD0044F655 /* Home */,
 				DE66C2F82D96B380009A983F /* Diary */,
 				025019C72DE043EA003FD48D /* MyInfo */,
+				DE4D0F4B2E7510AF00827EDE /* Announcement */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -1241,6 +1271,33 @@
 				DE3BFCE32D059E970076426D /* SearchCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		DE4D0F4B2E7510AF00827EDE /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				DE4D0F4C2E7510CB00827EDE /* Protocol */,
+				DE4D0F4F2E7510E500827EDE /* DefaultAnnouncementListUseCase.swift */,
+				DE4D0F5C2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift */,
+			);
+			path = Announcement;
+			sourceTree = "<group>";
+		};
+		DE4D0F4C2E7510CB00827EDE /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				DE4D0F5A2E7ACB7B00827EDE /* AnnouncementListUseCase.swift */,
+				DE4D0F4D2E7510D900827EDE /* AnnouncementDetailUseCase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		DE4D0F512E751D5200827EDE /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				DE4D0F522E751D6800827EDE /* AnnouncementTableViewCell.swift */,
+			);
+			path = Announcement;
 			sourceTree = "<group>";
 		};
 		DE56384D2D9E01B900A12192 /* DataSource */ = {
@@ -1695,6 +1752,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE4D0F442E71D47600827EDE /* AnnouncementViewController.swift in Sources */,
 				70A97C662E2169D300F08DF6 /* MyInfoPresentationAssembly.swift in Sources */,
 				025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */,
 				70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */,
@@ -1719,12 +1777,15 @@
 				702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */,
 				702D2B702E07F35B00D5E71E /* DiarySettingView.swift in Sources */,
 				DE3BFCD82D048B550076426D /* Coordinator.swift in Sources */,
+				DE4D0F4E2E7510D900827EDE /* AnnouncementDetailUseCase.swift in Sources */,
 				DE23873D2E0BB4B200893D8C /* HomeMyBibleView.swift in Sources */,
 				DE9A1FD72D79AB8B0044F655 /* HomeCommunityContent.swift in Sources */,
+				DE4D0F502E7510E500827EDE /* DefaultAnnouncementListUseCase.swift in Sources */,
 				709CBB6B2E2AD2C400F68457 /* Comment.swift in Sources */,
 				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
 				DED5588A2DBE226D00137B10 /* AuthRepository.swift in Sources */,
+				DE4D0F552E753ADE00827EDE /* AnnouncementDetailViewController.swift in Sources */,
 				DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */,
 				DE58FEB32D04284D008CADCD /* SceneDelegate.swift in Sources */,
 				DEEFEACA2D29270500699692 /* GraceLogUser.swift in Sources */,
@@ -1741,6 +1802,7 @@
 				702D2B6E2E07107A00D5E71E /* AutoSizingTableView.swift in Sources */,
 				DE2700532D2113F2005C9DCF /* SignInReactor.swift in Sources */,
 				023446172DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift in Sources */,
+				DE4D0F5D2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift in Sources */,
 				70A97C5C2E21622400F08DF6 /* DataAssembly.swift in Sources */,
 				025019CC2DE0469B003FD48D /* DefaultMyInfoUseCase.swift in Sources */,
 				DED5587A2DBC798A00137B10 /* AuthAPI.swift in Sources */,
@@ -1753,6 +1815,7 @@
 				DE2700632D22D188005C9DCF /* DefaultUserRepository.swift in Sources */,
 				DE9A1FDE2D79B0A50044F655 /* RecommendedVideo.swift in Sources */,
 				704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */,
+				DE4D0F592E75BF0E00827EDE /* AnnouncementDetailViewReactor.swift in Sources */,
 				702D2B5C2E02C3A000D5E71E /* GLInputTextView.swift in Sources */,
 				70A97C912E255EA800F08DF6 /* GLColor.swift in Sources */,
 				DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */,
@@ -1771,6 +1834,7 @@
 				70A97C532E1F8D5800F08DF6 /* DateFormatterFactory.swift in Sources */,
 				02DC29872DDC29C000662D8A /* ProfileEditCoordinator.swift in Sources */,
 				02DC29882DDC29C000662D8A /* MyInfoTableViewCell.swift in Sources */,
+				DE4D0F482E750D1400827EDE /* AnnouncementViewReactor.swift in Sources */,
 				02DC29892DDC29C000662D8A /* MyInfoViewController.swift in Sources */,
 				02DC298A2DDC29C000662D8A /* ProfileEditFieldView.swift in Sources */,
 				7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */,
@@ -1811,6 +1875,7 @@
 				70062C562E4AF8FA0096C1F7 /* URL+Extension.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
+				DE4D0F4A2E750EC300827EDE /* Announcement.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
 				DE9A1FFA2D7C09350044F655 /* HomeRepository.swift in Sources */,
 				0295ADFB2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift in Sources */,
@@ -1840,6 +1905,7 @@
 				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
+				DE4D0F5B2E7ACB7B00827EDE /* AnnouncementListUseCase.swift in Sources */,
 				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
 				DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
@@ -1853,6 +1919,8 @@
 				709CBB582E2AAC6D00F68457 /* CommentBottomSheetViewReactor.swift in Sources */,
 				709CBB612E2AAE4500F68457 /* CommentEditView.swift in Sources */,
 				DE2700662D22D43E005C9DCF /* UserResponseDTO.swift in Sources */,
+				DE4D0F462E7423B000827EDE /* AnnouncementCoordinator.swift in Sources */,
+				DE4D0F532E751D6800827EDE /* AnnouncementTableViewCell.swift in Sources */,
 				70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */,
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,
 				0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */,
