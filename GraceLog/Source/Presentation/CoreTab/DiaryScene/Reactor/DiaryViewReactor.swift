@@ -47,7 +47,18 @@ final class DiaryViewReactor: Reactor {
         self.initialState = State(
             images: [], 
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
-            shareStates: Community.allCases.map { DiaryShareState(diaryOption: $0, isSelected: false) }
+            shareStates: [Community(id: 1, name: "파이어폭스",
+                                    logoImageURL: URL(string: "https://picsum.photos/seed/firefox/200")),
+                          Community(id: 2, name: "스위프트 스터디",
+                                    logoImageURL: URL(string: "https://picsum.photos/seed/swift/200")),
+                          Community(id: 3, name: "iOS 개발 크루",
+                                    logoImageURL: URL(string: "https://picsum.photos/seed/ios/200")),
+                          Community(id: 4, name: "알고리즘 클럽",
+                                    logoImageURL: URL(string: "https://picsum.photos/seed/algorithm/200")),
+                          Community(id: 5, name: "UI/UX 연구회",
+                                    logoImageURL: URL(string: "https://picsum.photos/seed/design/200")),
+                          Community(id: 6, name: "네트워킹 동아리",
+                                    logoImageURL: URL(string: "https://picsum.photos/seed/networking/200")),].map { DiaryShareState(diaryOption: $0, isSelected: false) }
         )
     }
 }

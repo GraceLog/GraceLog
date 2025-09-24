@@ -70,9 +70,9 @@ final class DiaryShareTableViewCell: UITableViewCell {
         containerStackView.setCustomSpacing(18, after: logoImageView)
     }
     
-    func updateUI(imageNamed: String, title: String, isOn: Bool) {
-        logoImageView.image = UIImage(named: imageNamed)
-        titleLabel.text = title
+    func updateUI(imageURL: URL?, name: String, isOn: Bool) {
+        logoImageView.kf.setImage(with: imageURL)
+        titleLabel.text = name
         shareSwitchButton.isOn = isOn
     }
 }
