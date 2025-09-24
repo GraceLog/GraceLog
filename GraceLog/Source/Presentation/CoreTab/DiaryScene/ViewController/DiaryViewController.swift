@@ -161,8 +161,8 @@ final class DiaryViewController: UIViewController, View {
                 cellType: DiaryShareTableViewCell.self)
             ) { index, item, cell in
                 cell.updateUI(
-                    imageNamed: item.diaryOption.logoImageNamed,
-                    title: item.diaryOption.title,
+                    imageURL: item.diaryOption.logoImageURL,
+                    name: item.diaryOption.name,
                     isOn: item.isSelected
                 )
                 

@@ -109,8 +109,8 @@ extension HomeCommunityViewController {
                 cellType: HomeCommunityListCollectionViewCell.self)
             ) { index, item, cell in
                 cell.updateUI(
-                    imageNamed: item.logoImageNamed,
-                    communityName: item.title
+                    imageURL: item.logoImageURL,
+                    communityName: item.name
                 )
             }
             .disposed(by: disposeBag)

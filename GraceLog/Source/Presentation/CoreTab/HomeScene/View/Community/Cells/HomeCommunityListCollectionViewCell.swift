@@ -84,9 +84,8 @@ final class HomeCommunityListCollectionViewCell: UICollectionViewCell {
 }
 
 extension HomeCommunityListCollectionViewCell {
-    func updateUI(imageNamed: String, communityName: String) {
-        // TODO: 현재는 이미지 이름으로 -> 추후 이미지 URL을 통해 불러온 데이터로 수정 해야함
-        communityImageView.image = UIImage(named: imageNamed)
+    func updateUI(imageURL: URL?, communityName: String) {
+        communityImageView.kf.setImage(with: imageURL)
         communityLabel.text = communityName
     }
 }
