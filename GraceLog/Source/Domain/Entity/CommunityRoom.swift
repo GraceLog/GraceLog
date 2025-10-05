@@ -1,5 +1,5 @@
 //
-//  CommunityChatting.swift
+//  CommunityRoom.swift
 //  GraceLog
 //
 //  Created by 이건준 on 9/21/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CommunityChatting {
+struct CommunityRoom {
     let id: Int
     let title: String
     let description: String

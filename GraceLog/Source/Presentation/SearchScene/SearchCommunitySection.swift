@@ -14,8 +14,8 @@ enum SearchCommunityItem: IdentifiableType, Equatable {
         switch self {
         case .community(let community):
             return community.id
-        case .chatting(let communityChatting):
-            return communityChatting.id
+        case .room(let communityRoom):
+            return communityRoom.id
         case .profile(let profileItem):
             return profileItem.id
         }
@@ -26,7 +26,7 @@ enum SearchCommunityItem: IdentifiableType, Equatable {
     }
     
     case community(Community)
-    case chatting(CommunityChatting)
+    case room(CommunityRoom)
     case profile(ProfileItem)
 }
 

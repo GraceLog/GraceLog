@@ -1,5 +1,5 @@
 //
-//  CommunityChattingCollectionViewCell.swift
+//  CommunityRoomCollectionViewCell.swift
 //  GraceLog
 //
 //  Created by 이건준 on 9/21/25.
@@ -11,8 +11,8 @@ import Kingfisher
 import SnapKit
 import Then
 
-final class CommunityChattingCollectionViewCell: UICollectionViewCell {
-    static let identifier = String(describing: CommunityChattingCollectionViewCell.self)
+final class CommunityRoomCollectionViewCell: UICollectionViewCell {
+    static let identifier = String(describing: CommunityRoomCollectionViewCell.self)
     
     private let communityImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -93,7 +93,7 @@ final class CommunityChattingCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension CommunityChattingCollectionViewCell {
+extension CommunityRoomCollectionViewCell {
     func configureUI(
         title: String,
         description: String,

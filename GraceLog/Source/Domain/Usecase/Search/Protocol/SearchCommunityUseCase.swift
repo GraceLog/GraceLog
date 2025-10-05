@@ -9,11 +9,11 @@ import RxRelay
 
 protocol SearchCommunityUseCase {
     var popularCommunityList: BehaviorRelay<[Community]> { get }
-    var chattingList: BehaviorRelay<[CommunityChatting]> { get }
+    var roomList: BehaviorRelay<[CommunityRoom]> { get }
     var profileList: BehaviorRelay<[ProfileItem]> { get }
     
     func fetchPopularCommunity()
-    func fetchChattingList()
+    func fetchRoomList()
     func fetchProfileList()
     func searchCommunity(query: String)
 }

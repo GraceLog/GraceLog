@@ -21,7 +21,7 @@ final class SearchViewReactor: Reactor {
         )
         
         usecase.fetchProfileList()
-        usecase.fetchChattingList()
+        usecase.fetchRoomList()
         usecase.fetchPopularCommunity()
         
     }
@@ -36,22 +36,22 @@ final class SearchViewReactor: Reactor {
     enum Mutation {
         case setCommunities([Community])
         case setProfiles([ProfileItem])
-        case setChattings([CommunityChatting])
+        case setRooms([CommunityRoom])
     }
     
     struct State {
         @Pulse var sections: [SearchCommunitySection]
         var communities: [Community] = []
         var profiles: [ProfileItem] = []
-        var chattings: [CommunityChatting] = []
+        var rooms: [CommunityRoom] = []
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
         let communityMutation = usecase.popularCommunityList.map { Mutation.setCommunities($0) }
-        let chattingMutation = usecase.chattingList.map { Mutation.setChattings($0) }
+        let roomMutation = usecase.roomList.map { Mutation.setRooms($0) }
         let profileMutation = usecase.profileList.map { Mutation.setProfiles($0) }
         
-        return .merge(mutation, communityMutation, chattingMutation, profileMutation)
+        return .merge(mutation, communityMutation, roomMutation, profileMutation)
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -66,7 +66,7 @@ final class SearchViewReactor: Reactor {
             let id = currentState.communities[indexPath.row].id
             coordinator.showCommunityViewController(id: id)
         case let .didTapChattingRoom(indexPath):
-            let id = currentState.chattings[indexPath.row].id
+            let id = currentState.rooms[indexPath.row].id
             coordinator.showCommunityChattingViewController(id: id)
         }
         return .empty()
@@ -79,10 +79,10 @@ final class SearchViewReactor: Reactor {
             newState.communities = communities
         case let .setProfiles(profiles):
             newState.profiles = profiles
-        case let .setChattings(chattings):
-            newState.chattings = chattings
+        case let .setRooms(rooms):
+            newState.rooms = rooms
         }
-        newState.sections = makeSections(isSearching: isSearching, communities: newState.communities, chattings: newState.chattings, profiles: newState.profiles)
+        newState.sections = makeSections(isSearching: isSearching, communities: newState.communities, rooms: newState.rooms, profiles: newState.profiles)
         return newState
     }
 }
@@ -91,11 +91,11 @@ extension SearchViewReactor {
     private func makeSections(
         isSearching: Bool,
         communities: [Community],
-        chattings: [CommunityChatting],
+        rooms: [CommunityRoom],
         profiles: [ProfileItem]
     ) -> [SearchCommunitySection] {
         let primaryItems = isSearching ? profiles.map { SearchCommunityItem.profile($0) } : communities.map { SearchCommunityItem.community($0) }
-        let secondaryItems = chattings.map { SearchCommunityItem.chatting($0) }
+        let secondaryItems = rooms.map { SearchCommunityItem.room($0) }
         
         return [
             .primary(isSearching: isSearching, items: primaryItems),
