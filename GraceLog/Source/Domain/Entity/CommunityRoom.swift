@@ -2,7 +2,7 @@
 //  CommunityRoom.swift
 //  GraceLog
 //
-//  Created by 이건준 on 9/21/25.
+//  Created by 이건준 on 10/5/25.
 //
 
 import Foundation
