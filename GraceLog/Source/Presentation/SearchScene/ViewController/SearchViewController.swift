@@ -43,7 +43,7 @@ final class SearchViewController: GraceLogBaseViewController, View {
         }
     }).then {
         $0.register(HomeCommunityListCollectionViewCell.self, forCellWithReuseIdentifier: HomeCommunityListCollectionViewCell.reuseIdentifier)
-        $0.register(CommunityChattingCollectionViewCell.self, forCellWithReuseIdentifier: CommunityChattingCollectionViewCell.identifier)
+        $0.register(CommunityRoomCollectionViewCell.self, forCellWithReuseIdentifier: CommunityRoomCollectionViewCell.identifier)
         $0.register(SearchResultCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SearchResultCollectionHeaderView.identifier)
         $0.delegate = self
         $0.showsVerticalScrollIndicator = false
@@ -146,17 +146,17 @@ final class SearchViewController: GraceLogBaseViewController, View {
                     communityName: community.name
                 )
                 return cell
-            case .chatting(let chat):
+            case .room(let room):
                 let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: CommunityChattingCollectionViewCell.identifier,
+                    withReuseIdentifier: CommunityRoomCollectionViewCell.identifier,
                     for: indexPath
-                ) as? CommunityChattingCollectionViewCell ?? CommunityChattingCollectionViewCell()
+                ) as? CommunityRoomCollectionViewCell ?? CommunityRoomCollectionViewCell()
                 cell.configureUI(
-                    title: chat.title,
-                    description: chat.description,
-                    editedDate: chat.recentEditedDate,
-                    peopleCount: chat.peopleCount,
-                    imageURL: chat.imageURL,
+                    title: room.title,
+                    description: room.description,
+                    editedDate: room.recentEditedDate,
+                    peopleCount: room.peopleCount,
+                    imageURL: room.imageURL,
                 )
                 return cell
             case .profile(let item):

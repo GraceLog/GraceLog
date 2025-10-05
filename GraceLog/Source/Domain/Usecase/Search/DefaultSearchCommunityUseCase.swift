@@ -9,7 +9,7 @@ import RxRelay
 
 final class DefaultSearchCommunityUseCase: SearchCommunityUseCase {
     var popularCommunityList = BehaviorRelay<[Community]>(value: [])
-    var chattingList = BehaviorRelay<[CommunityChatting]>(value: [])
+    var roomList = BehaviorRelay<[CommunityRoom]>(value: [])
     var profileList = BehaviorRelay<[ProfileItem]>(value: [])
     
     func fetchPopularCommunity() {
@@ -29,9 +29,9 @@ final class DefaultSearchCommunityUseCase: SearchCommunityUseCase {
         ])
     }
     
-    func fetchChattingList() {
+    func fetchRoomList() {
         let now = Date()
-        let data: [CommunityChatting] = [
+        let data: [CommunityRoom] = [
             .init(
                 id: 101,
                 title: "iOS 아키텍처 토론방",
@@ -81,7 +81,7 @@ final class DefaultSearchCommunityUseCase: SearchCommunityUseCase {
                 imageURL: URL(string: "https://picsum.photos/seed/designsystem/200")
             )
         ]
-        chattingList.accept(data)
+        roomList.accept(data)
     }
     
     func fetchProfileList() {
@@ -121,7 +121,7 @@ final class DefaultSearchCommunityUseCase: SearchCommunityUseCase {
     
     func searchCommunity(query: String) {
         let now = Date()
-        let data: [CommunityChatting] = [
+        let data: [CommunityRoom] = [
             .init(
                 id: 101,
                 title: "iOS 아키텍처 토론방",
@@ -147,6 +147,6 @@ final class DefaultSearchCommunityUseCase: SearchCommunityUseCase {
                 imageURL: URL(string: "https://picsum.photos/seed/algorithm-chat/200")
             )
         ]
-        chattingList.accept(data)
+        roomList.accept(data)
     }
 }
