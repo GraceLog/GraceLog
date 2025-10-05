@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -31,7 +31,7 @@
 		02DC298B2DDC29C000662D8A /* MyInfoButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC29732DDC29C000662D8A /* MyInfoButtonTableViewCell.swift */; };
 		02DC298C2DDC29C000662D8A /* MyInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC296D2DDC29C000662D8A /* MyInfoDataSource.swift */; };
 		02F0DA512DDEAED900CD036A /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0DA502DDEAED900CD036A /* UserManager.swift */; };
-		6D6D359847E48286C67E16F7 /* Pods_GraceLogUseCaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */; };
+		3249611DF0E42C6E32EB88B9 /* Pods_GraceLogUseCaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 452DE6E3CB7FDB4552609BBD /* Pods_GraceLogUseCaseTests.framework */; };
 		70062C562E4AF8FA0096C1F7 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70062C552E4AF8FA0096C1F7 /* URL+Extension.swift */; };
 		702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */; };
 		702D2B5A2E02B43700D5E71E /* GLInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B592E02B43700D5E71E /* GLInputFieldView.swift */; };
@@ -80,15 +80,10 @@
 		70A97C932E269DD200F08DF6 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C922E269DD200F08DF6 /* Date+Extension.swift */; };
 		70A97C952E27605D00F08DF6 /* DailyVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C942E27605D00F08DF6 /* DailyVerse.swift */; };
 		70A97C972E27677700F08DF6 /* VideoTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C962E27677700F08DF6 /* VideoTag.swift */; };
-		70CBC72B2E7F084F0037C613 /* CommunityChattingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC72A2E7F084F0037C613 /* CommunityChattingCollectionViewCell.swift */; };
-		70CBC72D2E7F11610037C613 /* SearchResultCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC72C2E7F11610037C613 /* SearchResultCollectionHeaderView.swift */; };
-		70CBC72F2E7F16D80037C613 /* SearchViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC72E2E7F16D80037C613 /* SearchViewReactor.swift */; };
-		70CBC7372E7F1C040037C613 /* CommunityChatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC7362E7F1C040037C613 /* CommunityChatting.swift */; };
-		70CBC7392E7FFED10037C613 /* SearchCommunitySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC7382E7FFED10037C613 /* SearchCommunitySection.swift */; };
 		70CBC73B2E8427400037C613 /* ProfileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC73A2E8427400037C613 /* ProfileItem.swift */; };
+		70CBC7602E92602A0037C613 /* CommunityRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC75F2E92602A0037C613 /* CommunityRoom.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
-		75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */; };
-		A88BF65DF907D86788F86BF8 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */; };
+		88C9F4B2C850546A45083619 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0638CA878A08BDCEFDE7EC10 /* Pods_GraceLog_GraceLogUITests.framework */; };
 		DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B972D53A855007C2066 /* DiaryCoordinator.swift */; };
 		DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B992D53A884007C2066 /* DiaryViewController.swift */; };
 		DE069B9C2D5711D3007C2066 /* HomeCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */; };
@@ -216,6 +211,7 @@
 		DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEFEACE2D2A64CF00699692 /* SignInCoordinator.swift */; };
 		DEF8D6742E1A91EF00685517 /* HomeCommunityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8D6732E1A91EF00685517 /* HomeCommunityUseCase.swift */; };
 		DEF8D6762E1A925100685517 /* DefaultHomeCommunityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8D6752E1A925100685517 /* DefaultHomeCommunityUseCase.swift */; };
+		EB5E373DDAF9541DEA0D7027 /* Pods_GraceLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6FBCE74EBBE20E6DA8E67DA /* Pods_GraceLog.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,9 +256,10 @@
 		02DC297C2DDC29C000662D8A /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		02DC297D2DDC29C000662D8A /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		02F0DA502DDEAED900CD036A /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
-		13CEE664F868FEB4EF0F50A2 /* Pods-GraceLogUseCaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.release.xcconfig"; sourceTree = "<group>"; };
-		3772E15DC148101F5890C6F5 /* Pods-GraceLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.release.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.release.xcconfig"; sourceTree = "<group>"; };
-		45FB5606D88433D808BF0656 /* Pods-GraceLogTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.debug.xcconfig"; sourceTree = "<group>"; };
+		05C627937CFDB4AFDF85BF86 /* Pods-GraceLog-GraceLogUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.release.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.release.xcconfig"; sourceTree = "<group>"; };
+		0638CA878A08BDCEFDE7EC10 /* Pods_GraceLog_GraceLogUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLog_GraceLogUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		452DE6E3CB7FDB4552609BBD /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FA7B3F9FA74AB622B6B9B18 /* Pods-GraceLog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.release.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.release.xcconfig"; sourceTree = "<group>"; };
 		70062C552E4AF8FA0096C1F7 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		702D2B592E02B43700D5E71E /* GLInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLInputFieldView.swift; sourceTree = "<group>"; };
@@ -312,19 +309,12 @@
 		70A97C922E269DD200F08DF6 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		70A97C942E27605D00F08DF6 /* DailyVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerse.swift; sourceTree = "<group>"; };
 		70A97C962E27677700F08DF6 /* VideoTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTag.swift; sourceTree = "<group>"; };
-		70CBC72A2E7F084F0037C613 /* CommunityChattingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CommunityChattingCollectionViewCell.swift; path = GraceLog/Source/Presentation/SearchScene/CommunityChattingCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
-		70CBC72C2E7F11610037C613 /* SearchResultCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultCollectionHeaderView.swift; path = GraceLog/Source/Presentation/SearchScene/SearchResultCollectionHeaderView.swift; sourceTree = SOURCE_ROOT; };
-		70CBC72E2E7F16D80037C613 /* SearchViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewReactor.swift; path = GraceLog/Source/Presentation/SearchScene/SearchViewReactor.swift; sourceTree = SOURCE_ROOT; };
-		70CBC7362E7F1C040037C613 /* CommunityChatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityChatting.swift; sourceTree = "<group>"; };
-		70CBC7382E7FFED10037C613 /* SearchCommunitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchCommunitySection.swift; path = GraceLog/Source/Presentation/SearchScene/SearchCommunitySection.swift; sourceTree = SOURCE_ROOT; };
 		70CBC73A2E8427400037C613 /* ProfileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileItem.swift; sourceTree = "<group>"; };
+		70CBC75F2E92602A0037C613 /* CommunityRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRoom.swift; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
-		7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		87E14D79ABA16C7A19244077 /* Pods-GraceLogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogTests/Pods-GraceLogTests.release.xcconfig"; sourceTree = "<group>"; };
-		8BC9F644955C12A97595F5EF /* Pods-GraceLogUseCaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.debug.xcconfig"; sourceTree = "<group>"; };
-		92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLog_GraceLogUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD3D4E76539765E1009F5819 /* Pods-GraceLog-GraceLogUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.release.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.release.xcconfig"; sourceTree = "<group>"; };
-		C2C92987C1F1070895365F17 /* Pods_GraceLogTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A5653D885A3CC815C05106B /* Pods-GraceLogUseCaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9EDDF4DA9FBD1D0DC053E39F /* Pods-GraceLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.debug.xcconfig"; sourceTree = "<group>"; };
+		DDA5E9EA1406EDED8AFA9DF0 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE069B972D53A855007C2066 /* DiaryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCoordinator.swift; sourceTree = "<group>"; };
 		DE069B992D53A884007C2066 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityViewController.swift; sourceTree = "<group>"; };
@@ -449,13 +439,32 @@
 		DEEFEACE2D2A64CF00699692 /* SignInCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCoordinator.swift; sourceTree = "<group>"; };
 		DEF8D6732E1A91EF00685517 /* HomeCommunityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityUseCase.swift; sourceTree = "<group>"; };
 		DEF8D6752E1A925100685517 /* DefaultHomeCommunityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHomeCommunityUseCase.swift; sourceTree = "<group>"; };
-		E2561CE1730A7CC76CC990A3 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFE7CB138D1109187A996503 /* Pods-GraceLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.debug.xcconfig"; sourceTree = "<group>"; };
+		E63381AE129716210940BA41 /* Pods-GraceLogUseCaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.release.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.release.xcconfig"; sourceTree = "<group>"; };
+		E6FBCE74EBBE20E6DA8E67DA /* Pods_GraceLog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		70CBC7302E7F18FD0037C613 /* Search */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Search; sourceTree = "<group>"; };
+		70CBC7302E7F18FD0037C613 /* Search */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		70CBC75C2E925FCB0037C613 /* View */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		70CBC75E2E925FEF0037C613 /* Reactor */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -463,7 +472,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D6D359847E48286C67E16F7 /* Pods_GraceLogUseCaseTests.framework in Frameworks */,
+				3249611DF0E42C6E32EB88B9 /* Pods_GraceLogUseCaseTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,7 +480,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75248638A478EB9521F76504 /* Pods_GraceLog.framework in Frameworks */,
+				EB5E373DDAF9541DEA0D7027 /* Pods_GraceLog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,7 +488,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A88BF65DF907D86788F86BF8 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */,
+				88C9F4B2C850546A45083619 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,27 +662,14 @@
 		2EA2272B8D90352B60124564 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FFE7CB138D1109187A996503 /* Pods-GraceLog.debug.xcconfig */,
-				3772E15DC148101F5890C6F5 /* Pods-GraceLog.release.xcconfig */,
-				E2561CE1730A7CC76CC990A3 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */,
-				BD3D4E76539765E1009F5819 /* Pods-GraceLog-GraceLogUITests.release.xcconfig */,
-				45FB5606D88433D808BF0656 /* Pods-GraceLogTests.debug.xcconfig */,
-				87E14D79ABA16C7A19244077 /* Pods-GraceLogTests.release.xcconfig */,
-				8BC9F644955C12A97595F5EF /* Pods-GraceLogUseCaseTests.debug.xcconfig */,
-				13CEE664F868FEB4EF0F50A2 /* Pods-GraceLogUseCaseTests.release.xcconfig */,
+				9EDDF4DA9FBD1D0DC053E39F /* Pods-GraceLog.debug.xcconfig */,
+				4FA7B3F9FA74AB622B6B9B18 /* Pods-GraceLog.release.xcconfig */,
+				DDA5E9EA1406EDED8AFA9DF0 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */,
+				05C627937CFDB4AFDF85BF86 /* Pods-GraceLog-GraceLogUITests.release.xcconfig */,
+				8A5653D885A3CC815C05106B /* Pods-GraceLogUseCaseTests.debug.xcconfig */,
+				E63381AE129716210940BA41 /* Pods-GraceLogUseCaseTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		5220B6260B4015DECE44E88F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EC27041694929DC3D121EF0C /* Pods_GraceLog.framework */,
-				92AAD74E157DB380B9B4192E /* Pods_GraceLog_GraceLogUITests.framework */,
-				C2C92987C1F1070895365F17 /* Pods_GraceLogTests.framework */,
-				7D415D287B3EAEECA4BE40BB /* Pods_GraceLogUseCaseTests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		702D2B732E080A2B00D5E71E /* Cell */ = {
@@ -807,6 +803,16 @@
 				70A97C902E255EA800F08DF6 /* GLColor.swift */,
 			);
 			path = Color;
+			sourceTree = "<group>";
+		};
+		9680698417A62F595F716DEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E6FBCE74EBBE20E6DA8E67DA /* Pods_GraceLog.framework */,
+				0638CA878A08BDCEFDE7EC10 /* Pods_GraceLog_GraceLogUITests.framework */,
+				452DE6E3CB7FDB4552609BBD /* Pods_GraceLogUseCaseTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		DE069B922D53A708007C2066 /* DiaryScene */ = {
@@ -999,8 +1005,8 @@
 				70A97C962E27677700F08DF6 /* VideoTag.swift */,
 				709CBB6A2E2AD2C400F68457 /* Comment.swift */,
 				DE4D0F492E750EC300827EDE /* Announcement.swift */,
-				70CBC7362E7F1C040037C613 /* CommunityChatting.swift */,
 				70CBC73A2E8427400037C613 /* ProfileItem.swift */,
+				70CBC75F2E92602A0037C613 /* CommunityRoom.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1197,9 +1203,9 @@
 		DE3BFCC62D043DB70076426D /* SearchScene */ = {
 			isa = PBXGroup;
 			children = (
+				70CBC75E2E925FEF0037C613 /* Reactor */,
+				70CBC75C2E925FCB0037C613 /* View */,
 				DE3BFCE22D059DEF0076426D /* Coordinator */,
-				DE3BFCCE2D0489DA0076426D /* Reactor */,
-				DE3BFCCF2D0489E40076426D /* View */,
 				DE3BFCD02D0489EE0076426D /* ViewController */,
 			);
 			path = SearchScene;
@@ -1252,24 +1258,6 @@
 				DE069B9B2D5711D3007C2066 /* HomeCommunityViewController.swift */,
 			);
 			path = ViewController;
-			sourceTree = "<group>";
-		};
-		DE3BFCCE2D0489DA0076426D /* Reactor */ = {
-			isa = PBXGroup;
-			children = (
-				70CBC72E2E7F16D80037C613 /* SearchViewReactor.swift */,
-			);
-			path = Reactor;
-			sourceTree = "<group>";
-		};
-		DE3BFCCF2D0489E40076426D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				70CBC72A2E7F084F0037C613 /* CommunityChattingCollectionViewCell.swift */,
-				70CBC72C2E7F11610037C613 /* SearchResultCollectionHeaderView.swift */,
-				70CBC7382E7FFED10037C613 /* SearchCommunitySection.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		DE3BFCD02D0489EE0076426D /* ViewController */ = {
@@ -1341,8 +1329,8 @@
 				DE24DB642D26D32200581621 /* GraceLogUseCaseTests */,
 				DE58FEAE2D04284D008CADCD /* Products */,
 				2EA2272B8D90352B60124564 /* Pods */,
-				5220B6260B4015DECE44E88F /* Frameworks */,
 				02DC29032DDC24A900662D8A /* Recovered References */,
+				9680698417A62F595F716DEA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1500,11 +1488,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE24DB692D26D32200581621 /* Build configuration list for PBXNativeTarget "GraceLogUseCaseTests" */;
 			buildPhases = (
-				55A70F314490E256E54AF258 /* [CP] Check Pods Manifest.lock */,
+				7E6A6B7B0858DAAEF1800EF5 /* [CP] Check Pods Manifest.lock */,
 				DE24DB5F2D26D32200581621 /* Sources */,
 				DE24DB602D26D32200581621 /* Frameworks */,
 				DE24DB612D26D32200581621 /* Resources */,
-				7521E5AD04FD281E520CC86F /* [CP] Embed Pods Frameworks */,
+				57BC652C556713C017D4A7E4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1520,11 +1508,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE58FED72D04284E008CADCD /* Build configuration list for PBXNativeTarget "GraceLog" */;
 			buildPhases = (
-				583AF8AD94B7807E5B441B5B /* [CP] Check Pods Manifest.lock */,
+				10BB3A05F9E1F3899138C862 /* [CP] Check Pods Manifest.lock */,
 				DE58FEA92D04284D008CADCD /* Sources */,
 				DE58FEAA2D04284D008CADCD /* Frameworks */,
 				DE58FEAB2D04284D008CADCD /* Resources */,
-				ABED5811BE029F6EC390A7C1 /* [CP] Embed Pods Frameworks */,
+				3DF7314A2F020B5471A121CE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1532,6 +1520,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				70CBC7302E7F18FD0037C613 /* Search */,
+				70CBC75C2E925FCB0037C613 /* View */,
+				70CBC75E2E925FEF0037C613 /* Reactor */,
 			);
 			name = GraceLog;
 			productName = GraceLog;
@@ -1542,11 +1532,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE58FEDD2D04284E008CADCD /* Build configuration list for PBXNativeTarget "GraceLogUITests" */;
 			buildPhases = (
-				A6721BFEAB1CDEB55CA9A1D9 /* [CP] Check Pods Manifest.lock */,
+				2326A91DC8EFD16EA3C7C234 /* [CP] Check Pods Manifest.lock */,
 				DE58FEC92D04284E008CADCD /* Sources */,
 				DE58FECA2D04284E008CADCD /* Frameworks */,
 				DE58FECB2D04284E008CADCD /* Resources */,
-				701CD70413BD97E3234C9381 /* [CP] Embed Pods Frameworks */,
+				0A660CE15892490D07AAF81D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1582,7 +1572,6 @@
 				};
 			};
 			buildConfigurationList = DE58FEA82D04284D008CADCD /* Build configuration list for PBXProject "GraceLog" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1590,6 +1579,7 @@
 				Base,
 			);
 			mainGroup = DE58FEA42D04284D008CADCD;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = DE58FEAE2D04284D008CADCD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1639,29 +1629,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		55A70F314490E256E54AF258 /* [CP] Check Pods Manifest.lock */ = {
+		0A660CE15892490D07AAF81D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GraceLogUseCaseTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		583AF8AD94B7807E5B441B5B /* [CP] Check Pods Manifest.lock */ = {
+		10BB3A05F9E1F3899138C862 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1683,49 +1668,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		701CD70413BD97E3234C9381 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7521E5AD04FD281E520CC86F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A6721BFEAB1CDEB55CA9A1D9 /* [CP] Check Pods Manifest.lock */ = {
+		2326A91DC8EFD16EA3C7C234 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1747,7 +1690,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ABED5811BE029F6EC390A7C1 /* [CP] Embed Pods Frameworks */ = {
+		3DF7314A2F020B5471A121CE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1755,17 +1698,52 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			outputPaths = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57BC652C556713C017D4A7E4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7E6A6B7B0858DAAEF1800EF5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GraceLogUseCaseTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1791,6 +1769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE4D0F442E71D47600827EDE /* AnnouncementViewController.swift in Sources */,
+				70CBC7602E92602A0037C613 /* CommunityRoom.swift in Sources */,
 				70A97C662E2169D300F08DF6 /* MyInfoPresentationAssembly.swift in Sources */,
 				025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */,
 				70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */,
@@ -1833,7 +1812,6 @@
 				DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DEACFE682E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift in Sources */,
-				70CBC72B2E7F084F0037C613 /* CommunityChattingCollectionViewCell.swift in Sources */,
 				DE23873B2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift in Sources */,
 				709CBB6D2E2B8CA100F68457 /* CommentToggleButton.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
@@ -1843,7 +1821,6 @@
 				DE2700532D2113F2005C9DCF /* SignInReactor.swift in Sources */,
 				023446172DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift in Sources */,
 				DE4D0F5D2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift in Sources */,
-				70CBC72F2E7F16D80037C613 /* SearchViewReactor.swift in Sources */,
 				70A97C5C2E21622400F08DF6 /* DataAssembly.swift in Sources */,
 				025019CC2DE0469B003FD48D /* DefaultMyInfoUseCase.swift in Sources */,
 				DED5587A2DBC798A00137B10 /* AuthAPI.swift in Sources */,
@@ -1872,7 +1849,6 @@
 				026656AB2DE7E9CA00541D96 /* NavigationBarUtil.swift in Sources */,
 				02DC29862DDC29C000662D8A /* MyInfoViewReactor.swift in Sources */,
 				70A97C512E196D4E00F08DF6 /* NavigationController.swift in Sources */,
-				70CBC7372E7F1C040037C613 /* CommunityChatting.swift in Sources */,
 				70A97C532E1F8D5800F08DF6 /* DateFormatterFactory.swift in Sources */,
 				02DC29872DDC29C000662D8A /* ProfileEditCoordinator.swift in Sources */,
 				02DC29882DDC29C000662D8A /* MyInfoTableViewCell.swift in Sources */,
@@ -1895,7 +1871,6 @@
 				DE2700492D1F9E6B005C9DCF /* UIColor+CustomColor.swift in Sources */,
 				DE5638472D99785D00A12192 /* DiaryCreatableUseCase.swift in Sources */,
 				DED558992DBFAEB200137B10 /* NetworkManager.swift in Sources */,
-				70CBC72D2E7F11610037C613 /* SearchResultCollectionHeaderView.swift in Sources */,
 				70A97C482E18F61000F08DF6 /* Community.swift in Sources */,
 				DE9A1FCA2D6AAC8C0044F655 /* HomeViewReactor.swift in Sources */,
 				0234461D2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift in Sources */,
@@ -1909,7 +1884,6 @@
 				70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */,
 				DE2387412E0BB83B00893D8C /* HomeMyRecommendVideoView.swift in Sources */,
 				DEEFEACF2D2A64CF00699692 /* SignInCoordinator.swift in Sources */,
-				70CBC7392E7FFED10037C613 /* SearchCommunitySection.swift in Sources */,
 				702D2B722E07F42500D5E71E /* DiarySettingTableViewCell.swift in Sources */,
 				DED558902DBE3BE900137B10 /* SignInResult.swift in Sources */,
 				DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */,
@@ -2018,7 +1992,7 @@
 /* Begin XCBuildConfiguration section */
 		DE24DB6A2D26D32200581621 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BC9F644955C12A97595F5EF /* Pods-GraceLogUseCaseTests.debug.xcconfig */;
+			baseConfigurationReference = 8A5653D885A3CC815C05106B /* Pods-GraceLogUseCaseTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -2042,7 +2016,7 @@
 		};
 		DE24DB6B2D26D32200581621 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13CEE664F868FEB4EF0F50A2 /* Pods-GraceLogUseCaseTests.release.xcconfig */;
+			baseConfigurationReference = E63381AE129716210940BA41 /* Pods-GraceLogUseCaseTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -2186,7 +2160,7 @@
 		};
 		DE58FED82D04284E008CADCD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FFE7CB138D1109187A996503 /* Pods-GraceLog.debug.xcconfig */;
+			baseConfigurationReference = 9EDDF4DA9FBD1D0DC053E39F /* Pods-GraceLog.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2219,7 +2193,7 @@
 		};
 		DE58FED92D04284E008CADCD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3772E15DC148101F5890C6F5 /* Pods-GraceLog.release.xcconfig */;
+			baseConfigurationReference = 4FA7B3F9FA74AB622B6B9B18 /* Pods-GraceLog.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2252,7 +2226,7 @@
 		};
 		DE58FEDE2D04284E008CADCD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E2561CE1730A7CC76CC990A3 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */;
+			baseConfigurationReference = DDA5E9EA1406EDED8AFA9DF0 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -2272,7 +2246,7 @@
 		};
 		DE58FEDF2D04284E008CADCD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD3D4E76539765E1009F5819 /* Pods-GraceLog-GraceLogUITests.release.xcconfig */;
+			baseConfigurationReference = 05C627937CFDB4AFDF85BF86 /* Pods-GraceLog-GraceLogUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
