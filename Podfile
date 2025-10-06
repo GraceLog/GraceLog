@@ -27,6 +27,7 @@ target 'GraceLog' do
         pod 'KeychainAccess'
         pod 'Kingfisher', '~> 8.0'
   	pod 'Swinject', '~> 2.8.0'
+	pod 'FSCalendar'
 
   target 'GraceLogUseCaseTests' do
     inherit! :search_paths
