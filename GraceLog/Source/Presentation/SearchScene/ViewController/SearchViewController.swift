@@ -156,7 +156,7 @@ final class SearchViewController: GraceLogBaseViewController, View {
                     description: room.description,
                     editedDate: room.recentEditedDate,
                     peopleCount: room.peopleCount,
-                    imageURL: room.imageURL,
+                    imageURL: room.imageURL
                 )
                 return cell
             case .profile(let item):
