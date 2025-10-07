@@ -160,6 +160,7 @@ extension HomeMyViewController {
                                     return
                                 }
                                 print("선택된 일기장 정보: \(selectedItem)\n선택된 일기장 인덱스: \(indexPath)")
+                                reactor.coordinator?.showDiaryDetail()
                             })
                             .disposed(by: cell.disposeBag)
                         

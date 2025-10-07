@@ -17,7 +17,7 @@ extension Date {
         }
         
         if days == 0 {
-            return fromDate == toDate 
+            return fromDate == toDate
         } else {
             return (fromDate - toDate) >= days
         }
@@ -29,5 +29,12 @@ extension Date {
         let referenceYear = calendar.component(.year, from: referenceDate)
         let selfYear = calendar.component(.year, from: self)
         return selfYear == referenceYear - 1
+    }
+    
+    /// "yy년 M월" 형식으로 포맷팅
+    func toYearMonthString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy년 M월"
+        return dateFormatter.string(from: self)
     }
 }

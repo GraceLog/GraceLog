@@ -10,6 +10,7 @@ import ReactorKit
 import RxDataSources
 
 final class HomeCommunityViewReactor: Reactor {
+    weak var coordinator: HomeCoordinator?
     private let usecase: HomeCommunityUseCase
     
     var initialState: State

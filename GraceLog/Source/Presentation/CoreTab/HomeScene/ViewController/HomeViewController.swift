@@ -43,8 +43,8 @@ final class HomeViewController: GraceLogBaseViewController, View {
         options: nil
     )
     
-    private lazy var homeMyViewController = DependencyContainer.shared.injector.resolve(HomeMyViewController.self)
-    private lazy var homeCommunityViewController = DependencyContainer.shared.injector.resolve(HomeCommunityViewController.self)
+    lazy var homeMyViewController = DependencyContainer.shared.injector.resolve(HomeMyViewController.self)
+    lazy var homeCommunityViewController = DependencyContainer.shared.injector.resolve(HomeCommunityViewController.self)
     
     private lazy var pages: [UIViewController] = [
         homeMyViewController,

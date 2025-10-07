@@ -20,6 +20,13 @@ final class HomeCoordinator: NavigationCoordinator {
     
     func start() {
         let viewController = DependencyContainer.shared.injector.resolve(HomeViewController.self)
+        viewController.homeMyViewController.reactor?.coordinator = self
+        viewController.homeCommunityViewController.reactor?.coordinator = self
         navigationController.setViewControllers([viewController], animated: false)
+    }
+    
+    func showDiaryDetail() {
+        let diaryDetailsVC = DiaryDetailsViewController()
+        navigationController.pushViewController(diaryDetailsVC, animated: true)
     }
 }
