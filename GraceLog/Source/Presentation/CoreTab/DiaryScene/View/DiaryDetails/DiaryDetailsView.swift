@@ -2,7 +2,7 @@
 //  DiaryDetailsView.swift
 //  GraceLog
 //
-//  Created by 이상준 on 10/6/25.
+//  Created by 이상준 on 6/8/25.
 //
 
 import UIKit
@@ -30,6 +30,8 @@ final class DiaryDetailsView: UIView {
         $0.text = "오늘의 감사일기"
         $0.textColor = .white
         $0.font = GLFont.regular14.font
+        $0.setContentCompressionResistancePriority(.required, for: .vertical)
+        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
     private let titleLabel = UILabel().then {
@@ -37,9 +39,11 @@ final class DiaryDetailsView: UIView {
         $0.font = GLFont.extraBold24.font
         $0.numberOfLines = 2
         $0.lineBreakMode = .byWordWrapping
+        $0.setContentCompressionResistancePriority(.required, for: .vertical)
+        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
-    private let contentTextView = UITextView().then {
+    private let descriptionTextView = UITextView().then {
         $0.backgroundColor = .clear
         $0.textColor = .white
         $0.font = GLFont.regular14.font
@@ -65,6 +69,8 @@ final class DiaryDetailsView: UIView {
         }
         $0.configuration = config
         $0.tintColor = .white
+        $0.setContentCompressionResistancePriority(.required, for: .vertical)
+        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
     private let bottomStackView = UIStackView().then {
@@ -78,7 +84,7 @@ final class DiaryDetailsView: UIView {
         $0.setDimensions(width: 24, height: 24)
     }
     
-    private let likeButton = UIButton().then {
+    lazy var likeButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "diary_heart")
         config.title = "24"
@@ -94,7 +100,7 @@ final class DiaryDetailsView: UIView {
         $0.tintColor = .white
     }
     
-    private let commentButton = UIButton().then {
+    lazy var commentButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "diary_comment")
         config.title = "9"
@@ -148,7 +154,7 @@ final class DiaryDetailsView: UIView {
             bottomStackView.addArrangedSubview($0)
         }
         
-        contentView.addSubview(contentTextView)
+        contentView.addSubview(descriptionTextView)
     }
     
     private func setupConstraints() {
@@ -183,14 +189,14 @@ final class DiaryDetailsView: UIView {
             $0.bottom.equalToSuperview().inset(29)
         }
         
-        contentTextView.snp.makeConstraints {
+        descriptionTextView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(44)
             $0.leading.equalToSuperview().inset(31)
             $0.trailing.equalToSuperview().inset(48)
         }
         
         moreButton.snp.makeConstraints {
-            $0.top.equalTo(contentTextView.snp.bottom).offset(24)
+            $0.top.equalTo(descriptionTextView.snp.bottom).offset(24)
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(bottomStackView.snp.top).offset(-40)
         }
@@ -213,16 +219,38 @@ final class DiaryDetailsView: UIView {
     private func setupInitialCollapsedState() {
         applyCollapsedState()
     }
-
+    
     private func applyCollapsedState() {
-        let lineHeight = contentTextView.font?.lineHeight ?? 21
+        let lineHeight = descriptionTextView.font?.lineHeight ?? 21
         let maxHeight = lineHeight * CGFloat(collapsedLines)
         
-        contentTextView.snp.makeConstraints {
+        descriptionTextView.snp.makeConstraints {
             contentTextViewHeightConstraint = $0.height.lessThanOrEqualTo(maxHeight).constraint
         }
     }
-
+    
+    private func checkMoreButtonVisibility() {
+        guard !descriptionTextView.text.isEmpty else {
+            moreButton.isHidden = true
+            return
+        }
+        
+        let lineHeight = descriptionTextView.font?.lineHeight ?? 21
+        let maxHeight = lineHeight * CGFloat(collapsedLines)
+        
+        let textViewWidth = descriptionTextView.bounds.width
+        
+        let textSize = (descriptionTextView.text as NSString).boundingRect(
+            with: CGSize(width: textViewWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: descriptionTextView.font ?? GLFont.regular14.font],
+            context: nil
+        )
+        
+        let actualHeight = ceil(textSize.height)
+        moreButton.isHidden = actualHeight < maxHeight + 5
+    }
+    
     func toggleExpansion() {
         isExpanded.toggle()
         
@@ -247,16 +275,25 @@ final class DiaryDetailsView: UIView {
 extension DiaryDetailsView {
     func configure(
         title: String,
-        content: String,
+        description: String,
         backgroundImageURL: URL?,
-        likes: Int,
-        comments: Int
+        likeCount: Int,
+        commentCount: Int
     ) {
         titleLabel.text = title
-        contentTextView.text = content
+        descriptionTextView.text = description
         backgroundImageView.kf.setImage(with: backgroundImageURL)
         
-        likeButton.setTitle("\(likes)", for: .normal)
-        commentButton.setTitle("\(comments)", for: .normal)
+        likeButton.setTitle("\(likeCount)", for: .normal)
+        commentButton.setTitle("\(commentCount)", for: .normal)
+        
+        contentTextViewHeightConstraint?.activate()
+        
+        setNeedsLayout()
+        layoutIfNeeded()
+        
+        DispatchQueue.main.async {
+            self.checkMoreButtonVisibility()
+        }
     }
 }
