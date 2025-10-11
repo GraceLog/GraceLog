@@ -54,7 +54,7 @@ final class DiaryDetailsView: UIView {
         $0.verticalScrollIndicatorInsets = .zero
     }
     
-    let moreButton = UIButton().then {
+    lazy var moreButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "chevron_down")?.withTintColor(.white, renderingMode: .alwaysTemplate)
         config.title = "이어서 더보기"
@@ -87,8 +87,6 @@ final class DiaryDetailsView: UIView {
     lazy var likeButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "diary_heart")
-        config.title = "24"
-        config.baseForegroundColor = .white
         config.imagePlacement = .top
         config.imagePadding = 7
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
@@ -103,8 +101,6 @@ final class DiaryDetailsView: UIView {
     lazy var commentButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "diary_comment")
-        config.title = "9"
-        config.baseForegroundColor = .white
         config.imagePlacement = .top
         config.imagePadding = 7
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
@@ -277,6 +273,9 @@ extension DiaryDetailsView {
         title: String,
         description: String,
         backgroundImageURL: URL?,
+        isHideLike: Bool,
+        isHideComment: Bool,
+        isLiked: Bool,
         likeCount: Int,
         commentCount: Int
     ) {
@@ -284,13 +283,19 @@ extension DiaryDetailsView {
         descriptionTextView.text = description
         backgroundImageView.kf.setImage(with: backgroundImageURL)
         
+        let heartImage = isLiked ? UIImage(named: "diary_heart_selected") : UIImage(named: "diary_heart")
+        likeButton.setImage(heartImage, for: .normal)
         likeButton.setTitle("\(likeCount)", for: .normal)
+        likeButton.tintColor = isLiked ? GLColor.textAccent.color : UIColor.white
+        likeButton.isHidden = isHideLike
+        
+        
         commentButton.setTitle("\(commentCount)", for: .normal)
+        commentButton.isHidden = isHideComment
         
         contentTextViewHeightConstraint?.activate()
         
         setNeedsLayout()
-        layoutIfNeeded()
         
         DispatchQueue.main.async {
             self.checkMoreButtonVisibility()

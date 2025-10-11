@@ -22,7 +22,6 @@ enum GLColor: AppColor {
     case iconMain
     case iconSub
     case iconAccent
-
     
     var darkModeColor: UIColor {
         switch self {
