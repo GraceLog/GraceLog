@@ -9,9 +9,11 @@ import UIKit
 import SnapKit
 import Then
 import FSCalendar
+import ReactorKit
 import RxSwift
+import RxCocoa
 
-final class DiaryDetailsViewController: GraceLogBaseViewController {
+final class DiaryDetailsViewController: GraceLogBaseViewController, View {
     var disposeBag = DisposeBag()
     
     private var diaryHeightConstraint: Constraint?
@@ -62,6 +64,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController {
         $0.tintColor = .white
         $0.scrollDirection = .horizontal
         $0.scope = .week
+        $0.today = nil
         $0.locale = Locale(identifier: "ko_KR")
         $0.headerHeight = 0
         $0.appearance.weekdayFont = GLFont.regular12.font
@@ -69,17 +72,28 @@ final class DiaryDetailsViewController: GraceLogBaseViewController {
         $0.appearance.titleFont = GLFont.regular18.font
         $0.appearance.titleDefaultColor = GLColor.textBasic.color
         $0.appearance.todaySelectionColor = GLColor.textAccent.color
+        $0.appearance.selectionColor = GLColor.textAccent.color
         $0.appearance.titleTodayColor = UIColor.white
+        $0.appearance.eventDefaultColor = GLColor.textAccent.color
+        $0.appearance.eventSelectionColor = .clear
     }
     
-    private let diaryDetailsView = DiaryDetailsView()
+    private lazy var diaryDetailsView = DiaryDetailsView()
+    
+    init(reactor: DiaryDetailsViewReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayouts()
         setupConstraints()
         setupCalendarView()
-        bind()
     }
     
     private func setupLayouts() {
@@ -95,7 +109,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController {
         
         navigationBar.snp.makeConstraints {
             $0.top.equalTo(safeArea)
-            $0.leading.trailing.equalToSuperview()
+            $0.directionalHorizontalEdges.equalToSuperview()
             $0.height.equalTo(44)
         }
         
@@ -122,7 +136,24 @@ final class DiaryDetailsViewController: GraceLogBaseViewController {
         calendarView.dataSource = self
     }
     
-    private func bind() {
+    private func fetchDiaryList(for date: Date) {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let (startDate, endDate) = Date().getMonthDateRange(year: year, month: month)
+        
+        reactor?.action.onNext(.fetchSelectedDateDiaryList(startDate, endDate))
+    }
+    
+    func bind(reactor: DiaryDetailsViewReactor) {
+        /// Action
+        reactor.action.onNext(.fetchDiary(nil))
+        
+        backButton.rx.tap
+            .map { Reactor.Action.didTapBackButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         calendarButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.calendarView.scope = owner.calendarView.scope == .month ? .week : .month
@@ -136,6 +167,81 @@ final class DiaryDetailsViewController: GraceLogBaseViewController {
                 
                 UIView.animate(withDuration: 0.3) {
                     owner.view.layoutIfNeeded()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        diaryDetailsView.likeButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
+            .compactMap { reactor.currentState.diary?.id }
+            .map { DiaryDetailsViewReactor.Action.didTapLikeButton($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        /// State
+        let diaryObservable = reactor.pulse(\.$diary).share(replay: 1)
+        
+        diaryObservable
+            .compactMap { $0 }
+            .map { $0.createdAt.toYearMonthString() }
+            .distinctUntilChanged()
+            .withLatestFrom(diaryObservable.compactMap { $0 })
+            .observe(on: MainScheduler.asyncInstance)
+            .do(onNext: { [weak self] diary in
+                self?.fetchDiaryList(for: diary.createdAt)
+            })
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        diaryObservable
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { [weak self] diary in
+                guard let self = self, let diary = diary else { return }
+                
+                self.calendarButton.configuration?.title = diary.createdAt.toYearMonthString()
+                self.calendarView.select(diary.createdAt)
+                
+                self.diaryDetailsView.configure(
+                    title: diary.title,
+                    description: diary.description,
+                    backgroundImageURL: diary.imageURLs.first ?? nil,
+                    isHideLike: diary.isHideLike,
+                    isHideComment: diary.isHideComment,
+                    isLiked: diary.isLiked,
+                    likeCount: diary.likeCount,
+                    commentCount: diary.commentCount
+                )
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$selectedDateDiaryList)
+            .observe(on: MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, diaryList in
+                owner.calendarView.reloadData()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessLikeResult)
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 좋아요 성공여부에 따른 로직 구현
+                if isSuccess {
+                    print("좋아요 성공!")
+                } else {
+                    print("좋아요 실패!")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessUnlikeResult)
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, isSuccess in
+                // TODO: - 좋아요 성공여부에 따른 로직 구현
+                if isSuccess {
+                    print("좋아요 해제 성공!")
+                } else {
+                    print("좋아요 해제 실패!")
                 }
             }
             .disposed(by: disposeBag)
@@ -155,9 +261,42 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
         self.view.layoutIfNeeded()
     }
     
+    /// 캘린더 뷰의 년도 및 월이 바뀌는 경우
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         var config = calendarButton.configuration
         config?.title = calendar.currentPage.toYearMonthString()
         calendarButton.configuration = config
+        
+        fetchDiaryList(for: calendar.currentPage)
+    }
+    
+    /// 감사일기가 작성된 날짜 마커
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        guard let diaryList = reactor?.currentState.selectedDateDiaryList else { return 0 }
+        
+        let hasEvent = diaryList.contains(where: {
+            Calendar.current.isDate($0.createdAt, inSameDayAs: date)
+        })
+        
+        return hasEvent ? 1 : 0
+    }
+    
+    /// 날짜 선택 가능 여부 결정
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+        guard let diaryList = reactor?.currentState.selectedDateDiaryList else { return false }
+        
+        let hasEvent = diaryList.contains(where: {
+            Calendar.current.isDate($0.createdAt, inSameDayAs: date)
+        })
+        
+        return hasEvent
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        if let selectedDiary = reactor?.currentState.selectedDateDiaryList.first(where: {
+            Calendar.current.isDate($0.createdAt, inSameDayAs: date)
+        }) {
+            reactor?.action.onNext(.fetchDiary(selectedDiary.id))
+        }
     }
 }

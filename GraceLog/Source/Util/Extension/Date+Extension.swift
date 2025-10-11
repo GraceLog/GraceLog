@@ -37,4 +37,32 @@ extension Date {
         dateFormatter.dateFormat = "yy년 M월"
         return dateFormatter.string(from: self)
     }
+    
+    /// "년도, 월을 통해 해당 년도 월의 첫번째, 마지막 날짜를 내림"
+    func getMonthDateRange(year: Int, month: Int) -> (startDate: String, endDate: String) {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = 1
+        
+        guard let startOfMonth = calendar.date(from: components) else {
+            return ("", "")
+        }
+        
+        let range = calendar.range(of: .day, in: .month, for: startOfMonth)!
+        let dayCount = range.count
+        
+        var endComponents = components
+        endComponents.day = dayCount
+        let endOfMonth = calendar.date(from: endComponents)!
+        
+        return (
+            startDate: dateFormatter.string(from: startOfMonth),
+            endDate: dateFormatter.string(from: endOfMonth)
+        )
+    }
 }
