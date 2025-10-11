@@ -18,7 +18,7 @@ final class DiaryDetailsViewReactor: Reactor {
         case fetchSelectedDateDiaryList(String, String)
         case didTapBackButton
         case didTapLikeButton(Int)
-        case didTapCommentButton
+        case didTapCommentButton(Int)
     }
     
     enum Mutation {

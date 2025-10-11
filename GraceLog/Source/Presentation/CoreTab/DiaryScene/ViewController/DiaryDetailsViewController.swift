@@ -178,6 +178,12 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        diaryDetailsView.commentButton.rx.tap
+            .compactMap { reactor.currentState.diary?.id }
+            .map { DiaryDetailsViewReactor.Action.didTapCommentButton($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         /// State
         let diaryObservable = reactor.pulse(\.$diary).share(replay: 1)
         
