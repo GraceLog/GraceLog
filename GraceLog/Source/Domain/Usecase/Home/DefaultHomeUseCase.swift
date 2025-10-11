@@ -27,36 +27,41 @@ final class DefaultHomeUseCase: HomeUseCase {
     
     func fetchDiaryList() {
         diaryList.accept([
-//            MyDiary(
-//                editedDate: Date(),
-//                title: "스터디 카페에 새로운 손님이?",
-//                content: "처음에는 한숨만 나오고 절망을 느꼈다. 하지만 하나님께서는 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로",
-//                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-//            ),
-//            MyDiary(
-//                editedDate: Date().addingTimeInterval(-86400 * 7),
-//                title: "지난주 이시간",
-//                content: "어쩌다 보니 창업어쩌다 보니 창업어쩌다 보니 창업",
-//                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-//            ),
-//            MyDiary(
-//                editedDate: Date().addingTimeInterval(-86400 * 365),
-//                title: "작년 12월",
-//                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
-//                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-//            ),
-//            MyDiary(
-//                editedDate: Date().addingTimeInterval(-86400 * 7 + 100),
-//                title: "지난주 + 100",
-//                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
-//                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-//            ),
-//            MyDiary(
-//                editedDate: Date().addingTimeInterval(-86400 * 365 + 100),
-//                title: "작년 + 100",
-//                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
-//                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-//            )
+            MyDiary(
+                id: 1,
+                editedDate: Date(),
+                title: "스터디 카페에 새로운 손님이?",
+                content: "처음에는 한숨만 나오고 절망을 느꼈다. 하지만 하나님께서는 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
+            ),
+            MyDiary(
+                id: 2,
+                editedDate: Date().addingTimeInterval(-86400 * 7),
+                title: "편안한 퇴근길\nfeat. 현대버스",
+                content: "회사에서 퇴근하고 나와보니 비가 부슬 부슬 내린다.",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
+            ),
+            MyDiary(
+                id: 3,
+                editedDate: Date().addingTimeInterval(-86400 * 365),
+                title: "작년 12월",
+                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
+            ),
+            MyDiary(
+                id: 4,
+                editedDate: Date().addingTimeInterval(-86400 * 7 + 100),
+                title: "지난주 + 100",
+                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
+            ),
+            MyDiary(
+                id: 5,
+                editedDate: Date().addingTimeInterval(-86400 * 365 + 100),
+                title: "작년 + 100",
+                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
+                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
+            )
         ])
     }
 
