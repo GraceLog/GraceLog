@@ -252,19 +252,23 @@ final class DiaryDetailsView: UIView {
         
         if isExpanded {
             contentTextViewHeightConstraint?.deactivate()
-            
-            var config = moreButton.configuration
-            config?.title = "접기"
-            config?.image = UIImage(named: "chevron_up")?.withTintColor(.white, renderingMode: .alwaysTemplate)
-            moreButton.configuration = config
+            updateMoreButton(title: "접기", imageName: "chevron_up")
         } else {
             applyCollapsedState()
-            
-            var config = moreButton.configuration
-            config?.title = "이어서 더보기"
-            config?.image = UIImage(named: "chevron_down")?.withTintColor(.white, renderingMode: .alwaysTemplate)
-            moreButton.configuration = config
+            updateMoreButton(title: "이어서 더보기", imageName: "chevron_down")
         }
+    }
+    
+    private func updateMoreButton(title: String, imageName: String) {
+        moreButton.configuration?.title = title
+        moreButton.configuration?.image = UIImage(named: imageName)?.withTintColor(.white, renderingMode: .alwaysTemplate)
+    }
+    
+    private func resetToCollapsedState() {
+        isExpanded = false
+        contentTextViewHeightConstraint?.deactivate()
+        applyCollapsedState()
+        updateMoreButton(title: "이어서 더보기", imageName: "chevron_down")
     }
 }
 
@@ -279,6 +283,8 @@ extension DiaryDetailsView {
         likeCount: Int,
         commentCount: Int
     ) {
+        resetToCollapsedState()
+        
         titleLabel.text = title
         descriptionTextView.text = description
         backgroundImageView.kf.setImage(with: backgroundImageURL)
@@ -289,11 +295,8 @@ extension DiaryDetailsView {
         likeButton.tintColor = isLiked ? GLColor.textAccent.color : UIColor.white
         likeButton.isHidden = isHideLike
         
-        
         commentButton.setTitle("\(commentCount)", for: .normal)
         commentButton.isHidden = isHideComment
-        
-        contentTextViewHeightConstraint?.activate()
         
         setNeedsLayout()
         
