@@ -84,6 +84,7 @@
 		70CBC7602E92602A0037C613 /* CommunityRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC75F2E92602A0037C613 /* CommunityRoom.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		88C9F4B2C850546A45083619 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0638CA878A08BDCEFDE7EC10 /* Pods_GraceLog_GraceLogUITests.framework */; };
+		DE042C3F2E93FCE90089E20F /* DiaryDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C3E2E93FCE90089E20F /* DiaryDetailsCoordinator.swift */; };
 		DE042C452E93FE0A0089E20F /* DiaryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C442E93FE0A0089E20F /* DiaryDetailsViewController.swift */; };
 		DE042C482E93FE6D0089E20F /* DiaryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C472E93FE6D0089E20F /* DiaryDetailsView.swift */; };
 		DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B972D53A855007C2066 /* DiaryCoordinator.swift */; };
@@ -317,6 +318,7 @@
 		8A5653D885A3CC815C05106B /* Pods-GraceLogUseCaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9EDDF4DA9FBD1D0DC053E39F /* Pods-GraceLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.debug.xcconfig"; sourceTree = "<group>"; };
 		DDA5E9EA1406EDED8AFA9DF0 /* Pods-GraceLog-GraceLogUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		DE042C3E2E93FCE90089E20F /* DiaryDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailsCoordinator.swift; sourceTree = "<group>"; };
 		DE042C442E93FE0A0089E20F /* DiaryDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailsViewController.swift; sourceTree = "<group>"; };
 		DE042C472E93FE6D0089E20F /* DiaryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailsView.swift; sourceTree = "<group>"; };
 		DE069B972D53A855007C2066 /* DiaryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCoordinator.swift; sourceTree = "<group>"; };
@@ -836,6 +838,7 @@
 		DE069B932D53A818007C2066 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				DE042C3E2E93FCE90089E20F /* DiaryDetailsCoordinator.swift */,
 				DE069B972D53A855007C2066 /* DiaryCoordinator.swift */,
 			);
 			path = Coordinator;

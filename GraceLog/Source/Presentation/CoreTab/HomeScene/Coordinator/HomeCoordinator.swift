@@ -25,8 +25,10 @@ final class HomeCoordinator: NavigationCoordinator {
         navigationController.setViewControllers([viewController], animated: false)
     }
     
-    func showDiaryDetail() {
-        let diaryDetailsVC = DiaryDetailsViewController()
-        navigationController.pushViewController(diaryDetailsVC, animated: true)
+    func showDiaryDetail(diaryId: Int) {
+        let diaryDetailsCoordinator = DiaryDetailsCoordinator(self.navigationController)
+        diaryDetailsCoordinator.parentCoordinator = self
+        self.childCoordinators.append(diaryDetailsCoordinator)
+        diaryDetailsCoordinator.start(diaryId: diaryId)
     }
 }
