@@ -80,7 +80,7 @@ final class DiaryDetailsView: UIView {
     }
     
     private let optionView = UIImageView().then {
-        $0.image = UIImage(named: "diary_more")
+        $0.image = UIImage(named: "more")
         $0.setDimensions(width: 24, height: 24)
     }
     
