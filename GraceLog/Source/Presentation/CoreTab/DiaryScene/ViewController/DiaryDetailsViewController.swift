@@ -16,8 +16,6 @@ import RxCocoa
 final class DiaryDetailsViewController: GraceLogBaseViewController, View {
     var disposeBag = DisposeBag()
     
-    private var diaryHeightConstraint: Constraint?
-    
     private let navigationBar = GLNavigationBar().then {
         $0.backgroundColor = .white
         $0.setupTitleLabel(text: "나의 감사일기")
@@ -45,7 +43,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
     private lazy var calendarButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "chevron_down")?.withRenderingMode(.alwaysTemplate)
-        config.title = calendarView.currentPage.toYearMonthString()
+        config.title = DateFormatterFactory.toYearMonthString(from: calendarView.currentPage)
         config.baseForegroundColor = GLColor.textBasic.color
         config.imagePlacement = .trailing
         config.imagePadding = 7
@@ -140,7 +138,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         let calendar = Calendar.current
         let year = calendar.component(.year, from: date)
         let month = calendar.component(.month, from: date)
-        let (startDate, endDate) = Date().getMonthDateRange(year: year, month: month)
+        let (startDate, endDate) = DateFormatterFactory.getMonthDateRange(year: year, month: month)
         
         reactor?.action.onNext(.fetchSelectedDateDiaryList(startDate, endDate))
     }
@@ -189,7 +187,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         
         diaryObservable
             .compactMap { $0 }
-            .map { $0.createdAt.toYearMonthString() }
+            .map { DateFormatterFactory.toYearMonthString(from: $0.createdAt) }
             .distinctUntilChanged()
             .withLatestFrom(diaryObservable.compactMap { $0 })
             .observe(on: MainScheduler.asyncInstance)
@@ -204,7 +202,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
             .drive(onNext: { [weak self] diary in
                 guard let self = self, let diary = diary else { return }
                 
-                self.calendarButton.configuration?.title = diary.createdAt.toYearMonthString()
+                self.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: diary.createdAt)
                 self.calendarView.select(diary.createdAt)
                 
                 self.diaryDetailsView.configure(
@@ -270,7 +268,7 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
     /// 캘린더 뷰의 년도 및 월이 바뀌는 경우
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         var config = calendarButton.configuration
-        config?.title = calendar.currentPage.toYearMonthString()
+        config?.title = DateFormatterFactory.toYearMonthString(from: calendar.currentPage)
         calendarButton.configuration = config
         
         fetchDiaryList(for: calendar.currentPage)

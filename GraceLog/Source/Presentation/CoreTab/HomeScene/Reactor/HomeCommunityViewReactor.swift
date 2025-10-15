@@ -71,7 +71,7 @@ extension HomeCommunityViewReactor {
         let fetchedDiaryList = usecase.diaryList
             .map { diaries -> [HomeCommunityDiarySection] in
                 let grouped = Dictionary(grouping: diaries) {
-                    DateformatterFactory.dateWithShortKorean.string(from: $0.editedDate)
+                    DateFormatterFactory.dateWithShortKorean.string(from: $0.editedDate)
                 }
                 return grouped.map { key, value in
                     HomeCommunityDiarySection(date: key, items: value.map { CommunityDiaryItem(from: $0) })

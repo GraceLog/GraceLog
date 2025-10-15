@@ -57,16 +57,15 @@ final class DiaryDetailsView: UIView {
     lazy var moreButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "chevron_down")?.withTintColor(.white, renderingMode: .alwaysTemplate)
-        config.title = "이어서 더보기"
         config.baseForegroundColor = .white
         config.imagePlacement = .bottom
         config.imagePadding = 7
         config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-            var outgoing = incoming
-            outgoing.font = GLFont.bold14.font
-            return outgoing
-        }
+        
+        var attString = AttributedString("이어서 더보기")
+        attString.font = GLFont.bold14.font
+        config.attributedTitle = attString
+        
         $0.configuration = config
         $0.tintColor = .white
         $0.setContentCompressionResistancePriority(.required, for: .vertical)

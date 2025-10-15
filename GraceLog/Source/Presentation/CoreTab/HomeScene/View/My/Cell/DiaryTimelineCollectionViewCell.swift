@@ -145,7 +145,7 @@ extension DiaryTimelineCollectionViewCell {
         bottomLineView.isHidden = hideBottomLine
         
         if let editedDate = editedDate {
-            let exactDate = DateformatterFactory.monthDaySlash.string(from: editedDate)
+            let exactDate = DateFormatterFactory.monthDaySlash.string(from: editedDate)
             var relativeDate = ""
             
             if editedDate.hasElapsed(days: 0) {
