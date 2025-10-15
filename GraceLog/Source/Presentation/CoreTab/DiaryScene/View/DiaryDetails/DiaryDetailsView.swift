@@ -22,7 +22,7 @@ final class DiaryDetailsView: UIView {
         $0.image = UIImage(named: "diary1")
     }
     
-    private let gradientLayer = CAGradientLayer()
+    private let gradientLayer = CAGradientLayer.darkOverlayGradient()
     
     private let contentView = UIView()
     
@@ -114,7 +114,6 @@ final class DiaryDetailsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupStyles()
-        setupGradient()
         setupLayouts()
         setupConstraints()
         setupInitialCollapsedState()
@@ -195,16 +194,6 @@ final class DiaryDetailsView: UIView {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(bottomStackView.snp.top).offset(-40)
         }
-    }
-    
-    private func setupGradient() {
-        gradientLayer.colors = [
-            UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor,
-            UIColor(red: 0, green: 0, blue: 0, alpha: 0.9).cgColor
-        ]
-        gradientLayer.locations = [0, 1]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
     }
     
     private func updateGradientFrame() {
