@@ -159,8 +159,7 @@ extension HomeMyViewController {
                                       let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiary else {
                                     return
                                 }
-                                print("선택된 일기장 정보: \(selectedItem)\n선택된 일기장 인덱스: \(indexPath)")
-                                reactor.coordinator?.showDiaryDetail(diaryId: selectedItem.id)
+                                reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
                             })
                             .disposed(by: cell.disposeBag)
                         

@@ -27,6 +27,10 @@ final class HomeMyViewReactor: Reactor {
         homeUsecase.fetchDailyVerse()
     }
     
+    enum Action {
+        case didTapDiaryDetail(Int)
+    }
+    
     enum Mutation {
         case setDiaryList([MyDiary])
         case setVideoList([RecommendedVideo])
@@ -70,6 +74,14 @@ extension HomeMyViewReactor {
             .map { Mutation.setDailyVerse($0) }
         
         return Observable.merge(mutation, diaryMutation, videoMutation, videoTagMutation, dailyVerseMutation)
+    }
+    
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .didTapDiaryDetail(let id):
+            coordinator?.showDiaryDetail(diaryId: id)
+            return .empty()
+        }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
