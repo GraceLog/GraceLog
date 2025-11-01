@@ -11,10 +11,7 @@ import SnapKit
 import Kingfisher
 
 final class DiaryDetailsView: UIView {
-    private var isExpanded = false
-    
-    private var contentTextViewHeightConstraint: Constraint?
-    private let collapsedLines = 10
+    var isExpanded = false
     
     private let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -24,14 +21,22 @@ final class DiaryDetailsView: UIView {
     
     private let gradientLayer = CAGradientLayer.darkOverlayGradient()
     
-    private let contentView = UIView()
+    private let optionView = UIImageView().then {
+        $0.image = UIImage(named: "more")
+        $0.setDimensions(width: 24, height: 24)
+    }
+    
+    private let mainStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 0
+        $0.alignment = .center
+        $0.distribution = .fill
+    }
     
     private let categoryLabel = UILabel().then {
         $0.text = "오늘의 감사일기"
         $0.textColor = .white
         $0.font = GLFont.regular14.font
-        $0.setContentCompressionResistancePriority(.required, for: .vertical)
-        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
     private let titleLabel = UILabel().then {
@@ -39,19 +44,14 @@ final class DiaryDetailsView: UIView {
         $0.font = GLFont.extraBold24.font
         $0.numberOfLines = 2
         $0.lineBreakMode = .byWordWrapping
-        $0.setContentCompressionResistancePriority(.required, for: .vertical)
-        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
-    private let descriptionTextView = UITextView().then {
-        $0.backgroundColor = .clear
+    private let descriptionLabel = VerticalAlignLabel().then {
         $0.textColor = .white
         $0.font = GLFont.regular14.font
-        $0.isEditable = false
-        $0.isScrollEnabled = false
-        $0.textContainer.lineFragmentPadding = 0
-        $0.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 19)
-        $0.verticalScrollIndicatorInsets = .zero
+        $0.numberOfLines = 10
+        $0.lineBreakMode = .byWordWrapping
+        $0.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
     }
     
     lazy var moreButton = UIButton().then {
@@ -68,19 +68,12 @@ final class DiaryDetailsView: UIView {
         
         $0.configuration = config
         $0.tintColor = .white
-        $0.setContentCompressionResistancePriority(.required, for: .vertical)
-        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
     private let bottomStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
         $0.spacing = 40
-    }
-    
-    private let optionView = UIImageView().then {
-        $0.image = UIImage(named: "more")
-        $0.setDimensions(width: 24, height: 24)
     }
     
     lazy var likeButton = UIButton().then {
@@ -116,7 +109,6 @@ final class DiaryDetailsView: UIView {
         setupStyles()
         setupLayouts()
         setupConstraints()
-        setupInitialCollapsedState()
     }
     
     required init?(coder: NSCoder) {
@@ -137,26 +129,31 @@ final class DiaryDetailsView: UIView {
         addSubview(backgroundImageView)
         backgroundImageView.layer.addSublayer(gradientLayer)
         
-        addSubview(contentView)
-        contentView.addSubview(optionView)
-        contentView.addSubview(categoryLabel)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(moreButton)
-        contentView.addSubview(bottomStackView)
+        addSubview(optionView)
+        addSubview(mainStackView)
         
         [likeButton, commentButton].forEach {
             bottomStackView.addArrangedSubview($0)
         }
         
-        contentView.addSubview(descriptionTextView)
+        [
+            categoryLabel,
+            titleLabel,
+            descriptionLabel,
+            moreButton,
+            bottomStackView
+        ].forEach {
+            mainStackView.addArrangedSubview($0)
+        }
+        
+        mainStackView.setCustomSpacing(12, after: categoryLabel)
+        mainStackView.setCustomSpacing(42, after: titleLabel)
+        mainStackView.setCustomSpacing(24, after: descriptionLabel)
+        mainStackView.setCustomSpacing(40, after: moreButton)
     }
     
     private func setupConstraints() {
         backgroundImageView.snp.makeConstraints {
-            $0.directionalEdges.equalToSuperview()
-        }
-        
-        contentView.snp.makeConstraints {
             $0.directionalEdges.equalToSuperview()
         }
         
@@ -165,34 +162,29 @@ final class DiaryDetailsView: UIView {
             $0.trailing.equalToSuperview().inset(17)
         }
         
-        categoryLabel.snp.makeConstraints {
+        mainStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(60)
             $0.leading.equalToSuperview().inset(31)
             $0.trailing.equalToSuperview().inset(48)
+            $0.bottom.equalToSuperview().inset(30)
+        }
+        
+        categoryLabel.snp.makeConstraints {
+            $0.height.equalTo(20)
+            $0.width.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(categoryLabel.snp.bottom).offset(12)
-            $0.leading.equalToSuperview().inset(31)
-            $0.trailing.equalToSuperview().inset(48)
-        }
-        
-        bottomStackView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(47)
-            $0.bottom.equalToSuperview().inset(29)
-        }
-        
-        descriptionTextView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(44)
-            $0.leading.equalToSuperview().inset(31)
-            $0.trailing.equalToSuperview().inset(48)
+            $0.height.equalTo(60)
+            $0.width.equalToSuperview()
         }
         
         moreButton.snp.makeConstraints {
-            $0.top.equalTo(descriptionTextView.snp.bottom).offset(24)
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(bottomStackView.snp.top).offset(-40)
+            $0.height.equalTo(48)
+        }
+        
+        bottomStackView.snp.makeConstraints {
+            $0.height.equalTo(47)
         }
     }
     
@@ -200,63 +192,16 @@ final class DiaryDetailsView: UIView {
         gradientLayer.frame = backgroundImageView.bounds
     }
     
-    private func setupInitialCollapsedState() {
-        applyCollapsedState()
-    }
-    
-    private func applyCollapsedState() {
-        let lineHeight = descriptionTextView.font?.lineHeight ?? 21
-        let maxHeight = lineHeight * CGFloat(collapsedLines)
+    func updateMoreButton(title: String, imageName: String) {
+        var config = moreButton.configuration ?? UIButton.Configuration.plain()
         
-        descriptionTextView.snp.makeConstraints {
-            contentTextViewHeightConstraint = $0.height.lessThanOrEqualTo(maxHeight).constraint
-        }
-    }
-    
-    private func checkMoreButtonVisibility() {
-        guard !descriptionTextView.text.isEmpty else {
-            moreButton.isHidden = true
-            return
-        }
+        var attString = AttributedString(title)
+        attString.font = GLFont.bold14.font
+        config.attributedTitle = attString
         
-        let lineHeight = descriptionTextView.font?.lineHeight ?? 21
-        let maxHeight = lineHeight * CGFloat(collapsedLines)
+        config.image = UIImage(named: imageName)?.withTintColor(.white, renderingMode: .alwaysTemplate)
         
-        let textViewWidth = descriptionTextView.bounds.width
-        
-        let textSize = (descriptionTextView.text as NSString).boundingRect(
-            with: CGSize(width: textViewWidth, height: .greatestFiniteMagnitude),
-            options: [.usesLineFragmentOrigin, .usesFontLeading],
-            attributes: [.font: descriptionTextView.font ?? GLFont.regular14.font],
-            context: nil
-        )
-        
-        let actualHeight = ceil(textSize.height)
-        moreButton.isHidden = actualHeight < maxHeight + 5
-    }
-    
-    func toggleExpansion() {
-        isExpanded.toggle()
-        
-        if isExpanded {
-            contentTextViewHeightConstraint?.deactivate()
-            updateMoreButton(title: "접기", imageName: "chevron_up")
-        } else {
-            applyCollapsedState()
-            updateMoreButton(title: "이어서 더보기", imageName: "chevron_down")
-        }
-    }
-    
-    private func updateMoreButton(title: String, imageName: String) {
-        moreButton.configuration?.title = title
-        moreButton.configuration?.image = UIImage(named: imageName)?.withTintColor(.white, renderingMode: .alwaysTemplate)
-    }
-    
-    private func resetToCollapsedState() {
-        isExpanded = false
-        contentTextViewHeightConstraint?.deactivate()
-        applyCollapsedState()
-        updateMoreButton(title: "이어서 더보기", imageName: "chevron_down")
+        moreButton.configuration = config
     }
 }
 
@@ -271,10 +216,11 @@ extension DiaryDetailsView {
         likeCount: Int,
         commentCount: Int
     ) {
-        resetToCollapsedState()
+        isExpanded = false
         
         titleLabel.text = title
-        descriptionTextView.text = description
+        descriptionLabel.text = description
+        
         backgroundImageView.kf.setImage(with: backgroundImageURL)
         
         let heartImage = isLiked ? UIImage(named: "diary_heart_selected") : UIImage(named: "diary_heart")
@@ -285,11 +231,5 @@ extension DiaryDetailsView {
         
         commentButton.setTitle("\(commentCount)", for: .normal)
         commentButton.isHidden = isHideComment
-        
-        setNeedsLayout()
-        
-        DispatchQueue.main.async {
-            self.checkMoreButtonVisibility()
-        }
     }
 }

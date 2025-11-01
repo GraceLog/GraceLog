@@ -91,6 +91,7 @@
 		DE042C452E93FE0A0089E20F /* DiaryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C442E93FE0A0089E20F /* DiaryDetailsViewController.swift */; };
 		DE042C482E93FE6D0089E20F /* DiaryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C472E93FE6D0089E20F /* DiaryDetailsView.swift */; };
 		DE042C4A2E9F4F0A0089E20F /* CAGradientLayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C492E9F4F0A0089E20F /* CAGradientLayer+Extension.swift */; };
+		DE042C4C2EB5DC620089E20F /* VerticalAlignLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C4B2EB5DC620089E20F /* VerticalAlignLabel.swift */; };
 		DE04F8952E93FB58001A5135 /* DiaryDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE04F8942E93FB58001A5135 /* DiaryDetails.swift */; };
 		DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B972D53A855007C2066 /* DiaryCoordinator.swift */; };
 		DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE069B992D53A884007C2066 /* DiaryViewController.swift */; };
@@ -330,6 +331,7 @@
 		DE042C442E93FE0A0089E20F /* DiaryDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailsViewController.swift; sourceTree = "<group>"; };
 		DE042C472E93FE6D0089E20F /* DiaryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailsView.swift; sourceTree = "<group>"; };
 		DE042C492E9F4F0A0089E20F /* CAGradientLayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Extension.swift"; sourceTree = "<group>"; };
+		DE042C4B2EB5DC620089E20F /* VerticalAlignLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalAlignLabel.swift; sourceTree = "<group>"; };
 		DE04F8942E93FB58001A5135 /* DiaryDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetails.swift; sourceTree = "<group>"; };
 		DE069B972D53A855007C2066 /* DiaryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCoordinator.swift; sourceTree = "<group>"; };
 		DE069B992D53A884007C2066 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 				702D2B5B2E02C3A000D5E71E /* GLInputTextView.swift */,
 				702D2B672E05674B00D5E71E /* AutoSizingCollectionView.swift */,
 				702D2B6D2E07107A00D5E71E /* AutoSizingTableView.swift */,
+				DE042C4B2EB5DC620089E20F /* VerticalAlignLabel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1794,6 +1797,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE042C4C2EB5DC620089E20F /* VerticalAlignLabel.swift in Sources */,
 				DE4D0F442E71D47600827EDE /* AnnouncementViewController.swift in Sources */,
 				70CBC7602E92602A0037C613 /* CommunityRoom.swift in Sources */,
 				70A97C662E2169D300F08DF6 /* MyInfoPresentationAssembly.swift in Sources */,

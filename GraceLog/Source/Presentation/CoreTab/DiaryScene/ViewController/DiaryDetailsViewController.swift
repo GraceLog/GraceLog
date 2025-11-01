@@ -16,8 +16,10 @@ import RxCocoa
 final class DiaryDetailsViewController: GraceLogBaseViewController, View {
     var disposeBag = DisposeBag()
     
+    private var isInitialHeightSet = false
+    
     private let navigationBar = GLNavigationBar().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = GLColor.backgroundSub.color
         $0.setupTitleLabel(text: "나의 감사일기")
     }
     
@@ -89,9 +91,14 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupStyles()
         setupLayouts()
         setupConstraints()
         setupCalendarView()
+    }
+    
+    private func setupStyles() {
+        view.backgroundColor = GLColor.backgroundSub.color
     }
     
     private func setupLayouts() {
@@ -113,8 +120,8 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
-            $0.directionalHorizontalEdges.equalTo(safeArea)
-            $0.bottom.equalTo(safeArea)
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         containerStackView.snp.makeConstraints {
@@ -126,6 +133,11 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         
         calendarView.snp.makeConstraints {
             $0.height.equalTo(250)
+        }
+        
+        let totalOffset = 44 + 29 + 67.5 + 25 + 50
+        diaryDetailsView.snp.makeConstraints {
+            $0.height.equalTo(safeArea.snp.height).offset(-totalOffset)
         }
     }
     
@@ -161,11 +173,19 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         diaryDetailsView.moreButton.rx.tap
             .asDriver()
             .drive(with: self) { owner, _ in
-                owner.diaryDetailsView.toggleExpansion()
+                owner.diaryDetailsView.isExpanded.toggle()
                 
-                UIView.animate(withDuration: 0.3) {
-                    owner.view.layoutIfNeeded()
+                if owner.diaryDetailsView.isExpanded {
+                    owner.diaryDetailsView.snp.removeConstraints()
+                    owner.diaryDetailsView.updateMoreButton(title: "접기", imageName: "chevron_up")
+                } else {
+                    let totalOffset: CGFloat = 44 + 29 + 67.5 + 25 + 50
+                    owner.diaryDetailsView.snp.updateConstraints {
+                        $0.height.equalTo(owner.view.safeAreaLayoutGuide.snp.height).offset(-totalOffset)
+                    }
+                    owner.diaryDetailsView.updateMoreButton(title: "이어서 더보기", imageName: "chevron_down")
                 }
+                
             }
             .disposed(by: disposeBag)
         
