@@ -12,13 +12,17 @@ final class DiaryDetailsCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     
-    init(_ navigationController: UINavigationController) {
+    private let diaryId: Int
+    
+    init(
+        _ navigationController: UINavigationController,
+        diaryId: Int
+    ) {
         self.navigationController = navigationController
+        self.diaryId = diaryId
     }
     
-    func start() {}
-    
-    func start(diaryId: Int) {
+    func start() {
         let diaryDetailsVC = DiaryDetailsViewController(
             reactor: DiaryDetailsViewReactor(
                 coordinator: self,

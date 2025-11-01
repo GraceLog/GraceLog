@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import Swinject
 
 final class HomeCoordinator: NavigationCoordinator {
@@ -26,9 +25,9 @@ final class HomeCoordinator: NavigationCoordinator {
     }
     
     func showDiaryDetail(diaryId: Int) {
-        let diaryDetailsCoordinator = DiaryDetailsCoordinator(self.navigationController)
+        let diaryDetailsCoordinator = DiaryDetailsCoordinator(self.navigationController, diaryId: diaryId)
         diaryDetailsCoordinator.parentCoordinator = self
         self.childCoordinators.append(diaryDetailsCoordinator)
-        diaryDetailsCoordinator.start(diaryId: diaryId)
+        diaryDetailsCoordinator.start()
     }
 }

@@ -10,8 +10,8 @@ import ReactorKit
 import RxDataSources
 
 final class HomeCommunityViewReactor: Reactor {
-    weak var coordinator: HomeCoordinator?
     private let usecase: HomeCommunityUseCase
+    var coordinator: HomeCoordinator?
     
     var initialState: State
     
@@ -34,7 +34,9 @@ final class HomeCommunityViewReactor: Reactor {
         @Pulse var isSuccessUnlikeResult: Bool?
     }
     
-    init(usecase: HomeCommunityUseCase) {
+    init(
+        usecase: HomeCommunityUseCase
+    ) {
         self.usecase = usecase
         self.initialState = State(
             communityList: [],
