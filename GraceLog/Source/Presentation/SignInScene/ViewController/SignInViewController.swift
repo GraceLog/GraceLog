@@ -16,9 +16,7 @@ import ReactorKit
 import SnapKit
 import Then
 
-final class SignInViewController: UIViewController {
-    var disposeBag = DisposeBag()
-    
+final class SignInViewController: GraceLogBaseViewController<SignInReactor> {
     private let containerStackView = UIStackView().then {
         $0.backgroundColor = .clear
         $0.axis = .vertical
@@ -42,7 +40,7 @@ final class SignInViewController: UIViewController {
     }
     
     private let startLabel = UILabel().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = GLColor.backgroundMain.color
         $0.text = "시작하기"
         $0.textColor = .themeColor
         $0.font = GLFont.regular14.font
@@ -92,15 +90,6 @@ final class SignInViewController: UIViewController {
         padding: 0
     )
     
-    init(reactor: SignInReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupStyles()
@@ -120,17 +109,17 @@ final class SignInViewController: UIViewController {
         }
     }
     
-    private func setupStyles() {
-        view.backgroundColor = .white
+    override func setupStyles() {
+        super.setupStyles()
     }
     
-    private func setupLayouts() {
+    override func setupLayouts() {
         [sloganLabel, logoImageView, lineContainerView, buttonStackView].forEach { containerStackView.addArrangedSubview($0) }
         [containerStackView, copyrightLabel, activityIndicator].forEach { view.addSubview($0) }
         [lineView, startLabel].forEach { lineContainerView.addSubview($0) }
     }
     
-    private func setupConstraints() {
+    override func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
         containerStackView.snp.makeConstraints {
             $0.center.equalTo(safeArea)
@@ -165,10 +154,8 @@ final class SignInViewController: UIViewController {
             $0.size.equalTo(40)
         }
     }
-}
-
-extension SignInViewController: View {
-    func bind(reactor: SignInReactor) {
+    
+    override func bind(reactor: SignInReactor) {
         // Action
         googleLoginButton.rx.tap
             .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
