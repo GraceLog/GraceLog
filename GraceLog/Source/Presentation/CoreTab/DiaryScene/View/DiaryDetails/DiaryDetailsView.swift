@@ -46,6 +46,7 @@ final class DiaryDetailsView: UIView {
         $0.lineBreakMode = .byWordWrapping
     }
     
+    /// TODO: - 줄 높이 구하는 부분 필요
     private let descriptionLabel = VerticalAlignLabel().then {
         $0.textColor = .white
         $0.font = GLFont.regular14.font

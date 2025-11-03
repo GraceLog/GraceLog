@@ -170,6 +170,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
             }
             .disposed(by: disposeBag)
         
+        /// 다이어리뷰 toggle
         diaryDetailsView.moreButton.rx.tap
             .asDriver()
             .drive(with: self) { owner, _ in
