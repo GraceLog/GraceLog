@@ -13,8 +13,7 @@ import RxCocoa
 import RxDataSources
 import ReactorKit
 
-final class HomeCommunityViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
+final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunityViewReactor> {
     private var diaryDataSource: RxTableViewSectionedReloadDataSource<HomeCommunityDiarySection>!
     
     private lazy var scrollView = UIScrollView().then {
@@ -33,23 +32,13 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
     private let communitySelectedView = HomeCommunityListView()
     private let communityDiaryListView = HomeCommunityDiaryListView()
     
-    init(reactor: HomeCommunityViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
+    override func setupStyles() {
+        super.setupStyles()
+        showNavigationBar = false
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupLayouts()
-        setupConstraints()
-    }
-    
-    private func setupLayouts() {
+    override func setupLayouts() {
+        super.setupLayouts()
         view.addSubview(scrollView)
         
         let subviews = [communitySelectedView, communityDiaryListView]
@@ -58,7 +47,8 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         scrollView.addSubview(containerStackView)
     }
     
-    private func setupConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
         scrollView.snp.makeConstraints {
             $0.directionalEdges.width.equalToSuperview()
         }
@@ -69,7 +59,8 @@ final class HomeCommunityViewController: GraceLogBaseViewController, View {
         }
     }
      
-    func bind(reactor: HomeCommunityViewReactor) {
+    override func bind(reactor: HomeCommunityViewReactor) {
+        super.bind(reactor: reactor)
         bindCommunitySelectedCollectionView(reactor: reactor)
         bindCommunityDiaryTableView(reactor: reactor)
         

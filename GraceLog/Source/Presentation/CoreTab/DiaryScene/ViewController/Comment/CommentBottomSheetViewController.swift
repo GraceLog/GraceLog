@@ -12,9 +12,7 @@ import RxDataSources
 import SnapKit
 import Then
 
-final class CommentBottomSheetViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
+final class CommentBottomSheetViewController: GraceLogBaseViewController<CommentBottomSheetViewReactor> {
     private var commentDataSource: RxTableViewSectionedAnimatedDataSource<CommentSection>!
     
     private let containerStackView = UIStackView().then {
@@ -38,34 +36,16 @@ final class CommentBottomSheetViewController: GraceLogBaseViewController, View {
     }
     private let commentEditView = CommentEditView()
     
-    init(reactor: CommentBottomSheetViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupStyles()
-        setupLayouts()
-        setupConstraints()
-    }
-    
-    private func setupStyles() {
-        view.backgroundColor = .systemBackground
-    }
-    
-    private func setupLayouts() {
+    override func setupLayouts() {
+        super.setupLayouts()
         view.addSubview(containerStackView)
         
         let subviews = [commentTableView, commentEditView]
         containerStackView.addArrangedDividerSubViews(subviews)
     }
     
-    private func setupConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
         containerStackView.snp.makeConstraints {
             $0.top.directionalHorizontalEdges.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -76,7 +56,8 @@ final class CommentBottomSheetViewController: GraceLogBaseViewController, View {
         }
     }
     
-    func bind(reactor: CommentBottomSheetViewReactor) {
+    override func bind(reactor: CommentBottomSheetViewReactor) {
+        super.bind(reactor: reactor)
         commentTableView.rx.setDelegate(self).disposed(by: disposeBag)
         
         commentDataSource = RxTableViewSectionedAnimatedDataSource(configureCell: { dataSource, tableView, indexPath, item in

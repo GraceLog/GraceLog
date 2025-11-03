@@ -10,13 +10,7 @@ import UIKit
 import RxDataSources
 import ReactorKit
 
-final class HomeViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
-    private let navigationBar = GLNavigationBar().then {
-        $0.backgroundColor = .white
-    }
-    
+final class HomeViewController: GraceLogBaseViewController<HomeViewReactor> {
     private let homeMenuView = GLUnderlineSegmentedControl(items: []).then {
         $0.setHeight(50)
         $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
@@ -51,22 +45,6 @@ final class HomeViewController: GraceLogBaseViewController, View {
         homeCommunityViewController
     ]
     
-    init(reactor: HomeViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configurePageViewController()
-        configureUI()
-        configureNavBar()
-    }
-    
     private func configurePageViewController() {
         pageViewController.dataSource = nil
         pageViewController.delegate = self
@@ -74,20 +52,22 @@ final class HomeViewController: GraceLogBaseViewController, View {
         pageViewController.setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
     }
     
-    private func configureUI() {
+    override func setupStyles() {
+        super.setupStyles()
         view.backgroundColor = .white
-        let safeArea = view.safeAreaLayoutGuide
-        
-        [navigationBar, pageViewController.view].forEach { view.addSubview($0) }
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
-            $0.directionalHorizontalEdges.equalToSuperview()
-            $0.height.equalTo(50)
-        }
-        
+        configureNavBar()
+        configurePageViewController()
+    }
+    
+    override func setupLayouts() {
+        super.setupLayouts()
+        contentView.addSubview(pageViewController.view)
+    }
+    
+    override func setupConstraints() {
+        super.setupConstraints()
         pageViewController.view.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.directionalHorizontalEdges.bottom.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
     }
     
@@ -97,7 +77,8 @@ final class HomeViewController: GraceLogBaseViewController, View {
         navigationBar.addRightItem(profileButton)
     }
     
-    func bind(reactor: HomeViewReactor) {
+    override func bind(reactor: HomeViewReactor) {
+        super.bind(reactor: reactor)
         // Action
         homeMenuView.rx.value
             .map { index -> HomeViewReactor.State.HomeModeSegment in

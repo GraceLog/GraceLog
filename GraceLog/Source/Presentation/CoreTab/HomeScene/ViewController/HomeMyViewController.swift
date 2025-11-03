@@ -13,10 +13,7 @@ import RxCocoa
 import RxDataSources
 import ReactorKit
 
-final class HomeMyViewController: GraceLogBaseViewController, View {
-    typealias Reactor = HomeMyViewReactor
-    var disposeBag = DisposeBag()
-    
+final class HomeMyViewController: GraceLogBaseViewController<HomeMyViewReactor> {
     private lazy var scrollView = UIScrollView().then {
         $0.backgroundColor = .clear
         $0.alwaysBounceVertical = true
@@ -33,27 +30,23 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
     private let myDiaryView = HomeMyDiaryView()
     private let myRecommendVideoView = HomeMyRecommendVideoView()
     
-    init(reactor: HomeMyViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
+    override func setupStyles() {
+        super.setupStyles()
+        showNavigationBar = false
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-    }
-    
-    private func setupUI() {
+    override func setupLayouts() {
+        super.setupLayouts()
         view.addSubview(scrollView)
+        scrollView.addSubview(containerStackView)
+    }
+    
+    override func setupConstraints() {
+        super.setupConstraints()
         scrollView.snp.makeConstraints {
             $0.directionalEdges.width.equalToSuperview()
         }
         
-        scrollView.addSubview(containerStackView)
         containerStackView.snp.makeConstraints {
             $0.top.directionalHorizontalEdges.width.equalToSuperview()
             $0.bottom.lessThanOrEqualToSuperview()
@@ -63,7 +56,8 @@ final class HomeMyViewController: GraceLogBaseViewController, View {
         containerStackView.arrangedSubviews(subViews)
     }
     
-    func bind(reactor: HomeMyViewReactor) {
+    override func bind(reactor: HomeMyViewReactor) {
+        super.bind(reactor: reactor)
         bindHomeMyBibleView(reactor: reactor)
         bindHomeMyDiaryView(reactor: reactor)
         bindHomeMyRecommendVideoView(reactor: reactor)
