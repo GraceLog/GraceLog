@@ -17,6 +17,7 @@ enum GLColor: AppColor {
     case textSub
     case textAccent
     case textBasic
+    case textHome
     
     /// 아이콘 색상
     case iconMain
@@ -37,6 +38,8 @@ enum GLColor: AppColor {
             return UIColor(hex: 0xFE5F51)
         case .textBasic:
             return UIColor(hex: 0xFFFFFF)
+        case .textHome:
+            return UIColor(hex: 0x8C8C8C)
         case .iconMain:
             return UIColor(hex: 0xFFFFFF)
         case .iconSub:
@@ -60,6 +63,8 @@ enum GLColor: AppColor {
             return UIColor(hex: 0xFE5F51)
         case .textBasic:
             return UIColor(hex: 0x000000)
+        case .textHome:
+            return UIColor(hex: 0x414141)
         case .iconMain:
             return UIColor(hex: 0x161515)
         case .iconSub:

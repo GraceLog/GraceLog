@@ -107,7 +107,6 @@
 		DE23873B2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23873A2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift */; };
 		DE23873D2E0BB4B200893D8C /* HomeMyBibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23873C2E0BB4B200893D8C /* HomeMyBibleView.swift */; };
 		DE2387412E0BB83B00893D8C /* HomeMyRecommendVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2387402E0BB83B00893D8C /* HomeMyRecommendVideoView.swift */; };
-		DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2387422E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift */; };
 		DE24DB6D2D26D34D00581621 /* LoginUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FEC72D04284E008CADCD /* LoginUseCaseTests.swift */; };
 		DE24DB6E2D26D36100581621 /* MockFireStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2700732D257068005C9DCF /* MockFireStoreRepository.swift */; };
 		DE27003B2D1EFB4E005C9DCF /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */; };
@@ -348,7 +347,6 @@
 		DE23873A2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePastDiaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE23873C2E0BB4B200893D8C /* HomeMyBibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyBibleView.swift; sourceTree = "<group>"; };
 		DE2387402E0BB83B00893D8C /* HomeMyRecommendVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyRecommendVideoView.swift; sourceTree = "<group>"; };
-		DE2387422E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendVideoTableViewHeaderView.swift; sourceTree = "<group>"; };
 		DE24DB632D26D32200581621 /* GraceLogUseCaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraceLogUseCaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2700322D1EFB4D005C9DCF /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		DE2700332D1EFB4E005C9DCF /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
@@ -925,7 +923,6 @@
 				DE2387382E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift */,
 				DE23873A2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift */,
 				DE069BA12D571485007C2066 /* HomeRecommendVideoTableViewCell.swift */,
-				DE2387422E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift */,
 				70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */,
 			);
 			path = Cell;
@@ -1972,10 +1969,8 @@
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
 				DE4D0F5B2E7ACB7B00827EDE /* AnnouncementListUseCase.swift in Sources */,
-				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
 				DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
-				DE2387432E0BE13900893D8C /* HomeRecommendVideoTableViewHeaderView.swift in Sources */,
 				DE1B04FA2E5886760083A7EA /* NVActivityIndicatorView+Extension.swift in Sources */,
 				0252A6202E6159BB002BA0D8 /* MyInfoSwitchTableViewCell.swift in Sources */,
 				DE042C412E93FD3F0089E20F /* DefaultDiaryDetailsUseCase.swift in Sources */,

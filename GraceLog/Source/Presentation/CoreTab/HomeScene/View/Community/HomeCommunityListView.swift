@@ -19,7 +19,7 @@ final class HomeCommunityListView: UIView {
     }
     
     lazy var communityListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: communityListLayout).then {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = GLColor.backgroundSub.color
         $0.showsHorizontalScrollIndicator = false
         $0.alwaysBounceHorizontal = true
         $0.isScrollEnabled = true

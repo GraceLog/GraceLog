@@ -18,13 +18,13 @@ final class HomeMyBibleView: UIView {
     }
     
     private let bibleContentLabel = UILabel().then {
-        $0.textColor = .graceGray
+        $0.textColor = GLColor.textMain.color
         $0.font = GLFont.regular24.font
         $0.numberOfLines = 4
     }
     
     private let bibleReferenceLabel = UILabel().then {
-        $0.textColor = .graceGray
+        $0.textColor = GLColor.textMain.color
         $0.font = GLFont.regular14.font
     }
     
@@ -45,9 +45,7 @@ final class HomeMyBibleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI() {
-        backgroundColor = UIColor(hex: 0xF4F4F4)
-        
+    private func setupUI() {        
         addSubview(containerStackView)
         [titleLabel, bibleContentLabel, bibleReferenceLabel].forEach { containerStackView.addArrangedSubview($0) }
         

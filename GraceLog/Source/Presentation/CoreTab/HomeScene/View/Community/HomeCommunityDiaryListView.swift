@@ -11,7 +11,7 @@ import Then
 
 final class HomeCommunityDiaryListView: UIView {
     let diaryTableView = AutoSizingTableView().then {
-        $0.backgroundColor = UIColor(hex: 0xF4F4F4)
+        $0.backgroundColor = GLColor.backgroundMain.color
         $0.separatorStyle = .none
         $0.sectionHeaderHeight = .leastNonzeroMagnitude
         $0.sectionFooterHeight = .leastNonzeroMagnitude

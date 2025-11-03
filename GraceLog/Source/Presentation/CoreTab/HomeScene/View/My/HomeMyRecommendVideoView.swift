@@ -26,6 +26,7 @@ final class HomeMyRecommendVideoView: UIView {
     }
     
     private let recommendedTagLabel = UILabel().then {
+        $0.textColor = GLColor.textMain.color
         $0.font = GLFont.regular24.font
         $0.numberOfLines = 0
     }
@@ -54,8 +55,6 @@ final class HomeMyRecommendVideoView: UIView {
     }
     
     private func setupUI() {
-        backgroundColor = UIColor(hex: 0xF4F4F4)
-        
         addSubview(containerStackView)
         [titleLabel, recommendedTagLabel, recommendVideoTableView].forEach { containerStackView.addArrangedSubview($0) }
         containerStackView.snp.makeConstraints {
@@ -68,7 +67,7 @@ final class HomeMyRecommendVideoView: UIView {
 
 extension HomeMyRecommendVideoView {
     func configureUI(isEmpty: Bool = false, recommendedText: String) {
-        recommendedTagLabel.textColor = isEmpty ? UIColor(hex: 0xD8D8D8) : .graceGray
+        recommendedTagLabel.textColor = isEmpty ? UIColor(hex: 0xD8D8D8) : GLColor.textMain.color
         recommendedTagLabel.text = recommendedText
     }
 }

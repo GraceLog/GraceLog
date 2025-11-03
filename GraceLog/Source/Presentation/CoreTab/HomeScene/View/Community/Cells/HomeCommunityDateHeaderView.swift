@@ -21,8 +21,6 @@ final class HomeCommunityDateHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = UIColor(hex: 0xF4F4F4)
-        
         contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
             $0.directionalVerticalEdges.equalToSuperview().inset(13)

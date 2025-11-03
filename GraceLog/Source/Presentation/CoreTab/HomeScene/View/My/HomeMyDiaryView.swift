@@ -44,8 +44,6 @@ final class HomeMyDiaryView: UIView {
     }
     
     private func setupUI() {
-        backgroundColor = UIColor(hex: 0xF4F4F4)
-        
         let diaryTopStackView = UIStackView(arrangedSubviews: [diaryImageView, greetingLabel])
         diaryTopStackView.do {
             $0.axis = .horizontal
