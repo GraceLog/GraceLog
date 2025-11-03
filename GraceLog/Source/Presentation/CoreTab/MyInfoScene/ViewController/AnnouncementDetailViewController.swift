@@ -10,13 +10,7 @@ import SnapKit
 import Then
 import ReactorKit
 
-final class AnnouncementDetailViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
-    private let navigationBar = GLNavigationBar().then {
-        $0.setupTitleLabel(text: "공지사항")
-    }
-    
+final class AnnouncementDetailViewController: GraceLogBaseViewController<AnnouncementDetailViewReactor> {
     private let backButton = UIButton().then {
         $0.setImage(UIImage(named: "nav_chevron_left"), for: .normal)
     }
@@ -52,45 +46,25 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController, View {
         $0.numberOfLines = 0
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupStyles()
-        setupLayouts()
-        setupConstraints()
-    }
-    
-    init(reactor: AnnouncementDetailViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupStyles() {
+    override func setupStyles() {
+        super.setupStyles()
         view.backgroundColor = GLColor.backgroundSub.color
+        navigationBar.setupTitleLabel(text: "공지사항")
     }
     
-    private func setupLayouts() {
-        [navigationBar, scrollView].forEach { view.addSubview($0) }
+    override func setupLayouts() {
+        super.setupLayouts()
+        contentView.addSubview(scrollView)
         navigationBar.addLeftItem(backButton)
         scrollView.addSubview(containerStackView)
         [titleLabel, createdAtLabel, contentsLabel].forEach { containerStackView.addArrangedSubview($0) }
     }
     
-    private func setupConstraints() {
-        let safeArea = view.safeAreaLayoutGuide
-        
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
-        }
+    override func setupConstraints() {
+        super.setupConstraints()
         
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.width.bottom.equalToSuperview()
+            $0.directionalVerticalEdges.width.equalToSuperview()
         }
         
         containerStackView.snp.makeConstraints {
@@ -102,7 +76,8 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController, View {
         containerStackView.setCustomSpacing(40, after: createdAtLabel)
     }
     
-    func bind(reactor: AnnouncementDetailViewReactor) {
+    override func bind(reactor: AnnouncementDetailViewReactor) {
+        super.bind(reactor: reactor)
         reactor.action.onNext(.fetchAnnouncement)
         
         backButton.rx.tap

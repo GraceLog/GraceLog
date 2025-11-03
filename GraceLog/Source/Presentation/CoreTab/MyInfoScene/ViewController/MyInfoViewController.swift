@@ -11,14 +11,7 @@ import ReactorKit
 import RxSwift
 import Kingfisher
 
-final class MyInfoViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
-    private let navigationBar = GLNavigationBar().then {
-        $0.backgroundColor = .white
-        $0.setupTitleLabel(text: "내 계정")
-    }
-    
+final class MyInfoViewController: GraceLogBaseViewController<MyInfoViewReactor> {
     private lazy var scrollView = UIScrollView().then {
         $0.backgroundColor = GLColor.backgroundMain.lightModeColor
         $0.showsHorizontalScrollIndicator = false
@@ -72,45 +65,25 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
         }
     )
     
-    init(reactor: MyInfoViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
+    override func setupStyles() {
+        super.setupStyles()
+        view.backgroundColor = GLColor.backgroundSub.color
+        navigationBar.setupTitleLabel(text: "내 계정")
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupStyles()
-        setupLayouts()
-        setupConstraints()
-    }
-    
-    private func setupStyles() {
-        view.backgroundColor = .white
-    }
-    
-    private func setupLayouts() {
-        view.addSubview(navigationBar)
-        view.addSubview(scrollView)
+    override func setupLayouts() {
+        super.setupLayouts()
+        contentView.addSubview(scrollView)
         scrollView.addSubview(containerStackView)
         
         let subviews = [profileView, tableView]
         containerStackView.arrangedSubviews(subviews)
     }
     
-    private func setupConstraints() {
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.directionalHorizontalEdges.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-        
+    override func setupConstraints() {
+        super.setupConstraints()
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.directionalHorizontalEdges.bottom.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
         
         containerStackView.snp.makeConstraints {
@@ -119,7 +92,7 @@ final class MyInfoViewController: GraceLogBaseViewController, View {
         }
     }
     
-    func bind(reactor: MyInfoViewReactor) {
+    override func bind(reactor: MyInfoViewReactor) {
         bindMyInfoProfileView(reactor: reactor)
         
         // Action

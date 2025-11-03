@@ -10,13 +10,7 @@ import SnapKit
 import Then
 import ReactorKit
 
-final class AnnouncementViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
-    private let navigationBar = GLNavigationBar().then {
-        $0.setupTitleLabel(text: "공지사항")
-    }
-    
+final class AnnouncementViewController: GraceLogBaseViewController<AnnouncementViewReactor> {
     private let backButton = UIButton().then {
         $0.setImage(UIImage(named: "nav_chevron_left"), for: .normal)
     }
@@ -47,29 +41,16 @@ final class AnnouncementViewController: GraceLogBaseViewController, View {
         $0.register(AnnouncementTableViewCell.self, forCellReuseIdentifier: AnnouncementTableViewCell.reuseIdentifier)
     }
     
-    init(reactor: AnnouncementViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupStyles()
-        setupLayouts()
-        setupConstraints()
-    }
-    
-    private func setupStyles() {
+    override func setupStyles() {
+        super.setupStyles()
         view.backgroundColor = GLColor.backgroundSub.color
+        navigationBar.setupTitleLabel(text: "공지사항")
     }
     
-    private func setupLayouts() {
-        [navigationBar, containerStackView, annuncementTableView].forEach {
-            view.addSubview($0)
+    override func setupLayouts() {
+        super.setupLayouts()
+        [containerStackView, annuncementTableView].forEach {
+            contentView.addSubview($0)
         }
         navigationBar.addLeftItem(backButton)
         
@@ -78,26 +59,19 @@ final class AnnouncementViewController: GraceLogBaseViewController, View {
         }
     }
     
-    private func setupConstraints() {
-        let safeArea = view.safeAreaLayoutGuide
-        
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-        
+    override func setupConstraints() {
+        super.setupConstraints()
         containerStackView.snp.makeConstraints {
-            $0.center.equalTo(safeArea)
+            $0.center.equalTo(view.safeAreaLayoutGuide)
         }
         
         annuncementTableView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
     }
     
-    func bind(reactor: AnnouncementViewReactor) {
+    override func bind(reactor: AnnouncementViewReactor) {
+        super.bind(reactor: reactor)
         backButton.rx.tap
             .map { Reactor.Action.didTapBackButton }
             .bind(to: reactor.action)

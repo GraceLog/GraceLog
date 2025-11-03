@@ -11,19 +11,14 @@ import RxSwift
 import RxDataSources
 import ReactorKit
 
-final class SearchViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
+final class SearchViewController: GraceLogBaseViewController<SearchViewReactor> {
     enum Section: Int, Hashable {
         case primary
         case secondary
     }
     
     var dataSource: RxCollectionViewSectionedAnimatedDataSource<SearchCommunitySection>!
-    
-    private let navigationBar = GLNavigationBar().then {
-        $0.setupTitleLabel(text: "공동체")
-    }
+
     private let searchContainerView = UIView().then {
         $0.backgroundColor = GLColor.backgroundSub.color
     }
@@ -49,41 +44,26 @@ final class SearchViewController: GraceLogBaseViewController, View {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
         $0.alwaysBounceVertical = true
-        $0.backgroundColor = .clear
+        $0.backgroundColor = GLColor.backgroundMain.color
+        $0.contentInset = .init(top: 20, left: .zero, bottom: .zero, right: .zero)
     }
     
-    init(reactor: SearchViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-        setupUI()
-        setupLayouts()
-        setupConstraints()
+    override func setupStyles() {
+        super.setupStyles()
+        view.backgroundColor = GLColor.backgroundSub.color
+        navigationBar.setupTitleLabel(text: "공동체")
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-        view.backgroundColor = .systemBackground
-    }
-    
-    private func setupLayouts() {
-        [navigationBar, searchContainerView, searchResultCollectionView].forEach { view.addSubview($0) }
+    override func setupLayouts() {
+        super.setupLayouts()
+        [searchContainerView, searchResultCollectionView].forEach { contentView.addSubview($0) }
         searchContainerView.addSubview(communitySearchBar)
-        view.bringSubviewToFront(navigationBar)
     }
     
-    private func setupConstraints() {
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.directionalHorizontalEdges.equalToSuperview()
-            $0.height.equalTo(Constants.navigationBarHeight)
-        }
-        
+    override func setupConstraints() {
+        super.setupConstraints()
         searchContainerView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.top.directionalHorizontalEdges.equalToSuperview()
             $0.height.equalTo(Constants.searchBarHeight)
         }
         
@@ -98,7 +78,7 @@ final class SearchViewController: GraceLogBaseViewController, View {
         }
     }
     
-    func bind(reactor: SearchViewReactor) {
+    override func bind(reactor: SearchViewReactor) {
         setupDataSource()
         
         reactor.pulse(\.$sections)
@@ -270,8 +250,7 @@ extension SearchViewController {
     
     private func animateTopApperance(isAppear: Bool) {
         self.searchContainerView.snp.updateConstraints {
-            $0.height.equalTo(isAppear ? Constants.searchBarHeight : Constants.navigationBarHeight)
-            $0.top.equalTo(navigationBar.snp.bottom).offset(isAppear ? .zero : -Constants.navigationBarHeight)
+            $0.height.equalTo(isAppear ? Constants.searchBarHeight : .zero)
         }
         
         UIView.animate(withDuration: 0.3) {
