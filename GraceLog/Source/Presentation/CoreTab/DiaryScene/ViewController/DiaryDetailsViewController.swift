@@ -210,11 +210,9 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
             .map { DateFormatterFactory.toYearMonthString(from: $0.createdAt) }
             .distinctUntilChanged()
             .withLatestFrom(diaryObservable.compactMap { $0 })
-            .observe(on: MainScheduler.asyncInstance)
-            .do(onNext: { [weak self] diary in
+            .subscribe(onNext: { [weak self] diary in
                 self?.fetchDiaryList(for: diary.createdAt)
             })
-            .subscribe()
             .disposed(by: disposeBag)
         
         diaryObservable
@@ -236,14 +234,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
                     commentCount: diary.commentCount
                 )
             })
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$selectedDateDiaryList)
-            .observe(on: MainScheduler.asyncInstance)
-            .asDriver(onErrorJustReturn: [])
-            .drive(with: self) { owner, diaryList in
-                owner.calendarView.reloadData()
-            }
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$isSuccessLikeResult)

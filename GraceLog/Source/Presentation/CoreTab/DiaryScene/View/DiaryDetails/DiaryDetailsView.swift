@@ -49,9 +49,8 @@ final class DiaryDetailsView: UIView {
     private let descriptionLabel = VerticalAlignLabel().then {
         $0.textColor = .white
         $0.font = GLFont.regular14.font
-        $0.numberOfLines = 10
+        $0.numberOfLines = 0
         $0.lineBreakMode = .byWordWrapping
-        $0.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
     }
     
     lazy var moreButton = UIButton().then {
@@ -147,7 +146,7 @@ final class DiaryDetailsView: UIView {
         }
         
         mainStackView.setCustomSpacing(12, after: categoryLabel)
-        mainStackView.setCustomSpacing(42, after: titleLabel)
+        mainStackView.setCustomSpacing(40, after: titleLabel)
         mainStackView.setCustomSpacing(24, after: descriptionLabel)
         mainStackView.setCustomSpacing(40, after: moreButton)
     }
