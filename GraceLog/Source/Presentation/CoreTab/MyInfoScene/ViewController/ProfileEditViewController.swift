@@ -9,16 +9,7 @@ import UIKit
 import NVActivityIndicatorView
 import ReactorKit
 
-final class ProfileEditViewController: GraceLogBaseViewController, View {
-    typealias Reactor = ProfileEditViewReactor
-    
-    var disposeBag = DisposeBag()
-    
-    private let navigationBar = GLNavigationBar().then {
-        $0.backgroundColor = .white
-        $0.setupTitleLabel(text: "프로필 편집")
-    }
-    
+final class ProfileEditViewController: GraceLogBaseViewController<ProfileEditViewReactor> {
     private let backButton = UIButton().then {
         $0.setImage(UIImage(named: "nav_chevron_left"), for: .normal)
     }
@@ -47,31 +38,20 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
     private let nameContainerView = ProfileEditFieldView()
     private let messageContainerView = ProfileEditFieldView()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupLayouts()
-        setupConsraints()
-        setupStyles()
-    }
-    
-    private func setupLayouts() {
-        [navigationBar, profileImageView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
-            view.addSubview($0)
+    override func setupLayouts() {
+        super.setupLayouts()
+        [profileImageView, editButton, nicknameContainerView, nameContainerView, messageContainerView].forEach {
+            contentView.addSubview($0)
         }
         
         navigationBar.addLeftItem(backButton)
         navigationBar.addRightItem(saveButton)
     }
     
-    private func setupConsraints() {
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
-        }
-        
+    override func setupConstraints() {
+        super.setupConstraints()
         profileImageView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(27)
+            $0.top.equalToSuperview().inset(27)
             $0.centerX.equalToSuperview()
         }
         
@@ -95,13 +75,16 @@ final class ProfileEditViewController: GraceLogBaseViewController, View {
         }
     }
     
-    private func setupStyles() {
+    override func setupStyles() {
+        super.setupStyles()
+        navigationBar.setupTitleLabel(text: "프로필 편집")
         nicknameContainerView.configure(title: "닉네임", placeholder: "ex. Peter")
         nameContainerView.configure(title: "이름", placeholder: "ex. 베드로")
         messageContainerView.configure(title: "메시지", placeholder: "ex. 잠언 16:9")
     }
     
-    func bind(reactor: ProfileEditViewReactor) {
+    override func bind(reactor: ProfileEditViewReactor) {
+        super.bind(reactor: reactor)
         // State
         reactor.pulse(\.$profileImageData)
             .asDriver(onErrorJustReturn: nil)
