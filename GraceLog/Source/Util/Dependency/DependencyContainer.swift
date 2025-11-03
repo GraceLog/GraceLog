@@ -20,7 +20,8 @@ final class DependencyContainer {
             AuthPresentationAssembly(),
             HomePresentationAssembly(),
             DiaryPresentationAssembly(),
-            MyInfoPresentationAssembly()
+            MyInfoPresentationAssembly(),
+            DiaryDetailsPresentationAssembly()
         ])
         return injector
     }()

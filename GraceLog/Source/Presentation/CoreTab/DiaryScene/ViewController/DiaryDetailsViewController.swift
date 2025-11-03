@@ -13,15 +13,8 @@ import ReactorKit
 import RxSwift
 import RxCocoa
 
-final class DiaryDetailsViewController: GraceLogBaseViewController, View {
-    var disposeBag = DisposeBag()
-    
+final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsViewReactor> {
     private var isInitialHeightSet = false
-    
-    private let navigationBar = GLNavigationBar().then {
-        $0.backgroundColor = GLColor.backgroundSub.color
-        $0.setupTitleLabel(text: "나의 감사일기")
-    }
     
     private let backButton = UIButton().then {
         $0.setImage(UIImage(named: "chevron_left_theme"), for: .normal)
@@ -80,15 +73,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
     
     private lazy var diaryDetailsView = DiaryDetailsView()
     
-    init(reactor: DiaryDetailsViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupStyles()
@@ -97,11 +81,13 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         setupCalendarView()
     }
     
-    private func setupStyles() {
+    override func setupStyles() {
+        super.setupStyles()
         view.backgroundColor = GLColor.backgroundSub.color
     }
     
-    private func setupLayouts() {
+    override func setupLayouts() {
+        super.setupLayouts()
         [navigationBar, scrollView].forEach { view.addSubview($0) }
         navigationBar.addLeftItem(backButton)
         
@@ -109,14 +95,9 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         [calendarButton, calendarView, diaryDetailsView].forEach { containerStackView.addArrangedSubview($0) }
     }
     
-    private func setupConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
         let safeArea = view.safeAreaLayoutGuide
-        
-        navigationBar.snp.makeConstraints {
-            $0.top.equalTo(safeArea)
-            $0.directionalHorizontalEdges.equalToSuperview()
-            $0.height.equalTo(44)
-        }
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
@@ -155,7 +136,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController, View {
         reactor?.action.onNext(.fetchSelectedDateDiaryList(startDate, endDate))
     }
     
-    func bind(reactor: DiaryDetailsViewReactor) {
+    override func bind(reactor: DiaryDetailsViewReactor) {
         /// Action
         reactor.action.onNext(.fetchDiary(nil))
         

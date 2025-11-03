@@ -23,13 +23,10 @@ final class DiaryDetailsCoordinator: Coordinator {
     }
     
     func start() {
-        let diaryDetailsVC = DiaryDetailsViewController(
-            reactor: DiaryDetailsViewReactor(
-                coordinator: self,
-                usecase: DefaultDiaryDetailsUseCase(
-                    diaryId: diaryId
-                )
-            )
+        let diaryDetailsVC = DependencyContainer.shared.injector.resolve(
+            DiaryDetailsViewController.self,
+            arguments: self,
+            diaryId
         )
         self.navigationController.pushViewController(diaryDetailsVC, animated: true)
     }
