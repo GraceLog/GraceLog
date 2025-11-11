@@ -14,7 +14,7 @@ final class DiaryDetailsViewReactor: Reactor {
     var initialState: State
     
     enum Action {
-        case fetchDiary(Int?)
+        case fetchDiary(Int)
         case fetchSelectedDateDiaryList(String, String)
         case didTapBackButton
         case didTapLikeButton(Int)
@@ -58,11 +58,11 @@ extension DiaryDetailsViewReactor {
             coordinator.popViewController()
         case .didTapLikeButton(let diaryID):
             guard let diary = currentState.diary,
-                  diary.id == diaryID else {
+                  diary.diaryId == diaryID else {
                 return .empty()
             }
             
-            if diary.isLiked {
+            if diary.likeByMe {
                 usecase.unlikeDiary(id: diaryID)
             } else {
                 usecase.likeDiary(id: diaryID)

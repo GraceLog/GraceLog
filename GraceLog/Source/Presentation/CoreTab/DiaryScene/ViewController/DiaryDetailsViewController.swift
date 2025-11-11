@@ -138,8 +138,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
     
     override func bind(reactor: DiaryDetailsViewReactor) {
         /// Action
-        reactor.action.onNext(.fetchDiary(nil))
-        
         backButton.rx.tap
             .map { Reactor.Action.didTapBackButton }
             .bind(to: reactor.action)
@@ -173,13 +171,13 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         
         diaryDetailsView.likeButton.rx.tap
             .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
-            .compactMap { reactor.currentState.diary?.id }
+            .compactMap { reactor.currentState.diary?.diaryId }
             .map { DiaryDetailsViewReactor.Action.didTapLikeButton($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         diaryDetailsView.commentButton.rx.tap
-            .compactMap { reactor.currentState.diary?.id }
+            .compactMap { reactor.currentState.diary?.diaryId }
             .map { DiaryDetailsViewReactor.Action.didTapCommentButton($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -211,7 +209,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
                     backgroundImageURL: diary.imageURLs.first ?? nil,
                     isHideLike: diary.isHideLike,
                     isHideComment: diary.isHideComment,
-                    isLiked: diary.isLiked,
+                    isLiked: diary.likeByMe,
                     likeCount: diary.likeCount,
                     commentCount: diary.commentCount
                 )
@@ -292,7 +290,7 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
         if let selectedDiary = reactor?.currentState.selectedDateDiaryList.first(where: {
             Calendar.current.isDate($0.createdAt, inSameDayAs: date)
         }) {
-            reactor?.action.onNext(.fetchDiary(selectedDiary.id))
+            reactor?.action.onNext(.fetchDiary(selectedDiary.diaryId))
         }
     }
 }

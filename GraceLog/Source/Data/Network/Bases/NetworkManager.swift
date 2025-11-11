@@ -51,6 +51,40 @@ extension NetworkManager {
         }
     }
     
+    func requestMultipart(
+        _ target: TargetType,
+        multipartFormData: MultipartFormData
+    ) -> Single<Void> {
+        return .create { single in
+            self.session.upload(
+                multipartFormData: multipartFormData,
+                to: target.baseURL + target.path,
+                method: target.method,
+                headers: target.headers.httpHeaders
+            ).responseDecodable(of: GLResponseDTO<[String]>.self) { response in
+                switch response.result {
+                case .success(let value):
+                    let result = self.judgeStatus(
+                        by: response.response?.statusCode ?? 0,
+                        response: value
+                    )
+                    
+                    switch result {
+                    case .success:
+                        single(.success(()))
+                    case .failure(let error):
+                        single(.failure(error))
+                    }
+                    
+                case .failure(let afError):
+                    let glError = self.convertToGLError(afError)
+                    single(.failure(glError))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
     private func judgeStatus<T: Decodable>(
         by statusCode: Int,
         response: GLResponseDTO<T>
