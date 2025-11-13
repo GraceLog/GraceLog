@@ -11,12 +11,14 @@ import SnapKit
 import Kingfisher
 
 final class DiaryDetailsView: UIView {
-    var isExpanded = false
+    private(set) var isExpanded = false
+    private let collapsedLines = 3
     
     private let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.layer.masksToBounds = true
         $0.clipsToBounds = true
-        $0.image = UIImage(named: "diary1")
+        $0.isUserInteractionEnabled = true
     }
     
     private let gradientLayer = CAGradientLayer.darkOverlayGradient()
@@ -34,7 +36,6 @@ final class DiaryDetailsView: UIView {
     }
     
     private let categoryLabel = UILabel().then {
-        $0.text = "오늘의 감사일기"
         $0.textColor = .white
         $0.font = GLFont.regular14.font
     }
@@ -43,18 +44,19 @@ final class DiaryDetailsView: UIView {
         $0.textColor = .white
         $0.font = GLFont.extraBold24.font
         $0.numberOfLines = 2
-        $0.lineBreakMode = .byWordWrapping
+        $0.lineBreakMode = .byTruncatingTail
     }
     
-    /// TODO: - 줄 높이 구하는 부분 필요
-    private let descriptionLabel = VerticalAlignLabel().then {
+    lazy var descriptionLabel = VerticalAlignLabel().then {
         $0.textColor = .white
         $0.font = GLFont.regular14.font
         $0.numberOfLines = 0
-        $0.lineBreakMode = .byWordWrapping
+        $0.lineBreakMode = .byTruncatingTail
+        $0.setContentHuggingPriority(.required, for: .vertical)
+        $0.setContentCompressionResistancePriority(.required, for: .vertical)
     }
     
-    lazy var moreButton = UIButton().then {
+    let moreButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "chevron_down")?.withTintColor(.white, renderingMode: .alwaysTemplate)
         config.baseForegroundColor = .white
@@ -68,6 +70,7 @@ final class DiaryDetailsView: UIView {
         
         $0.configuration = config
         $0.tintColor = .white
+        $0.isHidden = true
     }
     
     private let bottomStackView = UIStackView().then {
@@ -76,7 +79,7 @@ final class DiaryDetailsView: UIView {
         $0.spacing = 40
     }
     
-    lazy var likeButton = UIButton().then {
+    let likeButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "diary_heart")
         config.imagePlacement = .top
@@ -90,7 +93,7 @@ final class DiaryDetailsView: UIView {
         $0.tintColor = .white
     }
     
-    lazy var commentButton = UIButton().then {
+    let commentButton = UIButton().then {
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "diary_comment")
         config.imagePlacement = .top
@@ -128,23 +131,16 @@ final class DiaryDetailsView: UIView {
     private func setupLayouts() {
         addSubview(backgroundImageView)
         backgroundImageView.layer.addSublayer(gradientLayer)
+        [optionView, mainStackView].forEach { backgroundImageView.addSubview($0) }
         
-        addSubview(optionView)
-        addSubview(mainStackView)
-        
-        [likeButton, commentButton].forEach {
-            bottomStackView.addArrangedSubview($0)
-        }
-        
+        [likeButton, commentButton].forEach { bottomStackView.addArrangedSubview($0) }
         [
             categoryLabel,
             titleLabel,
             descriptionLabel,
             moreButton,
             bottomStackView
-        ].forEach {
-            mainStackView.addArrangedSubview($0)
-        }
+        ].forEach { mainStackView.addArrangedSubview($0) }
         
         mainStackView.setCustomSpacing(12, after: categoryLabel)
         mainStackView.setCustomSpacing(40, after: titleLabel)
@@ -163,7 +159,7 @@ final class DiaryDetailsView: UIView {
         }
         
         mainStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(60)
+            $0.top.equalTo(optionView.snp.bottom).offset(18)
             $0.leading.equalToSuperview().inset(31)
             $0.trailing.equalToSuperview().inset(48)
             $0.bottom.equalToSuperview().inset(30)
@@ -207,6 +203,7 @@ final class DiaryDetailsView: UIView {
 
 extension DiaryDetailsView {
     func configure(
+        category: String,
         title: String,
         description: String,
         backgroundImageURL: URL?,
@@ -216,10 +213,12 @@ extension DiaryDetailsView {
         likeCount: Int,
         commentCount: Int
     ) {
-        isExpanded = false
-        
-        titleLabel.text = title
         descriptionLabel.text = description
+        moreButton.isHidden = descriptionLabel.currentNumberOfLines <= 3
+        
+        setExpanded(false)
+        categoryLabel.text = category
+        titleLabel.text = title
         
         backgroundImageView.kf.setImage(with: backgroundImageURL)
         
@@ -231,5 +230,23 @@ extension DiaryDetailsView {
         
         commentButton.setTitle("\(commentCount)", for: .normal)
         commentButton.isHidden = isHideComment
+    }
+    
+    func setExpanded(_ expanded: Bool) {
+        isExpanded = expanded
+        
+        if !moreButton.isHidden {
+            descriptionLabel.numberOfLines = expanded ? 0 : 3
+        }
+        
+        updateMoreButton(
+            title: expanded ? "접기" : "이어서 더보기",
+            imageName: expanded ? "chevron_up" : "chevron_down"
+        )
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0.03,
+            options: [.curveEaseInOut]
+        ) { self.descriptionLabel.sizeToFit() }
     }
 }

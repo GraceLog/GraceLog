@@ -14,8 +14,6 @@ import RxSwift
 import RxCocoa
 
 final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsViewReactor> {
-    private var isInitialHeightSet = false
-    
     private let backButton = UIButton().then {
         $0.setImage(UIImage(named: "chevron_left_theme"), for: .normal)
     }
@@ -33,6 +31,8 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         $0.distribution = .fill
         $0.alignment = .fill
         $0.spacing = 20
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = .init(top: 20, left: 20, bottom: 20, right: 20)
     }
     
     private lazy var calendarButton = UIButton().then {
@@ -42,7 +42,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         config.baseForegroundColor = GLColor.textBasic.color
         config.imagePlacement = .trailing
         config.imagePadding = 7
-        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        config.contentInsets = .zero
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var outgoing = incoming
             outgoing.font = GLFont.regular24.font
@@ -53,7 +53,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         $0.contentHorizontalAlignment = .leading
     }
     
-    private let calendarView = FSCalendar().then {
+    private lazy var calendarView = FSCalendar().then {
         $0.tintColor = .white
         $0.scrollDirection = .horizontal
         $0.scope = .week
@@ -69,17 +69,11 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         $0.appearance.titleTodayColor = UIColor.white
         $0.appearance.eventDefaultColor = GLColor.textAccent.color
         $0.appearance.eventSelectionColor = .clear
+        $0.delegate = self
+        $0.dataSource = self
     }
     
-    private lazy var diaryDetailsView = DiaryDetailsView()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupStyles()
-        setupLayouts()
-        setupConstraints()
-        setupCalendarView()
-    }
+    lazy var diaryDetailsView = DiaryDetailsView()
     
     override func setupStyles() {
         super.setupStyles()
@@ -88,7 +82,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
     
     override func setupLayouts() {
         super.setupLayouts()
-        [navigationBar, scrollView].forEach { view.addSubview($0) }
+        contentView.addSubview(scrollView)
         navigationBar.addLeftItem(backButton)
         
         scrollView.addSubview(containerStackView)
@@ -97,17 +91,13 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
     
     override func setupConstraints() {
         super.setupConstraints()
-        let safeArea = view.safeAreaLayoutGuide
-        
+
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.directionalHorizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
         
         containerStackView.snp.makeConstraints {
-            $0.directionalEdges.equalToSuperview().inset(20)
-            $0.width.equalTo(scrollView.snp.width).offset(-40)
+            $0.directionalEdges.width.equalToSuperview()
         }
         
         containerStackView.setCustomSpacing(5, after: calendarView)
@@ -115,16 +105,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         calendarView.snp.makeConstraints {
             $0.height.equalTo(250)
         }
-        
-        let totalOffset = 44 + 29 + 67.5 + 25 + 50
-        diaryDetailsView.snp.makeConstraints {
-            $0.height.equalTo(safeArea.snp.height).offset(-totalOffset)
-        }
-    }
-    
-    private func setupCalendarView() {
-        calendarView.delegate = self
-        calendarView.dataSource = self
     }
     
     private func fetchDiaryList(for date: Date) {
@@ -151,25 +131,14 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             }
             .disposed(by: disposeBag)
         
-        /// 다이어리뷰 toggle
         diaryDetailsView.moreButton.rx.tap
             .asDriver()
             .drive(with: self) { owner, _ in
-                owner.diaryDetailsView.isExpanded.toggle()
-                
-                if owner.diaryDetailsView.isExpanded {
-                    owner.diaryDetailsView.snp.removeConstraints()
-                    owner.diaryDetailsView.updateMoreButton(title: "접기", imageName: "chevron_up")
-                } else {
-                    let totalOffset: CGFloat = 44 + 29 + 67.5 + 25 + 50
-                    owner.diaryDetailsView.snp.updateConstraints {
-                        $0.height.equalTo(owner.view.safeAreaLayoutGuide.snp.height).offset(-totalOffset)
-                    }
-                    owner.diaryDetailsView.updateMoreButton(title: "이어서 더보기", imageName: "chevron_down")
-                }
-                
+                let willExpand = !owner.diaryDetailsView.isExpanded
+                owner.diaryDetailsView.setExpanded(willExpand)
             }
             .disposed(by: disposeBag)
+        
         
         diaryDetailsView.likeButton.rx.tap
             .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
@@ -198,14 +167,14 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .disposed(by: disposeBag)
         
         diaryObservable
-            .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: { [weak self] diary in
-                guard let self = self, let diary = diary else { return }
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, diary in
+                owner.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: diary.createdAt)
+                owner.calendarView.select(diary.createdAt)
                 
-                self.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: diary.createdAt)
-                self.calendarView.select(diary.createdAt)
-                
-                self.diaryDetailsView.configure(
+                owner.diaryDetailsView.configure(
+                    category: "오늘의 감사일기",
                     title: diary.title,
                     description: diary.description,
                     backgroundImageURL: diary.imageURLs.first ?? nil,
@@ -215,7 +184,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
                     likeCount: diary.likeCount,
                     commentCount: diary.commentCount
                 )
-            })
+            }
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$isSuccessLikeResult)
@@ -250,11 +219,15 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
             $0.height.equalTo(bounds.height)
         }
         
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0.03,
+            options: [.curveEaseInOut]
+        ) { self.view.layoutIfNeeded() }
+        
         var config = calendarButton.configuration
         config?.image = UIImage(named: calendar.scope == .month ? "chevron_up" : "chevron_down")?.withRenderingMode(.alwaysTemplate)
         calendarButton.configuration = config
-        
-        self.view.layoutIfNeeded()
     }
     
     /// 캘린더 뷰의 년도 및 월이 바뀌는 경우
