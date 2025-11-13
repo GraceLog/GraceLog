@@ -484,6 +484,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		7043DF0D2EC6306200FEF13F /* Community */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Community;
+			sourceTree = "<group>";
+		};
 		70CBC7302E7F18FD0037C613 /* Search */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Search;
@@ -1320,6 +1325,7 @@
 		DE3BFCD02D0489EE0076426D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7043DF0D2EC6306200FEF13F /* Community */,
 				DE3BFCDD2D059D3D0076426D /* SearchViewController.swift */,
 			);
 			path = ViewController;
@@ -1586,6 +1592,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				7043DF0D2EC6306200FEF13F /* Community */,
 				70CBC7302E7F18FD0037C613 /* Search */,
 				70CBC75C2E925FCB0037C613 /* View */,
 				70CBC75E2E925FEF0037C613 /* Reactor */,
@@ -1705,9 +1712,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1766,9 +1777,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLog/Pods-GraceLog-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1783,9 +1798,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
