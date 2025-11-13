@@ -8,14 +8,13 @@
 import Foundation
 
 struct DiaryDetails {
-    let id: Int
+    let diaryId: Int
     let title: String
     let description: String
-    let authorId: Int
-    let authorNickname: String
+    let user: GraceLogUser
     let imageURLs: [URL?]
     let likeCount: Int
-    let isLiked: Bool
+    let likeByMe: Bool
     let isHideLike: Bool
     let isHideComment: Bool
     let commentCount: Int

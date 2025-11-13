@@ -136,6 +136,18 @@
 		DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3BFCE32D059E970076426D /* SearchCoordinator.swift */; };
 		DE3BFCEC2D0D3D390076426D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE3BFCEB2D0D3D390076426D /* GoogleService-Info.plist */; };
 		DE4237222EB8A16E006FAA7B /* DiaryDetailsPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237212EB8A16E006FAA7B /* DiaryDetailsPresentationAssembly.swift */; };
+		DE4237422EBCC4C6006FAA7B /* DiaryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237412EBCC4C6006FAA7B /* DiaryAPI.swift */; };
+		DE4237462EBCC96B006FAA7B /* PostDiaryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */; };
+		DE42374A2EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */; };
+		DE42374C2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374B2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift */; };
+		DE42374E2EBDF980006FAA7B /* DiaryResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374D2EBDF980006FAA7B /* DiaryResponseDTO.swift */; };
+		DE4237502EBEE935006FAA7B /* DefaultDiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374F2EBEE935006FAA7B /* DefaultDiaryRepository.swift */; };
+		DE4237522EBEE960006FAA7B /* DiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237512EBEE960006FAA7B /* DiaryRepository.swift */; };
+		DE4237532EBEE960006FAA7B /* DiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237512EBEE960006FAA7B /* DiaryRepository.swift */; };
+		DE4237542EBEE960006FAA7B /* DiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237512EBEE960006FAA7B /* DiaryRepository.swift */; };
+		DE4237562EBF040E006FAA7B /* LikeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237552EBF040E006FAA7B /* LikeAPI.swift */; };
+		DE4237582EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237572EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift */; };
+		DE42375A2EC20AB8006FAA7B /* LikeCountRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237592EC20AB8006FAA7B /* LikeCountRequestDTO.swift */; };
 		DE47E9792E48790300C379C3 /* MyInfoProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE47E9782E48790300C379C3 /* MyInfoProfileView.swift */; };
 		DE4D0F442E71D47600827EDE /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F432E71D47600827EDE /* AnnouncementViewController.swift */; };
 		DE4D0F462E7423B000827EDE /* AnnouncementCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4D0F452E7423B000827EDE /* AnnouncementCoordinator.swift */; };
@@ -376,6 +388,16 @@
 		DE3BFCE32D059E970076426D /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		DE3BFCEB2D0D3D390076426D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE4237212EB8A16E006FAA7B /* DiaryDetailsPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailsPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE4237412EBCC4C6006FAA7B /* DiaryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAPI.swift; sourceTree = "<group>"; };
+		DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryRequestDTO.swift; sourceTree = "<group>"; };
+		DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDiaryListRequestDTO.swift; sourceTree = "<group>"; };
+		DE42374B2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDiaryListRequestDTO.swift; sourceTree = "<group>"; };
+		DE42374D2EBDF980006FAA7B /* DiaryResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryResponseDTO.swift; sourceTree = "<group>"; };
+		DE42374F2EBEE935006FAA7B /* DefaultDiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiaryRepository.swift; sourceTree = "<group>"; };
+		DE4237512EBEE960006FAA7B /* DiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRepository.swift; sourceTree = "<group>"; };
+		DE4237552EBF040E006FAA7B /* LikeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeAPI.swift; sourceTree = "<group>"; };
+		DE4237572EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeDiaryRequestDTO.swift; sourceTree = "<group>"; };
+		DE4237592EC20AB8006FAA7B /* LikeCountRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCountRequestDTO.swift; sourceTree = "<group>"; };
 		DE47E9782E48790300C379C3 /* MyInfoProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoProfileView.swift; sourceTree = "<group>"; };
 		DE4D0F432E71D47600827EDE /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		DE4D0F452E7423B000827EDE /* AnnouncementCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCoordinator.swift; sourceTree = "<group>"; };
@@ -1080,6 +1102,7 @@
 				DED558882DBE226D00137B10 /* AuthRepository.swift */,
 				DE27005E2D212770005C9DCF /* UserRepository.swift */,
 				DE9A1FF92D7C09350044F655 /* HomeRepository.swift */,
+				DE4237512EBEE960006FAA7B /* DiaryRepository.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1100,6 +1123,7 @@
 				DED558852DBE224300137B10 /* DefaultAuthRepository.swift */,
 				DE2700622D22D188005C9DCF /* DefaultUserRepository.swift */,
 				DE9A1FFB2D7C0B680044F655 /* DefaultHomeRepository.swift */,
+				DE42374F2EBEE935006FAA7B /* DefaultDiaryRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1456,6 +1480,8 @@
 			children = (
 				DED558792DBC798A00137B10 /* AuthAPI.swift */,
 				02C5861B2DD736D600E1F626 /* UserAPI.swift */,
+				DE4237412EBCC4C6006FAA7B /* DiaryAPI.swift */,
+				DE4237552EBF040E006FAA7B /* LikeAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1479,6 +1505,11 @@
 			children = (
 				DED5587C2DBC7B3100137B10 /* SignInRequestDTO.swift */,
 				025019C52DE03F73003FD48D /* UserRequestDTO.swift */,
+				DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */,
+				DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */,
+				DE42374B2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift */,
+				DE4237572EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift */,
+				DE4237592EC20AB8006FAA7B /* LikeCountRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1494,6 +1525,7 @@
 				DE9A1FEF2D7C05720044F655 /* CommunityDiaryDTO.swift */,
 				DE9A1FF12D7C065C0044F655 /* HomeContentDTO.swift */,
 				DE56384B2D9DFDDF00A12192 /* CommunityDTO.swift */,
+				DE42374D2EBDF980006FAA7B /* DiaryResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1797,6 +1829,7 @@
 				DEEFEAC12D26D4B800699692 /* SignInUseCase.swift in Sources */,
 				DEEFEAC22D26D4BC00699692 /* DefaultSignInUseCase.swift in Sources */,
 				DEEFEAC42D26D4CD00699692 /* UserRepository.swift in Sources */,
+				DE4237542EBEE960006FAA7B /* DiaryRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1806,6 +1839,7 @@
 			files = (
 				DE042C4C2EB5DC620089E20F /* VerticalAlignLabel.swift in Sources */,
 				DE4D0F442E71D47600827EDE /* AnnouncementViewController.swift in Sources */,
+				DE4237532EBEE960006FAA7B /* DiaryRepository.swift in Sources */,
 				70CBC7602E92602A0037C613 /* CommunityRoom.swift in Sources */,
 				70A97C662E2169D300F08DF6 /* MyInfoPresentationAssembly.swift in Sources */,
 				025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */,
@@ -1841,6 +1875,7 @@
 				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
 				DED5588A2DBE226D00137B10 /* AuthRepository.swift in Sources */,
+				DE42375A2EC20AB8006FAA7B /* LikeCountRequestDTO.swift in Sources */,
 				DE4D0F552E753ADE00827EDE /* AnnouncementDetailViewController.swift in Sources */,
 				DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */,
 				DE58FEB32D04284D008CADCD /* SceneDelegate.swift in Sources */,
@@ -1866,6 +1901,7 @@
 				DE655B212DA5EC480073B4F7 /* UILabel+Extension.swift in Sources */,
 				DE9565032DC4B311006DD9CF /* KeychainService.swift in Sources */,
 				DE2700502D1FA03B005C9DCF /* UIView+Extension.swift in Sources */,
+				DE4237582EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift in Sources */,
 				DE9A1FDC2D79AFFA0044F655 /* MyDiaryItem.swift in Sources */,
 				70A97C682E226B3900F08DF6 /* DependencyInjector.swift in Sources */,
 				DED558862DBE224300137B10 /* DefaultAuthRepository.swift in Sources */,
@@ -1894,6 +1930,7 @@
 				02DC29882DDC29C000662D8A /* MyInfoTableViewCell.swift in Sources */,
 				DE4D0F482E750D1400827EDE /* AnnouncementViewReactor.swift in Sources */,
 				02DC29892DDC29C000662D8A /* MyInfoViewController.swift in Sources */,
+				DE4237562EBF040E006FAA7B /* LikeAPI.swift in Sources */,
 				02DC298A2DDC29C000662D8A /* ProfileEditFieldView.swift in Sources */,
 				7048157A2DFFF362009ECDBD /* FontStylable.swift in Sources */,
 				702D2B5A2E02B43700D5E71E /* GLInputFieldView.swift in Sources */,
@@ -1902,6 +1939,7 @@
 				02DC298C2DDC29C000662D8A /* MyInfoDataSource.swift in Sources */,
 				DECF2A9F2E26A0AB000CAF42 /* HeaderType.swift in Sources */,
 				DE9A1FF02D7C05720044F655 /* CommunityDiaryDTO.swift in Sources */,
+				DE42374A2EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift in Sources */,
 				DE23872A2E003BDE00893D8C /* GLNavigationBar.swift in Sources */,
 				DE042C3D2E93FCB30089E20F /* DiaryDetailsUseCase.swift in Sources */,
 				DED558842DBE1E4000137B10 /* GLResponseDTO.swift in Sources */,
@@ -1935,6 +1973,7 @@
 				DECF2AA32E286BB0000CAF42 /* GLError.swift in Sources */,
 				709CBB5B2E2AACB600F68457 /* DefaultCommentUseCase.swift in Sources */,
 				709CBB672E2AC8E900F68457 /* CommentTableViewCell.swift in Sources */,
+				DE4237462EBCC96B006FAA7B /* PostDiaryRequestDTO.swift in Sources */,
 				70062C562E4AF8FA0096C1F7 /* URL+Extension.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
@@ -1955,6 +1994,7 @@
 				DE66C2FB2D96B39B009A983F /* DefaultDiaryUseCase.swift in Sources */,
 				DE23872C2E07C28500893D8C /* HomeCommunityViewReactor.swift in Sources */,
 				DE069BA22D571485007C2066 /* HomeRecommendVideoTableViewCell.swift in Sources */,
+				DE4237502EBEE935006FAA7B /* DefaultDiaryRepository.swift in Sources */,
 				DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */,
 				02F0DA512DDEAED900CD036A /* UserManager.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
@@ -1967,10 +2007,12 @@
 				DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */,
 				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
+				DE42374C2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift in Sources */,
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
 				DE4D0F5B2E7ACB7B00827EDE /* AnnouncementListUseCase.swift in Sources */,
 				DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */,
 				DE2387392E0AD29C00893D8C /* HomeLatestDiaryCollectionViewCell.swift in Sources */,
+				DE4237422EBCC4C6006FAA7B /* DiaryAPI.swift in Sources */,
 				DE1B04FA2E5886760083A7EA /* NVActivityIndicatorView+Extension.swift in Sources */,
 				0252A6202E6159BB002BA0D8 /* MyInfoSwitchTableViewCell.swift in Sources */,
 				DE042C412E93FD3F0089E20F /* DefaultDiaryDetailsUseCase.swift in Sources */,
@@ -1987,6 +2029,7 @@
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,
 				0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */,
 				DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */,
+				DE42374E2EBDF980006FAA7B /* DiaryResponseDTO.swift in Sources */,
 				704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */,
 				709CBB562E2AAC2200F68457 /* CommentBottomSheetViewController.swift in Sources */,
 				DE27005F2D212770005C9DCF /* UserRepository.swift in Sources */,
@@ -2004,6 +2047,7 @@
 				DED5588B2DBE226D00137B10 /* AuthRepository.swift in Sources */,
 				DEEFEAC02D26D4B800699692 /* SignInUseCase.swift in Sources */,
 				DEEFEAC32D26D4CD00699692 /* UserRepository.swift in Sources */,
+				DE4237522EBEE960006FAA7B /* DiaryRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
