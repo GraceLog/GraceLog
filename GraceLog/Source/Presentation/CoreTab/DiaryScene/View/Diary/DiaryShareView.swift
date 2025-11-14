@@ -15,8 +15,8 @@ final class DiaryShareView: UIView {
         $0.backgroundColor = .clear
         $0.axis = .vertical
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: 19, left: 30, bottom: 32 - 12, right: 30)
-        $0.spacing = 19
+        $0.layoutMargins = .init(top: 5, left: 30, bottom: 5, right: 30)
+        $0.spacing = 17
     }
     
     private let titleLabel = UILabel().then {

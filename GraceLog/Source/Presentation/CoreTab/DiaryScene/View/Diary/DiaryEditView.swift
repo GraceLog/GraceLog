@@ -14,9 +14,9 @@ final class DiaryEditView: UIView {
     private let containerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.backgroundColor = .clear
-        $0.spacing = 32
+        $0.spacing = 50
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: 0, left: 30, bottom: 43, right: 30)
+        $0.layoutMargins = .init(top: 4, left: 30, bottom: 5, right: 30)
     }
     
     let titleInputView = GLInputFieldView(
