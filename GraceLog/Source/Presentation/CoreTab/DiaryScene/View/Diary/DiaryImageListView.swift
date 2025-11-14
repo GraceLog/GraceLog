@@ -21,8 +21,6 @@ final class DiaryImageListView: UIView {
         $0.backgroundColor = .clear
         $0.axis = .horizontal
         $0.spacing = 14
-        $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: 32, left: 30, bottom: 34, right: 30)
     }
     
     let addImageButton = UIButton().then {
@@ -70,7 +68,7 @@ final class DiaryImageListView: UIView {
     
     private func setupConstraints() {
         self.snp.makeConstraints {
-            $0.height.equalTo(64 + 32 + 34)
+            $0.height.equalTo(64)
         }
         
         scrollView.snp.makeConstraints {
