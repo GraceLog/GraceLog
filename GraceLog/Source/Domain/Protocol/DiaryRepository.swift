@@ -11,7 +11,7 @@ import RxSwift
 protocol DiaryRepository {
     func fetchDiary(diaryId: Int) -> Single<DiaryDetails>
     func fetchMyDiaryList(startDate: Date, endDate: Date) -> Single<[DiaryDetails]>
-    func fetchCommunityDiaryList(startDate: Date, endDate: Date, communityId: Int) -> Single<[DiaryDetails]>
+    func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]>
     func postDiary(
         title: String,
         description: String,
@@ -23,5 +23,5 @@ protocol DiaryRepository {
         images: [Data]
     ) -> Single<Void>
     
-    func likeToggle(postId: Int, memberId: Int) -> Single<Bool>
+    func likeToggle(postId: Int) -> Single<Bool>
 }

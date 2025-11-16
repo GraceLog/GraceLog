@@ -11,7 +11,7 @@ enum DiaryAPI {
     case postDiary(PostDiaryRequestDTO)
     case fetchDiary(diaryId: Int)
     case fetchMyDiaryList(MyDiaryListRequestDTO)
-    case fetchCommunityDiaryList(CommunityDiaryListRequestDTO)
+    case fetchDateRangeDiaryList(DateRangeDiaryListRequestDTO)
     case deleteDiary(diaryId: Int)
 }
 
@@ -25,7 +25,7 @@ extension DiaryAPI: TargetType {
         case .postDiary: return .post
         case .fetchDiary: return .get
         case .fetchMyDiaryList: return .get
-        case .fetchCommunityDiaryList: return .get
+        case .fetchDateRangeDiaryList: return .get
         case .deleteDiary: return .delete
         }
     }
@@ -37,9 +37,9 @@ extension DiaryAPI: TargetType {
         case .fetchDiary(let id):
             return "/\(id)"
         case .fetchMyDiaryList:
-            return "/myPost"
-        case .fetchCommunityDiaryList:
-            return ""
+            return "/myPostList"
+        case .fetchDateRangeDiaryList:
+            return "/dateRangePostList"
         case .deleteDiary(let id):
             return "/\(id)"
         }
@@ -62,9 +62,9 @@ extension DiaryAPI: TargetType {
             return .none
         case .fetchMyDiaryList(let request):
             return .body(request)
-        case .fetchCommunityDiaryList(let params):
+        case .fetchDateRangeDiaryList(let params):
             return .query(params)
-        case .deleteDiary(let id):
+        case .deleteDiary:
             return .none
         }
     }

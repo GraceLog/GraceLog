@@ -20,13 +20,19 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     var error = PublishRelay<Error>()
     
     private let diaryId: Int
+    private let communityId: Int
+    private let memberId: Int
     
     init(
         diaryRepository: DiaryRepository,
-        diaryId: Int
+        diaryId: Int,
+        communityId: Int,
+        memberId: Int
     ) {
         self.diaryRepository = diaryRepository
         self.diaryId = diaryId
+        self.communityId = communityId
+        self.memberId = memberId
         
         fetchDiaryDetails(diaryId: diaryId)
     }
@@ -41,7 +47,10 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
             .disposed(by: disposeBag)
     }
     
-    func fetchSelectedDateDiaryDetails(startDate: String, endDate: String) {
+    func fetchDateRangeDiaryList(
+        startDate: String,
+        endDate: String
+    ) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
@@ -51,26 +60,37 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
             return
         }
         
-        diaryRepository.fetchMyDiaryList(startDate: start, endDate: end)
-            .subscribe(onSuccess: { diaryList in
-                self.selectedDateDiaryList.accept(diaryList)
+        diaryRepository.fetchDateRangeDiaryList(
+            startDate: start,
+            endDate: end,
+            communityId: communityId,
+            memberId: memberId
+        )
+        .subscribe(onSuccess: { diaryList in
+            self.selectedDateDiaryList.accept(diaryList)
+        }, onFailure: { error in
+            self.error.accept(error)
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    func likeDiary(id: Int) {
+        diaryRepository.likeToggle(postId: id)
+            .subscribe(onSuccess: { result in
+                self.likeDiaryResult.accept(result)
             }, onFailure: { error in
                 self.error.accept(error)
             })
             .disposed(by: disposeBag)
     }
     
-    func likeDiary(id: Int) {
-        print("좋아요한 감사일기 id \(id)")
-        
-        let result = [true, false].shuffled()[0]
-        likeDiaryResult.accept(result)
-    }
-    
     func unlikeDiary(id: Int) {
-        print("좋아요 해제한 감사일기 id \(id)")
-        
-        let result = [true, false].shuffled()[0]
-        unlikeDiaryResult.accept(result)
+        diaryRepository.likeToggle(postId: id)
+            .subscribe(onSuccess: { result in
+                self.likeDiaryResult.accept(result)
+            }, onFailure: { error in
+                self.error.accept(error)
+            })
+            .disposed(by: disposeBag)
     }
 }

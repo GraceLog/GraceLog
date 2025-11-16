@@ -72,10 +72,10 @@ final class DefaultDiaryRepository: DiaryRepository {
             }
     }
     
-    func fetchCommunityDiaryList(startDate: Date, endDate: Date, communityId: Int) -> Single<[DiaryDetails]> {
-        let request = CommunityDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId)
+    func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]> {
+        let request = DateRangeDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId, memberId: memberId)
         
-        return network.request(DiaryAPI.fetchCommunityDiaryList(request))
+        return network.request(DiaryAPI.fetchDateRangeDiaryList(request))
             .map { (responseDTO: [DiaryResponseDTO]) in
                 return responseDTO.map { diaryResponseDTO in
                     return DiaryDetails(
@@ -145,8 +145,8 @@ final class DefaultDiaryRepository: DiaryRepository {
         return network.requestMultipart(DiaryAPI.postDiary(request), multipartFormData: multipartFormData)
     }
     
-    func likeToggle(postId: Int, memberId: Int) -> Single<Bool> {
-        let request = LikeDiaryRequestDTO(postId: postId, memberId: memberId)
+    func likeToggle(postId: Int) -> Single<Bool> {
+        let request = LikeDiaryRequestDTO(postId: postId)
         
         return network.request(LikeAPI.likeToggle(request))
             .map { (responseDTO: GLResponseDTO<Bool>) in

@@ -14,7 +14,7 @@ protocol DiaryDetailsUseCase {
     var unlikeDiaryResult: PublishRelay<Bool> { get }
     
     func fetchDiaryDetails(diaryId: Int)
-    func fetchSelectedDateDiaryDetails(startDate: String, endDate: String)
+    func fetchDateRangeDiaryList(startDate: String, endDate: String)
     func likeDiary(id: Int)
     func unlikeDiary(id: Int)
 }

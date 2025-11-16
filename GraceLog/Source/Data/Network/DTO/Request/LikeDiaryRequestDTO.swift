@@ -9,5 +9,4 @@ import Foundation
 
 struct LikeDiaryRequestDTO: Encodable {
     let postId: Int
-    let memberId: Int
 }

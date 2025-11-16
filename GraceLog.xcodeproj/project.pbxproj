@@ -139,7 +139,7 @@
 		DE4237422EBCC4C6006FAA7B /* DiaryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237412EBCC4C6006FAA7B /* DiaryAPI.swift */; };
 		DE4237462EBCC96B006FAA7B /* PostDiaryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */; };
 		DE42374A2EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */; };
-		DE42374C2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374B2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift */; };
+		DE42374C2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374B2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift */; };
 		DE42374E2EBDF980006FAA7B /* DiaryResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374D2EBDF980006FAA7B /* DiaryResponseDTO.swift */; };
 		DE4237502EBEE935006FAA7B /* DefaultDiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374F2EBEE935006FAA7B /* DefaultDiaryRepository.swift */; };
 		DE4237522EBEE960006FAA7B /* DiaryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237512EBEE960006FAA7B /* DiaryRepository.swift */; };
@@ -391,7 +391,7 @@
 		DE4237412EBCC4C6006FAA7B /* DiaryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAPI.swift; sourceTree = "<group>"; };
 		DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryRequestDTO.swift; sourceTree = "<group>"; };
 		DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDiaryListRequestDTO.swift; sourceTree = "<group>"; };
-		DE42374B2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDiaryListRequestDTO.swift; sourceTree = "<group>"; };
+		DE42374B2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeDiaryListRequestDTO.swift; sourceTree = "<group>"; };
 		DE42374D2EBDF980006FAA7B /* DiaryResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryResponseDTO.swift; sourceTree = "<group>"; };
 		DE42374F2EBEE935006FAA7B /* DefaultDiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiaryRepository.swift; sourceTree = "<group>"; };
 		DE4237512EBEE960006FAA7B /* DiaryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRepository.swift; sourceTree = "<group>"; };
@@ -1507,7 +1507,7 @@
 				025019C52DE03F73003FD48D /* UserRequestDTO.swift */,
 				DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */,
 				DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */,
-				DE42374B2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift */,
+				DE42374B2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift */,
 				DE4237572EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift */,
 				DE4237592EC20AB8006FAA7B /* LikeCountRequestDTO.swift */,
 			);
@@ -2007,7 +2007,7 @@
 				DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */,
 				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
-				DE42374C2EBCCDB4006FAA7B /* CommunityDiaryListRequestDTO.swift in Sources */,
+				DE42374C2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift in Sources */,
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
 				DE4D0F5B2E7ACB7B00827EDE /* AnnouncementListUseCase.swift in Sources */,
 				DECF2AA72E2908C6000CAF42 /* GLAPILogger.swift in Sources */,

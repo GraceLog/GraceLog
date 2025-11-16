@@ -15,7 +15,7 @@ final class DiaryDetailsViewReactor: Reactor {
     
     enum Action {
         case fetchDiary(Int)
-        case fetchSelectedDateDiaryList(String, String)
+        case fetchDateRangeDiaryList(String, String)
         case didTapBackButton
         case didTapLikeButton(Int)
         case didTapCommentButton(Int)
@@ -52,8 +52,11 @@ extension DiaryDetailsViewReactor {
         switch action {
         case .fetchDiary(let diaryId):
             usecase.fetchDiaryDetails(diaryId: diaryId)
-        case .fetchSelectedDateDiaryList(let startDate, let endDate):
-            usecase.fetchSelectedDateDiaryDetails(startDate: startDate, endDate: endDate)
+        case .fetchDateRangeDiaryList(let startDate, let endDate):
+            usecase.fetchDateRangeDiaryList(
+                startDate: startDate,
+                endDate: endDate
+            )
         case .didTapBackButton:
             coordinator.popViewController()
         case .didTapLikeButton(let diaryID):

@@ -113,7 +113,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         let month = calendar.component(.month, from: date)
         let (startDate, endDate) = DateFormatterFactory.getMonthDateRange(year: year, month: month)
         
-        reactor?.action.onNext(.fetchSelectedDateDiaryList(startDate, endDate))
+        reactor?.action.onNext(.fetchDateRangeDiaryList(startDate, endDate))
     }
     
     override func bind(reactor: DiaryDetailsViewReactor) {

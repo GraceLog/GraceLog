@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct CommunityDiaryListRequestDTO: Encodable {
+struct DateRangeDiaryListRequestDTO: Encodable {
     let startDate: Date
     let endDate: Date
     let communityId: Int
+    let memberId: Int
 }
