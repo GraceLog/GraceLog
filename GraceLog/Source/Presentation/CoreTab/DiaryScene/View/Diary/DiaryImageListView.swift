@@ -104,8 +104,7 @@ extension DiaryImageListView {
         )
         
         let totalCharacters = NSAttributedString(
-            // TODO: - 이미지 등록 최대 갯수에 관련된 로직 Reactor에서 처리 예정
-            string: "/\(10)",
+            string: "/\(Constants.updatableMaxImageCount)",
             attributes: [.foregroundColor: UIColor.gray200, .font: GLFont.medium10.font]
         )
         

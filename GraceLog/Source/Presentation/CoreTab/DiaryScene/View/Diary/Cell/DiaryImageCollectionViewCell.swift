@@ -59,8 +59,6 @@ final class DiaryImageCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        backgroundColor = .white
-        
         contentView.addSubview(diaryImageView)
         diaryImageView.snp.makeConstraints {
             $0.leading.bottom.equalToSuperview()
