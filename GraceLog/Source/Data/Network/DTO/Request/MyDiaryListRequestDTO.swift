@@ -8,6 +8,6 @@
 import Foundation
 
 struct MyDiaryListRequestDTO: Encodable {
-    let startDate: Date
-    let endDate: Date
+    let sortOrder: String
+    let count: Int
 }
