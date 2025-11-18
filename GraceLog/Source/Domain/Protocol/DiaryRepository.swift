@@ -10,7 +10,6 @@ import RxSwift
 
 protocol DiaryRepository {
     func fetchDiary(diaryId: Int) -> Single<DiaryDetails>
-    func fetchMyDiaryList(startDate: Date, endDate: Date) -> Single<[DiaryDetails]>
     func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]>
     func postDiary(
         title: String,

@@ -42,36 +42,6 @@ final class DefaultDiaryRepository: DiaryRepository {
             }
     }
     
-    func fetchMyDiaryList(startDate: Date, endDate: Date) -> Single<[DiaryDetails]> {
-        let request = MyDiaryListRequestDTO(startDate: startDate, endDate: endDate)
-        
-        return network.request(DiaryAPI.fetchMyDiaryList(request))
-            .map { (responseDTO: [DiaryResponseDTO]) in
-                return responseDTO.map { diaryResponseDTO in
-                    return DiaryDetails(
-                        diaryId: diaryResponseDTO.postId,
-                        title: diaryResponseDTO.title,
-                        description: diaryResponseDTO.description,
-                        user: GraceLogUser(
-                            id: diaryResponseDTO.member.memberId,
-                            name: diaryResponseDTO.member.name,
-                            nickname: diaryResponseDTO.member.nickname,
-                            profileImageURL: URL(string: diaryResponseDTO.member.profileImage ?? ""),
-                            email: diaryResponseDTO.member.email,
-                            message: diaryResponseDTO.member.message
-                        ),
-                        imageURLs: diaryResponseDTO.postImages.map { $0.url },
-                        likeCount: diaryResponseDTO.likeCount,
-                        likeByMe: diaryResponseDTO.likeByMe,
-                        isHideLike: diaryResponseDTO.isHideLike,
-                        isHideComment: diaryResponseDTO.isHideComment,
-                        commentCount: diaryResponseDTO.commentCount,
-                        createdAt: diaryResponseDTO.createdAt
-                    )
-                }
-            }
-    }
-    
     func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]> {
         let request = DateRangeDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId, memberId: memberId)
         
