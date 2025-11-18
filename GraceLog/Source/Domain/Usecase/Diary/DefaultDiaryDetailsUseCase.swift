@@ -14,7 +14,7 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     private let disposeBag = DisposeBag()
     
     var diary = PublishRelay<DiaryDetails>()
-    var selectedDateDiaryList = BehaviorRelay<[DiaryDetails]>(value: [])
+    var dateRangeDiaries = BehaviorRelay<[DiaryDetails]>(value: [])
     var likeDiaryResult = PublishRelay<Bool>()
     var unlikeDiaryResult = PublishRelay<Bool>()
     var error = PublishRelay<Error>()
@@ -56,7 +56,7 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
         
         guard let start = dateFormatter.date(from: startDate),
               let end = dateFormatter.date(from: endDate) else {
-            selectedDateDiaryList.accept([])
+            dateRangeDiaries.accept([])
             return
         }
         
@@ -67,7 +67,7 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
             memberId: memberId
         )
         .subscribe(onSuccess: { diaryList in
-            self.selectedDateDiaryList.accept(diaryList)
+            self.dateRangeDiaries.accept(diaryList)
         }, onFailure: { error in
             self.error.accept(error)
         })

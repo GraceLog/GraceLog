@@ -9,7 +9,7 @@ import RxRelay
 
 protocol DiaryDetailsUseCase {
     var diary: PublishRelay<DiaryDetails> { get }
-    var selectedDateDiaryList: BehaviorRelay<[DiaryDetails]> { get }
+    var dateRangeDiaries: BehaviorRelay<[DiaryDetails]> { get }
     var likeDiaryResult: PublishRelay<Bool> { get }
     var unlikeDiaryResult: PublishRelay<Bool> { get }
     

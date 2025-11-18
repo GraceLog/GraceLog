@@ -97,7 +97,7 @@ extension DiaryDetailsViewReactor {
         let fetchDiaryDetail = usecase.diary
             .map { Mutation.setDiary($0) }
         
-        let fetchSelectedDateDiaryList = usecase.selectedDateDiaryList
+        let fetchSelectedDateDiaryList = usecase.dateRangeDiaries
             .map { Mutation.setSelectedDateDiaryList($0) }
         
         let likeResult = usecase.likeDiaryResult
