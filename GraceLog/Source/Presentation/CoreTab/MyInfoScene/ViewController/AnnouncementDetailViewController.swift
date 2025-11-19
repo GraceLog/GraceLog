@@ -12,7 +12,7 @@ import ReactorKit
 
 final class AnnouncementDetailViewController: GraceLogBaseViewController<AnnouncementDetailViewReactor> {
     private let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "nav_chevron_left"), for: .normal)
+        $0.setImage(UIImage(named: "chevron_left_theme"), for: .normal)
     }
     
     private lazy var scrollView = UIScrollView().then {
@@ -90,7 +90,7 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController<Announc
             .drive(with: self) { owner, announcement in
                 guard let announcement else { return }
                 owner.titleLabel.text = announcement.title
-                owner.createdAtLabel.text = DateformatterFactory.dateWithDot.string(from: announcement.createdAt)
+                owner.createdAtLabel.text = DateFormatterFactory.dateWithDot.string(from: announcement.createdAt)
                 owner.contentsLabel.text = announcement.contents
             }
             .disposed(by: disposeBag)

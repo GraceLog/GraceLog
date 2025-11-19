@@ -17,7 +17,7 @@ extension Date {
         }
         
         if days == 0 {
-            return fromDate == toDate 
+            return fromDate == toDate
         } else {
             return (fromDate - toDate) >= days
         }

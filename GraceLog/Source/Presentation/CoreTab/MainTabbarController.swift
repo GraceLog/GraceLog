@@ -22,8 +22,7 @@ final class MainTabController: UITabBarController {
         
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-        appearance.shadowColor = .gray200
+        appearance.backgroundColor = GLColor.backgroundSub.color
         appearance.shadowImage = UIImage()
         
         let itemAppearance = UITabBarItemAppearance()

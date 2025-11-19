@@ -23,7 +23,7 @@ final class HomeRecommendVideoTableViewCell: UITableViewCell {
     
     private let titleLabel = UILabel().then {
         $0.font = GLFont.bold14.font
-        $0.textColor = .graceGray
+        $0.textColor = GLColor.textHome.color
     }
     
     let thumbnailImageView = UIImageView().then {
@@ -55,10 +55,8 @@ final class HomeRecommendVideoTableViewCell: UITableViewCell {
     }
     
     private func configureUI() {
-        backgroundColor = UIColor(hex: 0xF4F4F4)
-        contentView.backgroundColor = UIColor(hex: 0xF4F4F4)
-        
         selectionStyle = .none
+        backgroundColor = GLColor.backgroundMain.color
         
         contentView.addSubview(containerStackView)
         [titleLabel, thumbnailImageView].forEach { containerStackView.addArrangedSubview($0) }

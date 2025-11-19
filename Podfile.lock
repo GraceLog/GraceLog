@@ -53,6 +53,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30911.0, >= 2.30908.0)
+  - FSCalendar (2.8.4)
   - GoogleAppMeasurement (10.28.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.28.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
@@ -126,7 +127,7 @@ PODS:
   - KakaoSDKUser (2.22.7):
     - KakaoSDKAuth (= 2.22.7)
   - KeychainAccess (4.2.2)
-  - Kingfisher (8.1.2)
+  - Kingfisher (8.3.3)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -170,6 +171,7 @@ DEPENDENCIES:
   - Alamofire
   - Firebase/Core
   - Firebase/Messaging
+  - FSCalendar
   - GoogleSignIn
   - IQKeyboardManagerSwift
   - KakaoSDKAuth
@@ -202,6 +204,7 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseInstallations
     - FirebaseMessaging
+    - FSCalendar
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleSignIn
@@ -244,6 +247,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: 58d07f1362fddeb0feb6a857d1d1d1c5e558e698
   FirebaseInstallations: 60c1d3bc1beef809fd1ad1189a8057a040c59f2e
   FirebaseMessaging: 087a7c7cadef7b9239f005bc4db823894844f323
+  FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   GoogleAppMeasurement: 55a4a3c8000c1280d68bf4c084adbfef20c49db1
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
@@ -255,7 +259,7 @@ SPEC CHECKSUMS:
   KakaoSDKCommon: 132164a6bac8bcd3a4346d3bf777f34f8f39fdca
   KakaoSDKUser: 4c9cf1da78710d19d0b2c2dd32d1a44c544cdfa4
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  Kingfisher: dc989619594e24713c83e5a98f89f08850e0c529
+  Kingfisher: ff82cb91d9266ddb56cbb2f72d32c26f00d3e5be
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   NVActivityIndicatorView: fe52a6a68664c2df8991d7d9e3d86d8d19453c53
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -276,6 +280,6 @@ SPEC CHECKSUMS:
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
   YPImagePicker: afc81b3cffab05a6e7261c5daf80dc31b4e917b4
 
-PODFILE CHECKSUM: b7ff8faa4ff0c31287c2580f323d26d5204bb53f
+PODFILE CHECKSUM: 368199e5da5987f5a6252426a65f18965673c2e7
 
 COCOAPODS: 1.16.2

@@ -38,6 +38,15 @@ struct DomainAssembly: Assembly {
             return DefaultDiaryUseCase()
         }
         
+        // DiaryDetails
+        container.register(DiaryDetailsUseCase.self) { (resolver, diaryId: Int ) in
+            let diaryRepository = resolver.resolve(DiaryRepository.self)!
+            return DefaultDiaryDetailsUseCase(
+                diaryRepository: diaryRepository,
+                diaryId: diaryId
+            )
+        }
+        
         // MyInfo
         container.register(MyInfoUseCase.self) { resolver in
             let userRepository = resolver.resolve(UserRepository.self)!

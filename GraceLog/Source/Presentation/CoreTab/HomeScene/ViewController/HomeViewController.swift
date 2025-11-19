@@ -13,13 +13,13 @@ import ReactorKit
 final class HomeViewController: GraceLogBaseViewController<HomeViewReactor> {
     private let homeMenuView = GLUnderlineSegmentedControl(items: []).then {
         $0.setHeight(50)
-        $0.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: GLFont.bold18.font], for: .normal)
+        $0.setTitleTextAttributes([.foregroundColor: GLColor.textHome.color, .font: GLFont.bold18.font], for: .normal)
         $0.setTitleTextAttributes([.foregroundColor: UIColor.themeColor, .font: GLFont.bold18.font], for: .selected)
     }
     
     private let bellButton = UIButton().then {
         $0.setImage(UIImage(named: "bell"), for: .normal)
-        $0.tintColor = .black
+        $0.tintColor = GLColor.textSub.color
         $0.setDimensions(width: 32, height: 32)
     }
     
@@ -37,8 +37,8 @@ final class HomeViewController: GraceLogBaseViewController<HomeViewReactor> {
         options: nil
     )
     
-    private lazy var homeMyViewController = DependencyContainer.shared.injector.resolve(HomeMyViewController.self)
-    private lazy var homeCommunityViewController = DependencyContainer.shared.injector.resolve(HomeCommunityViewController.self)
+    lazy var homeMyViewController = DependencyContainer.shared.injector.resolve(HomeMyViewController.self)
+    lazy var homeCommunityViewController = DependencyContainer.shared.injector.resolve(HomeCommunityViewController.self)
     
     private lazy var pages: [UIViewController] = [
         homeMyViewController,
@@ -54,7 +54,7 @@ final class HomeViewController: GraceLogBaseViewController<HomeViewReactor> {
     
     override func setupStyles() {
         super.setupStyles()
-        view.backgroundColor = .white
+        view.backgroundColor = GLColor.backgroundSub.color
         configureNavBar()
         configurePageViewController()
     }

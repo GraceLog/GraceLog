@@ -52,7 +52,7 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
     
     private let usernameLabel = UILabel().then {
         $0.font = GLFont.bold12.font
-        $0.textColor = .graceGray
+        $0.textColor = GLColor.textBasic.color
         $0.textAlignment = .center
         $0.numberOfLines = 0
     }

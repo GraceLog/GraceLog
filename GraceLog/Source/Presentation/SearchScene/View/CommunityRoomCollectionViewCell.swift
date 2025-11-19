@@ -103,7 +103,7 @@ extension CommunityRoomCollectionViewCell {
     ) {
         titleLabel.text = title
         descriptionLabel.text = description
-        recentEditedDateLabel.text = DateformatterFactory.dateWithDot.string(from: editedDate!)
+        recentEditedDateLabel.text = DateFormatterFactory.dateWithDot.string(from: editedDate!)
         peopleCountLabel.text = "\(peopleCount)"
         communityImageView.kf.setImage(with: imageURL)
     }

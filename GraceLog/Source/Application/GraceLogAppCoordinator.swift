@@ -21,6 +21,7 @@ final class GraceLogAppCoordinator: NavigationCoordinator {
     }
     
     func start() {
+//        showMainTabFlow()
         isLoggedIn ? showMainTabFlow() : showLoginFlow()
     }
     

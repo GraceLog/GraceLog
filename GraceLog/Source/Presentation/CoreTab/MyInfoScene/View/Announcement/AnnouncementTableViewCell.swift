@@ -76,7 +76,7 @@ extension AnnouncementTableViewCell {
         contents: String
     ) {
         titleLabel.text = title
-        createdAtLabel.text = DateformatterFactory.dateWithDot.string(from: createdAt)
+        createdAtLabel.text = DateFormatterFactory.dateWithDot.string(from: createdAt)
         contentsLabel.text = contents
     }
 }

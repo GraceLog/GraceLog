@@ -11,7 +11,7 @@ import ReactorKit
 
 final class ProfileEditViewController: GraceLogBaseViewController<ProfileEditViewReactor> {
     private let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "nav_chevron_left"), for: .normal)
+        $0.setImage(UIImage(named: "chevron_left_theme"), for: .normal)
     }
     
     private let saveButton = UIButton().then {

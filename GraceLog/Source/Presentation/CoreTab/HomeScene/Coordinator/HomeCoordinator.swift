@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import Swinject
 
 final class HomeCoordinator: NavigationCoordinator {
@@ -20,6 +19,15 @@ final class HomeCoordinator: NavigationCoordinator {
     
     func start() {
         let viewController = DependencyContainer.shared.injector.resolve(HomeViewController.self)
+        viewController.homeMyViewController.reactor?.coordinator = self
+        viewController.homeCommunityViewController.reactor?.coordinator = self
         navigationController.setViewControllers([viewController], animated: false)
+    }
+    
+    func showDiaryDetail(diaryId: Int) {
+        let diaryDetailsCoordinator = DiaryDetailsCoordinator(self.navigationController, diaryId: diaryId)
+        diaryDetailsCoordinator.parentCoordinator = self
+        self.childCoordinators.append(diaryDetailsCoordinator)
+        diaryDetailsCoordinator.start()
     }
 }

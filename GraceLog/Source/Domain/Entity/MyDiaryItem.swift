@@ -8,6 +8,7 @@
 import Foundation
 
 struct MyDiary {
+    let id: Int
     let editedDate: Date?
     let title: String
     let content: String

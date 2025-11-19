@@ -20,8 +20,10 @@ enum GLFont: FontStylable {
     
     /// Pretendard-ExtraBold
     case extraBold18
+    case extraBold24
     
     /// Pretendard-SemiBold
+    case semiBold14
     case semiBold16
     
     /// Pretendard-Regular
@@ -46,9 +48,9 @@ enum GLFont: FontStylable {
         switch self {
         case .bold10, .bold12, .bold14, .bold15, .bold16, .bold17, .bold18, .bold20:
             return .bold
-        case .extraBold18:
+        case .extraBold18, .extraBold24:
             return .extraBold
-        case .semiBold16:
+        case .semiBold14, .semiBold16:
             return .semiBold
         case .regular10, .regular11, .regular12, .regular14, .regular15, .regular16, .regular18, .regular24:
             return .regular
@@ -79,6 +81,10 @@ enum GLFont: FontStylable {
             return .customFont(font: .pretendard, style: fontStyle, size: 20)
         case .extraBold18:
             return .customFont(font: .pretendard, style: fontStyle, size: 18)
+        case .extraBold24:
+            return .customFont(font: .pretendard, style: fontStyle, size: 24)
+        case .semiBold14:
+            return .customFont(font: .pretendard, style: fontStyle, size: 14)
         case .semiBold16:
             return .customFont(font: .pretendard, style: fontStyle, size: 16)
         case .regular10:
@@ -103,6 +109,4 @@ enum GLFont: FontStylable {
             return .customFont(font: .pretendard, style: fontStyle, size: 11)
         }
     }
-    
-    
 }

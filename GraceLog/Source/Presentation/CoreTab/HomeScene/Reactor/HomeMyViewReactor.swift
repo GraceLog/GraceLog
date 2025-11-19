@@ -11,10 +11,13 @@ import RxDataSources
 
 final class HomeMyViewReactor: Reactor {
     private let homeUsecase: HomeUseCase
+    var coordinator: HomeCoordinator?
     private let disposeBag = DisposeBag()
     let initialState: State
     
-    init(homeUsecase: HomeUseCase) {
+    init(
+        homeUsecase: HomeUseCase
+    ) {
         self.homeUsecase = homeUsecase
         self.initialState = State()
         loadData()
@@ -24,6 +27,10 @@ final class HomeMyViewReactor: Reactor {
         homeUsecase.fetchDiaryList()
         homeUsecase.fetchVideoList()
         homeUsecase.fetchDailyVerse()
+    }
+    
+    enum Action {
+        case didTapDiaryDetail(Int)
     }
     
     enum Mutation {
@@ -69,6 +76,14 @@ extension HomeMyViewReactor {
             .map { Mutation.setDailyVerse($0) }
         
         return Observable.merge(mutation, diaryMutation, videoMutation, videoTagMutation, dailyVerseMutation)
+    }
+    
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .didTapDiaryDetail(let id):
+            coordinator?.showDiaryDetail(diaryId: id)
+            return .empty()
+        }
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
