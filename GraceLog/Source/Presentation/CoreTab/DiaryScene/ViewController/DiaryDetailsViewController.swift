@@ -185,6 +185,13 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             }
             .disposed(by: disposeBag)
         
+        reactor.pulse(\.$dateRangeDiaries)
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, _ in
+                owner.calendarView.reloadData()
+            }
+            .disposed(by: disposeBag)
+        
         reactor.pulse(\.$isSuccessLikeResult)
             .compactMap { $0 }
             .subscribe(with: self) { owner, isSuccess in
@@ -239,7 +246,7 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     /// 감사일기가 작성된 날짜 마커
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        guard let diaryList = reactor?.currentState.selectedDateDiaryList else { return 0 }
+        guard let diaryList = reactor?.currentState.dateRangeDiaries else { return 0 }
         
         let hasEvent = diaryList.contains(where: {
             Calendar.current.isDate($0.createdAt, inSameDayAs: date)
@@ -250,7 +257,7 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     /// 날짜 선택 가능 여부 결정
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        guard let diaryList = reactor?.currentState.selectedDateDiaryList else { return false }
+        guard let diaryList = reactor?.currentState.dateRangeDiaries else { return false }
         
         let hasEvent = diaryList.contains(where: {
             Calendar.current.isDate($0.createdAt, inSameDayAs: date)
@@ -260,7 +267,7 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if let selectedDiary = reactor?.currentState.selectedDateDiaryList.first(where: {
+        if let selectedDiary = reactor?.currentState.dateRangeDiaries.first(where: {
             Calendar.current.isDate($0.createdAt, inSameDayAs: date)
         }) {
             reactor?.action.onNext(.fetchDiary(selectedDiary.diaryId))

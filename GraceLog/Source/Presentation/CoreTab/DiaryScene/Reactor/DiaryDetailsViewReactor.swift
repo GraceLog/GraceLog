@@ -23,13 +23,13 @@ final class DiaryDetailsViewReactor: Reactor {
     
     enum Mutation {
         case setDiary(DiaryDetails)
-        case setSelectedDateDiaryList([DiaryDetails])
+        case setDateRangeDiaryList([DiaryDetails])
         case setDiaryLikeResult(isSuccess: Bool)
         case setDiaryUnlikeResult(isSuccess: Bool)
     }
     struct State {
         @Pulse var diary: DiaryDetails?
-        @Pulse var selectedDateDiaryList: [DiaryDetails]
+        @Pulse var dateRangeDiaries: [DiaryDetails]
         @Pulse var isSuccessLikeResult: Bool?
         @Pulse var isSuccessUnlikeResult: Bool?
     }
@@ -42,7 +42,7 @@ final class DiaryDetailsViewReactor: Reactor {
         self.usecase = usecase
         
         self.initialState = State(
-            selectedDateDiaryList: []
+            dateRangeDiaries: []
         )
     }
 }
@@ -82,8 +82,8 @@ extension DiaryDetailsViewReactor {
         switch mutation {
         case .setDiary(let diary):
             newState.diary = diary
-        case .setSelectedDateDiaryList(let diaryList):
-            newState.selectedDateDiaryList = diaryList
+        case .setDateRangeDiaryList(let diaryList):
+            newState.dateRangeDiaries = diaryList
         case .setDiaryLikeResult(let isSuccess):
             newState.isSuccessLikeResult = isSuccess
         case .setDiaryUnlikeResult(let isSuccess):
@@ -97,8 +97,8 @@ extension DiaryDetailsViewReactor {
         let fetchDiaryDetail = usecase.diary
             .map { Mutation.setDiary($0) }
         
-        let fetchSelectedDateDiaryList = usecase.dateRangeDiaries
-            .map { Mutation.setSelectedDateDiaryList($0) }
+        let fetchDateRangeDiaryList = usecase.dateRangeDiaries
+            .map { Mutation.setDateRangeDiaryList($0) }
         
         let likeResult = usecase.likeDiaryResult
             .map { result in Mutation.setDiaryLikeResult(isSuccess: result) }
@@ -108,7 +108,7 @@ extension DiaryDetailsViewReactor {
         
         return Observable.merge(
             fetchDiaryDetail,
-            fetchSelectedDateDiaryList,
+            fetchDateRangeDiaryList,
             likeResult,
             unlikeResult,
             mutation
