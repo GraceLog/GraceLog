@@ -17,7 +17,7 @@ extension LikeAPI: TargetType {
         return "http://\(Const.baseURL)/like"
     }
     
-    var method: Alamofire.HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .likeToggle: return .post
         case .fetchLikeCount: return .get

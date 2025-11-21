@@ -10,6 +10,7 @@ import Alamofire
 enum DiaryAPI {
     case postDiary(PostDiaryRequestDTO)
     case fetchDiary(diaryId: Int)
+    case fetchCommunityDiaryList(CommunityDiaryListRequestDTO)
     case fetchMyDiaryList(MyDiaryListRequestDTO)
     case fetchDateRangeDiaryList(DateRangeDiaryListRequestDTO)
     case deleteDiary(diaryId: Int)
@@ -24,6 +25,7 @@ extension DiaryAPI: TargetType {
         switch self {
         case .postDiary: return .post
         case .fetchDiary: return .get
+        case .fetchCommunityDiaryList: return .get
         case .fetchMyDiaryList: return .get
         case .fetchDateRangeDiaryList: return .get
         case .deleteDiary: return .delete
@@ -32,7 +34,7 @@ extension DiaryAPI: TargetType {
     
     var path: String {
         switch self {
-        case .postDiary:
+        case .postDiary, .fetchCommunityDiaryList:
             return ""
         case .fetchDiary(let id):
             return "/\(id)"
@@ -60,10 +62,12 @@ extension DiaryAPI: TargetType {
             return .body(request)
         case .fetchDiary:
             return .none
+        case .fetchCommunityDiaryList(let params):
+            return .query(params)
         case .fetchMyDiaryList(let request):
             return .body(request)
         case .fetchDateRangeDiaryList(let params):
-            return .query(params)
+            return .body(params)
         case .deleteDiary:
             return .none
         }
