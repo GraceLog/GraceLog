@@ -24,6 +24,9 @@ enum GLColor: AppColor {
     case iconSub
     case iconAccent
     
+    /// 공용
+    case emptyDiary
+    
     var darkModeColor: UIColor {
         switch self {
         case .backgroundMain:
@@ -46,6 +49,8 @@ enum GLColor: AppColor {
             return UIColor(hex: 0x8C8C8C)
         case .iconAccent:
             return UIColor(hex: 0xFE5F51)
+        case .emptyDiary:
+            return UIColor(hex: 0xD8D8D8)
         }
     }
     
@@ -71,6 +76,8 @@ enum GLColor: AppColor {
             return UIColor(hex: 0x8C8C8C)
         case .iconAccent:
             return UIColor(hex: 0xFE5F51)
+        case .emptyDiary:
+            return UIColor(hex: 0xD8D8D8)
         }
     }
 }

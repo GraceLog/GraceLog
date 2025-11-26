@@ -34,7 +34,7 @@ final class HomeMyViewReactor: Reactor {
     }
     
     enum Mutation {
-        case setDiaryList([MyDiary])
+        case setDiaryList([MyDiaryPreview])
         case setVideoList([RecommendedVideo])
         case setVideoTagList([VideoTag])
         case setDailyVerse(DailyVerse)
@@ -45,7 +45,7 @@ final class HomeMyViewReactor: Reactor {
         @Pulse var videoItems: [RecommendedVideo] = []
         @Pulse var isVideoItemsEmpty: Bool = true
         @Pulse var username: String = UserManager.shared.name
-        @Pulse var diaryItems: [MyDiary] = []
+        @Pulse var diaryItems: [MyDiaryPreview] = []
         @Pulse var videoTagItems: [VideoTag] = []
         @Pulse var dailyVerse: DailyVerse?
         @Pulse var errorMessage: String?

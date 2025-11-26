@@ -44,7 +44,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         $0.backgroundColor = .themeColor
     }
     
-    private let editedDateLabel = UILabel().then {
+    let editedDateLabel = UILabel().then {
         $0.textColor = .themeColor
         $0.numberOfLines = 0
         $0.textAlignment = .center

@@ -14,3 +14,15 @@ struct MyDiaryPreview {
     let content: String
     let imageURL: URL?
 }
+
+extension MyDiaryPreview {
+    static var empty: MyDiaryPreview {
+        MyDiaryPreview(
+            id: 0,
+            editedDate: Date(),
+            title: "",
+            content: "",
+            imageURL: nil
+        )
+    }
+}

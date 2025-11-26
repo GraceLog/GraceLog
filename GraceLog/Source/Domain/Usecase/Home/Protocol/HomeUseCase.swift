@@ -11,7 +11,7 @@ import RxCocoa
 
 protocol HomeUseCase {
     var dailyVerse: BehaviorRelay<DailyVerse?> { get }
-    var diaryList: BehaviorRelay<[MyDiary]> { get }
+    var diaryList: BehaviorRelay<[MyDiaryPreview]> { get }
     var videoList: BehaviorRelay<[RecommendedVideo]> { get }
     var videoTagList: BehaviorRelay<[VideoTag]> { get }
     var error: PublishRelay<Error> { get }

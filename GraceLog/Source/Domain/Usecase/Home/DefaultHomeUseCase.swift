@@ -11,10 +11,9 @@ import RxRelay
 
 final class DefaultHomeUseCase: HomeUseCase {
     var dailyVerse = BehaviorRelay<DailyVerse?>(value: nil)
-    var diaryList = BehaviorRelay<[MyDiary]>(value: [])
+    var diaryList = BehaviorRelay<[MyDiaryPreview]>(value: [])
     var videoList = BehaviorRelay<[RecommendedVideo]>(value: [])
     var videoTagList = BehaviorRelay<[VideoTag]>(value: [])
-    
     var error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
@@ -26,43 +25,13 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
     
     func fetchDiaryList() {
-        diaryList.accept([
-            MyDiary(
-                id: 1,
-                editedDate: Date(),
-                title: "스터디 카페에 새로운 손님이?",
-                content: "처음에는 한숨만 나오고 절망을 느꼈다. 하지만 하나님께서는 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로 나의 시선을 바꾸셨다. 이후로",
-                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-            ),
-            MyDiary(
-                id: 2,
-                editedDate: Date().addingTimeInterval(-86400 * 7),
-                title: "편안한 퇴근길\nfeat. 현대버스",
-                content: "회사에서 퇴근하고 나와보니 비가 부슬 부슬 내린다.",
-                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-            ),
-            MyDiary(
-                id: 3,
-                editedDate: Date().addingTimeInterval(-86400 * 365),
-                title: "작년 12월",
-                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
-                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-            ),
-            MyDiary(
-                id: 4,
-                editedDate: Date().addingTimeInterval(-86400 * 7 + 100),
-                title: "지난주 + 100",
-                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
-                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-            ),
-            MyDiary(
-                id: 5,
-                editedDate: Date().addingTimeInterval(-86400 * 365 + 100),
-                title: "작년 + 100",
-                content: "그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고그럼에도 불구하고",
-                imageURL: URL(string: "https://png.pngtree.com/png-vector/20250703/ourlarge/pngtree-a-large-green-tree-isolated-illustration-on-transparent-background-part-5-png-image_16692036.webp")
-            )
-        ])
+        homeRepository.fetchMyDiaryList()
+            .subscribe(onSuccess: {
+                self.diaryList.accept($0)
+            }, onFailure: {
+                self.error.accept($0)
+            })
+            .disposed(by: disposeBag)
     }
 
     func fetchVideoList() {
@@ -84,11 +53,12 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
 
     func fetchDailyVerse() {
-        dailyVerse.accept(
-            DailyVerse(
-                content:"순종이 제사보다 낫고\n듣는 것이 숫양의 기름보다 나으니",
-                reference: "사무엘상 5:22"
-            )
-        )
+        homeRepository.fetchDailyVerse()
+            .subscribe(onSuccess: {
+                self.dailyVerse.accept($0)
+            }, onFailure: {
+                self.error.accept($0)
+            })
+            .disposed(by: disposeBag)
     }
 }
