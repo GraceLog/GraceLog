@@ -79,6 +79,7 @@ final class SearchViewController: GraceLogBaseViewController<SearchViewReactor> 
     }
     
     override func bind(reactor: SearchViewReactor) {
+        super.bind(reactor: reactor)
         setupDataSource()
         
         reactor.pulse(\.$sections)
