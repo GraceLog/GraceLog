@@ -7,46 +7,62 @@
 
 import UIKit
 
+import RxSwift
 import RxDataSources
 import SnapKit
 import Then
 import YPImagePicker
 
 final class CreateCommunityViewController: GraceLogBaseViewController<CreateCommunityReactor> {
-    private lazy var scrollView = UIScrollView().then {
+    private let scrollView = UIScrollView().then {
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
         $0.alwaysBounceVertical = true
     }
     
-    private lazy var containerStackView = UIStackView().then {
+    private let containerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.backgroundColor = .clear
         $0.distribution = .fill
         $0.alignment = .fill
-        $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: 24, left: 30, bottom: .zero, right: 30)
     }
     
-    let communityImageListView = CommunityImageListView()
+    private let communityEditView = CommunityEditView()
+    private let communityImageListView = CommunityImageListView()
+    
+    private let createButton = UIButton().then {
+        $0.backgroundColor = GLColor.textAccent.color
+        $0.setTitle("만들기", for: .normal)
+        $0.setTitleColor(GLColor.backgroundSub.color, for: .normal)
+        $0.titleLabel?.font = GLFont.bold18.font
+        $0.layer.cornerRadius = 10
+        $0.clipsToBounds = true
+    }
     
     override func setupStyles() {
         super.setupStyles()
-        
+        navigationBar.setupTitleLabel(text: "공동체")
     }
     
     override func setupLayouts() {
         super.setupLayouts()
-        contentView.addSubview(scrollView)
+        [createButton, scrollView].forEach { contentView.addSubview($0) }
         [containerStackView].forEach { scrollView.addSubview($0) }
-        let subviews = [communityImageListView]
-        containerStackView.addArrangedDividerSubViews(subviews, exclude: [0])
+        let subviews = [communityEditView, communityImageListView]
+        containerStackView.addArrangedDividerSubViews(subviews)
     }
     
     override func setupConstraints() {
         super.setupConstraints()
+        createButton.snp.makeConstraints {
+            $0.directionalHorizontalEdges.equalToSuperview().inset(30)
+            $0.bottom.equalTo(contentView.safeAreaLayoutGuide).offset(-42)
+            $0.height.equalTo(45)
+        }
+        
         scrollView.snp.makeConstraints {
-            $0.directionalEdges.width.equalToSuperview()
+            $0.top.directionalHorizontalEdges.width.equalToSuperview()
+            $0.bottom.equalTo(createButton.snp.top)
         }
         
         containerStackView.snp.makeConstraints {
@@ -62,6 +78,27 @@ final class CreateCommunityViewController: GraceLogBaseViewController<CreateComm
             .asDriver()
             .drive(with: self) { owner, _ in
                 owner.showImagePicker()
+            }
+            .disposed(by: disposeBag)
+        
+        communityEditView.communityTitleEditView.text
+            .map { CreateCommunityReactor.Action.editTitle($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        createButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
+            .map { CreateCommunityReactor.Action.didTapCreateButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, message in
+                owner.showToast(message)
             }
             .disposed(by: disposeBag)
     }

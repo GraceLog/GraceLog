@@ -489,6 +489,11 @@
 			path = Community;
 			sourceTree = "<group>";
 		};
+		70C130522EE465B700D7BB2A /* Community */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Community;
+			sourceTree = "<group>";
+		};
 		70CBC7302E7F18FD0037C613 /* Search */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Search;
@@ -1073,6 +1078,7 @@
 		DE2700562D211F61005C9DCF /* Usecase */ = {
 			isa = PBXGroup;
 			children = (
+				70C130522EE465B700D7BB2A /* Community */,
 				70CBC7302E7F18FD0037C613 /* Search */,
 				709CBB592E2AACA300F68457 /* Comment */,
 				DE2700572D211F82005C9DCF /* SignIn */,
@@ -1593,6 +1599,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				7043DF0D2EC6306200FEF13F /* Community */,
+				70C130522EE465B700D7BB2A /* Community */,
 				70CBC7302E7F18FD0037C613 /* Search */,
 				70CBC75C2E925FCB0037C613 /* View */,
 				70CBC75E2E925FEF0037C613 /* Reactor */,
