@@ -16,6 +16,7 @@ final class GLInputFieldView: UIView {
     private let disposeBag = DisposeBag()
     
     private let title: String?
+    private let descriptionText: String?
     private let maxLength: Int?
     private let placeholder: String?
     
@@ -31,6 +32,11 @@ final class GLInputFieldView: UIView {
     private lazy var titleLabel = UILabel().then {
         $0.textColor = .themeColor
         $0.font = GLFont.bold14.font
+    }
+    
+    private lazy var descriptionLabel = UILabel().then {
+        $0.textColor = GLColor.iconSub.color
+        $0.font = GLFont.regular12.font
     }
     
     lazy var textField = UITextField().then {
@@ -54,11 +60,13 @@ final class GLInputFieldView: UIView {
     
     init(
         title: String? = nil,
+        descriptionText: String? = nil,
         placeholder: String? = nil,
         options: GLInputFieldViewOption = [],
         maxLength: Int? = 30
     ) {
         self.title = title
+        self.descriptionText = descriptionText
         self.placeholder = placeholder
         self.maxLength = options.contains(.textCount) ? maxLength : nil
         super.init(frame: .zero)
@@ -74,6 +82,7 @@ final class GLInputFieldView: UIView {
     
     private func setupStyles(options: GLInputFieldViewOption) {
         titleLabel.text = title
+        descriptionLabel.text = descriptionText
         
         if let placeholder = placeholder {
             textField.attributedPlaceholder = NSAttributedString(
@@ -97,6 +106,11 @@ final class GLInputFieldView: UIView {
         if let _ = title {
             containerStackView.addArrangedSubview(titleLabel)
         }
+        
+        if let _ = descriptionText {
+            containerStackView.addArrangedSubview(descriptionLabel)
+        }
+        
         containerStackView.addArrangedSubview(textField)
     }
     
