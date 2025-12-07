@@ -1,8 +1,8 @@
 //
-//  DiaryEditView.swift
+//  CommunityEditView.swift
 //  GraceLog
 //
-//  Created by 이건준 on 6/17/25.
+//  Created by 이건준 on 11/18/25.
 //
 
 import UIKit
@@ -10,24 +10,18 @@ import UIKit
 import SnapKit
 import Then
 
-final class DiaryEditView: UIView {
+final class CommunityEditView: UIView {
     private let containerStackView = UIStackView().then {
-        $0.axis = .vertical
         $0.backgroundColor = .clear
-        $0.spacing = 50
+        $0.axis = .vertical
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: 4, left: 30, bottom: 5, right: 30)
+        $0.layoutMargins = .init(top: 24, left: 30, bottom: 35, right: 30)
     }
     
-    let titleInputView = GLInputFieldView(
-        title: "제목",
-        placeholder: "일기 제목",
-        options: .textCount
-    )
-    
-    let descriptionInputView = GLInputTextView(
-        title: "본문",
-        placeholder: "오늘은 하나님께 어떤 점이 감사했나요?",
+    let communityTitleEditView = GLInputFieldView(
+        title: "공동체 이름",
+        descriptionText: "공동체 이름은 개설 이후에도 변경할 수 있습니다.",
+        placeholder: "제목을 입력해주세요",
         options: .textCount
     )
     
@@ -42,10 +36,10 @@ final class DiaryEditView: UIView {
     
     private func configureUI() {
         addSubview(containerStackView)
-        [titleInputView, descriptionInputView].forEach { containerStackView.addArrangedSubview($0) }
-        
         containerStackView.snp.makeConstraints {
             $0.directionalEdges.equalToSuperview()
         }
+        
+        containerStackView.addArrangedSubview(communityTitleEditView)
     }
 }

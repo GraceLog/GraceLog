@@ -21,15 +21,15 @@ final class DiaryImageListView: UIView {
         $0.backgroundColor = .clear
         $0.axis = .horizontal
         $0.spacing = 14
-        $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: 32, left: 30, bottom: 34, right: 30)
     }
+    
+    private let buttonContainerView = UIView()
     
     let addImageButton = UIButton().then {
         $0.layer.cornerRadius = 10
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray200.cgColor
-        $0.setDimensions(width: 64, height: 64)
+        $0.setDimensions(width: 65, height: 65)
         
         var config = UIButton.Configuration.plain()
         config.image = UIImage(named: "camera")
@@ -41,14 +41,13 @@ final class DiaryImageListView: UIView {
     private let diaryImageLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 14
-        $0.itemSize = CGSize(width: 64, height: 64)
+        $0.itemSize = CGSize(width: 70, height: 71)
     }
     lazy var diaryImageCollectionView = AutoSizingCollectionView(frame: .zero, collectionViewLayout: diaryImageLayout).then {
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
         $0.register(DiaryImageCollectionViewCell.self, forCellWithReuseIdentifier: DiaryImageCollectionViewCell.reuseIdentifier)
         $0.isScrollEnabled = false
-        $0.clipsToBounds = false
     }
     
     override init(frame: CGRect) {
@@ -65,21 +64,31 @@ final class DiaryImageListView: UIView {
     private func setupLayouts() {
         addSubview(scrollView)
         scrollView.addSubview(containerStackView)
-        [addImageButton, diaryImageCollectionView].forEach { containerStackView.addArrangedSubview($0) }
+        [buttonContainerView, diaryImageCollectionView].forEach { containerStackView.addArrangedSubview($0) }
+        buttonContainerView.addSubview(addImageButton)
     }
     
     private func setupConstraints() {
         self.snp.makeConstraints {
-            $0.height.equalTo(64 + 32 + 34)
+            $0.height.equalTo(71)
         }
         
         scrollView.snp.makeConstraints {
-            $0.directionalEdges.height.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
         
         containerStackView.snp.makeConstraints {
-            $0.leading.directionalVerticalEdges.equalToSuperview()
+            $0.leading.directionalVerticalEdges.height.equalToSuperview()
             $0.trailing.lessThanOrEqualToSuperview()
+        }
+        buttonContainerView.snp.makeConstraints {
+            $0.size.equalTo(65)
+        }
+        
+        addImageButton.snp.makeConstraints {
+            $0.size.equalTo(65)
+            $0.leading.bottom.equalToSuperview()
+            $0.top.equalToSuperview().inset(6)
         }
     }
 }
@@ -95,8 +104,7 @@ extension DiaryImageListView {
         )
         
         let totalCharacters = NSAttributedString(
-            // TODO: - 이미지 등록 최대 갯수에 관련된 로직 Reactor에서 처리 예정
-            string: "/\(10)",
+            string: "/\(Constants.updatableMaxImageCount)",
             attributes: [.foregroundColor: UIColor.gray200, .font: GLFont.medium10.font]
         )
         

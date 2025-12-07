@@ -59,11 +59,10 @@ final class DiaryImageCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        backgroundColor = .white
-        
         contentView.addSubview(diaryImageView)
         diaryImageView.snp.makeConstraints {
-            $0.directionalEdges.equalToSuperview()
+            $0.leading.bottom.equalToSuperview()
+            $0.size.equalTo(65)
         }
         
         diaryImageView.addSubview(representativeLabel)
@@ -72,12 +71,12 @@ final class DiaryImageCollectionViewCell: UICollectionViewCell {
             $0.height.equalTo(20)
         }
         
-        addSubview(deleteButton)
+        contentView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints {
             $0.size.equalTo(18)
-            $0.centerY.equalTo(snp.top)
-            $0.centerX.equalTo(snp.trailing)
+            $0.top.trailing.equalToSuperview()
         }
+        contentView.bringSubviewToFront(deleteButton)
     }
     
     func updateUI(diaryImage: UIImage, isRepresentative: Bool = false) {

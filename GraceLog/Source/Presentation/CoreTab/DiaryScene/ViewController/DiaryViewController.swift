@@ -14,9 +14,7 @@ import ReactorKit
 import RxDataSources
 import YPImagePicker
 
-final class DiaryViewController: UIViewController, View {
-    var disposeBag = DisposeBag()
-    
+final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
     private lazy var scrollView = UIScrollView().then {
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
@@ -28,8 +26,17 @@ final class DiaryViewController: UIViewController, View {
         $0.backgroundColor = .clear
         $0.distribution = .fill
         $0.alignment = .fill
+        $0.spacing = 20
     }
     
+    private lazy var addImageContainerView = UIView().then {
+        $0.addSubview(diaryImageListView)
+        diaryImageListView.snp.makeConstraints {
+            $0.directionalHorizontalEdges.equalToSuperview().inset(30)
+            $0.top.equalToSuperview().inset(14)
+            $0.bottom.equalToSuperview()
+        }
+    }
     private let diaryImageListView = DiaryImageListView()
     private let diaryEditView = DiaryEditView()
     private let diaryKeywordView = DiaryKeywordView()
@@ -45,42 +52,30 @@ final class DiaryViewController: UIViewController, View {
         $0.clipsToBounds = true
     }
     
-    init(reactor: DiaryViewReactor) {
-        super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupLayouts()
-        setupConstraints()
-        setupStyles()
-    }
-    
-    private func setupStyles() {
+    override func setupStyles() {
+        super.setupStyles()
         view.backgroundColor = .white
         diaryKeywordView.keywordCollectionView.delegate = self
+        navigationBar.setupTitleLabel(text: "일기 쓰기")
     }
     
-    private func setupLayouts() {
-        view.addSubview(scrollView)
+    override func setupLayouts() {
+        super.setupLayouts()
+        contentView.addSubview(scrollView)
         [containerStackView, shareButton].forEach { scrollView.addSubview($0) }
-        let subviews = [diaryImageListView, diaryEditView, diaryKeywordView, diaryShareView, diarySettingView]
-        containerStackView.addArrangedDividerSubViews(subviews, exclude: [0])
+        let subviews = [addImageContainerView, diaryEditView, diaryKeywordView, diaryShareView, diarySettingView]
+        containerStackView.addArrangedDividerSubViews(subviews)
         
         shareButton.snp.makeConstraints {
             $0.height.equalTo(45)
             $0.directionalHorizontalEdges.equalToSuperview().inset(30)
-            $0.top.equalTo(containerStackView.snp.bottom).offset(22)
-            $0.bottom.equalToSuperview().inset(33)
+            $0.top.equalTo(containerStackView.snp.bottom).offset(61)
+            $0.bottom.equalToSuperview().inset(42)
         }
     }
     
-    private func setupConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
         scrollView.snp.makeConstraints {
             $0.directionalEdges.width.equalToSuperview()
         }
@@ -134,7 +129,8 @@ final class DiaryViewController: UIViewController, View {
         present(picker, animated: true, completion: nil)
     }
     
-    func bind(reactor: DiaryViewReactor) {
+    override func bind(reactor: DiaryViewReactor) {
+        super.bind(reactor: reactor)
         diaryEditView.titleInputView.text
             .subscribe(with: self) { owner, title in
                 reactor.action.onNext(.updateTitle(title))

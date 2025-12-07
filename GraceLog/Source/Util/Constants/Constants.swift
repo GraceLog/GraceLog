@@ -9,4 +9,5 @@ import Foundation
 
 enum Constants {
     static let navigationBarHeight: CGFloat = 44
+    static let updatableMaxImageCount = 5
 }

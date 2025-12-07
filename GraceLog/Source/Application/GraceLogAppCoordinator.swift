@@ -13,7 +13,8 @@ final class GraceLogAppCoordinator: NavigationCoordinator {
     var navigationController: UINavigationController
     
     private var isLoggedIn: Bool {
-        KeychainServiceImpl.shared.isLoggedIn()
+        true
+//        KeychainServiceImpl.shared.isLoggedIn()
     }
     
     init(navigationController: UINavigationController) {
