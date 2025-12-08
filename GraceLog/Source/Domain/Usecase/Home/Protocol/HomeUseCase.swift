@@ -13,7 +13,7 @@ protocol HomeUseCase {
     var dailyVerse: BehaviorRelay<DailyVerse?> { get }
     var diaryList: BehaviorRelay<[MyDiaryPreview]> { get }
     var videoList: BehaviorRelay<[RecommendedVideo]> { get }
-    var videoTagList: BehaviorRelay<[VideoTag]> { get }
+    var videoTagList: BehaviorRelay<[String]> { get }
     var error: PublishRelay<Error> { get }
         
     func fetchDiaryList()

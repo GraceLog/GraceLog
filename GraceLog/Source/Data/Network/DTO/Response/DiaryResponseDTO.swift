@@ -14,15 +14,15 @@ struct DiaryResponseDTO: Decodable {
     let postImages: [DiaryImagesInfo]
     let isHideLike: Bool
     let isHideComment: Bool
-    let reservationTime: Date
+    let reserveTime: String
     let member: UserResponseDTO
-    let postCommunityId: Int
+    let postCommunityId: Int?
     let keywords: [String]
     let likeCount: Int
-    let likeByMe: Bool
+    let likedByMe: Bool
     let commentCount: Int
-    let createdAt: Date
-    let updatedAt: Date
+    let createdAt: String
+    let updatedAt: String
 }
 
 struct DiaryImagesInfo: Decodable {

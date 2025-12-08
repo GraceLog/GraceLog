@@ -15,7 +15,7 @@ enum CommunityAPI {
 
 extension CommunityAPI: TargetType {
     var baseURL: String {
-        return "http://\(Const.baseURL)/community"
+        return "http://\(Const.baseURL)"
     }
     
     var method: HTTPMethod {
@@ -29,11 +29,11 @@ extension CommunityAPI: TargetType {
     var path: String {
         switch self {
         case .fetchMyCommunityList:
-            return ""
+            return "/community"
         case .joinCommunity(let id):
-            return "/\(id)/join"
+            return "/community/\(id)/join"
         case .leaveCommunity(let id):
-            return "/\(id)/leave"
+            return "/community/\(id)/leave"
         }
     }
     

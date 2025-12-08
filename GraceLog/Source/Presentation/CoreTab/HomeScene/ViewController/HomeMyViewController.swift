@@ -67,7 +67,6 @@ final class HomeMyViewController: GraceLogBaseViewController<HomeMyViewReactor> 
 // MARK: Home Bindings
 extension HomeMyViewController {
     private func bindHomeMyBibleView(reactor: HomeMyViewReactor) {
-        // TODO: 성경데이터 모델링 및 API 연동하여 Reactor의 데이터로 바인딩 필요
         reactor.pulse(\.$dailyVerse)
             .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
@@ -204,7 +203,7 @@ extension HomeMyViewController {
         reactor.pulse(\.$videoTagItems)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, videoTagItems in
-                let recommendedTag = videoTagItems.map { "#\($0.name)" }.joined(separator: " ")
+                let recommendedTag = videoTagItems.map { "#\($0)" }.joined(separator: " ")
                 owner.myRecommendVideoView.configureUI(recommendedText: recommendedTag)
             }
             .disposed(by: disposeBag)

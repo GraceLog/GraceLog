@@ -13,6 +13,6 @@ struct DailyVerseResponseDTO: Decodable {
     let chapter: String
     let verse: String
     let text: String
-    let createdAt: Date
-    let updatedAt: Date
+    let createdAt: String
+    let updatedAt: String
 }

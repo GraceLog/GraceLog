@@ -13,7 +13,7 @@ final class DefaultHomeUseCase: HomeUseCase {
     var dailyVerse = BehaviorRelay<DailyVerse?>(value: nil)
     var diaryList = BehaviorRelay<[MyDiaryPreview]>(value: [])
     var videoList = BehaviorRelay<[RecommendedVideo]>(value: [])
-    var videoTagList = BehaviorRelay<[VideoTag]>(value: [])
+    var videoTagList = BehaviorRelay<[String]>(value: [])
     var error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
@@ -35,21 +35,15 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
 
     func fetchVideoList() {
-        videoList.accept([
-            RecommendedVideo(
-                title: "말씀노트",
-                imageURL: URL(string: "https://pimg.mk.co.kr/meet/neds/2017/11/image_readmed_2017_740612_15101228583092607.jpg")
-            ),
-            RecommendedVideo(
-                title: "더메세지 랩The Message LAB",
-                imageURL: URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4sCVSr1te6gasrpW9pSDUrQ46cf9rP7t8w&s")
-            )
-        ])
+        homeRepository.fetchVideoList()
+            .subscribe(onSuccess: {
+                self.videoTagList.accept($0.tags)
+                self.videoList.accept($0.videoList)
+            }, onFailure: {
+                self.error.accept($0)
+            })
+            .disposed(by: disposeBag)
         
-        videoTagList.accept([
-            VideoTag(name: "순종"),
-            VideoTag(name: "도전")
-        ])
     }
 
     func fetchDailyVerse() {

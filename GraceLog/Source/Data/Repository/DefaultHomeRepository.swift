@@ -21,7 +21,7 @@ final class DefaultHomeRepository: HomeRepository {
             .map { (responseDTO: DailyVerseResponseDTO) in
                 return DailyVerse(
                     content: responseDTO.text,
-                    reference: "\(responseDTO.book) \(responseDTO.chapter) \(responseDTO.verse)"
+                    reference: "\(responseDTO.book) \(responseDTO.chapter):\(responseDTO.verse)"
                 )
             }
     }
@@ -34,7 +34,7 @@ final class DefaultHomeRepository: HomeRepository {
                 return responseDTO.map { diaryResponseDTO in
                     return MyDiaryPreview(
                         id: diaryResponseDTO.postId,
-                        editedDate: diaryResponseDTO.updatedAt,
+                        editedDate: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.updatedAt) ?? Date(),
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
                         imageURL: diaryResponseDTO.postImages.first?.url
@@ -74,8 +74,8 @@ final class DefaultHomeRepository: HomeRepository {
                         id: diaryResponseDTO.postId,
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
-                        editedDate: diaryResponseDTO.updatedAt,
-                        isLiked: diaryResponseDTO.likeByMe,
+                        editedDate: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.updatedAt) ?? Date(),
+                        isLiked: diaryResponseDTO.likedByMe,
                         likeCount: diaryResponseDTO.likeCount,
                         commentCount: diaryResponseDTO.commentCount,
                         username: diaryResponseDTO.member.name,
@@ -84,6 +84,31 @@ final class DefaultHomeRepository: HomeRepository {
                         isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId
                     )
                 }
+            }
+    }
+    
+    func likeToggle(postId: Int) -> Single<Bool> {
+        let request = LikeDiaryRequestDTO(postId: postId)
+        
+        return network.request(LikeAPI.likeToggle(request))
+            .map { (responseDTO: GLResponseDTO<Bool>) in
+                return responseDTO.data ?? false
+            }
+    }
+    
+    func fetchVideoList() -> RxSwift.Single<VideoInfo> {
+        return network.request(YoutubeAPI.fetchVideo)
+            .map { (responseDTO: VideoResponseDTO) in
+                return VideoInfo(
+                    tags: responseDTO.keywords,
+                    videoList: responseDTO.videoList.map { youtubeResponse in
+                        RecommendedVideo(
+                            title: youtubeResponse.title,
+                            imageURL: youtubeResponse.titleImageUrl,
+                            videoURL: youtubeResponse.videoUrl
+                        )
+                    }
+                )
             }
     }
 }
