@@ -102,7 +102,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         }
         
         backgroundImageView.snp.makeConstraints {
-            $0.leading.greaterThanOrEqualTo(timelineContainerStackView.snp.trailing)
+            $0.leading.equalTo(timelineContainerStackView.snp.trailing)
             $0.top.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(Metric.backgroundImageBottomInset)
         }
