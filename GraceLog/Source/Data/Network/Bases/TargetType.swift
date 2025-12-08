@@ -18,7 +18,8 @@ protocol TargetType: URLRequestConvertible {
 extension TargetType {
     func asURLRequest() throws -> URLRequest {
         let url = try baseURL.asURL()
-        var urlRequest = try URLRequest(url: url.appendingPathComponent(path), method: method)
+        let finalURL = path.isEmpty ? url : url.appendingPathComponent(path)
+        var urlRequest = try URLRequest(url: finalURL, method: method)
         
         urlRequest.headers = headers.httpHeaders
         
@@ -26,7 +27,7 @@ extension TargetType {
         case .query(let request):
             let params = request?.toDictionary() ?? [:]
             let queryParams = params.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
-            var components = URLComponents(string: url.appendingPathComponent(path).absoluteString)
+            var components = URLComponents(string: finalURL.absoluteString)
             components?.queryItems = queryParams
             urlRequest.url = components?.url
         case .body(let request):
