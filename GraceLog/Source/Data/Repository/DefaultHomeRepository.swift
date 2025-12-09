@@ -58,7 +58,7 @@ final class DefaultHomeRepository: HomeRepository {
     
     func fetchHomeCommunityDiaryList(
         communityId: Int,
-        cursorId: Int,
+        cursorId: Int?,
         size: Int
     ) -> Single<[CommunityDiaryPreview]> {
         let reqeust = CommunityDiaryListRequestDTO(
@@ -68,8 +68,8 @@ final class DefaultHomeRepository: HomeRepository {
         )
         
         return network.request(DiaryAPI.fetchCommunityDiaryList(reqeust))
-            .map { (responseDTO: [DiaryResponseDTO]) in
-                return responseDTO.map { diaryResponseDTO in
+            .map { (responseDTO: DiaryPagingResponseDTO) in
+                return responseDTO.content.map { diaryResponseDTO in
                     return CommunityDiaryPreview(
                         id: diaryResponseDTO.postId,
                         title: diaryResponseDTO.title,

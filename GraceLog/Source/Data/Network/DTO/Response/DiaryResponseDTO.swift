@@ -7,6 +7,13 @@
 
 import Foundation
 
+struct DiaryPagingResponseDTO: Decodable {
+    let content: [DiaryResponseDTO]
+    let size: Int
+    let first: Bool
+    let last: Bool
+}
+
 struct DiaryResponseDTO: Decodable {
     let postId: Int
     let title: String
@@ -14,7 +21,7 @@ struct DiaryResponseDTO: Decodable {
     let postImages: [DiaryImagesInfo]
     let isHideLike: Bool
     let isHideComment: Bool
-    let reserveTime: String
+    let reserveTime: String?
     let member: UserResponseDTO
     let postCommunityId: Int?
     let keywords: [String]

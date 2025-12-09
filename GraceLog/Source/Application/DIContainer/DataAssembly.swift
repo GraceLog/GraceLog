@@ -20,7 +20,11 @@ struct DataAssembly: Assembly {
         }
         
         container.register(HomeRepository.self) { resolver in
-            return DefaultHomeRepository()
+            return DefaultHomeRepository(network: network)
+        }
+        
+        container.register(DiaryRepository.self) { resolver in
+            return DefaultDiaryRepository(network: network)
         }
     }
 }

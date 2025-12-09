@@ -14,7 +14,7 @@ protocol HomeRepository {
     func fetchMyCommunityList() -> Single<[Community]>
     func fetchHomeCommunityDiaryList(
         communityId: Int,
-        cursorId: Int,
+        cursorId: Int?,
         size: Int
     ) -> Single<[CommunityDiaryPreview]>
     func likeToggle(postId: Int) -> Single<Bool>

@@ -17,7 +17,7 @@ final class HomeCommunityViewReactor: Reactor {
     
     enum Action {
         case didSelectCommunity(Community)
-        case didTapLikeButton(String)
+        case didTapLikeButton(Int)
     }
     
     enum Mutation {
@@ -51,7 +51,7 @@ extension HomeCommunityViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .didSelectCommunity(let community):
-            usecase.fetchDiaryList(community: community)
+            usecase.fetchDiaryList(communityId: community.id, cursorId: nil)
         case .didTapLikeButton(let diaryID):
             guard let selectedDiary = usecase.diaryList.value.first(where: { $0.id == diaryID }) else {
                 return .empty()

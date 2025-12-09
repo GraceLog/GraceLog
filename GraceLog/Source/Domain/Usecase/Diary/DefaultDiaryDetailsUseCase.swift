@@ -20,19 +20,20 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     var error = PublishRelay<Error>()
     
     private let diaryId: Int
-    private let communityId: Int
-    private let memberId: Int
+    private let communityId: Int = 0
+    private let memberId: Int = 0
     
     init(
+        /// TODO: - 공동체 아이디, 유저 아이디 추후 주입 필요
         diaryRepository: DiaryRepository,
-        diaryId: Int,
-        communityId: Int,
-        memberId: Int
+        diaryId: Int
+//        communityId: Int,
+//        memberId: Int
     ) {
         self.diaryRepository = diaryRepository
         self.diaryId = diaryId
-        self.communityId = communityId
-        self.memberId = memberId
+//        self.communityId = communityId
+//        self.memberId = memberId
         
         fetchDiaryDetails(diaryId: diaryId)
     }
