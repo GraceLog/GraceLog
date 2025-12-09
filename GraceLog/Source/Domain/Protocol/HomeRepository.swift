@@ -9,6 +9,14 @@ import Foundation
 import RxSwift
 
 protocol HomeRepository {
-    func fetchHomeMyContent() -> Single<Void>
-    func fetchHomeCommunityContent() -> Single<HomeCommunityContent>
+    func fetchDailyVerse() -> Single<DailyVerse>
+    func fetchMyDiaryList() -> Single<[MyDiaryPreview]>
+    func fetchMyCommunityList() -> Single<[Community]>
+    func fetchHomeCommunityDiaryList(
+        communityId: Int,
+        cursorId: Int?,
+        size: Int
+    ) -> Single<[CommunityDiaryPreview]>
+    func likeToggle(postId: Int) -> Single<Bool>
+    func fetchVideoList() -> Single<VideoInfo>
 }

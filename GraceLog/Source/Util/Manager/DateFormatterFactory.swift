@@ -66,4 +66,11 @@ enum DateFormatterFactory {
             endDate: dateFormatter.string(from: endOfMonth)
         )
     }
+    
+    /// ISO8601 형식의 문자열을 Date로 변환
+    static func dateFromISO8601String(_ dateString: String) -> Date? {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter.date(from: dateString)
+    }
 }

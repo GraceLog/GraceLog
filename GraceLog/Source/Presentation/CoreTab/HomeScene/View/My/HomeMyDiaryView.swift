@@ -32,6 +32,7 @@ final class HomeMyDiaryView: UIView {
         
         $0.register(HomeLatestDiaryCollectionViewCell.self, forCellWithReuseIdentifier: HomeLatestDiaryCollectionViewCell.reuseIdentifier)
         $0.register(HomePastDiaryCollectionViewCell.self, forCellWithReuseIdentifier: HomePastDiaryCollectionViewCell.reuseIdentifier)
+        $0.register(EmptyDiaryCollectionViewCell.self, forCellWithReuseIdentifier: EmptyDiaryCollectionViewCell.reuseIdentifier)
     }
     
     override init(frame: CGRect) {

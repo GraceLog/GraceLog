@@ -9,7 +9,7 @@ import RxDataSources
 import UIKit
 
 struct CommunityDiaryItem {
-    let id: String
+    let id: Int
     let isCurrentUser: Bool
     let username: String
     let title: String
@@ -21,7 +21,7 @@ struct CommunityDiaryItem {
     let cardImageURL: URL?
     let editedDate: String
     
-    init(from: CommunityDiary) {
+    init(from: CommunityDiaryPreview) {
         self.id = from.id
         self.isCurrentUser = from.isCurrentUser
         self.username = from.username

@@ -27,17 +27,17 @@ final class DefaultDiaryRepository: DiaryRepository {
                         id: responseDTO.member.memberId,
                         name: responseDTO.member.name,
                         nickname: responseDTO.member.nickname,
-                        profileImageURL: URL(string: responseDTO.member.profileImage ?? ""),
+                        profileImageURL: responseDTO.member.profileImage,
                         email: responseDTO.member.email,
                         message: responseDTO.member.message
                     ),
                     imageURLs: responseDTO.postImages.map { $0.url },
                     likeCount: responseDTO.likeCount,
-                    likeByMe: responseDTO.likeByMe,
+                    likeByMe: responseDTO.likedByMe,
                     isHideLike: responseDTO.isHideLike,
                     isHideComment: responseDTO.isHideComment,
                     commentCount: responseDTO.commentCount,
-                    createdAt: responseDTO.createdAt
+                    createdAt: DateFormatterFactory.dateFromISO8601String(responseDTO.createdAt) ?? Date()
                 )
             }
     }
@@ -56,17 +56,17 @@ final class DefaultDiaryRepository: DiaryRepository {
                             id: diaryResponseDTO.member.memberId,
                             name: diaryResponseDTO.member.name,
                             nickname: diaryResponseDTO.member.nickname,
-                            profileImageURL: URL(string: diaryResponseDTO.member.profileImage ?? ""),
+                            profileImageURL: diaryResponseDTO.member.profileImage,
                             email: diaryResponseDTO.member.email,
                             message: diaryResponseDTO.member.message
                         ),
                         imageURLs: diaryResponseDTO.postImages.map { $0.url },
                         likeCount: diaryResponseDTO.likeCount,
-                        likeByMe: diaryResponseDTO.likeByMe,
+                        likeByMe: diaryResponseDTO.likedByMe,
                         isHideLike: diaryResponseDTO.isHideLike,
                         isHideComment: diaryResponseDTO.isHideComment,
                         commentCount: diaryResponseDTO.commentCount,
-                        createdAt: diaryResponseDTO.createdAt
+                        createdAt: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.createdAt) ?? Date()
                     )
                 }
             }

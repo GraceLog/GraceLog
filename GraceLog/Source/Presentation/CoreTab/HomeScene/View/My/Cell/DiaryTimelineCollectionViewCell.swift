@@ -44,7 +44,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         $0.backgroundColor = .themeColor
     }
     
-    private let editedDateLabel = UILabel().then {
+    let editedDateLabel = UILabel().then {
         $0.textColor = .themeColor
         $0.numberOfLines = 0
         $0.textAlignment = .center
@@ -102,7 +102,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         }
         
         backgroundImageView.snp.makeConstraints {
-            $0.leading.greaterThanOrEqualTo(timelineContainerStackView.snp.trailing)
+            $0.leading.equalTo(timelineContainerStackView.snp.trailing)
             $0.top.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(Metric.backgroundImageBottomInset)
         }

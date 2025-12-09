@@ -67,7 +67,6 @@ final class HomeMyViewController: GraceLogBaseViewController<HomeMyViewReactor> 
 // MARK: Home Bindings
 extension HomeMyViewController {
     private func bindHomeMyBibleView(reactor: HomeMyViewReactor) {
-        // TODO: 성경데이터 모델링 및 API 연동하여 Reactor의 데이터로 바인딩 필요
         reactor.pulse(\.$dailyVerse)
             .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
@@ -85,84 +84,99 @@ extension HomeMyViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$username)
-            .asDriver(onErrorJustReturn: "사용자")
-            .drive(with: self) { owner, username in
+        Observable.combineLatest(
+            reactor.pulse(\.$username),
+            reactor.pulse(\.$diaryItems)
+        )
+        .asDriver(onErrorJustReturn: ("사용자", []))
+        .drive(with: self) { owner, data in
+            let (username, diaryItems) = data
+            if diaryItems.isEmpty {
+                owner.myDiaryView.greetingLabel.text = "Grace Log와 함께 감사일기를 시작해요!"
+            } else {
                 owner.myDiaryView.greetingLabel.text = "\(username)님, 오늘도 하나님과 동행하세요"
             }
-            .disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
         
         reactor.pulse(\.$diaryItems)
+            .map { $0.isEmpty ? [MyDiaryPreview.empty] : $0 }
             .asDriver(onErrorJustReturn: [])
-            .drive(with: self) { owner, diaryList in
-                Observable.just(diaryList)
-                    .bind(to: owner.myDiaryView.diaryCollectionView.rx.items) { collectionView, index, item in
-                        let indexPath = IndexPath(item: index, section: 0)
-                        let diaryCount = diaryList.count
-                        
-                        guard diaryCount > 0 else {
-                            // TODO: - 일기장 목록이 없을 경우 처리 필요
-                            return UICollectionViewCell()
+            .drive(myDiaryView.diaryCollectionView.rx.items) { collectionView, index, item in
+                let indexPath = IndexPath(item: index, section: 0)
+                let diaryCount = reactor.currentState.diaryItems.count
+                
+                guard diaryCount > 0 else {
+                    let emptyCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: EmptyDiaryCollectionViewCell.reuseIdentifier,
+                        for: indexPath
+                    ) as! EmptyDiaryCollectionViewCell
+                    
+                    emptyCell.configureUI(
+                        backgroundImageURL: item.imageURL,
+                        editedDate: item.editedDate,
+                        hideTopLine: true,
+                        hideBottomLine: true
+                    )
+                    
+                    return emptyCell
+                }
+                
+                let isFirst = index == 0
+                let isLast = index == diaryCount - 1
+                let isSingleItem = diaryCount == 1
+                let hideTop = true
+                let hideBottom = isSingleItem
+                
+                let cell: DiaryTimelineCollectionViewCell
+                
+                if isSingleItem || isFirst {
+                    let latestCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: HomeLatestDiaryCollectionViewCell.reuseIdentifier,
+                        for: indexPath
+                    ) as! HomeLatestDiaryCollectionViewCell
+                    
+                    latestCell.setData(
+                        backgroundImageURL: item.imageURL,
+                        title: item.title,
+                        content: item.content,
+                        editedDate: item.editedDate,
+                        hideTopLine: hideTop,
+                        hideBottomLine: hideBottom
+                    )
+                    cell = latestCell
+                } else {
+                    let pastCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: HomePastDiaryCollectionViewCell.reuseIdentifier,
+                        for: indexPath
+                    ) as! HomePastDiaryCollectionViewCell
+                    
+                    pastCell.setData(
+                        backgroundImageURL: item.imageURL,
+                        title: item.title,
+                        content: item.content,
+                        editedDate: item.editedDate,
+                        hideTopLine: false,
+                        hideBottomLine: isLast
+                    )
+                    cell = pastCell
+                }
+                
+                cell.overlayBackgroundView.rx.tapGesture().when(.recognized)
+                    .asDriver(onErrorDriveWith: .empty())
+                    .drive(onNext: { [weak self] _ in
+                        guard let self,
+                              let indexPath = self.myDiaryView.diaryCollectionView.indexPath(for: cell),
+                              let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiaryPreview else {
+                            return
                         }
-                        
-                        let isFirst = index == 0
-                        let isLast = index == diaryCount - 1
-                        let isSingleItem = diaryCount == 1
-                        let hideTop = true
-                        let hideBottom = isSingleItem
-                        
-                        let cell: DiaryTimelineCollectionViewCell
-                        
-                        if isSingleItem || isFirst {
-                            let latestCell = collectionView.dequeueReusableCell(
-                                withReuseIdentifier: HomeLatestDiaryCollectionViewCell.reuseIdentifier,
-                                for: indexPath
-                            ) as! HomeLatestDiaryCollectionViewCell
-                            
-                            latestCell.setData(
-                                backgroundImageURL: item.imageURL,
-                                title: item.title,
-                                content: item.content,
-                                editedDate: item.editedDate,
-                                hideTopLine: hideTop,
-                                hideBottomLine: hideBottom
-                            )
-                            cell = latestCell
-                        } else {
-                            let pastCell = collectionView.dequeueReusableCell(
-                                withReuseIdentifier: HomePastDiaryCollectionViewCell.reuseIdentifier,
-                                for: indexPath
-                            ) as! HomePastDiaryCollectionViewCell
-                            
-                            pastCell.setData(
-                                backgroundImageURL: item.imageURL,
-                                title: item.title,
-                                content: item.content,
-                                editedDate: item.editedDate,
-                                hideTopLine: false,
-                                hideBottomLine: isLast
-                            )
-                            cell = pastCell
-                        }
-                        
-                        cell.overlayBackgroundView.rx.tapGesture().when(.recognized)
-                            .asDriver(onErrorDriveWith: .empty())
-                            .drive(onNext: { [weak self] _ in
-                                guard let self,
-                                      let indexPath = self.myDiaryView.diaryCollectionView.indexPath(for: cell),
-                                      let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiary else {
-                                    return
-                                }
-                                reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
-                            })
-                            .disposed(by: cell.disposeBag)
-                        
-                        return cell
-                    }
-                    .disposed(by: owner.disposeBag)
+                        reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                return cell
             }
             .disposed(by: disposeBag)
-        
     }
     
     private func bindHomeMyRecommendVideoView(reactor: HomeMyViewReactor) {
@@ -189,7 +203,7 @@ extension HomeMyViewController {
         reactor.pulse(\.$videoTagItems)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, videoTagItems in
-                let recommendedTag = videoTagItems.map { "#\($0.name)" }.joined(separator: " ")
+                let recommendedTag = videoTagItems.map { "#\($0)" }.joined(separator: " ")
                 owner.myRecommendVideoView.configureUI(recommendedText: recommendedTag)
             }
             .disposed(by: disposeBag)

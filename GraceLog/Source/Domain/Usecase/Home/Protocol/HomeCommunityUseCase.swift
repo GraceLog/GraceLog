@@ -10,13 +10,13 @@ import RxSwift
 import RxRelay
 
 protocol HomeCommunityUseCase {
-    var diaryList: BehaviorRelay<[CommunityDiary]> { get }
+    var diaryList: BehaviorRelay<[CommunityDiaryPreview]> { get }
     var communityList: BehaviorRelay<[Community]> { get }
     var likeDiaryResult: PublishRelay<Bool> { get }
     var unlikeDiaryResult: PublishRelay<Bool> { get }
     
-    func fetchDiaryList(community: Community)
+    func fetchDiaryList(communityId: Int, cursorId: Int?)
     func fetchCommunityList() 
-    func likeDiary(id: String)
-    func unlikeDiary(id: String)
+    func likeDiary(id: Int)
+    func unlikeDiary(id: Int)
 }

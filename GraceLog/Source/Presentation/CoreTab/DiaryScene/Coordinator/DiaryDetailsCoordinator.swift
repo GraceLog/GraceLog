@@ -25,7 +25,7 @@ final class DiaryDetailsCoordinator: Coordinator {
     func start() {
         let diaryDetailsVC = DependencyContainer.shared.injector.resolve(
             DiaryDetailsViewController.self,
-            arguments: self,
+            arguments: self as DiaryDetailsCoordinator,
             diaryId
         )
         self.navigationController.pushViewController(diaryDetailsVC, animated: true)
