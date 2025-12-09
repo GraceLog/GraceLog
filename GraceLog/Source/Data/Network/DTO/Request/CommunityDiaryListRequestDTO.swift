@@ -9,6 +9,6 @@ import Foundation
 
 struct CommunityDiaryListRequestDTO: Encodable {
     let communityId: Int
-    let cursorId: Int
+    let cursorId: Int?
     let size: Int
 }
