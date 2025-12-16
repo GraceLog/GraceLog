@@ -15,14 +15,19 @@ final class HomeCommunityViewReactor: Reactor {
     
     var initialState: State
     
+    private var selectedCommunityId: Int? = nil
+    
     enum Action {
         case didSelectCommunity(Community)
+        case didTapDiaryDetail(Int)
         case didTapLikeButton(Int)
+        case loadMoreDiaries
     }
     
     enum Mutation {
         case setCommunityList([Community])
         case setDiaryList([HomeCommunityDiarySection])
+        case setHasMoreDiaries(Bool)
         case setDiaryLikeResult(isSuccess: Bool)
         case setDiaryUnlikeResult(isSuccess: Bool)
     }
@@ -32,6 +37,7 @@ final class HomeCommunityViewReactor: Reactor {
         @Pulse var sectionedDiaryList: [HomeCommunityDiarySection]
         @Pulse var isSuccessLikeDiary: Bool?
         @Pulse var isSuccessUnlikeResult: Bool?
+        var hasMoreDiaries: Bool
     }
     
     init(
@@ -40,7 +46,8 @@ final class HomeCommunityViewReactor: Reactor {
         self.usecase = usecase
         self.initialState = State(
             communityList: [],
-            sectionedDiaryList: []
+            sectionedDiaryList: [],
+            hasMoreDiaries: true
         )
         
         usecase.fetchCommunityList()
@@ -51,7 +58,14 @@ extension HomeCommunityViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .didSelectCommunity(let community):
-            usecase.fetchDiaryList(communityId: community.id, cursorId: nil)
+            selectedCommunityId = community.id
+            usecase.fetchDiaryList(
+                communityId: community.id,
+                cursorId: nil,
+                isLoadMore: false
+            )
+        case .didTapDiaryDetail(let diaryID):
+            coordinator?.showDiaryDetail(diaryId: diaryID)
         case .didTapLikeButton(let diaryID):
             guard let selectedDiary = usecase.diaryList.value.first(where: { $0.id == diaryID }) else {
                 return .empty()
@@ -62,6 +76,24 @@ extension HomeCommunityViewReactor {
             } else {
                 usecase.likeDiary(id: diaryID)
             }
+        case .loadMoreDiaries:
+            guard currentState.hasMoreDiaries else {
+                return .empty()
+            }
+            
+            let currentDiaries = usecase.diaryList.value
+            
+            guard let selectedCommunityId = selectedCommunityId,
+                  !currentDiaries.isEmpty,
+                  let lastCursorId = currentDiaries.last?.id else {
+                return .empty()
+            }
+            
+            usecase.fetchDiaryList(
+                communityId: selectedCommunityId,
+                cursorId: lastCursorId,
+                isLoadMore: true
+            )
         }
         return .empty()
     }
@@ -81,13 +113,16 @@ extension HomeCommunityViewReactor {
             }
             .map { Mutation.setDiaryList($0) }
         
+        let hasMoreDiaries = usecase.hasMoreDiaries
+            .map { Mutation.setHasMoreDiaries($0) }
+        
         let likeResult = usecase.likeDiaryResult
             .map { result in Mutation.setDiaryLikeResult(isSuccess: result) }
         
         let unlikeResult = usecase.unlikeDiaryResult
             .map { result in Mutation.setDiaryUnlikeResult(isSuccess: result) }
         
-        return Observable.merge(mutation, fetchedCommunityList, fetchedDiaryList, likeResult, unlikeResult)
+        return Observable.merge(mutation, fetchedCommunityList, hasMoreDiaries, fetchedDiaryList, likeResult, unlikeResult)
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -98,6 +133,8 @@ extension HomeCommunityViewReactor {
             newState.communityList = communityList
         case .setDiaryList(let diaryList):
             newState.sectionedDiaryList = diaryList
+        case .setHasMoreDiaries(let hasMore):
+            newState.hasMoreDiaries = hasMore
         case .setDiaryLikeResult(let isSuccess):
             newState.isSuccessLikeDiary = isSuccess
         case .setDiaryUnlikeResult(let isSuccess):

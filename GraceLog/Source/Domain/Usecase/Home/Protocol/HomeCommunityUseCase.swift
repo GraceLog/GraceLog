@@ -14,9 +14,11 @@ protocol HomeCommunityUseCase {
     var communityList: BehaviorRelay<[Community]> { get }
     var likeDiaryResult: PublishRelay<Bool> { get }
     var unlikeDiaryResult: PublishRelay<Bool> { get }
+    var hasMoreDiaries: BehaviorRelay<Bool> { get }
+    var error: PublishRelay<Error> { get }
     
-    func fetchDiaryList(communityId: Int, cursorId: Int?)
-    func fetchCommunityList() 
+    func fetchDiaryList(communityId: Int, cursorId: Int?, isLoadMore: Bool)
+    func fetchCommunityList()
     func likeDiary(id: Int)
     func unlikeDiary(id: Int)
 }

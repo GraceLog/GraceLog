@@ -14,24 +14,39 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     var communityList = BehaviorRelay<[Community]>(value: [])
     var likeDiaryResult = PublishRelay<Bool>()
     var unlikeDiaryResult = PublishRelay<Bool>()
+    var hasMoreDiaries = BehaviorRelay<Bool>(value: true)
     var error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
-    
     private let homeRepository: HomeRepository
+    private let pageSize = 10
     
     init(homeRepository: HomeRepository) {
         self.homeRepository = homeRepository
     }
     
-    func fetchDiaryList(communityId: Int, cursorId: Int?) {
-        diaryList.accept([])
+    func fetchDiaryList(communityId: Int, cursorId: Int?, isLoadMore: Bool = false) {
+        if !isLoadMore {
+            diaryList.accept([])
+            hasMoreDiaries.accept(true)
+        }
         
-        homeRepository.fetchHomeCommunityDiaryList(communityId: communityId, cursorId: cursorId, size: 10)
-            .subscribe(onSuccess: {
-                self.diaryList.accept($0)
-            }, onFailure: {
-                self.error.accept($0)
+        homeRepository.fetchHomeCommunityDiaryList(communityId: communityId, cursorId: cursorId, size: pageSize)
+            .subscribe(onSuccess: { [weak self] newDiaries in
+                guard let self = self else { return }
+                
+                let hasMore = newDiaries.count >= self.pageSize
+                self.hasMoreDiaries.accept(hasMore)
+                
+                if isLoadMore {
+                    var currentList = self.diaryList.value
+                    currentList.append(contentsOf: newDiaries)
+                    self.diaryList.accept(currentList)
+                } else {
+                    self.diaryList.accept(newDiaries)
+                }
+            }, onFailure: { [weak self] error in
+                self?.error.accept(error)
             })
             .disposed(by: disposeBag)
     }
