@@ -33,7 +33,7 @@ final class DefaultHomeUseCase: HomeUseCase {
             })
             .disposed(by: disposeBag)
     }
-
+    
     func fetchVideoList() {
         homeRepository.fetchVideoList()
             .subscribe(onSuccess: {
@@ -45,7 +45,7 @@ final class DefaultHomeUseCase: HomeUseCase {
             .disposed(by: disposeBag)
         
     }
-
+    
     func fetchDailyVerse() {
         homeRepository.fetchDailyVerse()
             .subscribe(onSuccess: {

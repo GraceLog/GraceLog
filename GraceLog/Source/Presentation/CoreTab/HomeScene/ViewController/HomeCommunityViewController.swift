@@ -35,6 +35,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
     override func setupStyles() {
         super.setupStyles()
         showNavigationBar = false
+        scrollView.delegate = self
     }
     
     override func setupLayouts() {
@@ -58,7 +59,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
             $0.bottom.lessThanOrEqualToSuperview()
         }
     }
-     
+    
     override func bind(reactor: HomeCommunityViewReactor) {
         super.bind(reactor: reactor)
         bindCommunitySelectedCollectionView(reactor: reactor)
@@ -130,7 +131,7 @@ extension HomeCommunityViewController {
                     content: item.content,
                     likeCount: item.likeCount,
                     commentCount: item.commentCount,
-                    isLiked: item.isLiked, 
+                    isLiked: item.isLiked,
                     isCurrentUser: item.isCurrentUser,
                     profileImageURL: item.profileImageURL,
                     cardImageURL: item.cardImageURL
@@ -159,8 +160,7 @@ extension HomeCommunityViewController {
                             return
                         }
                         
-                        // TODO: - 선택한 감사일기 상세로 이동
-                        print("선택된 감사일기 정보: \(selectedItem)\n선택된 유저 인덱스: \(indexPath)")
+                        reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
                     })
                     .disposed(by: cell.disposeBag)
                 
@@ -185,6 +185,7 @@ extension HomeCommunityViewController {
                 return cell
             }
         )
+        
         reactor.pulse(\.$sectionedDiaryList)
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
@@ -228,5 +229,20 @@ extension HomeCommunityViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+
+extension HomeCommunityViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView == self.scrollView else {return }
+        
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.height
+        
+        if offsetY > contentHeight - height {
+            guard let reactor = reactor else { return }
+            reactor.action.onNext(.loadMoreDiaries)
+        }
     }
 }
