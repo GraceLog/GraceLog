@@ -146,19 +146,8 @@ extension DiaryTimelineCollectionViewCell {
         
         if let editedDate = editedDate {
             let exactDate = DateFormatterFactory.monthDaySlash.string(from: editedDate)
-            var relativeDate = ""
-            
-            if editedDate.hasElapsed(days: 0) {
-                relativeDate = "오늘"
-            } else if editedDate.isLastYear() {
-                relativeDate = "작년"
-            } else if editedDate.hasElapsed(days: 7) {
-                relativeDate = "지난주"
-            } else {
-                // TODO: - 해당 안되는 날짜인 경우 처리 필요
-                relativeDate = ""
-            }
-            
+            let relativeDate = editedDate.relativeTimeString()
+                    
             let relativeDateString = NSAttributedString(string: relativeDate + "\n", attributes: [.font: GLFont.regular14.font])
             let exactDateString = NSAttributedString(string: exactDate, attributes: [.font: GLFont.regular14.font])
             

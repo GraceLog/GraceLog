@@ -34,7 +34,7 @@ final class DefaultHomeRepository: HomeRepository {
                 return responseDTO.map { diaryResponseDTO in
                     return MyDiaryPreview(
                         id: diaryResponseDTO.postId,
-                        editedDate: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.updatedAt) ?? Date(),
+                        editedDate: DateFormatterFactory.dateFromServerString(diaryResponseDTO.updatedAt) ?? Date(),
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
                         imageURL: diaryResponseDTO.postImages.first?.url
@@ -74,7 +74,7 @@ final class DefaultHomeRepository: HomeRepository {
                         id: diaryResponseDTO.postId,
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
-                        editedDate: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.updatedAt) ?? Date(),
+                        editedDate: DateFormatterFactory.dateFromServerString(diaryResponseDTO.updatedAt) ?? Date(),
                         isLiked: diaryResponseDTO.likedByMe,
                         likeCount: diaryResponseDTO.likeCount,
                         commentCount: diaryResponseDTO.commentCount,
