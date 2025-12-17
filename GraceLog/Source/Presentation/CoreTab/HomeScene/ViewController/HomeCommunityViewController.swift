@@ -68,6 +68,14 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
         communityDiaryListView.diaryTableView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$error)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, error in
+                owner.view.makeToast(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -165,6 +173,9 @@ extension HomeCommunityViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.likeButton.rx.tap
+                    .do(onNext: { _ in
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    })
                     .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
                     .map { HomeCommunityViewReactor.Action.didTapLikeButton(item.id)}
                     .bind(to: reactor.action)
@@ -189,30 +200,6 @@ extension HomeCommunityViewController {
         reactor.pulse(\.$sectionedDiaryList)
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$isSuccessLikeDiary)
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 좋아요 성공여부에 따른 로직 구현
-                if isSuccess {
-                    print("좋아요 성공!")
-                } else {
-                    print("좋아요 실패!")
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$isSuccessUnlikeResult)
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 좋아요 성공여부에 따른 로직 구현
-                if isSuccess {
-                    print("좋아요 해제 성공!")
-                } else {
-                    print("좋아요 해제 실패!")
-                }
-            }
             .disposed(by: disposeBag)
     }
 }

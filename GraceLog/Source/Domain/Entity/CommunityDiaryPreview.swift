@@ -12,8 +12,8 @@ struct CommunityDiaryPreview {
     let title: String
     let content: String
     let editedDate: Date
-    let isLiked: Bool
-    let likeCount: Int
+    var isLiked: Bool
+    var likeCount: Int
     let commentCount: Int
     let username: String
     let profileImageURL: URL?

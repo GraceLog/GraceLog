@@ -28,8 +28,7 @@ final class HomeCommunityViewReactor: Reactor {
         case setCommunityList([Community])
         case setDiaryList([HomeCommunityDiarySection])
         case setHasMoreDiaries(Bool)
-        case setDiaryLikeResult(isSuccess: Bool)
-        case setDiaryUnlikeResult(isSuccess: Bool)
+        case setError(Error)
     }
     
     struct State {
@@ -37,6 +36,7 @@ final class HomeCommunityViewReactor: Reactor {
         @Pulse var sectionedDiaryList: [HomeCommunityDiarySection]
         @Pulse var isSuccessLikeDiary: Bool?
         @Pulse var isSuccessUnlikeResult: Bool?
+        @Pulse var error: Error?
         var hasMoreDiaries: Bool
     }
     
@@ -116,13 +116,16 @@ extension HomeCommunityViewReactor {
         let hasMoreDiaries = usecase.hasMoreDiaries
             .map { Mutation.setHasMoreDiaries($0) }
         
-        let likeResult = usecase.likeDiaryResult
-            .map { result in Mutation.setDiaryLikeResult(isSuccess: result) }
+        let errorMutation = usecase.error
+            .map { Mutation.setError($0) }
         
-        let unlikeResult = usecase.unlikeDiaryResult
-            .map { result in Mutation.setDiaryUnlikeResult(isSuccess: result) }
-        
-        return Observable.merge(mutation, fetchedCommunityList, hasMoreDiaries, fetchedDiaryList, likeResult, unlikeResult)
+        return Observable.merge(
+            mutation,
+            fetchedCommunityList,
+            hasMoreDiaries,
+            fetchedDiaryList,
+            errorMutation
+        )
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -135,10 +138,8 @@ extension HomeCommunityViewReactor {
             newState.sectionedDiaryList = diaryList
         case .setHasMoreDiaries(let hasMore):
             newState.hasMoreDiaries = hasMore
-        case .setDiaryLikeResult(let isSuccess):
-            newState.isSuccessLikeDiary = isSuccess
-        case .setDiaryUnlikeResult(let isSuccess):
-            newState.isSuccessUnlikeResult = isSuccess
+        case .setError(let error):
+            newState.error = error
         }
         return newState
     }
