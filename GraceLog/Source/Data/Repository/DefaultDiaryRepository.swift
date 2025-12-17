@@ -37,7 +37,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                     isHideLike: responseDTO.isHideLike,
                     isHideComment: responseDTO.isHideComment,
                     commentCount: responseDTO.commentCount,
-                    createdAt: DateFormatterFactory.dateFromISO8601String(responseDTO.createdAt) ?? Date()
+                    createdAt: DateFormatterFactory.dateFromServerString(responseDTO.createdAt) ?? Date()
                 )
             }
     }
@@ -66,7 +66,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                         isHideLike: diaryResponseDTO.isHideLike,
                         isHideComment: diaryResponseDTO.isHideComment,
                         commentCount: diaryResponseDTO.commentCount,
-                        createdAt: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.createdAt) ?? Date()
+                        createdAt: DateFormatterFactory.dateFromServerString(diaryResponseDTO.createdAt) ?? Date()
                     )
                 }
             }
