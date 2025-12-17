@@ -91,8 +91,8 @@ final class DefaultHomeRepository: HomeRepository {
         let request = LikeDiaryRequestDTO(postId: postId)
         
         return network.request(LikeAPI.likeToggle(request))
-            .map { (responseDTO: GLResponseDTO<Bool>) in
-                return responseDTO.data ?? false
+            .map { (isLiked: Bool) in
+                return isLiked
             }
     }
     

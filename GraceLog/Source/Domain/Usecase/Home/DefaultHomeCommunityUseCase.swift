@@ -62,22 +62,39 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     }
     
     func likeDiary(id: Int) {
+        updateDiaryLikeStatus(id: id, isLiked: true)
+        
         homeRepository.likeToggle(postId: id)
             .subscribe(onSuccess: {
                 self.likeDiaryResult.accept($0)
             }, onFailure: {
+                self.updateDiaryLikeStatus(id: id, isLiked: false)
                 self.error.accept($0)
             })
             .disposed(by: disposeBag)
     }
     
     func unlikeDiary(id: Int) {
+        self.updateDiaryLikeStatus(id: id, isLiked: false)
+        
         homeRepository.likeToggle(postId: id)
             .subscribe(onSuccess: {
                 self.unlikeDiaryResult.accept($0)
             }, onFailure: {
+                self.updateDiaryLikeStatus(id: id, isLiked: true)
                 self.error.accept($0)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func updateDiaryLikeStatus(id: Int, isLiked: Bool) {
+        var updatedList = diaryList.value
+        if let index = updatedList.firstIndex(where: { $0.id == id }) {
+            var diary = updatedList[index]
+            diary.isLiked = isLiked
+            diary.likeCount += isLiked ? 1 : -1
+            updatedList[index] = diary
+            diaryList.accept(updatedList)
+        }
     }
 }
