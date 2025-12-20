@@ -22,7 +22,7 @@ extension HeaderType {
             headers.add(.contentType("application/json"))
             return headers
         case .requireAccessToken:
-            guard let token = KeychainServiceImpl.shared.accessToken else {
+            guard let token = TokenManager.shared.accessToken else {
                 return HeaderType.noAccessToken.httpHeaders
             }
             
@@ -31,7 +31,7 @@ extension HeaderType {
             headers.add(.authorization(bearerToken: token))
             return headers
         case .formData:
-            guard let token = KeychainServiceImpl.shared.accessToken else {
+            guard let token = TokenManager.shared.accessToken else {
                 return HeaderType.noAccessToken.httpHeaders
             }
             

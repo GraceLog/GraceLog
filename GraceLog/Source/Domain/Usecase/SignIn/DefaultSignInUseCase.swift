@@ -27,8 +27,8 @@ final class DefaultSignInUseCase: SignInUseCase {
     func signIn(provider: SignInProvider, token: String) {
         authRepository.signIn(provider: provider, token: token)
             .subscribe(with: self, onSuccess: { owner, result in
-                KeychainServiceImpl.shared.accessToken = result.accessToken
-                KeychainServiceImpl.shared.refreshToken = result.refreshToken
+                TokenManager.shared.accessToken = result.accessToken
+                TokenManager.shared.refreshToken = result.refreshToken
                 owner.fetchUser()
             }, onFailure: { owner, error in
                 owner.isSuccessSignIn.accept(false)

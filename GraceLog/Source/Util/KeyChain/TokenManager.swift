@@ -1,5 +1,5 @@
 //
-//  KeychainService.swift
+//  TokenManager.swift
 //  GraceLog
 //
 //  Created by 이상준 on 5/2/25.
@@ -12,8 +12,8 @@ protocol KeychainService {
     var refreshToken: String? { get set }
 }
 
-final class KeychainServiceImpl: KeychainService {
-    static let shared = KeychainServiceImpl()
+final class TokenManager: KeychainService {
+    static let shared = TokenManager()
     private init() {}
     
     struct Key {
