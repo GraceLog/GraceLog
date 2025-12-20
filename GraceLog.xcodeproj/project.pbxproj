@@ -30,7 +30,6 @@
 		02DC298A2DDC29C000662D8A /* ProfileEditFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC29782DDC29C000662D8A /* ProfileEditFieldView.swift */; };
 		02DC298B2DDC29C000662D8A /* MyInfoButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC29732DDC29C000662D8A /* MyInfoButtonTableViewCell.swift */; };
 		02DC298C2DDC29C000662D8A /* MyInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DC296D2DDC29C000662D8A /* MyInfoDataSource.swift */; };
-		02F0DA512DDEAED900CD036A /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0DA502DDEAED900CD036A /* UserManager.swift */; };
 		3249611DF0E42C6E32EB88B9 /* Pods_GraceLogUseCaseTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 452DE6E3CB7FDB4552609BBD /* Pods_GraceLogUseCaseTests.framework */; };
 		70062C562E4AF8FA0096C1F7 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70062C552E4AF8FA0096C1F7 /* URL+Extension.swift */; };
 		702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702D2B572E02B1F900D5E71E /* UITextField+Extension.swift */; };
@@ -279,7 +278,6 @@
 		02DC29782DDC29C000662D8A /* ProfileEditFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditFieldView.swift; sourceTree = "<group>"; };
 		02DC297C2DDC29C000662D8A /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		02DC297D2DDC29C000662D8A /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
-		02F0DA502DDEAED900CD036A /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		05C627937CFDB4AFDF85BF86 /* Pods-GraceLog-GraceLogUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog-GraceLogUITests.release.xcconfig"; path = "Target Support Files/Pods-GraceLog-GraceLogUITests/Pods-GraceLog-GraceLogUITests.release.xcconfig"; sourceTree = "<group>"; };
 		0638CA878A08BDCEFDE7EC10 /* Pods_GraceLog_GraceLogUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLog_GraceLogUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		452DE6E3CB7FDB4552609BBD /* Pods_GraceLogUseCaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GraceLogUseCaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -495,6 +493,11 @@
 			path = Community;
 			sourceTree = "<group>";
 		};
+		70A34FC62EE96B4E009B0E77 /* UserDefaults */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
 		70C130522EE465B700D7BB2A /* Community */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Community;
@@ -708,8 +711,8 @@
 		02F0DA4F2DDEAECC00CD036A /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				70A34FC62EE96B4E009B0E77 /* UserDefaults */,
 				0220A0742DE7F57000D045F7 /* ImagePickerManager.swift */,
-				02F0DA502DDEAED900CD036A /* UserManager.swift */,
 				70A97C522E1F8D5800F08DF6 /* DateFormatterFactory.swift */,
 			);
 			path = Manager;
@@ -1608,6 +1611,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				7043DF0D2EC6306200FEF13F /* Community */,
+				70A34FC62EE96B4E009B0E77 /* UserDefaults */,
 				70C130522EE465B700D7BB2A /* Community */,
 				70CBC7302E7F18FD0037C613 /* Search */,
 				70CBC75C2E925FCB0037C613 /* View */,
@@ -2032,7 +2036,6 @@
 				DE069BA22D571485007C2066 /* HomeRecommendVideoTableViewCell.swift in Sources */,
 				DE4237502EBEE935006FAA7B /* DefaultDiaryRepository.swift in Sources */,
 				DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */,
-				02F0DA512DDEAED900CD036A /* UserManager.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DEACFE6A2E0F81DE00AD4222 /* HomeCommunityListSection.swift in Sources */,

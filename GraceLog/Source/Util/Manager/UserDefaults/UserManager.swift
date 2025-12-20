@@ -5,54 +5,26 @@
 //  Created by 이상준 on 5/22/25.
 //
 
-import Foundation
 import UIKit
-
-enum UserDefaultKey: String {
-    case id
-    case name
-    case nickname
-    case message
-    case email
-    case profileImageURL
-}
-
-@propertyWrapper
-struct UserDefault<T> {
-    let key: UserDefaultKey
-    let defaultValue: T
-    let storage: UserDefaults
-    
-    var wrappedValue: T {
-        get { UserDefaults.standard.object(forKey: self.key.rawValue) as? T ?? self.defaultValue }
-        set { UserDefaults.standard.set(newValue, forKey: self.key.rawValue) }
-    }
-    
-    init(key: UserDefaultKey, defaultValue: T, storage: UserDefaults = .standard) {
-        self.key = key
-        self.defaultValue = defaultValue
-        self.storage = storage
-    }
-}
 
 final class UserManager {
     static let shared = UserManager()
     
     private init() {}
     
-    @UserDefault(key: .id, defaultValue: nil, storage: .standard)
+    @UserDefaultsWrapper(key: .id, defaultValue: nil, storage: .standard)
     var id: Int?
     
-    @UserDefault(key: .name, defaultValue: "", storage: .standard)
+    @UserDefaultsWrapper(key: .name, defaultValue: "", storage: .standard)
     var name: String
     
-    @UserDefault(key: .nickname, defaultValue: "", storage: .standard)
+    @UserDefaultsWrapper(key: .nickname, defaultValue: "", storage: .standard)
     var nickname: String
     
-    @UserDefault(key: .message, defaultValue: "", storage: .standard)
+    @UserDefaultsWrapper(key: .message, defaultValue: "", storage: .standard)
     var message: String
     
-    @UserDefault(key: .email, defaultValue: "", storage: .standard)
+    @UserDefaultsWrapper(key: .email, defaultValue: "", storage: .standard)
     var email: String
     
     var profileImageURL: URL? {
