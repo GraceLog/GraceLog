@@ -27,13 +27,13 @@ final class GLInterceptor: RequestInterceptor {
             return
           }
         
-        guard let refreshToken = KeychainServiceImpl.shared.refreshToken else { return }
+        guard let refreshToken = TokenManager.shared.refreshToken else { return }
         let request = RefreshTokenRequestDTO(refreshToken: refreshToken)
         NetworkManager()
             .request(AuthAPI.refresh(request))
             .subscribe(onSuccess: { (result: SignInResponseDTO) in
-                KeychainServiceImpl.shared.accessToken = result.accessToken
-                KeychainServiceImpl.shared.refreshToken = result.refreshToken
+                TokenManager.shared.accessToken = result.accessToken
+                TokenManager.shared.refreshToken = result.refreshToken
                 
                 completion(.retry)
             }, onFailure: { error in
