@@ -53,7 +53,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
     private let bottomLineView = UIView().then {
         $0.backgroundColor = .themeColor
     }
-        
+    
     // MARK: - Intitializers
     
     override init(frame: CGRect) {
@@ -68,7 +68,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         let totalHeight = backgroundImageView.frame.height
         let labelHeight = editedDateLabel.frame.height
         let remaining = max((totalHeight - labelHeight - Metric.timelineSpacing * 2), 0) / 2
@@ -113,7 +113,7 @@ class DiaryTimelineCollectionViewCell: UICollectionViewCell {
         
         topLineContainer.addSubview(topLineView)
         bottomLineContainer.addSubview(bottomLineView)
-
+        
         [topLineView, bottomLineView].forEach {
             $0.snp.makeConstraints {
                 $0.directionalVerticalEdges.centerX.equalToSuperview()
@@ -146,8 +146,8 @@ extension DiaryTimelineCollectionViewCell {
         
         if let editedDate = editedDate {
             let exactDate = DateFormatterFactory.monthDaySlash.string(from: editedDate)
-            let relativeDate = editedDate.relativeTimeString()
-                    
+            let relativeDate = self.relativeTimeString(from: editedDate)
+            
             let relativeDateString = NSAttributedString(string: relativeDate + "\n", attributes: [.font: GLFont.regular14.font])
             let exactDateString = NSAttributedString(string: exactDate, attributes: [.font: GLFont.regular14.font])
             
@@ -157,6 +157,57 @@ extension DiaryTimelineCollectionViewCell {
         }
         
         contentView.layoutIfNeeded()
+    }
+    
+    private func relativeTimeString(from date: Date, to referenceDate: Date = Date()) -> String {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents(
+            [.year, .month, .weekOfMonth, .day],
+            from: date,
+            to: referenceDate
+        )
+        
+        guard let years = components.year,
+              let months = components.month,
+              let weeks = components.weekOfMonth,
+              let days = components.day else {
+            return ""
+        }
+        
+        if years == 0 && months == 0 && weeks == 0 && days == 0 {
+            return "오늘"
+        }
+        
+        if years == 0 && months == 0 && weeks == 0 && days == 1 {
+            return "어제"
+        }
+        
+        if years == 0 && months == 0 && weeks == 0 && days > 1 && days < 7 {
+            return "\(days)일 전"
+        }
+        
+        if days >= 7 && days <= 13 && months == 0 && years == 0 {
+            return "지난주"
+        }
+        
+        if days >= 14 && days < 28 && months == 0 && years == 0 {
+            let weeks = days / 7
+            return "\(weeks)주일 전"
+        }
+        
+        if years == 0 && months > 0 && months < 12 {
+            return "\(months)개월 전"
+        }
+        
+        if years == 1 {
+            return "작년"
+        }
+        
+        if years > 1 {
+            return "\(years)년 전"
+        }
+        
+        return ""
     }
 }
 
