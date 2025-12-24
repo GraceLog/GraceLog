@@ -35,7 +35,6 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
     override func setupStyles() {
         super.setupStyles()
         showNavigationBar = false
-        scrollView.delegate = self
     }
     
     override func setupLayouts() {
@@ -62,8 +61,10 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
     
     override func bind(reactor: HomeCommunityViewReactor) {
         super.bind(reactor: reactor)
+        
         bindCommunitySelectedCollectionView(reactor: reactor)
         bindCommunityDiaryTableView(reactor: reactor)
+        bindScrollViewPagination(reactor: reactor)
         
         communityDiaryListView.diaryTableView.rx
             .setDelegate(self)
@@ -202,6 +203,21 @@ extension HomeCommunityViewController {
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
             .disposed(by: disposeBag)
     }
+    
+    private func bindScrollViewPagination(reactor: HomeCommunityViewReactor) {
+        scrollView.rx.didEndDragging
+            .filter { [weak self] _ in
+                guard let self = self else { return false }
+                let offsetY = self.scrollView.contentOffset.y
+                let contentHeight = self.scrollView.contentSize.height
+                let height = self.scrollView.frame.height
+                
+                return offsetY > contentHeight - height
+            }
+            .map { _ in HomeCommunityViewReactor.Action.loadMoreDiaries }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
 }
 
 extension HomeCommunityViewController: UITableViewDelegate {
@@ -216,20 +232,5 @@ extension HomeCommunityViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
-    }
-}
-
-extension HomeCommunityViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard scrollView == self.scrollView else {return }
-        
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let height = scrollView.frame.height
-        
-        if offsetY > contentHeight - height {
-            guard let reactor = reactor else { return }
-            reactor.action.onNext(.loadMoreDiaries)
-        }
     }
 }

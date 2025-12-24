@@ -27,7 +27,6 @@ final class HomeCommunityViewReactor: Reactor {
     enum Mutation {
         case setCommunityList([Community])
         case setDiaryList([HomeCommunityDiarySection])
-        case setHasMoreDiaries(Bool)
         case setError(Error)
     }
     
@@ -37,7 +36,6 @@ final class HomeCommunityViewReactor: Reactor {
         @Pulse var isSuccessLikeDiary: Bool?
         @Pulse var isSuccessUnlikeResult: Bool?
         @Pulse var error: Error?
-        var hasMoreDiaries: Bool
     }
     
     init(
@@ -46,8 +44,7 @@ final class HomeCommunityViewReactor: Reactor {
         self.usecase = usecase
         self.initialState = State(
             communityList: [],
-            sectionedDiaryList: [],
-            hasMoreDiaries: true
+            sectionedDiaryList: []
         )
         
         usecase.fetchCommunityList()
@@ -59,10 +56,9 @@ extension HomeCommunityViewReactor {
         switch action {
         case .didSelectCommunity(let community):
             selectedCommunityId = community.id
+            
             usecase.fetchDiaryList(
-                communityId: community.id,
-                cursorId: nil,
-                isLoadMore: false
+                communityId: community.id
             )
         case .didTapDiaryDetail(let diaryID):
             coordinator?.showDiaryDetail(diaryId: diaryID)
@@ -77,22 +73,12 @@ extension HomeCommunityViewReactor {
                 usecase.likeDiary(id: diaryID)
             }
         case .loadMoreDiaries:
-            guard currentState.hasMoreDiaries else {
-                return .empty()
-            }
-            
-            let currentDiaries = usecase.diaryList.value
-            
-            guard let selectedCommunityId = selectedCommunityId,
-                  !currentDiaries.isEmpty,
-                  let lastCursorId = currentDiaries.last?.id else {
+            guard let selectedCommunityId = selectedCommunityId else {
                 return .empty()
             }
             
             usecase.fetchDiaryList(
-                communityId: selectedCommunityId,
-                cursorId: lastCursorId,
-                isLoadMore: true
+                communityId: selectedCommunityId
             )
         }
         return .empty()
@@ -104,8 +90,9 @@ extension HomeCommunityViewReactor {
         
         let fetchedDiaryList = usecase.diaryList
             .map { diaries -> [HomeCommunityDiarySection] in
-                let grouped = Dictionary(grouping: diaries) {
-                    DateFormatterFactory.dateWithShortKorean.string(from: $0.editedDate)
+                let validDiaries = diaries.filter { $0.editedDate != nil }
+                let grouped = Dictionary(grouping: validDiaries) {
+                    DateFormatterFactory.dateWithShortKorean.string(from: $0.editedDate!)
                 }
                 return grouped.map { key, value in
                     HomeCommunityDiarySection(date: key, items: value.map { CommunityDiaryItem(from: $0) })
@@ -113,16 +100,12 @@ extension HomeCommunityViewReactor {
             }
             .map { Mutation.setDiaryList($0) }
         
-        let hasMoreDiaries = usecase.hasMoreDiaries
-            .map { Mutation.setHasMoreDiaries($0) }
-        
         let errorMutation = usecase.error
             .map { Mutation.setError($0) }
         
         return Observable.merge(
             mutation,
             fetchedCommunityList,
-            hasMoreDiaries,
             fetchedDiaryList,
             errorMutation
         )
@@ -136,8 +119,6 @@ extension HomeCommunityViewReactor {
             newState.communityList = communityList
         case .setDiaryList(let diaryList):
             newState.sectionedDiaryList = diaryList
-        case .setHasMoreDiaries(let hasMore):
-            newState.hasMoreDiaries = hasMore
         case .setError(let error):
             newState.error = error
         }
