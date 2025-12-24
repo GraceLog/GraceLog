@@ -16,7 +16,7 @@ protocol HomeRepository {
         communityId: Int,
         cursorId: Int?,
         size: Int
-    ) -> Single<[CommunityDiaryPreview]>
+    ) -> Single<CommunityDiaryPreViewInfo>
     func likeToggle(postId: Int) -> Single<Bool>
     func fetchVideoList() -> Single<VideoInfo>
 }

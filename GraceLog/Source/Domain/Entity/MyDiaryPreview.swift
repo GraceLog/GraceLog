@@ -19,7 +19,7 @@ extension MyDiaryPreview {
     static var empty: MyDiaryPreview {
         MyDiaryPreview(
             id: 0,
-            editedDate: Date(),
+            editedDate: nil,
             title: "",
             content: "",
             imageURL: nil

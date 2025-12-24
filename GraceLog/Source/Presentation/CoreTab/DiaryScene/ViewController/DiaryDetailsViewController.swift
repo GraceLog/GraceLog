@@ -155,12 +155,12 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         let diaryObservable = reactor.pulse(\.$diary).share(replay: 1)
         
         diaryObservable
-            .compactMap { $0 }
-            .map { DateFormatterFactory.toYearMonthString(from: $0.createdAt) }
+            .compactMap { $0?.createdAt }
+            .map { DateFormatterFactory.toYearMonthString(from: $0) }
             .distinctUntilChanged()
-            .withLatestFrom(diaryObservable.compactMap { $0 })
-            .subscribe(onNext: { [weak self] diary in
-                self?.fetchDiaryList(for: diary.createdAt)
+            .withLatestFrom(diaryObservable.compactMap { $0?.createdAt })
+            .subscribe(onNext: { [weak self] createdAt in
+                self?.fetchDiaryList(for: createdAt)
             })
             .disposed(by: disposeBag)
         
@@ -168,8 +168,11 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, diary in
-                owner.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: diary.createdAt)
-                owner.calendarView.select(diary.createdAt)
+                
+                if let createdAt = diary.createdAt {
+                    owner.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: createdAt)
+                    owner.calendarView.select(createdAt)
+                }
                 
                 owner.diaryDetailsView.configure(
                     category: "오늘의 감사일기",
@@ -249,7 +252,8 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
         guard let diaryList = reactor?.currentState.dateRangeDiaries else { return 0 }
         
         let hasEvent = diaryList.contains(where: {
-            Calendar.current.isDate($0.createdAt, inSameDayAs: date)
+            guard let createdAt = $0.createdAt else { return false }
+            return Calendar.current.isDate(createdAt, inSameDayAs: date)
         })
         
         return hasEvent ? 1 : 0
@@ -260,7 +264,8 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
         guard let diaryList = reactor?.currentState.dateRangeDiaries else { return false }
         
         let hasEvent = diaryList.contains(where: {
-            Calendar.current.isDate($0.createdAt, inSameDayAs: date)
+            guard let createdAt = $0.createdAt else { return false }
+            return Calendar.current.isDate(createdAt, inSameDayAs: date)
         })
         
         return hasEvent
@@ -268,7 +273,8 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         if let selectedDiary = reactor?.currentState.dateRangeDiaries.first(where: {
-            Calendar.current.isDate($0.createdAt, inSameDayAs: date)
+            guard let createdAt = $0.createdAt else { return false }
+            return Calendar.current.isDate(createdAt, inSameDayAs: date)
         }) {
             reactor?.action.onNext(.fetchDiary(selectedDiary.diaryId))
         }

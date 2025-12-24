@@ -68,11 +68,11 @@ enum DateFormatterFactory {
     }
     
     /// 서버 응답의 날짜 문자열을 Date로 변환 (형식: "yyyy-MM-dd'T'HH:mm:ss")
-    static func dateFromServerString(_ dateString: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        return formatter.date(from: dateString)
+    static var dateTimeWithISO: DateFormatter {
+        DateFormatter().then {
+            $0.locale = Locale(identifier: "en_US_POSIX")
+            $0.timeZone = TimeZone(identifier: "Asia/Seoul")
+            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        }
     }
 }

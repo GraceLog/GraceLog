@@ -18,5 +18,5 @@ struct DiaryDetails {
     let isHideLike: Bool
     let isHideComment: Bool
     let commentCount: Int
-    let createdAt: Date
+    let createdAt: Date?
 }

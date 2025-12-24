@@ -11,13 +11,13 @@ import RxRelay
 
 protocol HomeCommunityUseCase {
     var diaryList: BehaviorRelay<[CommunityDiaryPreview]> { get }
+    var isLastPage: BehaviorRelay<Bool> { get }
     var communityList: BehaviorRelay<[Community]> { get }
     var likeDiaryResult: PublishRelay<Bool> { get }
     var unlikeDiaryResult: PublishRelay<Bool> { get }
-    var hasMoreDiaries: BehaviorRelay<Bool> { get }
     var error: PublishRelay<Error> { get }
     
-    func fetchDiaryList(communityId: Int, cursorId: Int?, isLoadMore: Bool)
+    func fetchDiaryList(communityId: Int)
     func fetchCommunityList()
     func likeDiary(id: Int)
     func unlikeDiary(id: Int)
