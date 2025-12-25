@@ -63,15 +63,7 @@ extension HomeCommunityViewReactor {
         case .didTapDiaryDetail(let diaryID):
             coordinator?.showDiaryDetail(diaryId: diaryID)
         case .didTapLikeButton(let diaryID):
-            guard let selectedDiary = usecase.diaryList.value.first(where: { $0.id == diaryID }) else {
-                return .empty()
-            }
-            
-            if selectedDiary.isLiked {
-                usecase.unlikeDiary(id: diaryID)
-            } else {
-                usecase.likeDiary(id: diaryID)
-            }
+            usecase.toggleDiaryLike(id: diaryID)
         case .loadMoreDiaries:
             guard let selectedCommunityId = selectedCommunityId else {
                 return .empty()
