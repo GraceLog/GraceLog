@@ -13,8 +13,7 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     var diaryList = BehaviorRelay<[CommunityDiaryPreview]>(value: [])
     var isLastPage = BehaviorRelay<Bool>(value: false)
     var communityList = BehaviorRelay<[Community]>(value: [])
-    var likeDiaryResult = PublishRelay<Bool>()
-    var unlikeDiaryResult = PublishRelay<Bool>()
+    var toggleDiaryResult = PublishRelay<Bool>()
     var error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
@@ -72,27 +71,14 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
             .disposed(by: disposeBag)
     }
     
-    func likeDiary(id: Int) {
-        updateDiaryLikeStatus(id: id, isLiked: true)
+    func toggleDiaryLike(id: Int) {
+        updateDiaryLikeStatusByToggle(id: id)
         
         homeRepository.likeToggle(postId: id)
-            .subscribe(onSuccess: {
-                self.likeDiaryResult.accept($0)
+            .subscribe(onSuccess: { _ in
+                self.toggleDiaryResult.accept(true)
             }, onFailure: {
-                self.updateDiaryLikeStatus(id: id, isLiked: false)
-                self.error.accept($0)
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func unlikeDiary(id: Int) {
-        self.updateDiaryLikeStatus(id: id, isLiked: false)
-        
-        homeRepository.likeToggle(postId: id)
-            .subscribe(onSuccess: {
-                self.unlikeDiaryResult.accept($0)
-            }, onFailure: {
-                self.updateDiaryLikeStatus(id: id, isLiked: true)
+                self.updateDiaryLikeStatusByToggle(id: id)
                 self.error.accept($0)
             })
             .disposed(by: disposeBag)
@@ -107,12 +93,15 @@ extension DefaultHomeCommunityUseCase {
         currentCommunityId = communityId
     }
     
-    private func updateDiaryLikeStatus(id: Int, isLiked: Bool) {
+    private func updateDiaryLikeStatusByToggle(id: Int) {
         var updatedList = diaryList.value
         if let index = updatedList.firstIndex(where: { $0.id == id }) {
             var diary = updatedList[index]
-            diary.isLiked = isLiked
-            diary.likeCount += isLiked ? 1 : -1
+            let currentStatus = diary.isLiked
+            
+            diary.isLiked = !currentStatus
+            diary.likeCount += diary.isLiked ? 1 : -1
+            
             updatedList[index] = diary
             diaryList.accept(updatedList)
         }
