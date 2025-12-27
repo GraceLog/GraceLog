@@ -21,17 +21,12 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     
     private let pageSize = 10
     private var currentCursorId: Int?
-    private var currentCommunityId: Int?
     
     init(homeRepository: HomeRepository) {
         self.homeRepository = homeRepository
     }
     
     func fetchDiaryList(communityId: Int) {
-        if currentCommunityId != communityId {
-            resetDiaryListWithPagination(communityId: communityId)
-        }
-        
         guard !isLastPage.value else { return }
         
         let isFirstPage = currentCursorId == nil
@@ -85,11 +80,10 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
 }
 
 extension DefaultHomeCommunityUseCase {
-    private func resetDiaryListWithPagination(communityId: Int) {
+    func resetDiaryListWithPagination() {
         diaryList.accept([])
         isLastPage.accept(false)
         currentCursorId = nil
-        currentCommunityId = communityId
     }
     
     private func updateDiaryLikeStatus(id: Int) {

@@ -19,4 +19,5 @@ protocol HomeCommunityUseCase {
     func fetchDiaryList(communityId: Int)
     func fetchCommunityList()
     func toggleDiaryLike(id: Int)
+    func resetDiaryListWithPagination()
 }

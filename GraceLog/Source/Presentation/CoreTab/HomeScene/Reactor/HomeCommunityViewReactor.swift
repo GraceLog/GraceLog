@@ -55,8 +55,7 @@ extension HomeCommunityViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .didSelectCommunity(let community):
-            selectedCommunityId = community.id
-            
+            usecase.resetDiaryListWithPagination()
             usecase.fetchDiaryList(
                 communityId: community.id
             )
