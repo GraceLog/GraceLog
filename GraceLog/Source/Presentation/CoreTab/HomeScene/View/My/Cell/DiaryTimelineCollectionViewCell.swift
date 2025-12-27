@@ -159,6 +159,7 @@ extension DiaryTimelineCollectionViewCell {
         contentView.layoutIfNeeded()
     }
     
+    // TODO: Util 내에서 재사용 가능한 메서드로 수정
     private func relativeTimeString(from date: Date, to referenceDate: Date = Date()) -> String {
         let calendar = Calendar.current
         let components = calendar.dateComponents(
