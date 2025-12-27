@@ -29,7 +29,7 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     
     func fetchDiaryList(communityId: Int) {
         if currentCommunityId != communityId {
-            resetDiaryList(communityId: communityId)
+            resetDiaryListWithPagination(communityId: communityId)
         }
         
         guard !isLastPage.value else { return }
@@ -72,13 +72,12 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     }
     
     func toggleDiaryLike(id: Int) {
-        updateDiaryLikeStatusByToggle(id: id)
-        
         homeRepository.likeToggle(postId: id)
             .subscribe(onSuccess: { _ in
                 self.toggleDiaryResult.accept(true)
+                self.updateDiaryLikeStatus(id: id)
             }, onFailure: {
-                self.updateDiaryLikeStatusByToggle(id: id)
+                self.toggleDiaryResult.accept(false)
                 self.error.accept($0)
             })
             .disposed(by: disposeBag)
@@ -86,20 +85,19 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
 }
 
 extension DefaultHomeCommunityUseCase {
-    private func resetDiaryList(communityId: Int) {
+    private func resetDiaryListWithPagination(communityId: Int) {
         diaryList.accept([])
         isLastPage.accept(false)
         currentCursorId = nil
         currentCommunityId = communityId
     }
     
-    private func updateDiaryLikeStatusByToggle(id: Int) {
+    private func updateDiaryLikeStatus(id: Int) {
         var updatedList = diaryList.value
         if let index = updatedList.firstIndex(where: { $0.id == id }) {
             var diary = updatedList[index]
-            let currentStatus = diary.isLiked
             
-            diary.isLiked = !currentStatus
+            diary.isLiked.toggle()
             diary.likeCount += diary.isLiked ? 1 : -1
             
             updatedList[index] = diary
