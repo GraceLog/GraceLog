@@ -11,29 +11,49 @@ import RxRelay
 
 final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     var diaryList = BehaviorRelay<[CommunityDiaryPreview]>(value: [])
+    var isLastPage = BehaviorRelay<Bool>(value: false)
     var communityList = BehaviorRelay<[Community]>(value: [])
-    var likeDiaryResult = PublishRelay<Bool>()
-    var unlikeDiaryResult = PublishRelay<Bool>()
+    var toggleDiaryResult = PublishRelay<Bool>()
     var error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
-    
     private let homeRepository: HomeRepository
+    
+    private let pageSize = 10
+    private var currentCursorId: Int?
     
     init(homeRepository: HomeRepository) {
         self.homeRepository = homeRepository
     }
     
-    func fetchDiaryList(communityId: Int, cursorId: Int?) {
-        diaryList.accept([])
+    func fetchDiaryList(communityId: Int) {
+        guard !isLastPage.value else { return }
         
-        homeRepository.fetchHomeCommunityDiaryList(communityId: communityId, cursorId: cursorId, size: 10)
-            .subscribe(onSuccess: {
-                self.diaryList.accept($0)
-            }, onFailure: {
-                self.error.accept($0)
-            })
-            .disposed(by: disposeBag)
+        let isFirstPage = currentCursorId == nil
+        
+        homeRepository.fetchHomeCommunityDiaryList(
+            communityId: communityId,
+            cursorId: currentCursorId,
+            size: pageSize
+        )
+        .subscribe(onSuccess: {
+            self.isLastPage.accept($0.isLastPage)
+            
+            if !$0.isLastPage {
+                self.currentCursorId = $0.diaryList.last?.id
+            }
+            
+            if isFirstPage {
+                self.diaryList.accept($0.diaryList)
+            } else {
+                var currentList = self.diaryList.value
+                currentList.append(contentsOf: $0.diaryList)
+                self.diaryList.accept(currentList)
+            }
+        }, onFailure: { [weak self] error in
+            self?.error.accept(error)
+        })
+        .disposed(by: disposeBag)
     }
     
     func fetchCommunityList() {
@@ -46,23 +66,36 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
             .disposed(by: disposeBag)
     }
     
-    func likeDiary(id: Int) {
+    func toggleDiaryLike(id: Int) {
         homeRepository.likeToggle(postId: id)
-            .subscribe(onSuccess: {
-                self.likeDiaryResult.accept($0)
+            .subscribe(onSuccess: { _ in
+                self.toggleDiaryResult.accept(true)
+                self.updateDiaryLikeStatus(id: id)
             }, onFailure: {
+                self.toggleDiaryResult.accept(false)
                 self.error.accept($0)
             })
             .disposed(by: disposeBag)
     }
+}
+
+extension DefaultHomeCommunityUseCase {
+    func resetDiaryListWithPagination() {
+        diaryList.accept([])
+        isLastPage.accept(false)
+        currentCursorId = nil
+    }
     
-    func unlikeDiary(id: Int) {
-        homeRepository.likeToggle(postId: id)
-            .subscribe(onSuccess: {
-                self.unlikeDiaryResult.accept($0)
-            }, onFailure: {
-                self.error.accept($0)
-            })
-            .disposed(by: disposeBag)
+    private func updateDiaryLikeStatus(id: Int) {
+        var updatedList = diaryList.value
+        if let index = updatedList.firstIndex(where: { $0.id == id }) {
+            var diary = updatedList[index]
+            
+            diary.isLiked.toggle()
+            diary.likeCount += diary.isLiked ? 1 : -1
+            
+            updatedList[index] = diary
+            diaryList.accept(updatedList)
+        }
     }
 }

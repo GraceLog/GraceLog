@@ -34,7 +34,7 @@ final class DefaultHomeRepository: HomeRepository {
                 return responseDTO.map { diaryResponseDTO in
                     return MyDiaryPreview(
                         id: diaryResponseDTO.postId,
-                        editedDate: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.updatedAt) ?? Date(),
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
                         imageURL: diaryResponseDTO.postImages.first?.url
@@ -60,21 +60,21 @@ final class DefaultHomeRepository: HomeRepository {
         communityId: Int,
         cursorId: Int?,
         size: Int
-    ) -> Single<[CommunityDiaryPreview]> {
-        let reqeust = CommunityDiaryListRequestDTO(
+    ) -> Single<CommunityDiaryPreViewInfo> {
+        let request = CommunityDiaryListRequestDTO(
             communityId: communityId,
             cursorId: cursorId,
             size: size
         )
         
-        return network.request(DiaryAPI.fetchCommunityDiaryList(reqeust))
+        return network.request(DiaryAPI.fetchCommunityDiaryList(request))
             .map { (responseDTO: DiaryPagingResponseDTO) in
-                return responseDTO.content.map { diaryResponseDTO in
+                let diaryList = responseDTO.content.map { diaryResponseDTO in
                     return CommunityDiaryPreview(
                         id: diaryResponseDTO.postId,
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
-                        editedDate: DateFormatterFactory.dateFromISO8601String(diaryResponseDTO.updatedAt) ?? Date(),
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
                         isLiked: diaryResponseDTO.likedByMe,
                         likeCount: diaryResponseDTO.likeCount,
                         commentCount: diaryResponseDTO.commentCount,
@@ -84,6 +84,11 @@ final class DefaultHomeRepository: HomeRepository {
                         isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId
                     )
                 }
+                
+                return CommunityDiaryPreViewInfo(
+                    diaryList: diaryList,
+                    isLastPage: responseDTO.last
+                )
             }
     }
     
@@ -91,8 +96,8 @@ final class DefaultHomeRepository: HomeRepository {
         let request = LikeDiaryRequestDTO(postId: postId)
         
         return network.request(LikeAPI.likeToggle(request))
-            .map { (responseDTO: GLResponseDTO<Bool>) in
-                return responseDTO.data ?? false
+            .map { (isLiked: Bool) in
+                return isLiked
             }
     }
     

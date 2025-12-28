@@ -58,14 +58,24 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
             $0.bottom.lessThanOrEqualToSuperview()
         }
     }
-     
+    
     override func bind(reactor: HomeCommunityViewReactor) {
         super.bind(reactor: reactor)
+        
         bindCommunitySelectedCollectionView(reactor: reactor)
         bindCommunityDiaryTableView(reactor: reactor)
+        bindScrollViewPagination(reactor: reactor)
         
         communityDiaryListView.diaryTableView.rx
             .setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$error)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, error in
+                owner.view.makeToast(error.localizedDescription)
+            }
             .disposed(by: disposeBag)
     }
 }
@@ -130,7 +140,7 @@ extension HomeCommunityViewController {
                     content: item.content,
                     likeCount: item.likeCount,
                     commentCount: item.commentCount,
-                    isLiked: item.isLiked, 
+                    isLiked: item.isLiked,
                     isCurrentUser: item.isCurrentUser,
                     profileImageURL: item.profileImageURL,
                     cardImageURL: item.cardImageURL
@@ -159,12 +169,14 @@ extension HomeCommunityViewController {
                             return
                         }
                         
-                        // TODO: - 선택한 감사일기 상세로 이동
-                        print("선택된 감사일기 정보: \(selectedItem)\n선택된 유저 인덱스: \(indexPath)")
+                        reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
                     })
                     .disposed(by: cell.disposeBag)
                 
                 cell.likeButton.rx.tap
+                    .do(onNext: { _ in
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    })
                     .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
                     .map { HomeCommunityViewReactor.Action.didTapLikeButton(item.id)}
                     .bind(to: reactor.action)
@@ -185,33 +197,25 @@ extension HomeCommunityViewController {
                 return cell
             }
         )
+        
         reactor.pulse(\.$sectionedDiaryList)
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
             .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$isSuccessLikeDiary)
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 좋아요 성공여부에 따른 로직 구현
-                if isSuccess {
-                    print("좋아요 성공!")
-                } else {
-                    print("좋아요 실패!")
-                }
+    }
+    
+    private func bindScrollViewPagination(reactor: HomeCommunityViewReactor) {
+        scrollView.rx.didEndDragging
+            .filter { [weak self] _ in
+                guard let self = self else { return false }
+                let offsetY = self.scrollView.contentOffset.y
+                let contentHeight = self.scrollView.contentSize.height
+                let height = self.scrollView.frame.height
+                
+                return offsetY > contentHeight - height
             }
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$isSuccessUnlikeResult)
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 좋아요 성공여부에 따른 로직 구현
-                if isSuccess {
-                    print("좋아요 해제 성공!")
-                } else {
-                    print("좋아요 해제 실패!")
-                }
-            }
+            .map { _ in HomeCommunityViewReactor.Action.loadMoreDiaries }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
 }

@@ -40,6 +40,7 @@ enum DateFormatterFactory {
     }
     
     /// 년도, 월을 통해 해당 년도 월의 첫번째, 마지막 날짜를 반환
+    // TODO: 다른 DateFormatterFactory 프로퍼티와 비교했을 때 이 클래스에 존재하기엔 모호 (리팩토링 필요)
     static func getMonthDateRange(year: Int, month: Int) -> (startDate: String, endDate: String) {
         let calendar = Calendar.current
         let dateFormatter = DateFormatter()
@@ -67,10 +68,12 @@ enum DateFormatterFactory {
         )
     }
     
-    /// ISO8601 형식의 문자열을 Date로 변환
-    static func dateFromISO8601String(_ dateString: String) -> Date? {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        return formatter.date(from: dateString)
+    /// 서버 응답의 날짜 문자열을 Date로 변환 (형식: "yyyy-MM-dd'T'HH:mm:ss")
+    static var dateTimeWithISO: DateFormatter {
+        formatter.then {
+            $0.locale = Locale(identifier: "en_US_POSIX")
+            $0.timeZone = TimeZone(identifier: "Asia/Seoul")
+            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        }
     }
 }

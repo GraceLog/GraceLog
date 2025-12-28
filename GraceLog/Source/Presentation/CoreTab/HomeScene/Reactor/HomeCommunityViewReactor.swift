@@ -15,16 +15,19 @@ final class HomeCommunityViewReactor: Reactor {
     
     var initialState: State
     
+    private var selectedCommunityId: Int? = nil
+    
     enum Action {
         case didSelectCommunity(Community)
+        case didTapDiaryDetail(Int)
         case didTapLikeButton(Int)
+        case loadMoreDiaries
     }
     
     enum Mutation {
         case setCommunityList([Community])
         case setDiaryList([HomeCommunityDiarySection])
-        case setDiaryLikeResult(isSuccess: Bool)
-        case setDiaryUnlikeResult(isSuccess: Bool)
+        case setError(Error)
     }
     
     struct State {
@@ -32,6 +35,7 @@ final class HomeCommunityViewReactor: Reactor {
         @Pulse var sectionedDiaryList: [HomeCommunityDiarySection]
         @Pulse var isSuccessLikeDiary: Bool?
         @Pulse var isSuccessUnlikeResult: Bool?
+        @Pulse var error: Error?
     }
     
     init(
@@ -51,17 +55,22 @@ extension HomeCommunityViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .didSelectCommunity(let community):
-            usecase.fetchDiaryList(communityId: community.id, cursorId: nil)
+            usecase.resetDiaryListWithPagination()
+            usecase.fetchDiaryList(
+                communityId: community.id
+            )
+        case .didTapDiaryDetail(let diaryID):
+            coordinator?.showDiaryDetail(diaryId: diaryID)
         case .didTapLikeButton(let diaryID):
-            guard let selectedDiary = usecase.diaryList.value.first(where: { $0.id == diaryID }) else {
+            usecase.toggleDiaryLike(id: diaryID)
+        case .loadMoreDiaries:
+            guard let selectedCommunityId = selectedCommunityId else {
                 return .empty()
             }
             
-            if selectedDiary.isLiked {
-                usecase.unlikeDiary(id: diaryID)
-            } else {
-                usecase.likeDiary(id: diaryID)
-            }
+            usecase.fetchDiaryList(
+                communityId: selectedCommunityId
+            )
         }
         return .empty()
     }
@@ -72,8 +81,9 @@ extension HomeCommunityViewReactor {
         
         let fetchedDiaryList = usecase.diaryList
             .map { diaries -> [HomeCommunityDiarySection] in
-                let grouped = Dictionary(grouping: diaries) {
-                    DateFormatterFactory.dateWithShortKorean.string(from: $0.editedDate)
+                let validDiaries = diaries.filter { $0.editedDate != nil }
+                let grouped = Dictionary(grouping: validDiaries) {
+                    DateFormatterFactory.dateWithShortKorean.string(from: $0.editedDate!)
                 }
                 return grouped.map { key, value in
                     HomeCommunityDiarySection(date: key, items: value.map { CommunityDiaryItem(from: $0) })
@@ -81,13 +91,15 @@ extension HomeCommunityViewReactor {
             }
             .map { Mutation.setDiaryList($0) }
         
-        let likeResult = usecase.likeDiaryResult
-            .map { result in Mutation.setDiaryLikeResult(isSuccess: result) }
+        let errorMutation = usecase.error
+            .map { Mutation.setError($0) }
         
-        let unlikeResult = usecase.unlikeDiaryResult
-            .map { result in Mutation.setDiaryUnlikeResult(isSuccess: result) }
-        
-        return Observable.merge(mutation, fetchedCommunityList, fetchedDiaryList, likeResult, unlikeResult)
+        return Observable.merge(
+            mutation,
+            fetchedCommunityList,
+            fetchedDiaryList,
+            errorMutation
+        )
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -98,10 +110,8 @@ extension HomeCommunityViewReactor {
             newState.communityList = communityList
         case .setDiaryList(let diaryList):
             newState.sectionedDiaryList = diaryList
-        case .setDiaryLikeResult(let isSuccess):
-            newState.isSuccessLikeDiary = isSuccess
-        case .setDiaryUnlikeResult(let isSuccess):
-            newState.isSuccessUnlikeResult = isSuccess
+        case .setError(let error):
+            newState.error = error
         }
         return newState
     }
