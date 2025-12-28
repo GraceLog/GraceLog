@@ -34,4 +34,10 @@ extension SearchCoordinator {
     func showCommunityViewController(id: Int) {
         print("선택한 커뮤니티 아이디: \(id)")
     }
+    
+    func showCreateCommunityViewController() {
+        let coordinator = CreateCommunityCoordinator(navigationController: self.navigationController)
+        childCoordinators.append(coordinator)
+        coordinator.start()
+    }
 }

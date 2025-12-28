@@ -31,6 +31,7 @@ final class SearchViewReactor: Reactor {
         case didTapProfile(IndexPath)
         case didTapCommunity(IndexPath)
         case didTapChattingRoom(IndexPath)
+        case didTapAddCommunityButton
     }
     
     enum Mutation {
@@ -68,6 +69,8 @@ final class SearchViewReactor: Reactor {
         case let .didTapChattingRoom(indexPath):
             let id = currentState.rooms[indexPath.row].id
             coordinator.showCommunityChattingViewController(id: id)
+        case .didTapAddCommunityButton:
+            coordinator.showCreateCommunityViewController()
         }
         return .empty()
     }

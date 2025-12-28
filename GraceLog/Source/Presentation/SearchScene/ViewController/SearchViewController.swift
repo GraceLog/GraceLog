@@ -48,10 +48,16 @@ final class SearchViewController: GraceLogBaseViewController<SearchViewReactor> 
         $0.contentInset = .init(top: 20, left: .zero, bottom: .zero, right: .zero)
     }
     
+    private let addCommunityButton = UIButton().then {
+        $0.tintColor = GLColor.iconAccent.color
+        $0.setImage(.plus, for: .normal)
+    }
+    
     override func setupStyles() {
         super.setupStyles()
         view.backgroundColor = GLColor.backgroundSub.color
         navigationBar.setupTitleLabel(text: "공동체")
+        navigationBar.addRightItem(addCommunityButton)
     }
     
     override func setupLayouts() {
@@ -111,6 +117,11 @@ final class SearchViewController: GraceLogBaseViewController<SearchViewReactor> 
                     break
                 }
             }
+            .disposed(by: disposeBag)
+        
+        addCommunityButton.rx.tap
+            .map { SearchViewReactor.Action.didTapAddCommunityButton }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
