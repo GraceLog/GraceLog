@@ -39,9 +39,15 @@ final class CreateCommunityViewController: GraceLogBaseViewController<CreateComm
         $0.clipsToBounds = true
     }
     
+    private let backButton = UIButton().then {
+        $0.setImage(UIImage(named: "chevron_left_theme"), for: .normal)
+    }
+    
     override func setupStyles() {
         super.setupStyles()
         navigationBar.setupTitleLabel(text: "공동체")
+        navigationBar.addLeftItem(backButton)
+        view.backgroundColor = GLColor.backgroundSub.color
     }
     
     override func setupLayouts() {
@@ -89,6 +95,11 @@ final class CreateCommunityViewController: GraceLogBaseViewController<CreateComm
         createButton.rx.tap
             .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
             .map { CreateCommunityReactor.Action.didTapCreateButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .map { CreateCommunityReactor.Action.didTapBackButton }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         

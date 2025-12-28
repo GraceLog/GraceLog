@@ -10,13 +10,15 @@ import ReactorKit
 final class CreateCommunityReactor: Reactor {
     let initialState: State
     private let usecase: CreateCommunityUseCase
+    private let coordinator: CreateCommunityCoordinator
     
     private var maxCommunityImageCount: Int {
         usecase.maxImageCount
     }
     
-    init(usecase: CreateCommunityUseCase) {
+    init(usecase: CreateCommunityUseCase, coordinator: CreateCommunityCoordinator) {
         self.usecase = usecase
+        self.coordinator = coordinator
         self.initialState = State(
             images: [],
             editedTitle: "",
@@ -29,6 +31,7 @@ final class CreateCommunityReactor: Reactor {
         case deleteImage(at: Int)
         case editTitle(String)
         case didTapCreateButton
+        case didTapBackButton
     }
     
     enum Mutation {
@@ -72,6 +75,9 @@ final class CreateCommunityReactor: Reactor {
                 title: currentState.editedTitle,
                 images: currentState.images
             )
+            return .empty()
+        case .didTapBackButton:
+            coordinator.popViewController()
             return .empty()
         }
     }
