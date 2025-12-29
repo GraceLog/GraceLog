@@ -19,7 +19,7 @@ final class CommunityGroupReactor: Reactor {
     }
     
     enum Action {
-
+        case didTapBackButton
     }
     
     enum Mutation {
@@ -31,6 +31,10 @@ final class CommunityGroupReactor: Reactor {
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .didTapBackButton:
+            coordinator.popViewController()
+        }
         return .empty()
     }
     
