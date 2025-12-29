@@ -81,6 +81,7 @@
 		70CBC73B2E8427400037C613 /* ProfileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC73A2E8427400037C613 /* ProfileItem.swift */; };
 		70CBC7602E92602A0037C613 /* CommunityRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC75F2E92602A0037C613 /* CommunityRoom.swift */; };
 		70D73E3A2F003CEA0045D531 /* CreateCommunityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D73E392F003CEA0045D531 /* CreateCommunityCoordinator.swift */; };
+		70D73E8C2F0278620045D531 /* CommunityGroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D73E8B2F0278620045D531 /* CommunityGroupCoordinator.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		88C9F4B2C850546A45083619 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0638CA878A08BDCEFDE7EC10 /* Pods_GraceLog_GraceLogUITests.framework */; };
 		DE042C3D2E93FCB30089E20F /* DiaryDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C3C2E93FCB30089E20F /* DiaryDetailsUseCase.swift */; };
@@ -334,6 +335,7 @@
 		70CBC73A2E8427400037C613 /* ProfileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileItem.swift; sourceTree = "<group>"; };
 		70CBC75F2E92602A0037C613 /* CommunityRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRoom.swift; sourceTree = "<group>"; };
 		70D73E392F003CEA0045D531 /* CreateCommunityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityCoordinator.swift; sourceTree = "<group>"; };
+		70D73E8B2F0278620045D531 /* CommunityGroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGroupCoordinator.swift; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A5653D885A3CC815C05106B /* Pods-GraceLogUseCaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9EDDF4DA9FBD1D0DC053E39F /* Pods-GraceLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1361,6 +1363,7 @@
 			children = (
 				DE3BFCE32D059E970076426D /* SearchCoordinator.swift */,
 				70D73E392F003CEA0045D531 /* CreateCommunityCoordinator.swift */,
+				70D73E8B2F0278620045D531 /* CommunityGroupCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1930,6 +1933,7 @@
 				DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DEACFE682E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift in Sources */,
+				70D73E8C2F0278620045D531 /* CommunityGroupCoordinator.swift in Sources */,
 				DE23873B2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift in Sources */,
 				709CBB6D2E2B8CA100F68457 /* CommentToggleButton.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
