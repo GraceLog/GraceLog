@@ -8,5 +8,9 @@
 import Foundation
 
 final class DefaultCommunityGroupUseCase: CommunityGroupUseCase {
+    private let id: Int
     
+    init(id: Int) {
+        self.id = id
+    }
 }
