@@ -11,12 +11,16 @@ import RxCocoa
 
 final class DiaryViewReactor: Reactor {
     private let usecase: DiaryCreatableUseCase
+    var coordinator: DiaryCoordinator?
     
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
     private var selectedShareOptions: Set<Community> = []
     private var diaryTitle = ""
     private var diaryContent = ""
+    private var reserveTime: Date? = nil
+    private var isHideLike: Bool = false
+    private var isHideComment: Bool = false
     
     var initialState: State
     
@@ -25,6 +29,7 @@ final class DiaryViewReactor: Reactor {
         case deleteImage(at: Int)
         case updateTitle(String)
         case updateContent(String)
+        case didTapSettings
         case didTapShareButton
         case didSelectKeyword(DiaryKeywordState)
         case didSelectShareOption(DiaryShareState)
@@ -45,20 +50,9 @@ final class DiaryViewReactor: Reactor {
     init(usecase: DiaryCreatableUseCase) {
         self.usecase = usecase
         self.initialState = State(
-            images: [], 
+            images: [],
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
-            shareStates: [Community(id: 1, name: "파이어폭스",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/firefox/200")),
-                          Community(id: 2, name: "스위프트 스터디",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/swift/200")),
-                          Community(id: 3, name: "iOS 개발 크루",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/ios/200")),
-                          Community(id: 4, name: "알고리즘 클럽",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/algorithm/200")),
-                          Community(id: 5, name: "UI/UX 연구회",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/design/200")),
-                          Community(id: 6, name: "네트워킹 동아리",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/networking/200")),].map { DiaryShareState(diaryOption: $0, isSelected: false) }
+            shareStates: []
         )
     }
 }
@@ -87,12 +81,22 @@ extension DiaryViewReactor {
             diaryTitle = title
         case .updateContent(let content):
             diaryContent = content
+        case .didTapSettings:
+            coordinator?.showDiarySettings { [weak self] reserveTime, isHideLike, isHideComment in
+                self?.reserveTime = reserveTime
+                self?.isHideLike = isHideLike
+                self?.isHideComment = isHideComment
+            }
         case .didTapShareButton:
             usecase.createDiary(
+                images: currentState.images,
                 title: diaryTitle,
                 content: diaryContent,
                 selectedKeywords: Array(selectedKeywords),
-                shareOptions: Array(selectedShareOptions)
+                shareOptions: Array(selectedShareOptions),
+                reserveTime: reserveTime,
+                isHideLike: isHideLike,
+                isHideComment: isHideComment
             )
         case .didSelectKeyword(let state):
             if state.isSelected {

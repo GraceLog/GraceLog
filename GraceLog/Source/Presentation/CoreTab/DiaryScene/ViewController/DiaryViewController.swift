@@ -55,7 +55,6 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
     override func setupStyles() {
         super.setupStyles()
         view.backgroundColor = .white
-        diaryKeywordView.keywordCollectionView.delegate = self
         navigationBar.setupTitleLabel(text: "일기 쓰기")
     }
     
@@ -122,7 +121,7 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
                     newImages.append(photo.image)
                 }
             }
-
+            
             self?.reactor?.action.onNext(.updateImages(newImages))
         }
         
@@ -217,7 +216,7 @@ extension DiaryViewController {
                         }
                     }
                     .disposed(by: cell.disposeBag)
-
+                
                 return cell
             }
         )
@@ -227,7 +226,7 @@ extension DiaryViewController {
                 let items = images.map { DiaryImageItem.image($0) }
                 return [DiaryImageSection.imageSection(items: items)]
             }.share(replay: 1)
-
+        
         diaryImageSectionState
             .compactMap { $0.first?.items.count }
             .subscribe(with: self) { owner, imageCount in
@@ -239,8 +238,12 @@ extension DiaryViewController {
             .bind(to: diaryImageListView.diaryImageCollectionView.rx.items(dataSource: imageDataSource))
             .disposed(by: disposeBag)
     }
-
+    
     private func bindDiaryKeywordCollectionView(reactor: DiaryViewReactor) {
+        diaryKeywordView.keywordCollectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+        
         reactor.pulse(\.$keywords)
             .asDriver(onErrorJustReturn: [])
             .drive(diaryKeywordView.keywordCollectionView.rx.items(
@@ -257,7 +260,7 @@ extension DiaryViewController {
             collectionView.rx.itemSelected.asObservable(),
             collectionView.rx.itemDeselected.asObservable()
         )
-
+        
         let selectedKeywordModels = Observable.merge(
             collectionView.rx.modelSelected(DiaryKeywordState.self).asObservable(),
             collectionView.rx.modelDeselected(DiaryKeywordState.self).asObservable()
@@ -267,6 +270,12 @@ extension DiaryViewController {
             .subscribe(with: self) { owner, state in
                 let (indexPath, model) = state
                 guard let cell = collectionView.cellForItem(at: indexPath) as? DiaryKeywordCollectionViewCell else {
+                    return
+                }
+                
+                let selectedCount = collectionView.indexPathsForSelectedItems?.count ?? 0
+                if selectedCount > 3 {
+                    cell.isSelected = false
                     return
                 }
                 
@@ -299,7 +308,7 @@ extension DiaryViewController {
             .drive(with: self) { owner, selectedMenu in
                 switch selectedMenu {
                 case .setting:
-                    print("추가 설정화면 이동")
+                    reactor.action.onNext(.didTapSettings)
                 }
             }
             .disposed(by: disposeBag)

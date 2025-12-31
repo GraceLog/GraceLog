@@ -11,15 +11,15 @@ import RxSwift
 protocol DiaryRepository {
     func fetchDiary(diaryId: Int) -> Single<DiaryDetails>
     func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]>
-    func postDiary(
+    func createDiary(
+        images: [Data],
         title: String,
         description: String,
-        keywordList: [String],
-        selectedCommunityIdList: [Int],
-        reserveTime: Date,
+        keywordList: [String]?,
+        selectedCommunityIdList: [Int]?,
+        reserveTime: Date?,
         isHideLike: Bool,
-        isHideComment: Bool,
-        images: [Data]
+        isHideComment: Bool
     ) -> Single<Void>
     
     func likeToggle(postId: Int) -> Single<Bool>

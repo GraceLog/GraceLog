@@ -73,7 +73,7 @@ final class GLNavigationBar: UIView {
     
     func setupTitleLabel(
         text: String? = nil,
-        color: UIColor = .black,
+        color: UIColor = GLColor.textBasic.color,
         font: UIFont = GLFont.bold16.font
     ) {
         titleLabel.text = text

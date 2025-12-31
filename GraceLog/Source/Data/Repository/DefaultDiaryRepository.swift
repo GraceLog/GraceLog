@@ -72,17 +72,17 @@ final class DefaultDiaryRepository: DiaryRepository {
             }
     }
     
-    func postDiary(
+    func createDiary(
+        images: [Data],
         title: String,
         description: String,
-        keywordList: [String],
-        selectedCommunityIdList: [Int],
-        reserveTime: Date,
+        keywordList: [String]?,
+        selectedCommunityIdList: [Int]?,
+        reserveTime: Date?,
         isHideLike: Bool,
-        isHideComment: Bool,
-        images: [Data]
+        isHideComment: Bool
     ) -> Single<Void> {
-        let request = PostDiaryRequestDTO(
+        let request = CreateDiaryRequestDTO(
             title: title,
             description: description,
             keywordList: keywordList,
@@ -112,7 +112,11 @@ final class DefaultDiaryRepository: DiaryRepository {
             )
         }
         
-        return network.requestMultipart(DiaryAPI.postDiary(request), multipartFormData: multipartFormData)
+        return network.requestMultipart(
+            DiaryAPI.createDiary,
+            parameters: request,
+            images: images
+        )
     }
     
     func likeToggle(postId: Int) -> Single<Bool> {

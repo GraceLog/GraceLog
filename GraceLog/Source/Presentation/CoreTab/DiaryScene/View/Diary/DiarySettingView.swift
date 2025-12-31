@@ -15,7 +15,7 @@ final class DiarySettingView: UIView {
         $0.backgroundColor = .clear
         $0.axis = .vertical
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: 18, left: 30, bottom: 18, right: 30)
+        $0.layoutMargins = .init(top: 0, left: 30, bottom: 0, right: 30)
     }
     
     lazy var diarySettingTableView = AutoSizingTableView().then {

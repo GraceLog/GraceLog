@@ -27,6 +27,7 @@ extension NetworkManager {
     ) -> Single<T> {
         return .create { single in
             self.session.request(target)
+                .validate(statusCode: 200..<300) 
                 .responseDecodable(of: GLResponseDTO<T>.self) { response in
                     switch response.result {
                     case .success(let value):
@@ -51,17 +52,37 @@ extension NetworkManager {
         }
     }
     
-    func requestMultipart(
+    func requestMultipart<T: Encodable>(
         _ target: TargetType,
-        multipartFormData: MultipartFormData
+        parameters: T,
+        images: [Data]
     ) -> Single<Void> {
         return .create { single in
             self.session.upload(
-                multipartFormData: multipartFormData,
+                multipartFormData: { multipartFormData in
+                    if let params = parameters.toDictionary() {
+                        for (key, value) in params {
+                            multipartFormData.append(
+                                "\(value)".data(using: .utf8)!,
+                                withName: key
+                            )
+                        }
+                    }
+                    
+                    for (index, imageData) in images.enumerated() {
+                        multipartFormData.append(
+                            imageData,
+                            withName: "images",
+                            fileName: "image\(index).jpg",
+                            mimeType: "image/jpeg"
+                        )
+                    }
+                },
                 to: target.baseURL + target.path,
                 method: target.method,
                 headers: target.headers.httpHeaders
-            ).responseDecodable(of: GLResponseDTO<[String]>.self) { response in
+            )
+            .responseDecodable(of: GLResponseDTO<GLEmptyResponse>.self) { response in
                 switch response.result {
                 case .success(let value):
                     let result = self.judgeStatus(
@@ -81,6 +102,7 @@ extension NetworkManager {
                     single(.failure(glError))
                 }
             }
+            
             return Disposables.create()
         }
     }
