@@ -10,6 +10,7 @@ import RxSwift
 
 final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     private let diaryRepository: DiaryRepository
+    private let likeRepository: LikeRepository
     
     private let disposeBag = DisposeBag()
     
@@ -26,11 +27,13 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     init(
         /// TODO: - 공동체 아이디, 유저 아이디 추후 주입 필요
         diaryRepository: DiaryRepository,
+        likeRepository: LikeRepository,
         diaryId: Int
 //        communityId: Int,
 //        memberId: Int
     ) {
         self.diaryRepository = diaryRepository
+        self.likeRepository = likeRepository
         self.diaryId = diaryId
 //        self.communityId = communityId
 //        self.memberId = memberId
@@ -76,7 +79,7 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     }
     
     func likeDiary(id: Int) {
-        diaryRepository.likeToggle(postId: id)
+        likeRepository.likeToggle(postId: id)
             .subscribe(onSuccess: { result in
                 self.likeDiaryResult.accept(result)
             }, onFailure: { error in
@@ -86,7 +89,7 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     }
     
     func unlikeDiary(id: Int) {
-        diaryRepository.likeToggle(postId: id)
+        likeRepository.likeToggle(postId: id)
             .subscribe(onSuccess: { result in
                 self.likeDiaryResult.accept(result)
             }, onFailure: { error in

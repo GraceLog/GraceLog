@@ -17,13 +17,22 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     var error = PublishRelay<Error>()
     
     private let disposeBag = DisposeBag()
-    private let homeRepository: HomeRepository
+    
+    private let diaryRepository: DiaryRepository
+    private let communityRepository: CommunityRepository
+    private let likeRepository: LikeRepository
     
     private let pageSize = 10
     private var currentCursorId: Int?
     
-    init(homeRepository: HomeRepository) {
-        self.homeRepository = homeRepository
+    init(
+        diaryRepository: DiaryRepository,
+        communityRepository: CommunityRepository,
+        likeRepository: LikeRepository
+    ) {
+        self.diaryRepository = diaryRepository
+        self.communityRepository = communityRepository
+        self.likeRepository = likeRepository
     }
     
     func fetchDiaryList(communityId: Int) {
@@ -31,7 +40,7 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
         
         let isFirstPage = currentCursorId == nil
         
-        homeRepository.fetchHomeCommunityDiaryList(
+        diaryRepository.fetchCommunityDiaryList(
             communityId: communityId,
             cursorId: currentCursorId,
             size: pageSize
@@ -57,7 +66,7 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     }
     
     func fetchCommunityList() {
-        homeRepository.fetchMyCommunityList()
+        communityRepository.fetchMyCommunityList()
             .subscribe(onSuccess: {
                 self.communityList.accept($0)
             }, onFailure: {
@@ -67,7 +76,7 @@ final class DefaultHomeCommunityUseCase: HomeCommunityUseCase {
     }
     
     func toggleDiaryLike(id: Int) {
-        homeRepository.likeToggle(postId: id)
+        likeRepository.likeToggle(postId: id)
             .subscribe(onSuccess: { _ in
                 self.toggleDiaryResult.accept(true)
                 self.updateDiaryLikeStatus(id: id)

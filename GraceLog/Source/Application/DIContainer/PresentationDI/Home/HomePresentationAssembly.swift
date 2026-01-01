@@ -10,7 +10,7 @@ import Swinject
 struct HomePresentationAssembly: Assembly {
     func assemble(container: Container) {
         container.register(HomeViewReactor.self) { resolver in
-            let homeUsecase = resolver.resolve(HomeUseCase.self)!
+            let homeUsecase = resolver.resolve(HomePersonalUseCase.self)!
             return HomeViewReactor(homeUsecase: homeUsecase)
         }
         
@@ -20,7 +20,7 @@ struct HomePresentationAssembly: Assembly {
         }
         
         container.register(HomeMyViewReactor.self) { resolver in
-            let homeUsecase = resolver.resolve(HomeUseCase.self)!
+            let homeUsecase = resolver.resolve(HomePersonalUseCase.self)!
             return HomeMyViewReactor(homeUsecase: homeUsecase)
         }
         

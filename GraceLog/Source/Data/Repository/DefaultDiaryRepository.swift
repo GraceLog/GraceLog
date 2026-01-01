@@ -42,6 +42,24 @@ final class DefaultDiaryRepository: DiaryRepository {
             }
     }
     
+    func fetchMyDiaryList() -> Single<[MyDiaryPreview]> {
+        let request = MyDiaryListRequestDTO(sortOrder: "DESC", count: 3)
+        
+        return network.request(DiaryAPI.fetchMyDiaryList(request))
+            .map { (responseDTO: [DiaryResponseDTO]) in
+                return responseDTO.map { diaryResponseDTO in
+                    return MyDiaryPreview(
+                        id: diaryResponseDTO.postId,
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
+                        title: diaryResponseDTO.title,
+                        content: diaryResponseDTO.description,
+                        imageURL: diaryResponseDTO.postImages.first?.url
+                    )
+                }
+            }
+    }
+    
+    
     func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]> {
         let request = DateRangeDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId, memberId: memberId)
         
@@ -69,6 +87,38 @@ final class DefaultDiaryRepository: DiaryRepository {
                         createdAt: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.createdAt)
                     )
                 }
+            }
+    }
+    
+    func fetchCommunityDiaryList(communityId: Int, cursorId: Int?, size: Int) -> Single<CommunityDiaryPreViewInfo> {
+        let request = CommunityDiaryListRequestDTO(
+            communityId: communityId,
+            cursorId: cursorId,
+            size: size
+        )
+        
+        return network.request(DiaryAPI.fetchCommunityDiaryList(request))
+            .map { (responseDTO: DiaryPagingResponseDTO) in
+                let diaryList = responseDTO.content.map { diaryResponseDTO in
+                    return CommunityDiaryPreview(
+                        id: diaryResponseDTO.postId,
+                        title: diaryResponseDTO.title,
+                        content: diaryResponseDTO.description,
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
+                        isLiked: diaryResponseDTO.likedByMe,
+                        likeCount: diaryResponseDTO.likeCount,
+                        commentCount: diaryResponseDTO.commentCount,
+                        username: diaryResponseDTO.member.name,
+                        profileImageURL: diaryResponseDTO.member.profileImage,
+                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId
+                    )
+                }
+                
+                return CommunityDiaryPreViewInfo(
+                    diaryList: diaryList,
+                    isLastPage: responseDTO.last
+                )
             }
     }
     
@@ -119,12 +169,10 @@ final class DefaultDiaryRepository: DiaryRepository {
         )
     }
     
-    func likeToggle(postId: Int) -> Single<Bool> {
-        let request = LikeDiaryRequestDTO(postId: postId)
-        
-        return network.request(LikeAPI.likeToggle(request))
-            .map { (responseDTO: GLResponseDTO<Bool>) in
-                return responseDTO.data ?? false
+    func deleteDiary(diaryId: Int) -> Single<Bool> {
+        return network.request(DiaryAPI.deleteDiary(diaryId: diaryId))
+            .map { (isDeleted: Bool) in
+                return isDeleted
             }
     }
 }

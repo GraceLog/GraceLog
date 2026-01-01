@@ -10,13 +10,13 @@ import ReactorKit
 import RxDataSources
 
 final class HomeMyViewReactor: Reactor {
-    private let homeUsecase: HomeUseCase
+    private let homeUsecase: HomePersonalUseCase
     var coordinator: HomeCoordinator?
     private let disposeBag = DisposeBag()
     let initialState: State
     
     init(
-        homeUsecase: HomeUseCase
+        homeUsecase: HomePersonalUseCase
     ) {
         self.homeUsecase = homeUsecase
         self.initialState = State()
