@@ -27,7 +27,7 @@ extension NetworkManager {
     ) -> Single<T> {
         return .create { single in
             self.session.request(target)
-                .validate(statusCode: 200..<300) 
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: GLResponseDTO<T>.self) { response in
                     switch response.result {
                     case .success(let value):
@@ -60,20 +60,22 @@ extension NetworkManager {
         return .create { single in
             self.session.upload(
                 multipartFormData: { multipartFormData in
-                    if let params = parameters.toDictionary() {
-                        for (key, value) in params {
-                            multipartFormData.append(
-                                "\(value)".data(using: .utf8)!,
-                                withName: key
-                            )
-                        }
+                    let encoder = JSONEncoder()
+                    encoder.dateEncodingStrategy = .iso8601
+                    
+                    if let jsonData = try? encoder.encode(parameters) {
+                        multipartFormData.append(
+                            jsonData,
+                            withName: "createPostRequest",
+                            mimeType: "application/json"
+                        )
                     }
                     
                     for (index, imageData) in images.enumerated() {
                         multipartFormData.append(
                             imageData,
                             withName: "images",
-                            fileName: "image\(index).jpg",
+                            fileName: "image\(index).jpeg",
                             mimeType: "image/jpeg"
                         )
                     }

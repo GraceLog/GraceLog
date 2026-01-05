@@ -33,11 +33,15 @@ final class DiaryViewReactor: Reactor {
         case didTapShareButton
         case didSelectKeyword(DiaryKeywordState)
         case didSelectShareOption(DiaryShareState)
+        case resetData
     }
     
     enum Mutation {
         case setImages([DiaryImage])
+        case setShareStates([DiaryShareState])
         case setCreateDiaryResult(Bool)
+        case setError(Error)
+        case resetData
     }
     
     struct State {
@@ -45,6 +49,7 @@ final class DiaryViewReactor: Reactor {
         @Pulse var keywords: [DiaryKeywordState]
         @Pulse var shareStates: [DiaryShareState]
         @Pulse var isSuccessCreateDiary: Bool?
+        @Pulse var error: Error?
     }
     
     init(usecase: DiaryCreatableUseCase) {
@@ -54,6 +59,8 @@ final class DiaryViewReactor: Reactor {
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
             shareStates: []
         )
+        
+        usecase.fetchCommunityList()
     }
 }
 
@@ -110,13 +117,31 @@ extension DiaryViewReactor {
             } else {
                 selectedShareOptions.remove(state.diaryOption)
             }
+        case .resetData:
+            return .just(.resetData)
         }
         return .empty()
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        Observable.merge(
-            usecase.createDiaryResult.map { .setCreateDiaryResult($0) },
+        let fetchCommunitiesMutation = usecase.communityList
+            .map { communities in
+                let shareStates = communities.map { community in
+                    DiaryShareState(diaryOption: community, isSelected: false)
+                }
+                return Mutation.setShareStates(shareStates)
+            }
+        
+        let createDiaryResultMutation = usecase.createDiaryResult
+            .map { Mutation.setCreateDiaryResult($0) }
+        
+        let errorMutation = usecase.error
+            .map { Mutation.setError($0) }
+        
+        return Observable.merge(
+            fetchCommunitiesMutation,
+            createDiaryResultMutation,
+            errorMutation,
             mutation
         )
     }
@@ -127,8 +152,26 @@ extension DiaryViewReactor {
         switch mutation {
         case .setImages(let images):
             newState.images = images
+        case .setShareStates(let states):
+            newState.shareStates = states
         case .setCreateDiaryResult(let isSuccess):
             newState.isSuccessCreateDiary = isSuccess
+        case .setError(let error):
+            newState.error = error
+        case .resetData:
+            newState.images = []
+            newState.keywords = DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) }
+            newState.shareStates = newState.shareStates.map {
+                DiaryShareState(diaryOption: $0.diaryOption, isSelected: false)
+            }
+            
+            selectedKeywords.removeAll()
+            selectedShareOptions.removeAll()
+            diaryTitle = ""
+            diaryContent = ""
+            reserveTime = nil
+            isHideLike = false
+            isHideComment = false
         }
         
         return newState

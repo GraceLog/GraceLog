@@ -40,6 +40,7 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
     private let diaryImageListView = DiaryImageListView()
     private let diaryEditView = DiaryEditView()
     private let diaryKeywordView = DiaryKeywordView()
+    private let diaryShareDivider = GLDividerView()
     private let diaryShareView = DiaryShareView()
     private let diarySettingView = DiarySettingView()
     
@@ -62,8 +63,8 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         super.setupLayouts()
         contentView.addSubview(scrollView)
         [containerStackView, shareButton].forEach { scrollView.addSubview($0) }
-        let subviews = [addImageContainerView, diaryEditView, diaryKeywordView, diaryShareView, diarySettingView]
-        containerStackView.addArrangedDividerSubViews(subviews)
+        let subviews = [addImageContainerView, diaryEditView, diaryKeywordView, diaryShareDivider, diaryShareView, diarySettingView]
+        containerStackView.addArrangedDividerSubViews(subviews, exclude: [2, 3])
         
         shareButton.snp.makeConstraints {
             $0.height.equalTo(45)
@@ -151,6 +152,12 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         
         reactor.pulse(\.$shareStates)
             .asDriver(onErrorJustReturn: [])
+            .do(onNext: { [weak self] states in
+                guard let self = self else { return }
+                let isHidden = states.isEmpty
+                self.diaryShareView.isHidden = isHidden
+                self.diaryShareDivider.isHidden = isHidden
+            })
             .drive(diaryShareView.diaryShareTableView.rx.items(
                 cellIdentifier: DiaryShareTableViewCell.identifier,
                 cellType: DiaryShareTableViewCell.self)
@@ -182,9 +189,29 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         
         reactor.pulse(\.$isSuccessCreateDiary)
             .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 일기장 생성 성공여부에 따른 로직 구현
-                print("일기장 생성 성공여부: \(isSuccess)")
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self) { owner, isSuccess in
+                if isSuccess == true {
+                    owner.view.makeToast("일기가 성공적으로 공유되었습니다!")
+                    
+                    reactor.action.onNext(.resetData)
+                    owner.diaryEditView.titleInputView.text.accept("")
+                    owner.diaryEditView.descriptionInputView.text.accept("")
+                    
+                    owner.diaryKeywordView.keywordCollectionView.indexPathsForSelectedItems?.forEach {
+                        owner.diaryKeywordView.keywordCollectionView.deselectItem(at: $0, animated: false)
+                    }
+                    
+                    owner.scrollView.setContentOffset(.zero, animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$error)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, error in
+                owner.view.makeToast(error.localizedDescription)
             }
             .disposed(by: disposeBag)
         
@@ -195,7 +222,6 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
 }
 
 // MARK: - Diary Bindings
-
 extension DiaryViewController {
     private func bindDiaryImageCollectionView(reactor: DiaryViewReactor) {
         let imageDataSource = RxCollectionViewSectionedAnimatedDataSource<DiaryImageSection>(

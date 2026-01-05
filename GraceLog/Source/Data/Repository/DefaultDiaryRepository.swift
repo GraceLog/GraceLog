@@ -142,26 +142,6 @@ final class DefaultDiaryRepository: DiaryRepository {
             isHideComment: isHideComment
         )
         
-        let multipartFormData = MultipartFormData()
-        
-        let jsonEncoder = JSONEncoder()
-        if let jsonData = try? jsonEncoder.encode(request) {
-            multipartFormData.append(
-                jsonData,
-                withName: "createPostRequest",
-                mimeType: "application/json"
-            )
-        }
-        
-        for (index, imageData) in images.enumerated() {
-            multipartFormData.append(
-                imageData,
-                withName: "images",
-                fileName: "image\(index).jpg",
-                mimeType: "image/jpeg"
-            )
-        }
-        
         return network.requestMultipart(
             DiaryAPI.createDiary,
             parameters: request,

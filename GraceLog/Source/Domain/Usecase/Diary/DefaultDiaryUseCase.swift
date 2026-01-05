@@ -11,16 +11,30 @@ import RxRelay
 typealias DiaryUseCase = DiaryCreatableUseCase & DiaryDeletableUseCase
 
 final class DefaultDiaryUseCase: DiaryUseCase {
+    var communityList = BehaviorRelay<[Community]>(value: [])
     var createDiaryResult = PublishRelay<Bool>()
     var error = PublishRelay<Error>()
     
+    private let communityRepository: CommunityRepository
     private let diaryRepository: DiaryRepository
     private let disposeBag = DisposeBag()
     
     init(
+        communityRepository: CommunityRepository,
         diaryRepository: DiaryRepository
     ) {
+        self.communityRepository = communityRepository
         self.diaryRepository = diaryRepository
+    }
+    
+    func fetchCommunityList() {
+        communityRepository.fetchMyCommunityList()
+            .subscribe(onSuccess: {
+                self.communityList.accept($0)
+            }, onFailure: {
+                self.error.accept($0)
+            })
+            .disposed(by: disposeBag)
     }
     
     func createDiary(

@@ -48,8 +48,13 @@ struct DomainAssembly: Assembly {
         
         // Diary
         container.register(DiaryUseCase.self) { resolver in
+            let communityRepository = resolver.resolve(CommunityRepository.self)!
             let diaryRepository = resolver.resolve(DiaryRepository.self)!
-            return DefaultDiaryUseCase(diaryRepository: diaryRepository)
+            
+            return DefaultDiaryUseCase(
+                communityRepository: communityRepository,
+                diaryRepository: diaryRepository
+            )
         }
         
         // DiaryDetails
