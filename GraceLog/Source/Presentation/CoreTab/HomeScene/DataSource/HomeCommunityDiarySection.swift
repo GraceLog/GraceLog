@@ -36,6 +36,16 @@ struct CommunityDiaryItem {
     }
 }
 
+extension CommunityDiaryItem: IdentifiableType, Equatable {
+    typealias Identity = Int
+    var identity: Int { id }
+
+    static func == (lhs: CommunityDiaryItem, rhs: CommunityDiaryItem) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.isLiked == rhs.isLiked
+    }
+}
+
 struct HomeCommunityDiarySection {
     let date: String
     var items: [CommunityDiaryItem]

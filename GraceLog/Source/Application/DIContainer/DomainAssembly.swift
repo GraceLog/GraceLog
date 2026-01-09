@@ -58,7 +58,7 @@ struct DomainAssembly: Assembly {
         }
         
         // DiaryDetails
-        container.register(DiaryDetailsUseCase.self) { (resolver, diaryId: Int) in
+        container.register(DiaryDetailsUseCase.self) { (resolver, communityId: Int, memberId: Int) in
             let diaryRepository = resolver.resolve(DiaryRepository.self)!
             let likeRepository = resolver.resolve(LikeRepository.self)!
             

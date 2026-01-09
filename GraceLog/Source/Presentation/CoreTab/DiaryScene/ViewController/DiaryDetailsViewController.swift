@@ -194,8 +194,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, error in
                 owner.view.makeToast(error.localizedDescription)
-            }
-            .disposed(by: disposeBag)
     }
 }
 

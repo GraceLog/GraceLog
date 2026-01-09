@@ -31,8 +31,8 @@ extension SearchCoordinator {
         print("선택한 채팅방 아이디: \(id)")
     }
     
-    func showCommunityViewController(id: Int) {
-        let coordinator = CommunityGroupCoordinator(navigationController: self.navigationController, id: id)
+    func showCommunityViewController(communityId: Int, memberId: Int) {
+        let coordinator = CommunityGroupCoordinator(navigationController: self.navigationController, communityId: communityId, memberId: memberId)
         childCoordinators.append(coordinator)
         coordinator.start()
     }

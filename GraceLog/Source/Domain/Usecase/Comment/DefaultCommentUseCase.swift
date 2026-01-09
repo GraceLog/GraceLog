@@ -8,7 +8,12 @@
 import RxRelay
 
 final class DefaultCommentUseCase: CommentUseCase {
+    private let diaryID: Int
     var commentList = BehaviorRelay<[Comment]>(value: [])
+    
+    init(diaryID: Int) {
+        self.diaryID = diaryID
+    }
     
     func fetchCommentList() {
         commentList.accept([
