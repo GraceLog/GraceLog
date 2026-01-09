@@ -10,8 +10,8 @@ import RxRelay
 protocol DiaryDetailsUseCase {
     var diary: PublishRelay<DiaryDetails> { get }
     var dateRangeDiaries: BehaviorRelay<[DiaryDetails]> { get }
-    var likeDiaryResult: PublishRelay<Bool> { get }
-    var unlikeDiaryResult: PublishRelay<Bool> { get }
+    var likeDiaryResult: PublishRelay<(Bool, Int)> { get }
+    var unlikeDiaryResult: PublishRelay<(Bool, Int)> { get }
     
     func fetchDiaryDetails(diaryId: Int)
     func fetchDateRangeDiaryList(startDate: String, endDate: String)

@@ -197,7 +197,8 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         
         reactor.pulse(\.$isSuccessLikeResult)
             .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
+            .subscribe(with: self) { owner, result in
+                let (isSuccess, diaryID) = result
                 // TODO: - 좋아요 성공여부에 따른 로직 구현
                 if isSuccess {
                     print("좋아요 성공!")
@@ -209,7 +210,8 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         
         reactor.pulse(\.$isSuccessUnlikeResult)
             .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
+            .subscribe(with: self) { owner, result in
+                let (isSuccess, diaryID) = result
                 // TODO: - 좋아요 성공여부에 따른 로직 구현
                 if isSuccess {
                     print("좋아요 해제 성공!")

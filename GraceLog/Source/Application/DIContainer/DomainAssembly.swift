@@ -39,11 +39,12 @@ struct DomainAssembly: Assembly {
         }
         
         // DiaryDetails
-        container.register(DiaryDetailsUseCase.self) { (resolver, diaryId: Int) in
+        container.register(DiaryDetailsUseCase.self) { (resolver, communityId: Int, memberId: Int) in
             let diaryRepository = resolver.resolve(DiaryRepository.self)!
             return DefaultDiaryDetailsUseCase(
                 diaryRepository: diaryRepository,
-                diaryId: diaryId
+                communityId: communityId,
+                memberId: memberId
             )
         }
         

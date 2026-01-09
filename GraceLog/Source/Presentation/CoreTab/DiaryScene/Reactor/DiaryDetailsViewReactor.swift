@@ -24,14 +24,14 @@ final class DiaryDetailsViewReactor: Reactor {
     enum Mutation {
         case setDiary(DiaryDetails)
         case setDateRangeDiaryList([DiaryDetails])
-        case setDiaryLikeResult(isSuccess: Bool)
-        case setDiaryUnlikeResult(isSuccess: Bool)
+        case setDiaryLikeResult((isSuccess: Bool, diaryID: Int))
+        case setDiaryUnlikeResult((isSuccess: Bool, diaryID: Int))
     }
     struct State {
         @Pulse var diary: DiaryDetails?
         @Pulse var dateRangeDiaries: [DiaryDetails]
-        @Pulse var isSuccessLikeResult: Bool?
-        @Pulse var isSuccessUnlikeResult: Bool?
+        @Pulse var isSuccessLikeResult: (Bool, Int)?
+        @Pulse var isSuccessUnlikeResult: (Bool, Int)?
     }
     
     init(
@@ -101,10 +101,10 @@ extension DiaryDetailsViewReactor {
             .map { Mutation.setDateRangeDiaryList($0) }
         
         let likeResult = usecase.likeDiaryResult
-            .map { result in Mutation.setDiaryLikeResult(isSuccess: result) }
+            .map { Mutation.setDiaryLikeResult((isSuccess: $0.0, diaryID: $0.1)) }
         
         let unlikeResult = usecase.unlikeDiaryResult
-            .map { result in Mutation.setDiaryUnlikeResult(isSuccess: result) }
+            .map { Mutation.setDiaryUnlikeResult((isSuccess: $0.0, diaryID: $0.1)) }
         
         return Observable.merge(
             fetchDiaryDetail,

@@ -8,23 +8,34 @@
 import UIKit
 
 final class CommunityGroupCoordinator: NavigationCoordinator {
-    private let id: Int
+    private let communityId: Int
+    private let memberId: Int
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     
-    init(navigationController: UINavigationController, id: Int) {
+    init(navigationController: UINavigationController, communityId: Int, memberId: Int) {
         self.navigationController = navigationController
-        self.id = id
+        self.communityId = communityId
+        self.memberId = memberId
     }
     
     func start() {
-        let viewController = CommunityGroupViewController(reactor: CommunityGroupReactor(usecase: DefaultCommunityGroupUseCase(id: id), coordinator: self))
+        let viewController = CommunityGroupViewController(reactor: CommunityGroupReactor(diaryDetailUseCase: DefaultDiaryDetailsUseCase(diaryRepository: DefaultDiaryRepository(network: .init()), communityId: communityId, memberId: memberId), coordinator: self))
         navigationController.pushViewController(viewController, animated: true)
     }
 }
 
 extension CommunityGroupCoordinator {
+    func showCommentBottomSheet(diaryID: Int) {
+        let commentBottomSheetVC = CommentBottomSheetViewController(
+            reactor: CommentBottomSheetViewReactor(
+                usecase: DefaultCommentUseCase(diaryID: diaryID)
+            )
+        )
+        self.navigationController.present(commentBottomSheetVC, animated: true)
+    }
+    
     func popViewController() {
         navigationController.popViewController(animated: true)
         parentCoordinator?.removeChildCoordinator(self)
