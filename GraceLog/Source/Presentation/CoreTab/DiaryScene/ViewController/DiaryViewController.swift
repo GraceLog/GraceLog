@@ -29,6 +29,13 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         $0.spacing = 20
     }
     
+    private let cancelButton = UIButton().then {
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+        let image = UIImage(systemName: "xmark", withConfiguration: config)
+        $0.setImage(image, for: .normal)
+        $0.tintColor = GLColor.textAccent.color
+    }
+    
     private lazy var addImageContainerView = UIView().then {
         $0.addSubview(diaryImageListView)
         diaryImageListView.snp.makeConstraints {
@@ -57,6 +64,7 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         super.setupStyles()
         view.backgroundColor = .white
         navigationBar.setupTitleLabel(text: "일기 쓰기")
+        navigationBar.addRightItem(cancelButton)
     }
     
     override func setupLayouts() {
@@ -131,6 +139,11 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
     
     override func bind(reactor: DiaryViewReactor) {
         super.bind(reactor: reactor)
+        cancelButton.rx.tap
+            .map { DiaryViewReactor.Action.didTapCloseButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         diaryEditView.titleInputView.text
             .subscribe(with: self) { owner, title in
                 reactor.action.onNext(.updateTitle(title))
@@ -192,17 +205,7 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
             .asDriver(onErrorJustReturn: false)
             .drive(with: self) { owner, isSuccess in
                 if isSuccess == true {
-                    owner.view.makeToast("일기가 성공적으로 공유되었습니다!")
-                    
-                    reactor.action.onNext(.resetData)
-                    owner.diaryEditView.titleInputView.text.accept("")
-                    owner.diaryEditView.descriptionInputView.text.accept("")
-                    
-                    owner.diaryKeywordView.keywordCollectionView.indexPathsForSelectedItems?.forEach {
-                        owner.diaryKeywordView.keywordCollectionView.deselectItem(at: $0, animated: false)
-                    }
-                    
-                    owner.scrollView.setContentOffset(.zero, animated: true)
+                    reactor.action.onNext(.executeCreateDiary)
                 }
             }
             .disposed(by: disposeBag)

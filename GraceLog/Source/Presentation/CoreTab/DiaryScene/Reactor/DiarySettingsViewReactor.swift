@@ -57,11 +57,11 @@ extension DiarySettingsViewReactor {
         case .toggleSetting(let index, let isOn):
             return .just(.setSettings(index, isOn))
         case .didTapCancelButton:
-            coordinator?.dismissDiarySettings()
+            coordinator?.dismiss()
         case .didTapCompleteButton:
             let reserveTime = isReserveTimeEnabled ? reserveDate : nil
             onComplete?(reserveTime, isHideLike, isHideComment)
-            coordinator?.dismissDiarySettings()
+            coordinator?.dismiss()
         }
         return .empty()
     }

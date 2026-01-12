@@ -61,6 +61,16 @@ final class HomeMyViewController: GraceLogBaseViewController<HomeMyViewReactor> 
         bindHomeMyBibleView(reactor: reactor)
         bindHomeMyDiaryView(reactor: reactor)
         bindHomeMyRecommendVideoView(reactor: reactor)
+        
+        Observable.merge(
+            reactor.pulse(\.$toastMessage).compactMap { $0 },
+            reactor.pulse(\.$error).compactMap { $0?.localizedDescription }
+        )
+        .asDriver(onErrorDriveWith: .empty())
+        .drive(with: self) { owner, message in
+            owner.view.makeToast(message)
+        }
+        .disposed(by: disposeBag)
     }
 }
 
@@ -176,6 +186,11 @@ extension HomeMyViewController {
                 
                 return cell
             }
+            .disposed(by: disposeBag)
+        
+        NotificationCenterManager.reloadHomeMyDiaryList.addObserver()
+            .map { _ in Reactor.Action.refreshDiaryList }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     

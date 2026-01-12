@@ -14,6 +14,7 @@ final class DiaryCoordinator: NavigationCoordinator {
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        navigationController.modalPresentationStyle = .overFullScreen
     }
     
     func start() {
@@ -29,7 +30,13 @@ final class DiaryCoordinator: NavigationCoordinator {
         navigationController.present(diarySettingsVC, animated: true)
     }
     
-    func dismissDiarySettings() {
+    func dismiss() {
         navigationController.dismiss(animated: true)
+    }
+    
+    func diaryCreatedEvent() {
+        navigationController.dismiss(animated: true) {
+            NotificationCenterManager.reloadHomeMyDiaryList.post()
+        }
     }
 }

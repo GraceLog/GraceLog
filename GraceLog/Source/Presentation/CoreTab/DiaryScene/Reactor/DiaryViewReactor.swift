@@ -25,6 +25,7 @@ final class DiaryViewReactor: Reactor {
     var initialState: State
     
     enum Action {
+        case didTapCloseButton
         case updateImages([UIImage])
         case deleteImage(at: Int)
         case updateTitle(String)
@@ -33,7 +34,7 @@ final class DiaryViewReactor: Reactor {
         case didTapShareButton
         case didSelectKeyword(DiaryKeywordState)
         case didSelectShareOption(DiaryShareState)
-        case resetData
+        case executeCreateDiary
     }
     
     enum Mutation {
@@ -41,7 +42,6 @@ final class DiaryViewReactor: Reactor {
         case setShareStates([DiaryShareState])
         case setCreateDiaryResult(Bool)
         case setError(Error)
-        case resetData
     }
     
     struct State {
@@ -67,6 +67,8 @@ final class DiaryViewReactor: Reactor {
 extension DiaryViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .didTapCloseButton:
+            coordinator?.dismiss()
         case .updateImages(let newImages):
             let currentImages = currentState.images
             let convertedImages = newImages.map { DiaryImage(id: UUID(), image: $0) }
@@ -117,8 +119,8 @@ extension DiaryViewReactor {
             } else {
                 selectedShareOptions.remove(state.diaryOption)
             }
-        case .resetData:
-            return .just(.resetData)
+        case .executeCreateDiary:
+            coordinator?.diaryCreatedEvent()
         }
         return .empty()
     }
@@ -158,20 +160,6 @@ extension DiaryViewReactor {
             newState.isSuccessCreateDiary = isSuccess
         case .setError(let error):
             newState.error = error
-        case .resetData:
-            newState.images = []
-            newState.keywords = DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) }
-            newState.shareStates = newState.shareStates.map {
-                DiaryShareState(diaryOption: $0.diaryOption, isSelected: false)
-            }
-            
-            selectedKeywords.removeAll()
-            selectedShareOptions.removeAll()
-            diaryTitle = ""
-            diaryContent = ""
-            reserveTime = nil
-            isHideLike = false
-            isHideComment = false
         }
         
         return newState

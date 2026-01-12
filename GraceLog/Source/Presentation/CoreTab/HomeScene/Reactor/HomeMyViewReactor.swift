@@ -31,6 +31,7 @@ final class HomeMyViewReactor: Reactor {
     
     enum Action {
         case didTapDiaryDetail(Int)
+        case refreshDiaryList
     }
     
     enum Mutation {
@@ -39,6 +40,7 @@ final class HomeMyViewReactor: Reactor {
         case setVideoTagList([String])
         case setDailyVerse(DailyVerse)
         case setError(Error)
+        case showToast(String)
     }
     
     struct State {
@@ -48,7 +50,8 @@ final class HomeMyViewReactor: Reactor {
         @Pulse var diaryItems: [MyDiaryPreview] = []
         @Pulse var videoTagItems: [String] = []
         @Pulse var dailyVerse: DailyVerse?
-        @Pulse var errorMessage: String?
+        @Pulse var error: Error?
+        @Pulse var toastMessage: String?
     }
 }
 
@@ -82,8 +85,11 @@ extension HomeMyViewReactor {
         switch action {
         case .didTapDiaryDetail(let id):
             coordinator?.showDiaryDetail(diaryId: id)
-            return .empty()
+        case .refreshDiaryList:
+            homeUsecase.fetchDiaryList()
+            return .just(.showToast("일기가 성공적으로 공유되었습니다!"))
         }
+        return .empty()
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -96,11 +102,13 @@ extension HomeMyViewReactor {
             newState.videoItems = videoItems
             newState.isVideoItemsEmpty = videoItems.isEmpty
         case .setError(let error):
-            newState.errorMessage = error.localizedDescription
+            newState.error = error
         case .setDailyVerse(let dailyVerse):
             newState.dailyVerse = dailyVerse
         case .setVideoTagList(let videoTagItems):
             newState.videoTagItems = videoTagItems
+        case .showToast(let message):
+            newState.toastMessage = message
         }
         return newState
     }
