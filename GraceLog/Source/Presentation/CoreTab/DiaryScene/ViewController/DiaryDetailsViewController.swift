@@ -128,8 +128,10 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             }
             .disposed(by: disposeBag)
         
-        
         diaryDetailsView.likeButton.rx.tap
+            .do(onNext: { _ in
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            })
             .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
             .compactMap { reactor.currentState.diary?.diaryId }
             .map { DiaryDetailsViewReactor.Action.didTapLikeButton($0) }
@@ -142,7 +144,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        /// State
         let diaryObservable = reactor.pulse(\.$diary).share(replay: 1)
         
         diaryObservable
@@ -185,30 +186,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, _ in
                 owner.calendarView.reloadData()
-            }
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$isSuccessLikeResult)
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 좋아요 성공여부에 따른 로직 구현
-                if isSuccess {
-                    print("좋아요 성공!")
-                } else {
-                    print("좋아요 실패!")
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$isSuccessUnlikeResult)
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 좋아요 성공여부에 따른 로직 구현
-                if isSuccess {
-                    print("좋아요 해제 성공!")
-                } else {
-                    print("좋아요 해제 실패!")
-                }
             }
             .disposed(by: disposeBag)
         

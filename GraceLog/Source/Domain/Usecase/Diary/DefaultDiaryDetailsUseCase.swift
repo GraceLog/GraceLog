@@ -16,8 +16,7 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     
     var diary = PublishRelay<DiaryDetails>()
     var dateRangeDiaries = BehaviorRelay<[DiaryDetails]>(value: [])
-    var likeDiaryResult = PublishRelay<Bool>()
-    var unlikeDiaryResult = PublishRelay<Bool>()
+    var toggleDiaryResult = PublishRelay<Bool>()
     var error = PublishRelay<Error>()
     
     private let diaryId: Int
@@ -82,22 +81,13 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
         .disposed(by: disposeBag)
     }
     
-    func likeDiary(id: Int) {
+    func toggleDiaryLike(id: Int) {
         likeRepository.likeToggle(postId: id)
-            .subscribe(onSuccess: { result in
-                self.likeDiaryResult.accept(result)
-            }, onFailure: { error in
-                self.error.accept(error)
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func unlikeDiary(id: Int) {
-        likeRepository.likeToggle(postId: id)
-            .subscribe(onSuccess: { result in
-                self.likeDiaryResult.accept(result)
-            }, onFailure: { error in
-                self.error.accept(error)
+            .subscribe(onSuccess: { _ in
+                self.toggleDiaryResult.accept(true)
+            }, onFailure: {
+                self.toggleDiaryResult.accept(false)
+                self.error.accept($0)
             })
             .disposed(by: disposeBag)
     }
