@@ -14,9 +14,9 @@ protocol DiaryRepository {
     func fetchMyDiaryList() -> Single<[MyDiaryPreview]>
     
     func fetchDateRangeDiaryList(
-        startDate: Date,
-        endDate: Date,
-        communityId: Int,
+        startDate: String,
+        endDate: String,
+        communityId: Int?,
         memberId: Int
     ) -> Single<[DiaryDetails]>
     

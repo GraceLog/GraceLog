@@ -64,10 +64,10 @@ extension DiaryAPI: TargetType {
             return .none
         case .fetchCommunityDiaryList(let params):
             return .query(params)
-        case .fetchMyDiaryList(let request):
-            return .query(request)
+        case .fetchMyDiaryList(let params):
+            return .query(params)
         case .fetchDateRangeDiaryList(let params):
-            return .body(params)
+            return .query(params)
         case .deleteDiary:
             return .none
         }

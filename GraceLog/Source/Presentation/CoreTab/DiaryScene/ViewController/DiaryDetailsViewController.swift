@@ -91,7 +91,7 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
     
     override func setupConstraints() {
         super.setupConstraints()
-
+        
         scrollView.snp.makeConstraints {
             $0.directionalEdges.equalToSuperview()
         }
@@ -105,15 +105,6 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         calendarView.snp.makeConstraints {
             $0.height.equalTo(250)
         }
-    }
-    
-    private func fetchDiaryList(for date: Date) {
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        let (startDate, endDate) = DateFormatterFactory.getMonthDateRange(year: year, month: month)
-        
-        reactor?.action.onNext(.fetchDateRangeDiaryList(startDate, endDate))
     }
     
     override func bind(reactor: DiaryDetailsViewReactor) {
@@ -155,20 +146,22 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         let diaryObservable = reactor.pulse(\.$diary).share(replay: 1)
         
         diaryObservable
-            .compactMap { $0?.createdAt }
-            .map { DateFormatterFactory.toYearMonthString(from: $0) }
-            .distinctUntilChanged()
-            .withLatestFrom(diaryObservable.compactMap { $0?.createdAt })
-            .subscribe(onNext: { [weak self] createdAt in
-                self?.fetchDiaryList(for: createdAt)
-            })
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, diary in
+                if diary.user.id == UserManager.shared.id {
+                    owner.navigationBar.setupTitleLabel(text: "나의 감사일기")
+                } else {
+                    let username = diary.user.name
+                    owner.navigationBar.setupTitleLabel(text: "\(username)님의 감사일기")
+                }
+            }
             .disposed(by: disposeBag)
         
         diaryObservable
             .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, diary in
-                
                 if let createdAt = diary.createdAt {
                     owner.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: createdAt)
                     owner.calendarView.select(createdAt)
@@ -218,6 +211,14 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
                 }
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$error)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, error in
+                owner.view.makeToast(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -244,7 +245,7 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
         config?.title = DateFormatterFactory.toYearMonthString(from: calendar.currentPage)
         calendarButton.configuration = config
         
-        fetchDiaryList(for: calendar.currentPage)
+        reactor?.action.onNext(.fetchDateRangeDiaryList(calendar.currentPage))
     }
     
     /// 감사일기가 작성된 날짜 마커

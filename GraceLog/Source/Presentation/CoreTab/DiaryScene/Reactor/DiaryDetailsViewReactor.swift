@@ -15,7 +15,7 @@ final class DiaryDetailsViewReactor: Reactor {
     
     enum Action {
         case fetchDiary(Int)
-        case fetchDateRangeDiaryList(String, String)
+        case fetchDateRangeDiaryList(Date)
         case didTapBackButton
         case didTapLikeButton(Int)
         case didTapCommentButton(Int)
@@ -26,12 +26,14 @@ final class DiaryDetailsViewReactor: Reactor {
         case setDateRangeDiaryList([DiaryDetails])
         case setDiaryLikeResult(isSuccess: Bool)
         case setDiaryUnlikeResult(isSuccess: Bool)
+        case setError(Error)
     }
     struct State {
         @Pulse var diary: DiaryDetails?
         @Pulse var dateRangeDiaries: [DiaryDetails]
         @Pulse var isSuccessLikeResult: Bool?
         @Pulse var isSuccessUnlikeResult: Bool?
+        @Pulse var error: Error?
     }
     
     init(
@@ -52,10 +54,9 @@ extension DiaryDetailsViewReactor {
         switch action {
         case .fetchDiary(let diaryId):
             usecase.fetchDiaryDetails(diaryId: diaryId)
-        case .fetchDateRangeDiaryList(let startDate, let endDate):
+        case .fetchDateRangeDiaryList(let date):
             usecase.fetchDateRangeDiaryList(
-                startDate: startDate,
-                endDate: endDate
+                date: date
             )
         case .didTapBackButton:
             coordinator.popViewController()
@@ -88,6 +89,8 @@ extension DiaryDetailsViewReactor {
             newState.isSuccessLikeResult = isSuccess
         case .setDiaryUnlikeResult(let isSuccess):
             newState.isSuccessUnlikeResult = isSuccess
+        case .setError(let error):
+            newState.error = error
         }
         
         return newState
@@ -106,11 +109,15 @@ extension DiaryDetailsViewReactor {
         let unlikeResult = usecase.unlikeDiaryResult
             .map { result in Mutation.setDiaryUnlikeResult(isSuccess: result) }
         
+        let errorMuataion = usecase.error
+            .map { Mutation.setError($0) }
+        
         return Observable.merge(
             fetchDiaryDetail,
             fetchDateRangeDiaryList,
             likeResult,
             unlikeResult,
+            errorMuataion,
             mutation
         )
     }

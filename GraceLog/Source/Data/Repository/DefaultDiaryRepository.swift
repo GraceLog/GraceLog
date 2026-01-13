@@ -21,6 +21,7 @@ final class DefaultDiaryRepository: DiaryRepository {
             .map { (responseDTO: DiaryResponseDTO) in
                 return DiaryDetails(
                     diaryId: responseDTO.postId,
+                    communityId: responseDTO.postCommunityId,
                     title: responseDTO.title,
                     description: responseDTO.description,
                     user: GraceLogUser(
@@ -60,7 +61,7 @@ final class DefaultDiaryRepository: DiaryRepository {
     }
     
     
-    func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]> {
+    func fetchDateRangeDiaryList(startDate: String, endDate: String, communityId: Int?, memberId: Int) -> Single<[DiaryDetails]> {
         let request = DateRangeDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId, memberId: memberId)
         
         return network.request(DiaryAPI.fetchDateRangeDiaryList(request))
@@ -68,6 +69,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                 return responseDTO.map { diaryResponseDTO in
                     return DiaryDetails(
                         diaryId: diaryResponseDTO.postId,
+                        communityId: diaryResponseDTO.postCommunityId,
                         title: diaryResponseDTO.title,
                         description: diaryResponseDTO.description,
                         user: GraceLogUser(
