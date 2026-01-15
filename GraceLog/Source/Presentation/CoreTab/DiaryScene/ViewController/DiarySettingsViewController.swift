@@ -94,7 +94,7 @@ final class DiarySettingsViewController: GraceLogBaseViewController<DiarySetting
         reactor.pulse(\.$settings)
             .asDriver(onErrorJustReturn: [])
             .drive(settingsView.settingsTableView.rx.items(
-                cellIdentifier: DiaryAdditionalSettingsTableViewCell.identifier,
+                cellIdentifier: DiaryAdditionalSettingsTableViewCell.reuseIdentifier,
                 cellType: DiaryAdditionalSettingsTableViewCell.self)
             ){ index, item, cell in
                 cell.configureUI(title: item.title, isOn: item.isOn)

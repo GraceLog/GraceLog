@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 final class DiaryAdditionalSettingsTableViewCell: UITableViewCell {
-    static let identifier = "DiaryAdditionalSettingsTableViewCell"
+    static let reuseIdentifier = String(describing: DiaryAdditionalSettingsTableViewCell.self)
     
     private let disposeBag = DisposeBag()
     var onSwitchToggle: ((Bool) -> Void)?
