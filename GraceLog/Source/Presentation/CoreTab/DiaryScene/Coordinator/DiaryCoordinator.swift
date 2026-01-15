@@ -24,9 +24,17 @@ final class DiaryCoordinator: NavigationCoordinator {
     }
     
     func showDiarySettings(completion: @escaping (Date?, Bool, Bool) -> Void) {
-        let diarySettingsVC = DependencyContainer.shared.injector.resolve(DiarySettingsViewController.self)
-        diarySettingsVC.reactor?.coordinator = self
-        diarySettingsVC.reactor?.onComplete = completion
+        let reactor = DependencyContainer.shared.injector.resolve(
+               DiarySettingsViewReactor.self,
+               argument: completion
+        )
+        reactor.coordinator = self
+        
+        let diarySettingsVC = DependencyContainer.shared.injector.resolve(
+              DiarySettingsViewController.self,
+              argument: reactor
+        )
+        
         navigationController.present(diarySettingsVC, animated: true)
     }
     

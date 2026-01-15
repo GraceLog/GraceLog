@@ -23,7 +23,7 @@ final class DiarySettingsView: UIView {
         $0.showsHorizontalScrollIndicator = false
         $0.showsVerticalScrollIndicator = false
         $0.rowHeight = 50
-        $0.register(DiaryAdditionalSettingsTableViewCell.self, forCellReuseIdentifier: DiaryAdditionalSettingsTableViewCell.identifier)
+        $0.register(DiaryAdditionalSettingsTableViewCell.self, forCellReuseIdentifier: DiaryAdditionalSettingsTableViewCell.reuseIdentifier)
     }
     
     override init(frame: CGRect) {
