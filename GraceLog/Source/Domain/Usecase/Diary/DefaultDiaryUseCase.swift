@@ -63,7 +63,7 @@ final class DefaultDiaryUseCase: DiaryUseCase {
             reserveTime: reserveTime,
             isHideLike: isHideLike,
             isHideComment: isHideComment
-        ).subscribe(onSuccess: {
+        ).subscribe(onSuccess: { _ in 
             self.createDiaryResult.accept(true)
         }, onFailure: {
             self.error.accept($0)

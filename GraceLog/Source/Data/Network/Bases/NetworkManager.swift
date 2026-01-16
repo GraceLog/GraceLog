@@ -52,12 +52,12 @@ extension NetworkManager {
         }
     }
     
-    func request(
+    func request<T: Decodable>(
         _ target: TargetType,
         images: [Data],
-        bodyFieldName: String = "request",
-        imageFieldName: String = "images"
-    ) -> Single<Void> {
+        bodyFieldName: String,
+        imageFieldName: String
+    ) -> Single<T> {
         return .create { single in
             self.session.upload(
                 multipartFormData: { multipartFormData in
@@ -88,7 +88,7 @@ extension NetworkManager {
                 method: target.method,
                 headers: target.headers.httpHeaders
             )
-            .responseDecodable(of: GLResponseDTO<GLEmptyResponse>.self) { response in
+            .responseDecodable(of: GLResponseDTO<T>.self) { response in
                 switch response.result {
                 case .success(let value):
                     let result = self.judgeStatus(
@@ -97,8 +97,8 @@ extension NetworkManager {
                     )
                     
                     switch result {
-                    case .success:
-                        single(.success(()))
+                    case .success(let data):
+                        single(.success(data))
                     case .failure(let error):
                         single(.failure(error))
                     }

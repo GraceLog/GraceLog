@@ -35,7 +35,7 @@ protocol DiaryRepository {
         reserveTime: Date?,
         isHideLike: Bool,
         isHideComment: Bool
-    ) -> Single<Void>
+    ) -> Single<GLEmptyResponse>
     
     func deleteDiary(diaryId: Int) -> Single<Bool>
 }

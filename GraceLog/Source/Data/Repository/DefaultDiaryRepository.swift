@@ -133,7 +133,7 @@ final class DefaultDiaryRepository: DiaryRepository {
         reserveTime: Date?,
         isHideLike: Bool,
         isHideComment: Bool
-    ) -> Single<Void> {
+    ) -> Single<GLEmptyResponse> {
         let request = CreateDiaryRequestDTO(
             title: title,
             description: description,
