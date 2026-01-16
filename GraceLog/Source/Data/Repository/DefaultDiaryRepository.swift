@@ -144,10 +144,11 @@ final class DefaultDiaryRepository: DiaryRepository {
             isHideComment: isHideComment
         )
         
-        return network.requestMultipart(
-            DiaryAPI.createDiary,
-            parameters: request,
-            images: images
+        return network.request(
+            DiaryAPI.createDiary(request),
+            images: images,
+            bodyFieldName: "createPostRequest",
+            imageFieldName: "images"
         )
     }
     

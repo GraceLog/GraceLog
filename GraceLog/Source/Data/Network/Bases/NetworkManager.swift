@@ -52,29 +52,33 @@ extension NetworkManager {
         }
     }
     
-    func requestMultipart<T: Encodable>(
+    func request(
         _ target: TargetType,
-        parameters: T,
-        images: [Data]
+        images: [Data],
+        bodyFieldName: String = "request",
+        imageFieldName: String = "images"
     ) -> Single<Void> {
         return .create { single in
             self.session.upload(
                 multipartFormData: { multipartFormData in
-                    let encoder = JSONEncoder()
-                    encoder.dateEncodingStrategy = .iso8601
-                    
-                    if let jsonData = try? encoder.encode(parameters) {
-                        multipartFormData.append(
-                            jsonData,
-                            withName: "createPostRequest",
-                            mimeType: "application/json"
-                        )
+                    if case .body(let requestBody) = target.parameters,
+                       let encodableRequest = requestBody {
+                        let encoder = JSONEncoder()
+                        encoder.dateEncodingStrategy = .iso8601
+                        
+                        if let jsonData = try? encoder.encode(encodableRequest) {
+                            multipartFormData.append(
+                                jsonData,
+                                withName: bodyFieldName,
+                                mimeType: "application/json"
+                            )
+                        }
                     }
                     
                     for (index, imageData) in images.enumerated() {
                         multipartFormData.append(
                             imageData,
-                            withName: "images",
+                            withName: imageFieldName,
                             fileName: "image\(index).jpeg",
                             mimeType: "image/jpeg"
                         )

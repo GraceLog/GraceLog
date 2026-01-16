@@ -8,7 +8,7 @@
 import Alamofire
 
 enum DiaryAPI {
-    case createDiary
+    case createDiary(CreateDiaryRequestDTO)
     case fetchDiary(diaryId: Int)
     case fetchCommunityDiaryList(CommunityDiaryListRequestDTO)
     case fetchMyDiaryList(MyDiaryListRequestDTO)
@@ -58,8 +58,8 @@ extension DiaryAPI: TargetType {
     
     var parameters: RequestParams {
         switch self {
-        case .createDiary:
-            return .none
+        case .createDiary(let request):
+            return .body(request)
         case .fetchDiary:
             return .none
         case .fetchCommunityDiaryList(let params):
