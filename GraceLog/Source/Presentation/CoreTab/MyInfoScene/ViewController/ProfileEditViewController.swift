@@ -124,8 +124,9 @@ final class ProfileEditViewController: GraceLogBaseViewController<ProfileEditVie
             .compactMap { $0 }
             .withUnretained(self)
             .bind(onNext: { owner, isSuccess in
-                // TODO: - 유저 업데이트 성공 여부에 따른 구현
-                print("유저 업데이트 성공 여부 \(isSuccess)")
+                if isSuccess {
+                    reactor.action.onNext(.executeProfileEdit)
+                }
             })
             .disposed(by: disposeBag)
         

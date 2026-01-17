@@ -34,4 +34,9 @@ final class ProfileEditCoordinator: Coordinator {
             completion: completion
         )
     }
+    
+    func profileEditEvent() {
+        NotificationCenterManager.reloadMyInfo.post()
+        navigationController.popViewController(animated: true)
+    }
 }

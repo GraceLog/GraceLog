@@ -54,7 +54,7 @@ extension NetworkManager {
     
     func request<T: Decodable>(
         _ target: TargetType,
-        images: [Data],
+        images: [Data]?,
         bodyFieldName: String,
         imageFieldName: String
     ) -> Single<T> {
@@ -75,13 +75,15 @@ extension NetworkManager {
                         }
                     }
                     
-                    for (index, imageData) in images.enumerated() {
-                        multipartFormData.append(
-                            imageData,
-                            withName: imageFieldName,
-                            fileName: "image\(index).jpeg",
-                            mimeType: "image/jpeg"
-                        )
+                    if let images = images {
+                        for (index, imageData) in images.enumerated() {
+                            multipartFormData.append(
+                                imageData,
+                                withName: imageFieldName,
+                                fileName: "image\(index).jpeg",
+                                mimeType: "image/jpeg"
+                            )
+                        }
                     }
                 },
                 to: target.baseURL + target.path,
