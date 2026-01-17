@@ -15,7 +15,8 @@ final class DiaryViewReactor: Reactor {
     private let disposeBag = DisposeBag()
     
     private var maxDiaryImageCount = 5
-    private var selectedKeywords: Set<DiaryKeyword> = []
+    var maxKeywordCount = 3
+    var selectedKeywords: Set<DiaryKeyword> = []
     private var selectedShareOptions: Set<Community> = []
     private var diaryTitle = ""
     private var diaryContent = ""
@@ -40,6 +41,7 @@ final class DiaryViewReactor: Reactor {
     
     enum Mutation {
         case setImages([DiaryImage])
+        case setKeywordStates([DiaryKeywordState])
         case setShareStates([DiaryShareState])
         case setCreateDiaryResult(Bool)
         case setError(Error)
@@ -113,10 +115,21 @@ extension DiaryViewReactor {
             )
         case .didSelectKeyword(let state):
             if state.isSelected {
+                guard selectedKeywords.count < maxKeywordCount else {
+                    return .empty()
+                }
                 selectedKeywords.insert(state.keyword)
             } else {
                 selectedKeywords.remove(state.keyword)
             }
+            
+            let updatedKeywords = DiaryKeyword.allCases.map { keyword in
+                DiaryKeywordState(
+                    keyword: keyword,
+                    isSelected: selectedKeywords.contains(keyword)
+                )
+            }
+            return .just(.setKeywordStates(updatedKeywords))
         case .didSelectShareOption(let state):
             if state.isSelected {
                 selectedShareOptions.insert(state.diaryOption)
@@ -158,6 +171,8 @@ extension DiaryViewReactor {
         switch mutation {
         case .setImages(let images):
             newState.images = images
+        case .setKeywordStates(let keywords):
+            newState.keywords = keywords
         case .setShareStates(let states):
             newState.shareStates = states
         case .setCreateDiaryResult(let isSuccess):
@@ -171,7 +186,6 @@ extension DiaryViewReactor {
 }
 
 // MARK: - Diary Model
-
 struct DiaryKeywordState {
     let keyword: DiaryKeyword
     let isSelected: Bool

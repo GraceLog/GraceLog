@@ -273,52 +273,41 @@ extension DiaryViewController {
             .setDelegate(self)
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$keywords)
-            .asDriver(onErrorJustReturn: [])
-            .drive(diaryKeywordView.keywordCollectionView.rx.items(
-                cellIdentifier: DiaryKeywordCollectionViewCell.identifier,
-                cellType: DiaryKeywordCollectionViewCell.self)
-            ) { index, item, cell in
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<Void, DiaryKeywordState>>(
+            configureCell: { _, collectionView, indexPath, item in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: DiaryKeywordCollectionViewCell.identifier,
+                    for: indexPath
+                ) as! DiaryKeywordCollectionViewCell
+                
+                cell.isSelected = item.isSelected
                 cell.configureUI(keyword: item.keyword.rawValue)
+                
+                if item.isSelected {
+                    collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                } else {
+                    collectionView.deselectItem(at: indexPath, animated: false)
+                }
+                
+                return cell
             }
+        )
+        
+        reactor.pulse(\.$keywords)
+            .map { [SectionModel(model: (), items: $0)] }
+            .asDriver(onErrorJustReturn: [])
+            .drive(diaryKeywordView.keywordCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        let collectionView = diaryKeywordView.keywordCollectionView
-        
-        let keywordSelectionEvent = Observable.merge(
-            collectionView.rx.itemSelected.asObservable(),
-            collectionView.rx.itemDeselected.asObservable()
+        Observable.merge(
+            diaryKeywordView.keywordCollectionView.rx.modelSelected(DiaryKeywordState.self)
+                .map { DiaryKeywordState(keyword: $0.keyword, isSelected: true) },
+            diaryKeywordView.keywordCollectionView.rx.modelDeselected(DiaryKeywordState.self)
+                .map { DiaryKeywordState(keyword: $0.keyword, isSelected: false) }
         )
-        
-        let selectedKeywordModels = Observable.merge(
-            collectionView.rx.modelSelected(DiaryKeywordState.self).asObservable(),
-            collectionView.rx.modelDeselected(DiaryKeywordState.self).asObservable()
-        )
-        
-        Observable.zip(keywordSelectionEvent, selectedKeywordModels)
-            .subscribe(with: self) { owner, state in
-                let (indexPath, model) = state
-                guard let cell = collectionView.cellForItem(at: indexPath) as? DiaryKeywordCollectionViewCell else {
-                    return
-                }
-                
-                let selectedCount = collectionView.indexPathsForSelectedItems?.count ?? 0
-                if selectedCount > 3 {
-                    cell.isSelected = false
-                    return
-                }
-                
-                cell.configureUI(keyword: model.keyword.rawValue)
-                
-                Observable.just(DiaryKeywordState(
-                    keyword: model.keyword,
-                    isSelected: cell.isSelected
-                ))
-                .map { DiaryViewReactor.Action.didSelectKeyword($0) }
-                .bind(to: reactor.action)
-                .disposed(by: owner.disposeBag)
-                
-            }.disposed(by: disposeBag)
+        .map { DiaryViewReactor.Action.didSelectKeyword($0) }
+        .bind(to: reactor.action)
+        .disposed(by: disposeBag)
     }
     
     private func bindDiarySettingTableView(reactor: DiaryViewReactor) {
