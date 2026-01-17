@@ -10,7 +10,7 @@ import RxSwift
 
 final class DiarySettingsViewReactor: Reactor {
     weak var coordinator: DiaryCoordinator?
-    private let onComplete: (Date?, Bool, Bool) -> Void
+    let onComplete = PublishSubject<(Date?, Bool, Bool)>()
     
     private var isReserveTimeEnabled: Bool = false
     private var reserveDate: Date? = nil
@@ -37,9 +37,7 @@ final class DiarySettingsViewReactor: Reactor {
     
     let initialState: State
     
-    init(onComplete: @escaping (Date?, Bool, Bool) -> Void) {
-        self.onComplete = onComplete
-        
+    init() {
         self.initialState = State(
             settings: [
                 DiarySettingsState(type: .hideLike, title: "좋아요 개수 숨기기", isOn: false),
@@ -62,7 +60,7 @@ extension DiarySettingsViewReactor {
             coordinator?.dismiss()
         case .didTapCompleteButton:
             let reserveTime = isReserveTimeEnabled ? reserveDate : nil
-            onComplete(reserveTime, isHideLike, isHideComment)
+            onComplete.onNext((reserveTime, isHideLike, isHideComment))
             coordinator?.dismiss()
         }
         return .empty()

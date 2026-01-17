@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class DiaryCoordinator: NavigationCoordinator {
     weak var parentCoordinator: Coordinator?
@@ -23,19 +24,19 @@ final class DiaryCoordinator: NavigationCoordinator {
         navigationController.setViewControllers([diaryVC], animated: false)
     }
     
-    func showDiarySettings(completion: @escaping (Date?, Bool, Bool) -> Void) {
+    func showDiarySettings() -> Observable<(Date?, Bool, Bool)> {
         let reactor = DependencyContainer.shared.injector.resolve(
-               DiarySettingsViewReactor.self,
-               argument: completion
+            DiarySettingsViewReactor.self
         )
         reactor.coordinator = self
         
         let diarySettingsVC = DependencyContainer.shared.injector.resolve(
-              DiarySettingsViewController.self,
-              argument: reactor
+            DiarySettingsViewController.self,
+            argument: reactor
         )
-        
         navigationController.present(diarySettingsVC, animated: true)
+        
+        return reactor.onComplete.take(1)
     }
     
     func dismiss() {

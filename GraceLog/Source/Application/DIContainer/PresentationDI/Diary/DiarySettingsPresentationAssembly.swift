@@ -9,8 +9,8 @@ import Swinject
 
 struct DiarySettingsPresentationAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(DiarySettingsViewReactor.self) { (resolver, completion: @escaping (Date?, Bool, Bool) -> Void) in
-            return DiarySettingsViewReactor(onComplete: completion)
+        container.register(DiarySettingsViewReactor.self) { resolver in
+            return DiarySettingsViewReactor()
         }
         
         container.register(DiarySettingsViewController.self) { (resolver, reactor: DiarySettingsViewReactor) in

@@ -12,6 +12,7 @@ import RxCocoa
 final class DiaryViewReactor: Reactor {
     private let usecase: DiaryCreatableUseCase
     var coordinator: DiaryCoordinator?
+    private let disposeBag = DisposeBag()
     
     private var maxDiaryImageCount = 5
     private var selectedKeywords: Set<DiaryKeyword> = []
@@ -91,11 +92,14 @@ extension DiaryViewReactor {
         case .updateContent(let content):
             diaryContent = content
         case .didTapSettings:
-            coordinator?.showDiarySettings { [weak self] reserveTime, isHideLike, isHideComment in
-                self?.reserveTime = reserveTime
-                self?.isHideLike = isHideLike
-                self?.isHideComment = isHideComment
-            }
+            coordinator?.showDiarySettings()
+                .subscribe(onNext: { [weak self] (reserveTime, isHideLike, isHideComment) in
+                    guard let self = self else { return }
+                    self.reserveTime = reserveTime
+                    self.isHideLike = isHideLike
+                    self.isHideComment = isHideComment
+                })
+                .disposed(by: disposeBag)
         case .didTapShareButton:
             usecase.createDiary(
                 images: currentState.images,
