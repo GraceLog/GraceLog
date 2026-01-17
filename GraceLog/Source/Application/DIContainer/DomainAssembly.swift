@@ -20,7 +20,7 @@ struct DomainAssembly: Assembly {
             )
         }
         
-        // CoreTab 
+        // CoreTab
         // Home
         container.register(HomePersonalUseCase.self) { resolver in
             let dailyVerseRepository = resolver.resolve(DailyVerseRepository.self)!
@@ -73,6 +73,14 @@ struct DomainAssembly: Assembly {
         container.register(MyInfoUseCase.self) { resolver in
             let userRepository = resolver.resolve(UserRepository.self)!
             return DefaultMyInfoUseCase(userRepository: userRepository)
+        }
+        
+        container.register(AnnouncementListUseCase.self) { resolver in
+            return DefaultAnnouncementListUseCase()
+        }
+        
+        container.register(AnnouncementDetailUseCase.self) { resolver, announcementId in
+            return DefaultAnnouncementDetailUseCase(announcementId: announcementId)
         }
     }
 }

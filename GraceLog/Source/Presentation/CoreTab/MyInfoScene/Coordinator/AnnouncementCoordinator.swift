@@ -18,25 +18,18 @@ final class AnnouncementCoordinator: Coordinator {
     }
     
     func start() {
-        let announcementVC = AnnouncementViewController(
-            reactor: AnnouncementViewReactor(
-                coordinator: self,
-                usecase: DefaultAnnouncementListUseCase()
-            )
-        )
-        self.navigationController.pushViewController(announcementVC, animated: true)
+        let announcementVC = DependencyContainer.shared.injector.resolve(AnnouncementViewController.self)
+        announcementVC.reactor?.coordinator = self
+        navigationController.pushViewController(announcementVC, animated: true)
     }
     
     func showAnnouncementDetail(announcementId: Int) {
-        let detailVC = AnnouncementDetailViewController(
-            reactor: AnnouncementDetailViewReactor(
-                coordinator: self,
-                usecase: DefaultAnnouncementDetailUseCase(
-                    announcementId: announcementId
-                )
-            )
+        let announcementDetailVC = DependencyContainer.shared.injector.resolve(
+            AnnouncementDetailViewController.self,
+            argument: announcementId
         )
-        navigationController.pushViewController(detailVC, animated: true)
+        announcementDetailVC.reactor?.coordinator = self
+        navigationController.pushViewController(announcementDetailVC, animated: true)
     }
     
     func popViewController() {

@@ -170,6 +170,7 @@
 		DE6459B12F10CBB800C98B5A /* NotificationCenterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6459B02F10CBB800C98B5A /* NotificationCenterHandler.swift */; };
 		DE6459B32F10CBC700C98B5A /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */; };
 		DE645A452F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */; };
+		DE645A472F1B696800C98B5A /* AnnouncementPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */; };
 		DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */; };
 		DE655B212DA5EC480073B4F7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */; };
 		DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */; };
@@ -448,6 +449,7 @@
 		DE6459B02F10CBB800C98B5A /* NotificationCenterHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandler.swift; sourceTree = "<group>"; };
 		DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDivideTableViewCell.swift; sourceTree = "<group>"; };
 		DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareTableViewCell.swift; sourceTree = "<group>"; };
@@ -878,6 +880,7 @@
 			children = (
 				70A97C652E2169D300F08DF6 /* MyInfoPresentationAssembly.swift */,
 				DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */,
+				DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */,
 			);
 			path = MyInfo;
 			sourceTree = "<group>";
@@ -2108,6 +2111,7 @@
 				70A97C602E2164C600F08DF6 /* HomePresentationAssembly.swift in Sources */,
 				DED558642DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift in Sources */,
 				DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */,
+				DE645A472F1B696800C98B5A /* AnnouncementPresentationAssembly.swift in Sources */,
 				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
 				DE42374C2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift in Sources */,

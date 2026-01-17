@@ -9,7 +9,7 @@ import ReactorKit
 import RxSwift
 
 final class AnnouncementDetailViewReactor: Reactor {
-    private let coordinator: AnnouncementCoordinator
+    var coordinator: AnnouncementCoordinator?
     private let usecase: AnnouncementDetailUseCase
     
     var initialState: State
@@ -27,11 +27,7 @@ final class AnnouncementDetailViewReactor: Reactor {
         @Pulse var announcement: Announcement?
     }
     
-    init(
-        coordinator: AnnouncementCoordinator,
-        usecase: AnnouncementDetailUseCase
-    ) {
-        self.coordinator = coordinator
+    init(usecase: AnnouncementDetailUseCase) {
         self.usecase = usecase
         
         self.initialState = State()
@@ -44,7 +40,7 @@ extension AnnouncementDetailViewReactor {
         case .fetchAnnouncement:
             usecase.fetchAnnouncementDetail()
         case .didTapBackButton:
-            coordinator.popViewController()
+            coordinator?.popViewController()
         }
         return .empty()
     }

@@ -8,7 +8,7 @@
 import Swinject
 
 struct ProfileEditPresentationAssembly: Assembly {
-    func assemble(container: Swinject.Container) {
+    func assemble(container: Container) {
         container.register(ProfileEditViewReactor.self) { resolver in
             let usecase = resolver.resolve(MyInfoUseCase.self)!
             return ProfileEditViewReactor(usecase: usecase)
@@ -21,4 +21,3 @@ struct ProfileEditPresentationAssembly: Assembly {
         
     }
 }
-
