@@ -21,6 +21,7 @@ final class DependencyContainer {
             HomePresentationAssembly(),
             DiaryPresentationAssembly(),
             MyInfoPresentationAssembly(),
+            ProfileEditPresentationAssembly(),
             DiaryDetailsPresentationAssembly(),
             DiarySettingsPresentationAssembly()
         ])
