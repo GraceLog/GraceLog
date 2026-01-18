@@ -10,20 +10,20 @@ import RxSwift
 import RxCocoa
 
 final class ProfileEditViewReactor: Reactor {
-    private let coordinator: ProfileEditCoordinator
-    private let usecase: DefaultMyInfoUseCase
+    var coordinator: ProfileEditCoordinator?
+    private let usecase: MyInfoUseCase
     private let userManager = UserManager.shared
     
     var initialState: State
     
     enum Action {
-        //        case updateProfileImage(UIImage?)
         case updateNickname(String)
         case updateName(String)
         case updateMessage(String)
         case didTapProfileImageEdit
         case didTapSaveButton
         case didTapBackButton
+        case executeProfileEdit
     }
     
     enum Mutation {
@@ -44,8 +44,7 @@ final class ProfileEditViewReactor: Reactor {
         @Pulse var error: Error?
     }
     
-    init(coordinator: ProfileEditCoordinator, usecase: DefaultMyInfoUseCase) {
-        self.coordinator = coordinator
+    init(usecase: MyInfoUseCase) {
         self.usecase = usecase
         
         self.initialState = State(
@@ -88,9 +87,9 @@ extension ProfileEditViewReactor {
             return .just(.setMessage(message))
         case .didTapProfileImageEdit:
             return Observable.create { [weak self] observer in
-                self?.coordinator.showImagePicker { image in
+                self?.coordinator?.showImagePicker { image in
                     if let image = image {
-                        observer.onNext(.setImage(image.pngData()))
+                        observer.onNext(.setImage(image.jpegData(compressionQuality: 0.8)))
                     } else {
                         observer.onNext(.setImage(nil))
                     }
@@ -106,7 +105,9 @@ extension ProfileEditViewReactor {
                 message: currentState.message
             )
         case .didTapBackButton:
-            coordinator.popViewController()
+            coordinator?.popViewController()
+        case .executeProfileEdit:
+            coordinator?.profileEditEvent()
         }
         return .empty()
     }

@@ -5,19 +5,69 @@
 //  Created by 이상준 on 3/28/25.
 //
 
+import RxSwift
 import RxRelay
 
 typealias DiaryUseCase = DiaryCreatableUseCase & DiaryDeletableUseCase
 
 final class DefaultDiaryUseCase: DiaryUseCase {
+    var communityList = BehaviorRelay<[Community]>(value: [])
     var createDiaryResult = PublishRelay<Bool>()
+    var error = PublishRelay<Error>()
     
-    func createDiary(title: String, content: String, selectedKeywords: [DiaryKeyword], shareOptions: [Community]) {
-        // TODO: - 일기장 생성에 따른 등록된 이미지 처리 필요
+    private let communityRepository: CommunityRepository
+    private let diaryRepository: DiaryRepository
+    private let disposeBag = DisposeBag()
+    
+    init(
+        communityRepository: CommunityRepository,
+        diaryRepository: DiaryRepository
+    ) {
+        self.communityRepository = communityRepository
+        self.diaryRepository = diaryRepository
+    }
+    
+    func fetchCommunityList() {
+        communityRepository.fetchMyCommunityList()
+            .subscribe(onSuccess: {
+                self.communityList.accept($0)
+            }, onFailure: {
+                self.error.accept($0)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func createDiary(
+        images: [DiaryImage],
+        title: String,
+        content: String,
+        selectedKeywords: [DiaryKeyword]?,
+        shareOptions: [Community]?,
+        reserveTime: Date?,
+        isHideLike: Bool,
+        isHideComment: Bool
+    ) {
+        let images = images.compactMap { diaryImage in
+            diaryImage.image.jpegData(compressionQuality: 0.8)
+        }
         
-        print("작성된 일기장 제목: \(title)\n작성된 일기장 내용: \(content)\n작성된 일기장 키워드들: \(selectedKeywords)\n작성된 일기장 공유목록: \(shareOptions)")
+        let keywords = selectedKeywords?.map { $0.rawValue }
+        let communityIds = shareOptions?.map { $0.id }
         
-        let result = [true, false].shuffled()[0]
-        createDiaryResult.accept(result)
+        diaryRepository.createDiary(
+            images: images,
+            title: title,
+            description: content,
+            keywordList: keywords,
+            selectedCommunityIdList: communityIds,
+            reserveTime: reserveTime,
+            isHideLike: isHideLike,
+            isHideComment: isHideComment
+        ).subscribe(onSuccess: { _ in 
+            self.createDiaryResult.accept(true)
+        }, onFailure: {
+            self.error.accept($0)
+        })
+        .disposed(by: disposeBag)
     }
 }

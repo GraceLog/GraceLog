@@ -29,6 +29,13 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         $0.spacing = 20
     }
     
+    private let cancelButton = UIButton().then {
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+        let image = UIImage(systemName: "xmark", withConfiguration: config)
+        $0.setImage(image, for: .normal)
+        $0.tintColor = GLColor.textAccent.color
+    }
+    
     private lazy var addImageContainerView = UIView().then {
         $0.addSubview(diaryImageListView)
         diaryImageListView.snp.makeConstraints {
@@ -40,6 +47,7 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
     private let diaryImageListView = DiaryImageListView()
     private let diaryEditView = DiaryEditView()
     private let diaryKeywordView = DiaryKeywordView()
+    private let diaryShareDivider = GLDividerView()
     private let diaryShareView = DiaryShareView()
     private let diarySettingView = DiarySettingView()
     
@@ -55,16 +63,16 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
     override func setupStyles() {
         super.setupStyles()
         view.backgroundColor = .white
-        diaryKeywordView.keywordCollectionView.delegate = self
         navigationBar.setupTitleLabel(text: "일기 쓰기")
+        navigationBar.addRightItem(cancelButton)
     }
     
     override func setupLayouts() {
         super.setupLayouts()
         contentView.addSubview(scrollView)
         [containerStackView, shareButton].forEach { scrollView.addSubview($0) }
-        let subviews = [addImageContainerView, diaryEditView, diaryKeywordView, diaryShareView, diarySettingView]
-        containerStackView.addArrangedDividerSubViews(subviews)
+        let subviews = [addImageContainerView, diaryEditView, diaryKeywordView, diaryShareDivider, diaryShareView, diarySettingView]
+        containerStackView.addArrangedDividerSubViews(subviews, exclude: [2, 3])
         
         shareButton.snp.makeConstraints {
             $0.height.equalTo(45)
@@ -122,7 +130,7 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
                     newImages.append(photo.image)
                 }
             }
-
+            
             self?.reactor?.action.onNext(.updateImages(newImages))
         }
         
@@ -131,6 +139,11 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
     
     override func bind(reactor: DiaryViewReactor) {
         super.bind(reactor: reactor)
+        cancelButton.rx.tap
+            .map { DiaryViewReactor.Action.didTapCloseButton }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         diaryEditView.titleInputView.text
             .subscribe(with: self) { owner, title in
                 reactor.action.onNext(.updateTitle(title))
@@ -152,6 +165,12 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         
         reactor.pulse(\.$shareStates)
             .asDriver(onErrorJustReturn: [])
+            .do(onNext: { [weak self] states in
+                guard let self = self else { return }
+                let isHidden = states.isEmpty
+                self.diaryShareView.isHidden = isHidden
+                self.diaryShareDivider.isHidden = isHidden
+            })
             .drive(diaryShareView.diaryShareTableView.rx.items(
                 cellIdentifier: DiaryShareTableViewCell.identifier,
                 cellType: DiaryShareTableViewCell.self)
@@ -183,9 +202,19 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
         
         reactor.pulse(\.$isSuccessCreateDiary)
             .compactMap { $0 }
-            .subscribe(with: self) { owner, isSuccess in
-                // TODO: - 일기장 생성 성공여부에 따른 로직 구현
-                print("일기장 생성 성공여부: \(isSuccess)")
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self) { owner, isSuccess in
+                if isSuccess == true {
+                    reactor.action.onNext(.executeCreateDiary)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$error)
+            .compactMap { $0 }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, error in
+                owner.view.makeToast(error.localizedDescription)
             }
             .disposed(by: disposeBag)
         
@@ -196,7 +225,6 @@ final class DiaryViewController: GraceLogBaseViewController<DiaryViewReactor> {
 }
 
 // MARK: - Diary Bindings
-
 extension DiaryViewController {
     private func bindDiaryImageCollectionView(reactor: DiaryViewReactor) {
         let imageDataSource = RxCollectionViewSectionedAnimatedDataSource<DiaryImageSection>(
@@ -217,7 +245,7 @@ extension DiaryViewController {
                         }
                     }
                     .disposed(by: cell.disposeBag)
-
+                
                 return cell
             }
         )
@@ -227,7 +255,7 @@ extension DiaryViewController {
                 let items = images.map { DiaryImageItem.image($0) }
                 return [DiaryImageSection.imageSection(items: items)]
             }.share(replay: 1)
-
+        
         diaryImageSectionState
             .compactMap { $0.first?.items.count }
             .subscribe(with: self) { owner, imageCount in
@@ -239,48 +267,47 @@ extension DiaryViewController {
             .bind(to: diaryImageListView.diaryImageCollectionView.rx.items(dataSource: imageDataSource))
             .disposed(by: disposeBag)
     }
-
+    
     private func bindDiaryKeywordCollectionView(reactor: DiaryViewReactor) {
-        reactor.pulse(\.$keywords)
-            .asDriver(onErrorJustReturn: [])
-            .drive(diaryKeywordView.keywordCollectionView.rx.items(
-                cellIdentifier: DiaryKeywordCollectionViewCell.identifier,
-                cellType: DiaryKeywordCollectionViewCell.self)
-            ) { index, item, cell in
-                cell.configureUI(keyword: item.keyword.rawValue)
-            }
+        diaryKeywordView.keywordCollectionView.rx
+            .setDelegate(self)
             .disposed(by: disposeBag)
         
-        let collectionView = diaryKeywordView.keywordCollectionView
-        
-        let keywordSelectionEvent = Observable.merge(
-            collectionView.rx.itemSelected.asObservable(),
-            collectionView.rx.itemDeselected.asObservable()
-        )
-
-        let selectedKeywordModels = Observable.merge(
-            collectionView.rx.modelSelected(DiaryKeywordState.self).asObservable(),
-            collectionView.rx.modelDeselected(DiaryKeywordState.self).asObservable()
-        )
-        
-        Observable.zip(keywordSelectionEvent, selectedKeywordModels)
-            .subscribe(with: self) { owner, state in
-                let (indexPath, model) = state
-                guard let cell = collectionView.cellForItem(at: indexPath) as? DiaryKeywordCollectionViewCell else {
-                    return
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<Void, DiaryKeywordState>>(
+            configureCell: { _, collectionView, indexPath, item in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: DiaryKeywordCollectionViewCell.identifier,
+                    for: indexPath
+                ) as! DiaryKeywordCollectionViewCell
+                
+                cell.isSelected = item.isSelected
+                cell.configureUI(keyword: item.keyword.rawValue)
+                
+                if item.isSelected {
+                    collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                } else {
+                    collectionView.deselectItem(at: indexPath, animated: false)
                 }
                 
-                cell.configureUI(keyword: model.keyword.rawValue)
-                
-                Observable.just(DiaryKeywordState(
-                    keyword: model.keyword,
-                    isSelected: cell.isSelected
-                ))
-                .map { DiaryViewReactor.Action.didSelectKeyword($0) }
-                .bind(to: reactor.action)
-                .disposed(by: owner.disposeBag)
-                
-            }.disposed(by: disposeBag)
+                return cell
+            }
+        )
+        
+        reactor.pulse(\.$keywords)
+            .map { [SectionModel(model: (), items: $0)] }
+            .asDriver(onErrorJustReturn: [])
+            .drive(diaryKeywordView.keywordCollectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        Observable.merge(
+            diaryKeywordView.keywordCollectionView.rx.modelSelected(DiaryKeywordState.self)
+                .map { DiaryKeywordState(keyword: $0.keyword, isSelected: true) },
+            diaryKeywordView.keywordCollectionView.rx.modelDeselected(DiaryKeywordState.self)
+                .map { DiaryKeywordState(keyword: $0.keyword, isSelected: false) }
+        )
+        .map { DiaryViewReactor.Action.didSelectKeyword($0) }
+        .bind(to: reactor.action)
+        .disposed(by: disposeBag)
     }
     
     private func bindDiarySettingTableView(reactor: DiaryViewReactor) {
@@ -299,7 +326,7 @@ extension DiaryViewController {
             .drive(with: self) { owner, selectedMenu in
                 switch selectedMenu {
                 case .setting:
-                    print("추가 설정화면 이동")
+                    reactor.action.onNext(.didTapSettings)
                 }
             }
             .disposed(by: disposeBag)

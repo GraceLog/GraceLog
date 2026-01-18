@@ -10,7 +10,7 @@ import ReactorKit
 import RxDataSources
 
 final class HomeViewReactor: Reactor {
-    private let homeUsecase: HomeUseCase
+    private let homeUsecase: HomePersonalUseCase
     private let disposeBag = DisposeBag()
     
     enum Action {
@@ -40,7 +40,7 @@ final class HomeViewReactor: Reactor {
     let initialState: State
     let user = UserManager.shared
     
-    init(homeUsecase: HomeUseCase) {
+    init(homeUsecase: HomePersonalUseCase) {
         self.homeUsecase = homeUsecase
         self.initialState = State(
             currentSegment: .user,

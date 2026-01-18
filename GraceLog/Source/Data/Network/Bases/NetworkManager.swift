@@ -27,6 +27,7 @@ extension NetworkManager {
     ) -> Single<T> {
         return .create { single in
             self.session.request(target)
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: GLResponseDTO<T>.self) { response in
                     switch response.result {
                     case .success(let value):
@@ -51,17 +52,45 @@ extension NetworkManager {
         }
     }
     
-    func requestMultipart(
+    func request<T: Decodable>(
         _ target: TargetType,
-        multipartFormData: MultipartFormData
-    ) -> Single<Void> {
+        images: [Data]?,
+        bodyFieldName: String,
+        imageFieldName: String
+    ) -> Single<T> {
         return .create { single in
             self.session.upload(
-                multipartFormData: multipartFormData,
+                multipartFormData: { multipartFormData in
+                    if case .body(let requestBody) = target.parameters,
+                       let encodableRequest = requestBody {
+                        let encoder = JSONEncoder()
+                        encoder.dateEncodingStrategy = .iso8601
+                        
+                        if let jsonData = try? encoder.encode(encodableRequest) {
+                            multipartFormData.append(
+                                jsonData,
+                                withName: bodyFieldName,
+                                mimeType: "application/json"
+                            )
+                        }
+                    }
+                    
+                    if let images = images {
+                        for (index, imageData) in images.enumerated() {
+                            multipartFormData.append(
+                                imageData,
+                                withName: imageFieldName,
+                                fileName: "image\(index).jpeg",
+                                mimeType: "image/jpeg"
+                            )
+                        }
+                    }
+                },
                 to: target.baseURL + target.path,
                 method: target.method,
                 headers: target.headers.httpHeaders
-            ).responseDecodable(of: GLResponseDTO<[String]>.self) { response in
+            )
+            .responseDecodable(of: GLResponseDTO<T>.self) { response in
                 switch response.result {
                 case .success(let value):
                     let result = self.judgeStatus(
@@ -70,8 +99,8 @@ extension NetworkManager {
                     )
                     
                     switch result {
-                    case .success:
-                        single(.success(()))
+                    case .success(let data):
+                        single(.success(data))
                     case .failure(let error):
                         single(.failure(error))
                     }
@@ -81,6 +110,7 @@ extension NetworkManager {
                     single(.failure(glError))
                 }
             }
+            
             return Disposables.create()
         }
     }

@@ -8,8 +8,8 @@
 import Foundation
 
 struct DateRangeDiaryListRequestDTO: Encodable {
-    let startDate: Date
-    let endDate: Date
-    let communityId: Int
+    let startDate: String
+    let endDate: String
+    let communityId: Int?
     let memberId: Int
 }

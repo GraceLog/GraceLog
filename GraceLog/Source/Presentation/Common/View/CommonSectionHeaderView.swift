@@ -39,8 +39,4 @@ final class CommonSectionHeaderView: UITableViewHeaderFooterView {
         titleLabel.text = title
         titleLabel.font = font
     }
-    
-    func updateTopOffset(_ offset: CGFloat) {
-        bottomOffSet?.update(offset: offset)
-    }
 }

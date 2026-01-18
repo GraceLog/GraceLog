@@ -10,17 +10,32 @@ import RxSwift
 
 protocol DiaryRepository {
     func fetchDiary(diaryId: Int) -> Single<DiaryDetails>
-    func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]>
-    func postDiary(
+    
+    func fetchMyDiaryList() -> Single<[MyDiaryPreview]>
+    
+    func fetchDateRangeDiaryList(
+        startDate: String,
+        endDate: String,
+        communityId: Int?,
+        memberId: Int
+    ) -> Single<[DiaryDetails]>
+    
+    func fetchCommunityDiaryList(
+        communityId: Int,
+        cursorId: Int?,
+        size: Int
+    ) -> Single<CommunityDiaryPreViewInfo>
+    
+    func createDiary(
+        images: [Data],
         title: String,
         description: String,
-        keywordList: [String],
-        selectedCommunityIdList: [Int],
-        reserveTime: Date,
+        keywordList: [String]?,
+        selectedCommunityIdList: [Int]?,
+        reserveTime: Date?,
         isHideLike: Bool,
-        isHideComment: Bool,
-        images: [Data]
-    ) -> Single<Void>
+        isHideComment: Bool
+    ) -> Single<GLEmptyResponse>
     
-    func likeToggle(postId: Int) -> Single<Bool>
+    func deleteDiary(diaryId: Int) -> Single<Bool>
 }

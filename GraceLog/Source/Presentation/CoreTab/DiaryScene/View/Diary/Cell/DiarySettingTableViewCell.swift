@@ -45,6 +45,7 @@ final class DiarySettingTableViewCell: UITableViewCell {
     
     private func configureUI() {
         selectionStyle = .none
+        contentView.backgroundColor = .white
         contentView.addSubview(containerStackView)
         [settingImageView, settingTitleLabel, accesoryImageView].forEach { containerStackView.addArrangedSubview($0) }
         

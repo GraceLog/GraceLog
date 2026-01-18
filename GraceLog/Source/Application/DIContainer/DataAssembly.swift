@@ -19,12 +19,24 @@ struct DataAssembly: Assembly {
             return DefaultUserRepository(network: network)
         }
         
-        container.register(HomeRepository.self) { resolver in
-            return DefaultHomeRepository(network: network)
+        container.register(CommunityRepository.self) { resolver in
+            return DefaultCommunityRepository(network: network)
         }
         
         container.register(DiaryRepository.self) { resolver in
             return DefaultDiaryRepository(network: network)
+        }
+        
+        container.register(DailyVerseRepository.self) { resolver in
+            return DefaultDailyVerseRepository(network: network)
+        }
+        
+        container.register(VideoRepository.self) { resolver in
+            return DefaultVideoRepository(network: network)
+        }
+        
+        container.register(LikeRepository.self) { resolver in
+            return DefaultLikeRepository(network: network)
         }
     }
 }

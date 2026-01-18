@@ -10,17 +10,18 @@ import ReactorKit
 import RxSwift
 
 final class MyInfoViewReactor: Reactor {
-    weak var coordinator: MyInfoCoordinator?
+    var coordinator: MyInfoCoordinator?
     private let user = UserManager.shared
     
     enum Action {
         case viewDidLoad
-        case refreshData
+        case updateUser
         case itemSelected(at: IndexPath)
     }
     
     enum Mutation {
         case setSections([MyInfoSection])
+        case setUser(UserManager)
         case selectItem(MyInfoItemType)
     }
     
@@ -43,12 +44,13 @@ final class MyInfoViewReactor: Reactor {
 extension MyInfoViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad, .refreshData:
+        case .viewDidLoad:
             let sections = createSections()
             return .just(.setSections(sections))
+        case .updateUser:
+            return .just(.setUser(UserManager.shared))
         case .itemSelected(let indexPath):
             let item = currentState.sections[indexPath.section].items[indexPath.row]
-            
             if let myInfoItem = item as? MyInfoItem {
                 switch myInfoItem.type {
                 case .myProfile:
@@ -69,6 +71,8 @@ extension MyInfoViewReactor {
         switch mutation {
         case .setSections(let sections):
             newState.sections = sections
+        case .setUser(let user):
+            newState.user = user
         case .selectItem(let itemType):
             newState.selectedItem = itemType
         }
@@ -77,6 +81,8 @@ extension MyInfoViewReactor {
     }
     
     private func createSections() -> [MyInfoSection] {
+        let currentUser = UserManager.shared
+        
         let myInfoItems = [
             MyInfoItem(icon: "user", title: "프로필 편집", type: .myProfile),
             MyInfoItem(icon: "coffee", title: "나의 감사일기", type: .myGraceLog),
@@ -102,7 +108,7 @@ extension MyInfoViewReactor {
         ]
         
         return [
-            .myInfo(title: "\(user.name)님의 Grace Log", items: myInfoItems),
+            .myInfo(title: "\(currentUser.name)님의 Grace Log", items: myInfoItems),
             .notificationSettings(title: "푸시 알림 설정", items: notificationItems),
             .customerService(title: "고객센터", items: customerServiceItems),
             .accountSettings(title: "계정 설정", items: logoutItems),

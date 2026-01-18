@@ -13,28 +13,14 @@ final class ProfileEditCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     
-    required init(_ navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
     func start() {
-        self.pushProfileEditViewController()
-    }
-    
-    func pushProfileEditViewController() {
-        let useCase = DefaultMyInfoUseCase(
-            userRepository: DefaultUserRepository(
-                network: NetworkManager()
-            )
-        )
-        
-        let reactor = ProfileEditViewReactor(coordinator: self, usecase: useCase)
-        let profileEditVC = ProfileEditViewController()
-        profileEditVC.view.backgroundColor = .white
-        profileEditVC.reactor = reactor
-        profileEditVC.title = "프로필 편집"
-        
-        self.navigationController.pushViewController(profileEditVC, animated: true)
+        let profileEditVC = DependencyContainer.shared.injector.resolve(ProfileEditViewController.self)
+        profileEditVC.reactor?.coordinator = self
+        navigationController.pushViewController(profileEditVC, animated: true)
     }
     
     func popViewController() {
@@ -47,5 +33,10 @@ final class ProfileEditCoordinator: Coordinator {
             from: navigationController,
             completion: completion
         )
+    }
+    
+    func profileEditEvent() {
+        NotificationCenterManager.reloadMyInfo.post()
+        navigationController.popViewController(animated: true)
     }
 }

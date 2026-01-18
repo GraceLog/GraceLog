@@ -11,28 +11,40 @@ import RxCocoa
 
 final class DiaryViewReactor: Reactor {
     private let usecase: DiaryCreatableUseCase
+    var coordinator: DiaryCoordinator?
+    private let disposeBag = DisposeBag()
     
     private var maxDiaryImageCount = 5
-    private var selectedKeywords: Set<DiaryKeyword> = []
+    var maxKeywordCount = 3
+    var selectedKeywords: Set<DiaryKeyword> = []
     private var selectedShareOptions: Set<Community> = []
     private var diaryTitle = ""
     private var diaryContent = ""
+    private var reserveTime: Date? = nil
+    private var isHideLike: Bool = false
+    private var isHideComment: Bool = false
     
     var initialState: State
     
     enum Action {
+        case didTapCloseButton
         case updateImages([UIImage])
         case deleteImage(at: Int)
         case updateTitle(String)
         case updateContent(String)
+        case didTapSettings
         case didTapShareButton
         case didSelectKeyword(DiaryKeywordState)
         case didSelectShareOption(DiaryShareState)
+        case executeCreateDiary
     }
     
     enum Mutation {
         case setImages([DiaryImage])
+        case setKeywordStates([DiaryKeywordState])
+        case setShareStates([DiaryShareState])
         case setCreateDiaryResult(Bool)
+        case setError(Error)
     }
     
     struct State {
@@ -40,32 +52,26 @@ final class DiaryViewReactor: Reactor {
         @Pulse var keywords: [DiaryKeywordState]
         @Pulse var shareStates: [DiaryShareState]
         @Pulse var isSuccessCreateDiary: Bool?
+        @Pulse var error: Error?
     }
     
     init(usecase: DiaryCreatableUseCase) {
         self.usecase = usecase
         self.initialState = State(
-            images: [], 
+            images: [],
             keywords: DiaryKeyword.allCases.map { DiaryKeywordState(keyword: $0, isSelected: false) },
-            shareStates: [Community(id: 1, name: "파이어폭스",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/firefox/200")),
-                          Community(id: 2, name: "스위프트 스터디",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/swift/200")),
-                          Community(id: 3, name: "iOS 개발 크루",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/ios/200")),
-                          Community(id: 4, name: "알고리즘 클럽",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/algorithm/200")),
-                          Community(id: 5, name: "UI/UX 연구회",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/design/200")),
-                          Community(id: 6, name: "네트워킹 동아리",
-                                    logoImageURL: URL(string: "https://picsum.photos/seed/networking/200")),].map { DiaryShareState(diaryOption: $0, isSelected: false) }
+            shareStates: []
         )
+        
+        usecase.fetchCommunityList()
     }
 }
 
 extension DiaryViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .didTapCloseButton:
+            coordinator?.dismiss()
         case .updateImages(let newImages):
             let currentImages = currentState.images
             let convertedImages = newImages.map { DiaryImage(id: UUID(), image: $0) }
@@ -87,32 +93,74 @@ extension DiaryViewReactor {
             diaryTitle = title
         case .updateContent(let content):
             diaryContent = content
+        case .didTapSettings:
+            coordinator?.showDiarySettings()
+                .subscribe(onNext: { [weak self] (reserveTime, isHideLike, isHideComment) in
+                    guard let self = self else { return }
+                    self.reserveTime = reserveTime
+                    self.isHideLike = isHideLike
+                    self.isHideComment = isHideComment
+                })
+                .disposed(by: disposeBag)
         case .didTapShareButton:
             usecase.createDiary(
+                images: currentState.images,
                 title: diaryTitle,
                 content: diaryContent,
                 selectedKeywords: Array(selectedKeywords),
-                shareOptions: Array(selectedShareOptions)
+                shareOptions: Array(selectedShareOptions),
+                reserveTime: reserveTime,
+                isHideLike: isHideLike,
+                isHideComment: isHideComment
             )
         case .didSelectKeyword(let state):
             if state.isSelected {
+                guard selectedKeywords.count < maxKeywordCount else {
+                    return .empty()
+                }
                 selectedKeywords.insert(state.keyword)
             } else {
                 selectedKeywords.remove(state.keyword)
             }
+            
+            let updatedKeywords = DiaryKeyword.allCases.map { keyword in
+                DiaryKeywordState(
+                    keyword: keyword,
+                    isSelected: selectedKeywords.contains(keyword)
+                )
+            }
+            return .just(.setKeywordStates(updatedKeywords))
         case .didSelectShareOption(let state):
             if state.isSelected {
                 selectedShareOptions.insert(state.diaryOption)
             } else {
                 selectedShareOptions.remove(state.diaryOption)
             }
+        case .executeCreateDiary:
+            coordinator?.diaryCreatedEvent()
         }
         return .empty()
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        Observable.merge(
-            usecase.createDiaryResult.map { .setCreateDiaryResult($0) },
+        let fetchCommunitiesMutation = usecase.communityList
+            .map { communities in
+                let shareStates = communities.map { community in
+                    DiaryShareState(diaryOption: community, isSelected: false)
+                }
+                return Mutation.setShareStates(shareStates)
+            }
+        
+        let createDiaryResultMutation = usecase.createDiaryResult
+            .map { Mutation.setCreateDiaryResult($0) }
+        
+        let errorMutation = usecase.error
+            .map { Mutation.setError($0) }
+        
+        return Observable.merge(
+            fetchCommunitiesMutation,
+            createDiaryResultMutation,
+            errorMutation,
             mutation
         )
     }
@@ -123,8 +171,14 @@ extension DiaryViewReactor {
         switch mutation {
         case .setImages(let images):
             newState.images = images
+        case .setKeywordStates(let keywords):
+            newState.keywords = keywords
+        case .setShareStates(let states):
+            newState.shareStates = states
         case .setCreateDiaryResult(let isSuccess):
             newState.isSuccessCreateDiary = isSuccess
+        case .setError(let error):
+            newState.error = error
         }
         
         return newState
@@ -132,7 +186,6 @@ extension DiaryViewReactor {
 }
 
 // MARK: - Diary Model
-
 struct DiaryKeywordState {
     let keyword: DiaryKeyword
     let isSelected: Bool

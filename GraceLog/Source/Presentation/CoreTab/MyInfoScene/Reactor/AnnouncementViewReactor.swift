@@ -9,7 +9,7 @@ import ReactorKit
 import RxSwift
 
 final class AnnouncementViewReactor: Reactor {
-    private let coordinator: AnnouncementCoordinator
+    var coordinator: AnnouncementCoordinator?
     private let usecase: AnnouncementListUseCase
     
     var initialState: State
@@ -27,11 +27,7 @@ final class AnnouncementViewReactor: Reactor {
         @Pulse var announcements: [Announcement]
     }
     
-    init(
-        coordinator: AnnouncementCoordinator,
-        usecase: AnnouncementListUseCase
-    ) {
-        self.coordinator = coordinator
+    init(usecase: AnnouncementListUseCase) {
         self.usecase = usecase
         
         self.initialState = State(
@@ -47,9 +43,9 @@ extension AnnouncementViewReactor {
         switch action {
         case .didTapAnnouncement(let announcementId):
             print("선택된 공지사항 아이디: \(announcementId)")
-            coordinator.showAnnouncementDetail(announcementId: announcementId)
+            coordinator?.showAnnouncementDetail(announcementId: announcementId)
         case .didTapBackButton:
-            coordinator.popViewController()
+            coordinator?.popViewController()
         }
         
         return .empty()

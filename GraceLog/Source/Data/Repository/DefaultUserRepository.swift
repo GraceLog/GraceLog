@@ -29,7 +29,6 @@ final class DefaultUserRepository: UserRepository {
             }
     }
     
-    // TODO: - Multipart Form Data로 호출하도록 수정
     func updateUser(
         name: String,
         nickname: String,
@@ -39,20 +38,24 @@ final class DefaultUserRepository: UserRepository {
         let request = UpdateUserRequestDTO(
             name: name,
             nickname: nickname,
-            profileImage: profileImage,
             message: message
         )
         
-        return network.request(UserAPI.updateUser(request))
-            .map { (responseDTO: UserResponseDTO) in
-                return GraceLogUser(
-                    id: responseDTO.memberId,
-                    name: responseDTO.name,
-                    nickname: responseDTO.nickname,
-                    profileImageURL: responseDTO.profileImage,
-                    email: responseDTO.email,
-                    message: responseDTO.message
-                )
-            }
+        return network.request(
+            UserAPI.updateUser(request),
+            images: profileImage.map { [$0] },
+            bodyFieldName: "updateMemberRequest",
+            imageFieldName: "profileImage"
+        )
+        .map { (responseDTO: UserResponseDTO) in
+            return GraceLogUser(
+                id: responseDTO.memberId,
+                name: responseDTO.name,
+                nickname: responseDTO.nickname,
+                profileImageURL: responseDTO.profileImage,
+                email: responseDTO.email,
+                message: responseDTO.message
+            )
+        }
     }
 }

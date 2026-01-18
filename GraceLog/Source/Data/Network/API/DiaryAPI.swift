@@ -8,7 +8,7 @@
 import Alamofire
 
 enum DiaryAPI {
-    case postDiary(PostDiaryRequestDTO)
+    case createDiary(CreateDiaryRequestDTO)
     case fetchDiary(diaryId: Int)
     case fetchCommunityDiaryList(CommunityDiaryListRequestDTO)
     case fetchMyDiaryList(MyDiaryListRequestDTO)
@@ -23,7 +23,7 @@ extension DiaryAPI: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .postDiary: return .post
+        case .createDiary: return .post
         case .fetchDiary: return .get
         case .fetchCommunityDiaryList: return .get
         case .fetchMyDiaryList: return .get
@@ -34,7 +34,7 @@ extension DiaryAPI: TargetType {
     
     var path: String {
         switch self {
-        case .postDiary, .fetchCommunityDiaryList:
+        case .createDiary, .fetchCommunityDiaryList:
             return ""
         case .fetchDiary(let id):
             return "/\(id)"
@@ -49,7 +49,7 @@ extension DiaryAPI: TargetType {
     
     var headers: HeaderType {
         switch self {
-        case .postDiary:
+        case .createDiary:
             return .formData
         default:
             return .requireAccessToken
@@ -58,16 +58,16 @@ extension DiaryAPI: TargetType {
     
     var parameters: RequestParams {
         switch self {
-        case .postDiary(let request):
+        case .createDiary(let request):
             return .body(request)
         case .fetchDiary:
             return .none
         case .fetchCommunityDiaryList(let params):
             return .query(params)
-        case .fetchMyDiaryList(let request):
-            return .query(request)
+        case .fetchMyDiaryList(let params):
+            return .query(params)
         case .fetchDateRangeDiaryList(let params):
-            return .body(params)
+            return .query(params)
         case .deleteDiary:
             return .none
         }

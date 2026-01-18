@@ -113,6 +113,11 @@ final class MyInfoViewController: GraceLogBaseViewController<MyInfoViewReactor> 
             .map { $0.sections }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        NotificationCenterManager.reloadMyInfo.addObserver()
+            .map { _ in Reactor.Action.updateUser }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  DefaultHomeUseCase.swift
+//  DefaultHomePersonalUseCase.swift
 //  GraceLog
 //
 //  Created by 이상준 on 3/8/25.
@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-final class DefaultHomeUseCase: HomeUseCase {
+final class DefaultHomePersonalUseCase: HomePersonalUseCase {
     var dailyVerse = BehaviorRelay<DailyVerse?>(value: nil)
     var diaryList = BehaviorRelay<[MyDiaryPreview]>(value: [])
     var videoList = BehaviorRelay<[RecommendedVideo]>(value: [])
@@ -18,14 +18,22 @@ final class DefaultHomeUseCase: HomeUseCase {
     
     private let disposeBag = DisposeBag()
     
-    private let homeRepository: HomeRepository
+    private let dailyVerseRepository: DailyVerseRepository
+    private let diaryRepository: DiaryRepository
+    private let videoRepository: VideoRepository
     
-    init(homeRepository: HomeRepository) {
-        self.homeRepository = homeRepository
+    init(
+        dailyVerseRepository: DailyVerseRepository,
+        diaryRepository: DiaryRepository,
+        videoRepository: VideoRepository
+    ) {
+        self.dailyVerseRepository = dailyVerseRepository
+        self.diaryRepository = diaryRepository
+        self.videoRepository = videoRepository
     }
     
     func fetchDiaryList() {
-        homeRepository.fetchMyDiaryList()
+        diaryRepository.fetchMyDiaryList()
             .subscribe(onSuccess: {
                 self.diaryList.accept($0)
             }, onFailure: {
@@ -35,7 +43,7 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
     
     func fetchVideoList() {
-        homeRepository.fetchVideoList()
+        videoRepository.fetchVideoList()
             .subscribe(onSuccess: {
                 self.videoTagList.accept($0.tags)
                 self.videoList.accept($0.videoList)
@@ -47,7 +55,7 @@ final class DefaultHomeUseCase: HomeUseCase {
     }
     
     func fetchDailyVerse() {
-        homeRepository.fetchDailyVerse()
+        dailyVerseRepository.fetchDailyVerse()
             .subscribe(onSuccess: {
                 self.dailyVerse.accept($0)
             }, onFailure: {

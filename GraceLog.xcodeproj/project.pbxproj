@@ -8,10 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0220A0752DE7F57000D045F7 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220A0742DE7F57000D045F7 /* ImagePickerManager.swift */; };
-		023446172DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023446162DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift */; };
-		0234461B2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234461A2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift */; };
-		0234461D2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234461C2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift */; };
-		0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234461E2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift */; };
+		023446172DB61B0300F21439 /* DiarySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023446162DB61B0300F21439 /* DiarySettingsViewController.swift */; };
+		0234461B2DB61CAC00F21439 /* DiarySettingsAdditionalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234461A2DB61CAC00F21439 /* DiarySettingsAdditionalTableViewCell.swift */; };
+		0234461F2DB6283600F21439 /* DiarySettingsViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0234461E2DB6283600F21439 /* DiarySettingsViewReactor.swift */; };
 		025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025019C52DE03F73003FD48D /* UserRequestDTO.swift */; };
 		025019CA2DE04410003FD48D /* MyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025019C92DE04410003FD48D /* MyInfoUseCase.swift */; };
 		025019CC2DE0469B003FD48D /* DefaultMyInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025019CB2DE0469B003FD48D /* DefaultMyInfoUseCase.swift */; };
@@ -136,7 +135,7 @@
 		DE3BFCEC2D0D3D390076426D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE3BFCEB2D0D3D390076426D /* GoogleService-Info.plist */; };
 		DE4237222EB8A16E006FAA7B /* DiaryDetailsPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237212EB8A16E006FAA7B /* DiaryDetailsPresentationAssembly.swift */; };
 		DE4237422EBCC4C6006FAA7B /* DiaryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237412EBCC4C6006FAA7B /* DiaryAPI.swift */; };
-		DE4237462EBCC96B006FAA7B /* PostDiaryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */; };
+		DE4237462EBCC96B006FAA7B /* CreateDiaryRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237452EBCC96B006FAA7B /* CreateDiaryRequestDTO.swift */; };
 		DE42374A2EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */; };
 		DE42374C2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374B2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift */; };
 		DE42374E2EBDF980006FAA7B /* DiaryResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE42374D2EBDF980006FAA7B /* DiaryResponseDTO.swift */; };
@@ -169,6 +168,10 @@
 		DE58FED22D04284E008CADCD /* GraceLogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FED12D04284E008CADCD /* GraceLogUITests.swift */; };
 		DE58FED42D04284E008CADCD /* GraceLogUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58FED32D04284E008CADCD /* GraceLogUITestsLaunchTests.swift */; };
 		DE597A6E2E26141100B2CB5B /* AuthPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE597A6D2E26141100B2CB5B /* AuthPresentationAssembly.swift */; };
+		DE6459B12F10CBB800C98B5A /* NotificationCenterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6459B02F10CBB800C98B5A /* NotificationCenterHandler.swift */; };
+		DE6459B32F10CBC700C98B5A /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */; };
+		DE645A452F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */; };
+		DE645A472F1B696800C98B5A /* AnnouncementPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */; };
 		DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */; };
 		DE655B212DA5EC480073B4F7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */; };
 		DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */; };
@@ -189,11 +192,28 @@
 		DE9A1FDC2D79AFFA0044F655 /* MyDiaryPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FDB2D79AFFA0044F655 /* MyDiaryPreview.swift */; };
 		DE9A1FE12D7BFD1A0044F655 /* MyDiaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FE02D7BFD1A0044F655 /* MyDiaryDTO.swift */; };
 		DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FEB2D7C04C50044F655 /* Bundle.swift */; };
-		DE9A1FF62D7C07FE0044F655 /* HomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FF52D7C07FE0044F655 /* HomeUseCase.swift */; };
-		DE9A1FF82D7C08070044F655 /* DefaultHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FF72D7C08070044F655 /* DefaultHomeUseCase.swift */; };
-		DE9A1FFA2D7C09350044F655 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FF92D7C09350044F655 /* HomeRepository.swift */; };
-		DE9A1FFC2D7C0B680044F655 /* DefaultHomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FFB2D7C0B680044F655 /* DefaultHomeRepository.swift */; };
+		DE9A1FF62D7C07FE0044F655 /* HomePersonalUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FF52D7C07FE0044F655 /* HomePersonalUseCase.swift */; };
+		DE9A1FF82D7C08070044F655 /* DefaultHomePersonalUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A1FF72D7C08070044F655 /* DefaultHomePersonalUseCase.swift */; };
 		DEA04FA72D69A8C000BA978A /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA04FA62D69A8C000BA978A /* String+Extension.swift */; };
+		DEA80D822F0258D400216B1D /* DiarySettingsPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D812F0258D400216B1D /* DiarySettingsPresentationAssembly.swift */; };
+		DEA80D842F026BAC00216B1D /* CommunityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D832F026BAC00216B1D /* CommunityRepository.swift */; };
+		DEA80D852F026BAC00216B1D /* CommunityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D832F026BAC00216B1D /* CommunityRepository.swift */; };
+		DEA80D862F026BAC00216B1D /* CommunityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D832F026BAC00216B1D /* CommunityRepository.swift */; };
+		DEA80D882F026C0200216B1D /* DefaultCommunityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D872F026C0200216B1D /* DefaultCommunityRepository.swift */; };
+		DEA80D8A2F04AC6B00216B1D /* DiaryReserveTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D892F04AC6B00216B1D /* DiaryReserveTimeView.swift */; };
+		DEA80D8C2F04B7E400216B1D /* DiarySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D8B2F04B7E400216B1D /* DiarySettingsView.swift */; };
+		DEA80D8E2F05048000216B1D /* LikeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D8D2F05048000216B1D /* LikeRepository.swift */; };
+		DEA80D8F2F05048000216B1D /* LikeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D8D2F05048000216B1D /* LikeRepository.swift */; };
+		DEA80D902F05048000216B1D /* LikeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D8D2F05048000216B1D /* LikeRepository.swift */; };
+		DEA80D922F05048C00216B1D /* VideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D912F05048C00216B1D /* VideoRepository.swift */; };
+		DEA80D932F05048C00216B1D /* VideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D912F05048C00216B1D /* VideoRepository.swift */; };
+		DEA80D942F05048C00216B1D /* VideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D912F05048C00216B1D /* VideoRepository.swift */; };
+		DEA80D962F0504F100216B1D /* DefaultVideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D952F0504F100216B1D /* DefaultVideoRepository.swift */; };
+		DEA80D982F0507A500216B1D /* DefaultLikeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D972F0507A500216B1D /* DefaultLikeRepository.swift */; };
+		DEA80D9A2F050B1F00216B1D /* DailyVerseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D992F050B1F00216B1D /* DailyVerseRepository.swift */; };
+		DEA80D9B2F050B1F00216B1D /* DailyVerseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D992F050B1F00216B1D /* DailyVerseRepository.swift */; };
+		DEA80D9C2F050B1F00216B1D /* DailyVerseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D992F050B1F00216B1D /* DailyVerseRepository.swift */; };
+		DEA80D9E2F050B3F00216B1D /* DefaultDailyVerseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA80D9D2F050B3F00216B1D /* DefaultDailyVerseRepository.swift */; };
 		DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE632E0CFE5500AD4222 /* HomeCommunityListView.swift */; };
 		DEACFE662E0D016800AD4222 /* HomeCommunityDiaryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE652E0D016800AD4222 /* HomeCommunityDiaryListView.swift */; };
 		DEACFE682E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACFE672E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift */; };
@@ -257,10 +277,9 @@
 
 /* Begin PBXFileReference section */
 		0220A0742DE7F57000D045F7 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
-		023446162DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAdditionalSettingsViewController.swift; sourceTree = "<group>"; };
-		0234461A2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAdditionalSettingsTableViewCell.swift; sourceTree = "<group>"; };
-		0234461C2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAdditionalSettingsDataSource.swift; sourceTree = "<group>"; };
-		0234461E2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAdditionalSettingsViewReactor.swift; sourceTree = "<group>"; };
+		023446162DB61B0300F21439 /* DiarySettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingsViewController.swift; sourceTree = "<group>"; };
+		0234461A2DB61CAC00F21439 /* DiarySettingsAdditionalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingsAdditionalTableViewCell.swift; sourceTree = "<group>"; };
+		0234461E2DB6283600F21439 /* DiarySettingsViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingsViewReactor.swift; sourceTree = "<group>"; };
 		025019C52DE03F73003FD48D /* UserRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestDTO.swift; sourceTree = "<group>"; };
 		025019C92DE04410003FD48D /* MyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoUseCase.swift; sourceTree = "<group>"; };
 		025019CB2DE0469B003FD48D /* DefaultMyInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMyInfoUseCase.swift; sourceTree = "<group>"; };
@@ -391,7 +410,7 @@
 		DE3BFCEB2D0D3D390076426D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DE4237212EB8A16E006FAA7B /* DiaryDetailsPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailsPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE4237412EBCC4C6006FAA7B /* DiaryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryAPI.swift; sourceTree = "<group>"; };
-		DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryRequestDTO.swift; sourceTree = "<group>"; };
+		DE4237452EBCC96B006FAA7B /* CreateDiaryRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDiaryRequestDTO.swift; sourceTree = "<group>"; };
 		DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDiaryListRequestDTO.swift; sourceTree = "<group>"; };
 		DE42374B2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeDiaryListRequestDTO.swift; sourceTree = "<group>"; };
 		DE42374D2EBDF980006FAA7B /* DiaryResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryResponseDTO.swift; sourceTree = "<group>"; };
@@ -429,6 +448,10 @@
 		DE58FED12D04284E008CADCD /* GraceLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogUITests.swift; sourceTree = "<group>"; };
 		DE58FED32D04284E008CADCD /* GraceLogUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraceLogUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DE597A6D2E26141100B2CB5B /* AuthPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE6459B02F10CBB800C98B5A /* NotificationCenterHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandler.swift; sourceTree = "<group>"; };
+		DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
+		DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDivideTableViewCell.swift; sourceTree = "<group>"; };
 		DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareTableViewCell.swift; sourceTree = "<group>"; };
@@ -449,11 +472,20 @@
 		DE9A1FDB2D79AFFA0044F655 /* MyDiaryPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDiaryPreview.swift; sourceTree = "<group>"; };
 		DE9A1FE02D7BFD1A0044F655 /* MyDiaryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDiaryDTO.swift; sourceTree = "<group>"; };
 		DE9A1FEB2D7C04C50044F655 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
-		DE9A1FF52D7C07FE0044F655 /* HomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUseCase.swift; sourceTree = "<group>"; };
-		DE9A1FF72D7C08070044F655 /* DefaultHomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHomeUseCase.swift; sourceTree = "<group>"; };
-		DE9A1FF92D7C09350044F655 /* HomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
-		DE9A1FFB2D7C0B680044F655 /* DefaultHomeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHomeRepository.swift; sourceTree = "<group>"; };
+		DE9A1FF52D7C07FE0044F655 /* HomePersonalUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePersonalUseCase.swift; sourceTree = "<group>"; };
+		DE9A1FF72D7C08070044F655 /* DefaultHomePersonalUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHomePersonalUseCase.swift; sourceTree = "<group>"; };
 		DEA04FA62D69A8C000BA978A /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		DEA80D812F0258D400216B1D /* DiarySettingsPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingsPresentationAssembly.swift; sourceTree = "<group>"; };
+		DEA80D832F026BAC00216B1D /* CommunityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRepository.swift; sourceTree = "<group>"; };
+		DEA80D872F026C0200216B1D /* DefaultCommunityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCommunityRepository.swift; sourceTree = "<group>"; };
+		DEA80D892F04AC6B00216B1D /* DiaryReserveTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryReserveTimeView.swift; sourceTree = "<group>"; };
+		DEA80D8B2F04B7E400216B1D /* DiarySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySettingsView.swift; sourceTree = "<group>"; };
+		DEA80D8D2F05048000216B1D /* LikeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRepository.swift; sourceTree = "<group>"; };
+		DEA80D912F05048C00216B1D /* VideoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRepository.swift; sourceTree = "<group>"; };
+		DEA80D952F0504F100216B1D /* DefaultVideoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVideoRepository.swift; sourceTree = "<group>"; };
+		DEA80D972F0507A500216B1D /* DefaultLikeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLikeRepository.swift; sourceTree = "<group>"; };
+		DEA80D992F050B1F00216B1D /* DailyVerseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseRepository.swift; sourceTree = "<group>"; };
+		DEA80D9D2F050B3F00216B1D /* DefaultDailyVerseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDailyVerseRepository.swift; sourceTree = "<group>"; };
 		DEACFE632E0CFE5500AD4222 /* HomeCommunityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityListView.swift; sourceTree = "<group>"; };
 		DEACFE652E0D016800AD4222 /* HomeCommunityDiaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityDiaryListView.swift; sourceTree = "<group>"; };
 		DEACFE672E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCommunityListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -571,7 +603,9 @@
 		023446192DB61C9A00F21439 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				0234461A2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift */,
+				DEA80D892F04AC6B00216B1D /* DiaryReserveTimeView.swift */,
+				DEA80D8B2F04B7E400216B1D /* DiarySettingsView.swift */,
+				0234461A2DB61CAC00F21439 /* DiarySettingsAdditionalTableViewCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -713,6 +747,7 @@
 		02F0DA4F2DDEAECC00CD036A /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				DE6459AF2F10CBA000C98B5A /* NotificationCenter */,
 				70A34FC62EE96B4E009B0E77 /* UserDefaults */,
 				0220A0742DE7F57000D045F7 /* ImagePickerManager.swift */,
 				70A97C522E1F8D5800F08DF6 /* DateFormatterFactory.swift */,
@@ -837,6 +872,7 @@
 			children = (
 				70A97C622E2167C200F08DF6 /* DiaryPresentationAssembly.swift */,
 				DE4237212EB8A16E006FAA7B /* DiaryDetailsPresentationAssembly.swift */,
+				DEA80D812F0258D400216B1D /* DiarySettingsPresentationAssembly.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -845,6 +881,8 @@
 			isa = PBXGroup;
 			children = (
 				70A97C652E2169D300F08DF6 /* MyInfoPresentationAssembly.swift */,
+				DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */,
+				DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */,
 			);
 			path = MyInfo;
 			sourceTree = "<group>";
@@ -911,7 +949,7 @@
 			children = (
 				DE042C422E93FD7D0089E20F /* DiaryDetailsViewReactor.swift */,
 				DE66C2F42D96B0E4009A983F /* DiaryViewReactor.swift */,
-				0234461E2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift */,
+				0234461E2DB6283600F21439 /* DiarySettingsViewReactor.swift */,
 				709CBB572E2AAC6D00F68457 /* CommentBottomSheetViewReactor.swift */,
 			);
 			path = Reactor;
@@ -933,7 +971,7 @@
 			children = (
 				709CBB542E2AAC0E00F68457 /* Comment */,
 				DE069B992D53A884007C2066 /* DiaryViewController.swift */,
-				023446162DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift */,
+				023446162DB61B0300F21439 /* DiarySettingsViewController.swift */,
 				DE042C442E93FE0A0089E20F /* DiaryDetailsViewController.swift */,
 			);
 			path = ViewController;
@@ -1123,8 +1161,11 @@
 			children = (
 				DED558882DBE226D00137B10 /* AuthRepository.swift */,
 				DE27005E2D212770005C9DCF /* UserRepository.swift */,
-				DE9A1FF92D7C09350044F655 /* HomeRepository.swift */,
 				DE4237512EBEE960006FAA7B /* DiaryRepository.swift */,
+				DEA80D832F026BAC00216B1D /* CommunityRepository.swift */,
+				DEA80D8D2F05048000216B1D /* LikeRepository.swift */,
+				DEA80D912F05048C00216B1D /* VideoRepository.swift */,
+				DEA80D992F050B1F00216B1D /* DailyVerseRepository.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1144,8 +1185,11 @@
 			children = (
 				DED558852DBE224300137B10 /* DefaultAuthRepository.swift */,
 				DE2700622D22D188005C9DCF /* DefaultUserRepository.swift */,
-				DE9A1FFB2D7C0B680044F655 /* DefaultHomeRepository.swift */,
 				DE42374F2EBEE935006FAA7B /* DefaultDiaryRepository.swift */,
+				DEA80D872F026C0200216B1D /* DefaultCommunityRepository.swift */,
+				DEA80D952F0504F100216B1D /* DefaultVideoRepository.swift */,
+				DEA80D972F0507A500216B1D /* DefaultLikeRepository.swift */,
+				DEA80D9D2F050B3F00216B1D /* DefaultDailyVerseRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1395,7 +1439,6 @@
 		DE56384D2D9E01B900A12192 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				0234461C2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift */,
 				702D2B652E05185900D5E71E /* DiaryImageSection.swift */,
 				709CBB682E2ACB5100F68457 /* CommentSection.swift */,
 			);
@@ -1451,6 +1494,15 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		DE6459AF2F10CBA000C98B5A /* NotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				DE6459B02F10CBB800C98B5A /* NotificationCenterHandler.swift */,
+				DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */,
+			);
+			path = NotificationCenter;
+			sourceTree = "<group>";
+		};
 		DE66C2F82D96B380009A983F /* Diary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1484,7 +1536,7 @@
 			isa = PBXGroup;
 			children = (
 				DE9A1FF42D7C07F40044F655 /* Protocol */,
-				DE9A1FF72D7C08070044F655 /* DefaultHomeUseCase.swift */,
+				DE9A1FF72D7C08070044F655 /* DefaultHomePersonalUseCase.swift */,
 				DEF8D6752E1A925100685517 /* DefaultHomeCommunityUseCase.swift */,
 			);
 			path = Home;
@@ -1493,7 +1545,7 @@
 		DE9A1FF42D7C07F40044F655 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				DE9A1FF52D7C07FE0044F655 /* HomeUseCase.swift */,
+				DE9A1FF52D7C07FE0044F655 /* HomePersonalUseCase.swift */,
 				DEF8D6732E1A91EF00685517 /* HomeCommunityUseCase.swift */,
 			);
 			path = Protocol;
@@ -1532,7 +1584,7 @@
 			children = (
 				DED5587C2DBC7B3100137B10 /* SignInRequestDTO.swift */,
 				025019C52DE03F73003FD48D /* UserRequestDTO.swift */,
-				DE4237452EBCC96B006FAA7B /* PostDiaryRequestDTO.swift */,
+				DE4237452EBCC96B006FAA7B /* CreateDiaryRequestDTO.swift */,
 				DE4237492EBCCBCE006FAA7B /* MyDiaryListRequestDTO.swift */,
 				DE42374B2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift */,
 				DE4237572EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift */,
@@ -1866,12 +1918,16 @@
 				DEEFEAC62D26D4F000699692 /* UserResponseDTO.swift in Sources */,
 				DED558892DBE226D00137B10 /* AuthRepository.swift in Sources */,
 				DE24DB6D2D26D34D00581621 /* LoginUseCaseTests.swift in Sources */,
+				DEA80D932F05048C00216B1D /* VideoRepository.swift in Sources */,
 				DE24DB6E2D26D36100581621 /* MockFireStoreRepository.swift in Sources */,
 				DEEFEACC2D2A5E8200699692 /* GraceLogUser.swift in Sources */,
+				DEA80D842F026BAC00216B1D /* CommunityRepository.swift in Sources */,
+				DEA80D8E2F05048000216B1D /* LikeRepository.swift in Sources */,
 				DEEFEAC12D26D4B800699692 /* SignInUseCase.swift in Sources */,
 				DEEFEAC22D26D4BC00699692 /* DefaultSignInUseCase.swift in Sources */,
 				DEEFEAC42D26D4CD00699692 /* UserRepository.swift in Sources */,
 				DE4237542EBEE960006FAA7B /* DiaryRepository.swift in Sources */,
+				DEA80D9C2F050B1F00216B1D /* DailyVerseRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1887,6 +1943,7 @@
 				025019C62DE03F73003FD48D /* UserRequestDTO.swift in Sources */,
 				70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */,
 				702D2B6C2E07008800D5E71E /* DiaryShareView.swift in Sources */,
+				DEA80D822F0258D400216B1D /* DiarySettingsPresentationAssembly.swift in Sources */,
 				709CBB632E2AC2A200F68457 /* CommentTableHeaderView.swift in Sources */,
 				DE3BFCD62D048B170076426D /* GraceLogAppCoordinator.swift in Sources */,
 				025019CA2DE04410003FD48D /* MyInfoUseCase.swift in Sources */,
@@ -1901,6 +1958,7 @@
 				70A97C632E2167C200F08DF6 /* DiaryPresentationAssembly.swift in Sources */,
 				709CBB652E2AC3A300F68457 /* CommentInfoView.swift in Sources */,
 				704815842E018F5A009ECDBD /* DiaryEditView.swift in Sources */,
+				DE6459B32F10CBC700C98B5A /* NotificationCenterManager.swift in Sources */,
 				DECF2AA52E28B4B9000CAF42 /* GLInterceptor.swift in Sources */,
 				DE47E9792E48790300C379C3 /* MyInfoProfileView.swift in Sources */,
 				DE597A6E2E26141100B2CB5B /* AuthPresentationAssembly.swift in Sources */,
@@ -1911,6 +1969,7 @@
 				702D2B702E07F35B00D5E71E /* DiarySettingView.swift in Sources */,
 				DE3BFCD82D048B550076426D /* Coordinator.swift in Sources */,
 				DE4D0F4E2E7510D900827EDE /* AnnouncementDetailUseCase.swift in Sources */,
+				DEA80D942F05048C00216B1D /* VideoRepository.swift in Sources */,
 				DE23873D2E0BB4B200893D8C /* HomeMyBibleView.swift in Sources */,
 				DE93B6FB2ED060DD00BCFB5D /* DailyVerseAPI.swift in Sources */,
 				DE4D0F502E7510E500827EDE /* DefaultAnnouncementListUseCase.swift in Sources */,
@@ -1918,6 +1977,7 @@
 				709CBB6B2E2AD2C400F68457 /* Comment.swift in Sources */,
 				702D2B5E2E02D01A00D5E71E /* DiaryImageListView.swift in Sources */,
 				DE3BFCE42D059E970076426D /* SearchCoordinator.swift in Sources */,
+				DEA80D9A2F050B1F00216B1D /* DailyVerseRepository.swift in Sources */,
 				DED5588A2DBE226D00137B10 /* AuthRepository.swift in Sources */,
 				DE42375A2EC20AB8006FAA7B /* LikeCountRequestDTO.swift in Sources */,
 				DE4D0F552E753ADE00827EDE /* AnnouncementDetailViewController.swift in Sources */,
@@ -1936,7 +1996,7 @@
 				70A97C4D2E19500900F08DF6 /* MainTabbarController.swift in Sources */,
 				702D2B6E2E07107A00D5E71E /* AutoSizingTableView.swift in Sources */,
 				DE2700532D2113F2005C9DCF /* SignInReactor.swift in Sources */,
-				023446172DB61B0300F21439 /* DiaryAdditionalSettingsViewController.swift in Sources */,
+				023446172DB61B0300F21439 /* DiarySettingsViewController.swift in Sources */,
 				DE4D0F5D2E7C3A9F00827EDE /* DefaultAnnouncementDetailUseCase.swift in Sources */,
 				70A97C5C2E21622400F08DF6 /* DataAssembly.swift in Sources */,
 				025019CC2DE0469B003FD48D /* DefaultMyInfoUseCase.swift in Sources */,
@@ -1945,6 +2005,8 @@
 				DE9565032DC4B311006DD9CF /* TokenManager.swift in Sources */,
 				DE2700502D1FA03B005C9DCF /* UIView+Extension.swift in Sources */,
 				DE4237582EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift in Sources */,
+				DEA80D852F026BAC00216B1D /* CommunityRepository.swift in Sources */,
+				DEA80D8A2F04AC6B00216B1D /* DiaryReserveTimeView.swift in Sources */,
 				DE9A1FDC2D79AFFA0044F655 /* MyDiaryPreview.swift in Sources */,
 				70A97C682E226B3900F08DF6 /* DependencyInjector.swift in Sources */,
 				DED558862DBE224300137B10 /* DefaultAuthRepository.swift in Sources */,
@@ -1955,6 +2017,7 @@
 				70A97C912E255EA800F08DF6 /* GLColor.swift in Sources */,
 				DE5167132E1DE8F500E74818 /* MainTabCoordinator.swift in Sources */,
 				DE66C2FD2D96B6F9009A983F /* DiaryImageCollectionViewCell.swift in Sources */,
+				DEA80D982F0507A500216B1D /* DefaultLikeRepository.swift in Sources */,
 				DE3BFCDA2D059A3B0076426D /* HomeViewController.swift in Sources */,
 				709CBB692E2ACB5100F68457 /* CommentSection.swift in Sources */,
 				DE042C482E93FE6D0089E20F /* DiaryDetailsView.swift in Sources */,
@@ -1962,6 +2025,7 @@
 				02DC29812DDC29C000662D8A /* MyInfoCoordinator.swift in Sources */,
 				702D2B662E05185900D5E71E /* DiaryImageSection.swift in Sources */,
 				02DC29822DDC29C000662D8A /* ProfileEditViewReactor.swift in Sources */,
+				DE645A452F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift in Sources */,
 				02DC29832DDC29C000662D8A /* ProfileEditViewController.swift in Sources */,
 				026656AB2DE7E9CA00541D96 /* NavigationBarUtil.swift in Sources */,
 				02DC29862DDC29C000662D8A /* MyInfoViewReactor.swift in Sources */,
@@ -1987,7 +2051,7 @@
 				DE042C3D2E93FCB30089E20F /* DiaryDetailsUseCase.swift in Sources */,
 				DED558842DBE1E4000137B10 /* GLResponseDTO.swift in Sources */,
 				7048157C2DFFF570009ECDBD /* GLFont.swift in Sources */,
-				DE9A1FF82D7C08070044F655 /* DefaultHomeUseCase.swift in Sources */,
+				DE9A1FF82D7C08070044F655 /* DefaultHomePersonalUseCase.swift in Sources */,
 				DE069B9C2D5711D3007C2066 /* HomeCommunityViewController.swift in Sources */,
 				DE2700492D1F9E6B005C9DCF /* UIColor+CustomColor.swift in Sources */,
 				DE5638472D99785D00A12192 /* DiaryCreatableUseCase.swift in Sources */,
@@ -1996,11 +2060,11 @@
 				70A97C482E18F61000F08DF6 /* Community.swift in Sources */,
 				DE9A1FCA2D6AAC8C0044F655 /* HomeViewReactor.swift in Sources */,
 				DE04F8952E93FB58001A5135 /* DiaryDetails.swift in Sources */,
-				0234461D2DB6251300F21439 /* DiaryAdditionalSettingsDataSource.swift in Sources */,
 				DE069B982D53A855007C2066 /* DiaryCoordinator.swift in Sources */,
 				70A97C952E27605D00F08DF6 /* DailyVerse.swift in Sources */,
-				0234461B2DB61CAC00F21439 /* DiaryAdditionalSettingsTableViewCell.swift in Sources */,
+				0234461B2DB61CAC00F21439 /* DiarySettingsAdditionalTableViewCell.swift in Sources */,
 				DE042C432E93FD7D0089E20F /* DiaryDetailsViewReactor.swift in Sources */,
+				DEA80D882F026C0200216B1D /* DefaultCommunityRepository.swift in Sources */,
 				DEACFE662E0D016800AD4222 /* HomeCommunityDiaryListView.swift in Sources */,
 				70A97C932E269DD200F08DF6 /* Date+Extension.swift in Sources */,
 				DE27005C2D212609005C9DCF /* DefaultSignInUseCase.swift in Sources */,
@@ -2016,15 +2080,17 @@
 				DECF2AA32E286BB0000CAF42 /* GLError.swift in Sources */,
 				709CBB5B2E2AACB600F68457 /* DefaultCommentUseCase.swift in Sources */,
 				709CBB672E2AC8E900F68457 /* CommentTableViewCell.swift in Sources */,
-				DE4237462EBCC96B006FAA7B /* PostDiaryRequestDTO.swift in Sources */,
+				DE4237462EBCC96B006FAA7B /* CreateDiaryRequestDTO.swift in Sources */,
+				DEA80D962F0504F100216B1D /* DefaultVideoRepository.swift in Sources */,
 				70062C562E4AF8FA0096C1F7 /* URL+Extension.swift in Sources */,
+				DE6459B12F10CBB800C98B5A /* NotificationCenterHandler.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
 				DE4D0F4A2E750EC300827EDE /* Announcement.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
-				DE9A1FFA2D7C09350044F655 /* HomeRepository.swift in Sources */,
 				DECCC6282EE582E000E893DB /* VideoResponseDTO.swift in Sources */,
 				0295ADFB2DED3AEF00B97DB1 /* GraceLogBaseViewController.swift in Sources */,
+				DEA80D902F05048000216B1D /* LikeRepository.swift in Sources */,
 				DEF8D6762E1A925100685517 /* DefaultHomeCommunityUseCase.swift in Sources */,
 				DED5589D2DC4AD3700137B10 /* Crypto.swift in Sources */,
 				DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */,
@@ -2042,13 +2108,14 @@
 				DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
+				DEA80D9E2F050B3F00216B1D /* DefaultDailyVerseRepository.swift in Sources */,
 				DEACFE6A2E0F81DE00AD4222 /* HomeCommunityListSection.swift in Sources */,
-				DE9A1FFC2D7C0B680044F655 /* DefaultHomeRepository.swift in Sources */,
-				DE9A1FF62D7C07FE0044F655 /* HomeUseCase.swift in Sources */,
+				DE9A1FF62D7C07FE0044F655 /* HomePersonalUseCase.swift in Sources */,
 				DE93B6FF2ED06B9B00BCFB5D /* CommunityDiaryPreview.swift in Sources */,
 				70A97C602E2164C600F08DF6 /* HomePresentationAssembly.swift in Sources */,
 				DED558642DABAC7800137B10 /* DiaryKeywordCollectionViewCell.swift in Sources */,
 				DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */,
+				DE645A472F1B696800C98B5A /* AnnouncementPresentationAssembly.swift in Sources */,
 				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
 				DE42374C2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift in Sources */,
@@ -2071,8 +2138,9 @@
 				DE4D0F462E7423B000827EDE /* AnnouncementCoordinator.swift in Sources */,
 				DE4D0F532E751D6800827EDE /* AnnouncementTableViewCell.swift in Sources */,
 				70A97C8F2E255E0100F08DF6 /* AppColor.swift in Sources */,
+				DEA80D8C2F04B7E400216B1D /* DiarySettingsView.swift in Sources */,
 				DE5638532DA1726700A12192 /* CommonButtonTableViewCell.swift in Sources */,
-				0234461F2DB6283600F21439 /* DiaryAdditionalSettingsViewReactor.swift in Sources */,
+				0234461F2DB6283600F21439 /* DiarySettingsViewReactor.swift in Sources */,
 				DEACFE642E0CFE5500AD4222 /* HomeCommunityListView.swift in Sources */,
 				DE42374E2EBDF980006FAA7B /* DiaryResponseDTO.swift in Sources */,
 				704815802E018D72009ECDBD /* UIStackView+Extension.swift in Sources */,
@@ -2087,11 +2155,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE58FED42D04284E008CADCD /* GraceLogUITestsLaunchTests.swift in Sources */,
+				DEA80D862F026BAC00216B1D /* CommunityRepository.swift in Sources */,
 				DE58FED22D04284E008CADCD /* GraceLogUITests.swift in Sources */,
+				DEA80D922F05048C00216B1D /* VideoRepository.swift in Sources */,
+				DEA80D8F2F05048000216B1D /* LikeRepository.swift in Sources */,
 				DEEFEACD2D2A5E8400699692 /* GraceLogUser.swift in Sources */,
 				DED5588B2DBE226D00137B10 /* AuthRepository.swift in Sources */,
 				DEEFEAC02D26D4B800699692 /* SignInUseCase.swift in Sources */,
 				DEEFEAC32D26D4CD00699692 /* UserRepository.swift in Sources */,
+				DEA80D9B2F050B1F00216B1D /* DailyVerseRepository.swift in Sources */,
 				DE4237522EBEE960006FAA7B /* DiaryRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

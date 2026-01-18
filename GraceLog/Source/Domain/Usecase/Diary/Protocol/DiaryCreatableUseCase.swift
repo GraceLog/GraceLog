@@ -8,7 +8,19 @@
 import RxRelay
 
 protocol DiaryCreatableUseCase {
+    var communityList: BehaviorRelay<[Community]> { get }
     var createDiaryResult: PublishRelay<Bool> { get }
+    var error: PublishRelay<Error> { get }
     
-    func createDiary(title: String, content: String, selectedKeywords: [DiaryKeyword], shareOptions: [Community])
+    func fetchCommunityList()
+    func createDiary(
+        images: [DiaryImage],
+        title: String,
+        content: String,
+        selectedKeywords: [DiaryKeyword]?,
+        shareOptions: [Community]?,
+        reserveTime: Date?,
+        isHideLike: Bool,
+        isHideComment: Bool
+    )
 }

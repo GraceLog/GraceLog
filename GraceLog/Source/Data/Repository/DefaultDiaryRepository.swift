@@ -21,6 +21,7 @@ final class DefaultDiaryRepository: DiaryRepository {
             .map { (responseDTO: DiaryResponseDTO) in
                 return DiaryDetails(
                     diaryId: responseDTO.postId,
+                    communityId: responseDTO.postCommunityId,
                     title: responseDTO.title,
                     description: responseDTO.description,
                     user: GraceLogUser(
@@ -42,7 +43,25 @@ final class DefaultDiaryRepository: DiaryRepository {
             }
     }
     
-    func fetchDateRangeDiaryList(startDate: Date, endDate: Date, communityId: Int, memberId: Int) -> Single<[DiaryDetails]> {
+    func fetchMyDiaryList() -> Single<[MyDiaryPreview]> {
+        let request = MyDiaryListRequestDTO(sortOrder: "DESC", count: 3)
+        
+        return network.request(DiaryAPI.fetchMyDiaryList(request))
+            .map { (responseDTO: [DiaryResponseDTO]) in
+                return responseDTO.map { diaryResponseDTO in
+                    return MyDiaryPreview(
+                        id: diaryResponseDTO.postId,
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
+                        title: diaryResponseDTO.title,
+                        content: diaryResponseDTO.description,
+                        imageURL: diaryResponseDTO.postImages.first?.url
+                    )
+                }
+            }
+    }
+    
+    
+    func fetchDateRangeDiaryList(startDate: String, endDate: String, communityId: Int?, memberId: Int) -> Single<[DiaryDetails]> {
         let request = DateRangeDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId, memberId: memberId)
         
         return network.request(DiaryAPI.fetchDateRangeDiaryList(request))
@@ -50,6 +69,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                 return responseDTO.map { diaryResponseDTO in
                     return DiaryDetails(
                         diaryId: diaryResponseDTO.postId,
+                        communityId: diaryResponseDTO.postCommunityId,
                         title: diaryResponseDTO.title,
                         description: diaryResponseDTO.description,
                         user: GraceLogUser(
@@ -72,17 +92,49 @@ final class DefaultDiaryRepository: DiaryRepository {
             }
     }
     
-    func postDiary(
+    func fetchCommunityDiaryList(communityId: Int, cursorId: Int?, size: Int) -> Single<CommunityDiaryPreViewInfo> {
+        let request = CommunityDiaryListRequestDTO(
+            communityId: communityId,
+            cursorId: cursorId,
+            size: size
+        )
+        
+        return network.request(DiaryAPI.fetchCommunityDiaryList(request))
+            .map { (responseDTO: DiaryPagingResponseDTO) in
+                let diaryList = responseDTO.content.map { diaryResponseDTO in
+                    return CommunityDiaryPreview(
+                        id: diaryResponseDTO.postId,
+                        title: diaryResponseDTO.title,
+                        content: diaryResponseDTO.description,
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
+                        isLiked: diaryResponseDTO.likedByMe,
+                        likeCount: diaryResponseDTO.likeCount,
+                        commentCount: diaryResponseDTO.commentCount,
+                        username: diaryResponseDTO.member.name,
+                        profileImageURL: diaryResponseDTO.member.profileImage,
+                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId
+                    )
+                }
+                
+                return CommunityDiaryPreViewInfo(
+                    diaryList: diaryList,
+                    isLastPage: responseDTO.last
+                )
+            }
+    }
+    
+    func createDiary(
+        images: [Data],
         title: String,
         description: String,
-        keywordList: [String],
-        selectedCommunityIdList: [Int],
-        reserveTime: Date,
+        keywordList: [String]?,
+        selectedCommunityIdList: [Int]?,
+        reserveTime: Date?,
         isHideLike: Bool,
-        isHideComment: Bool,
-        images: [Data]
-    ) -> Single<Void> {
-        let request = PostDiaryRequestDTO(
+        isHideComment: Bool
+    ) -> Single<GLEmptyResponse> {
+        let request = CreateDiaryRequestDTO(
             title: title,
             description: description,
             keywordList: keywordList,
@@ -92,35 +144,18 @@ final class DefaultDiaryRepository: DiaryRepository {
             isHideComment: isHideComment
         )
         
-        let multipartFormData = MultipartFormData()
-        
-        let jsonEncoder = JSONEncoder()
-        if let jsonData = try? jsonEncoder.encode(request) {
-            multipartFormData.append(
-                jsonData,
-                withName: "createPostRequest",
-                mimeType: "application/json"
-            )
-        }
-        
-        for (index, imageData) in images.enumerated() {
-            multipartFormData.append(
-                imageData,
-                withName: "images",
-                fileName: "image\(index).jpg",
-                mimeType: "image/jpeg"
-            )
-        }
-        
-        return network.requestMultipart(DiaryAPI.postDiary(request), multipartFormData: multipartFormData)
+        return network.request(
+            DiaryAPI.createDiary(request),
+            images: images,
+            bodyFieldName: "createPostRequest",
+            imageFieldName: "images"
+        )
     }
     
-    func likeToggle(postId: Int) -> Single<Bool> {
-        let request = LikeDiaryRequestDTO(postId: postId)
-        
-        return network.request(LikeAPI.likeToggle(request))
-            .map { (responseDTO: GLResponseDTO<Bool>) in
-                return responseDTO.data ?? false
+    func deleteDiary(diaryId: Int) -> Single<Bool> {
+        return network.request(DiaryAPI.deleteDiary(diaryId: diaryId))
+            .map { (isDeleted: Bool) in
+                return isDeleted
             }
     }
 }
