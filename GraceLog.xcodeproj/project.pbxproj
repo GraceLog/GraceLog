@@ -173,6 +173,8 @@
 		DE6459B32F10CBC700C98B5A /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */; };
 		DE645A452F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */; };
 		DE645A472F1B696800C98B5A /* AnnouncementPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */; };
+		DE645B872F1FA44800C98B5A /* CreateCommunityRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645B862F1FA44800C98B5A /* CreateCommunityRequestDTO.swift */; };
+		DE645B8A2F20462500C98B5A /* CreateCommunityPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645B892F20462500C98B5A /* CreateCommunityPresentationAssembly.swift */; };
 		DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */; };
 		DE655B212DA5EC480073B4F7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */; };
 		DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */; };
@@ -454,6 +456,8 @@
 		DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE645B862F1FA44800C98B5A /* CreateCommunityRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityRequestDTO.swift; sourceTree = "<group>"; };
+		DE645B892F20462500C98B5A /* CreateCommunityPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDivideTableViewCell.swift; sourceTree = "<group>"; };
 		DE655B202DA5EC480073B4F7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		DE66C2F22D941AF5009A983F /* DiaryShareTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareTableViewCell.swift; sourceTree = "<group>"; };
@@ -859,9 +863,10 @@
 			isa = PBXGroup;
 			children = (
 				DE597A6C2E26140300B2CB5B /* Auth */,
+				70A97C5E2E21646000F08DF6 /* Home */,
 				70A97C642E2169C700F08DF6 /* MyInfo */,
 				70A97C612E2167B400F08DF6 /* Diary */,
-				70A97C5E2E21646000F08DF6 /* Home */,
+				DE645B882F2045F800C98B5A /* Community */,
 			);
 			path = PresentationDI;
 			sourceTree = "<group>";
@@ -1512,6 +1517,14 @@
 			path = NotificationCenter;
 			sourceTree = "<group>";
 		};
+		DE645B882F2045F800C98B5A /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				DE645B892F20462500C98B5A /* CreateCommunityPresentationAssembly.swift */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
 		DE66C2F82D96B380009A983F /* Diary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1599,6 +1612,7 @@
 				DE4237572EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift */,
 				DE4237592EC20AB8006FAA7B /* LikeCountRequestDTO.swift */,
 				DE93B6F42ECDF6C000BCFB5D /* CommunityDiaryListRequestDTO.swift */,
+				DE645B862F1FA44800C98B5A /* CreateCommunityRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2092,6 +2106,7 @@
 				709CBB5B2E2AACB600F68457 /* DefaultCommentUseCase.swift in Sources */,
 				709CBB672E2AC8E900F68457 /* CommentTableViewCell.swift in Sources */,
 				DE4237462EBCC96B006FAA7B /* CreateDiaryRequestDTO.swift in Sources */,
+				DE645B872F1FA44800C98B5A /* CreateCommunityRequestDTO.swift in Sources */,
 				DEA80D962F0504F100216B1D /* DefaultVideoRepository.swift in Sources */,
 				70062C562E4AF8FA0096C1F7 /* URL+Extension.swift in Sources */,
 				DE6459B12F10CBB800C98B5A /* NotificationCenterHandler.swift in Sources */,
@@ -2118,6 +2133,7 @@
 				DE4237502EBEE935006FAA7B /* DefaultDiaryRepository.swift in Sources */,
 				DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
+				DE645B8A2F20462500C98B5A /* CreateCommunityPresentationAssembly.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DEA80D9E2F050B3F00216B1D /* DefaultDailyVerseRepository.swift in Sources */,
 				DEACFE6A2E0F81DE00AD4222 /* HomeCommunityListSection.swift in Sources */,

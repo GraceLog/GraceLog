@@ -10,15 +10,14 @@ import ReactorKit
 final class CreateCommunityReactor: Reactor {
     let initialState: State
     private let usecase: CreateCommunityUseCase
-    private let coordinator: CreateCommunityCoordinator
+    var coordinator: CreateCommunityCoordinator?
     
     private var maxCommunityImageCount: Int {
         usecase.maxImageCount
     }
     
-    init(usecase: CreateCommunityUseCase, coordinator: CreateCommunityCoordinator) {
+    init(usecase: CreateCommunityUseCase) {
         self.usecase = usecase
-        self.coordinator = coordinator
         self.initialState = State(
             images: [],
             editedTitle: "",
@@ -77,7 +76,7 @@ final class CreateCommunityReactor: Reactor {
             )
             return .empty()
         case .didTapBackButton:
-            coordinator.popViewController()
+            coordinator?.popViewController()
             return .empty()
         }
     }

@@ -17,8 +17,9 @@ final class CreateCommunityCoordinator: NavigationCoordinator {
     }
     
     func start() {
-        let viewController = CreateCommunityViewController(reactor: CreateCommunityReactor(usecase: DefaultCreateCommunityUseCase(), coordinator: CreateCommunityCoordinator(navigationController: self.navigationController)))
-        navigationController.pushViewController(viewController, animated: true)
+        let createCommunityVC = DependencyContainer.shared.injector.resolve(CreateCommunityViewController.self)
+        createCommunityVC.reactor?.coordinator = self
+        navigationController.pushViewController(createCommunityVC, animated: true)
     }
 }
 
@@ -26,5 +27,10 @@ extension CreateCommunityCoordinator {
     func popViewController() {
         navigationController.popViewController(animated: true)
         parentCoordinator?.removeChildCoordinator(self)
+    }
+    
+    func createCommunityEvent() {
+        NotificationCenterManager.reloadCommunityList.post()
+        navigationController.popViewController(animated: true)
     }
 }

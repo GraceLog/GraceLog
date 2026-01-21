@@ -58,7 +58,7 @@ struct DomainAssembly: Assembly {
         }
         
         // DiaryDetails
-        container.register(DiaryDetailsUseCase.self) { (resolver, communityId: Int, memberId: Int) in
+        container.register(DiaryDetailsUseCase.self) { (resolver, diaryId: Int) in
             let diaryRepository = resolver.resolve(DiaryRepository.self)!
             let likeRepository = resolver.resolve(LikeRepository.self)!
             
@@ -81,6 +81,12 @@ struct DomainAssembly: Assembly {
         
         container.register(AnnouncementDetailUseCase.self) { resolver, announcementId in
             return DefaultAnnouncementDetailUseCase(announcementId: announcementId)
+        }
+        
+        // Community
+        container.register(CreateCommunityUseCase.self) { resolver in
+            let communityRepository = resolver.resolve(CommunityRepository.self)!
+            return DefaultCreateCommunityUseCase(communityRepository: communityRepository)
         }
     }
 }

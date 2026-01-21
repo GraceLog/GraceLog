@@ -10,4 +10,5 @@ import RxSwift
 
 protocol CommunityRepository {
     func fetchMyCommunityList() -> Single<[Community]>
+    func createCommunity(images: [Data], name: String) -> Single<GLEmptyResponse> 
 }
