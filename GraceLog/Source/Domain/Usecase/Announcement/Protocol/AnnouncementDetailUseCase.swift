@@ -8,7 +8,8 @@
 import RxRelay
 
 protocol AnnouncementDetailUseCase {
-    var announcement: PublishRelay<Announcement> { get }
+    var announcement: BehaviorRelay<Announcement?> { get }
+    var error: PublishRelay<Error> { get }
     
     func fetchAnnouncementDetail()
 }

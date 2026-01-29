@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import RxSwift
+
+protocol AnnouncementRepository {
+    func fetchAnnoucementList() -> Single<[Announcement]>
+    func fetchAnnouncement(id: Int) -> Single<Announcement>
+}
