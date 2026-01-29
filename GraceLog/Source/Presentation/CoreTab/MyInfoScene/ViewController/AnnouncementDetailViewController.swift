@@ -78,7 +78,6 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController<Announc
     
     override func bind(reactor: AnnouncementDetailViewReactor) {
         super.bind(reactor: reactor)
-        reactor.action.onNext(.fetchAnnouncement)
         
         backButton.rx.tap
             .map { Reactor.Action.didTapBackButton }
@@ -90,7 +89,7 @@ final class AnnouncementDetailViewController: GraceLogBaseViewController<Announc
             .drive(with: self) { owner, announcement in
                 guard let announcement else { return }
                 owner.titleLabel.text = announcement.title
-                owner.createdAtLabel.text = DateFormatterFactory.dateWithDot.string(from: announcement.createdAt)
+                owner.createdAtLabel.text = DateFormatterFactory.dateWithDot.string(from: announcement.createdAt!)
                 owner.contentsLabel.text = announcement.contents
             }
             .disposed(by: disposeBag)

@@ -15,7 +15,6 @@ final class AnnouncementDetailViewReactor: Reactor {
     var initialState: State
     
     enum Action {
-        case fetchAnnouncement
         case didTapBackButton
     }
     
@@ -29,16 +28,15 @@ final class AnnouncementDetailViewReactor: Reactor {
     
     init(usecase: AnnouncementDetailUseCase) {
         self.usecase = usecase
-        
         self.initialState = State()
+        
+        usecase.fetchAnnouncementDetail()
     }
 }
 
 extension AnnouncementDetailViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .fetchAnnouncement:
-            usecase.fetchAnnouncementDetail()
         case .didTapBackButton:
             coordinator?.popViewController()
         }
@@ -58,7 +56,9 @@ extension AnnouncementDetailViewReactor {
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
         return Observable.merge(
-            usecase.announcement.map { .setAnnouncement($0) },
+            usecase.announcement
+                .compactMap { $0 }
+                .map { .setAnnouncement($0) },
             mutation
         )
     }
