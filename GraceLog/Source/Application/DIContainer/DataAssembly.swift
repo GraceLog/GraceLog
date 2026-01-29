@@ -38,5 +38,9 @@ struct DataAssembly: Assembly {
         container.register(LikeRepository.self) { resolver in
             return DefaultLikeRepository(network: network)
         }
+        
+        container.register(AnnouncementRepository.self) { resolver in
+            return DefaultAnnouncementRepository(network: network)
+        }
     }
 }

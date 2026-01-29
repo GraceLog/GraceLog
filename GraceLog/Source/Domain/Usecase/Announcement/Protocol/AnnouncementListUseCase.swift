@@ -9,6 +9,7 @@ import RxRelay
 
 protocol AnnouncementListUseCase {
     var announcementList: BehaviorRelay<[Announcement]> { get }
+    var error: PublishRelay<Error> { get }
     
     func fetchAnnouncementList()
 }
