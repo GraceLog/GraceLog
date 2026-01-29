@@ -11,5 +11,5 @@ struct Announcement {
     let id: Int
     let title: String
     let contents: String
-    let createdAt: Date
+    let createdAt: Date?
 }
