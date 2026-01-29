@@ -28,11 +28,11 @@ final class DefaultDiaryRepository: DiaryRepository {
                         id: responseDTO.member.memberId,
                         name: responseDTO.member.name,
                         nickname: responseDTO.member.nickname,
-                        profileImageURL: responseDTO.member.profileImage,
+                        profileImageURL: URL(string: responseDTO.member.profileImage),
                         email: responseDTO.member.email,
                         message: responseDTO.member.message
                     ),
-                    imageURLs: responseDTO.postImages.map { $0.url },
+                    imageURLs: responseDTO.postImages.compactMap { URL(string: $0.url) },
                     likeCount: responseDTO.likeCount,
                     likeByMe: responseDTO.likedByMe,
                     isHideLike: responseDTO.isHideLike,
@@ -54,7 +54,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                         editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
-                        imageURL: diaryResponseDTO.postImages.first?.url
+                        imageURL: nil
                     )
                 }
             }
@@ -65,28 +65,28 @@ final class DefaultDiaryRepository: DiaryRepository {
         let request = DateRangeDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId, memberId: memberId)
         
         return network.request(DiaryAPI.fetchDateRangeDiaryList(request))
-            .map { (responseDTO: [DiaryResponseDTO]) in
-                return responseDTO.map { diaryResponseDTO in
+            .map { (responseDTO: DiaryPagingResponseDTO) in
+                return responseDTO.content.map { content in
                     return DiaryDetails(
-                        diaryId: diaryResponseDTO.postId,
-                        communityId: diaryResponseDTO.postCommunityId,
-                        title: diaryResponseDTO.title,
-                        description: diaryResponseDTO.description,
+                        diaryId: content.postId,
+                        communityId: content.postCommunityId,
+                        title: content.title,
+                        description: content.description,
                         user: GraceLogUser(
-                            id: diaryResponseDTO.member.memberId,
-                            name: diaryResponseDTO.member.name,
-                            nickname: diaryResponseDTO.member.nickname,
-                            profileImageURL: diaryResponseDTO.member.profileImage,
-                            email: diaryResponseDTO.member.email,
-                            message: diaryResponseDTO.member.message
+                            id: content.member.memberId,
+                            name: content.member.name,
+                            nickname: content.member.nickname,
+                            profileImageURL: URL(string: content.member.profileImage),
+                            email: content.member.email,
+                            message: content.member.message
                         ),
-                        imageURLs: diaryResponseDTO.postImages.map { $0.url },
-                        likeCount: diaryResponseDTO.likeCount,
-                        likeByMe: diaryResponseDTO.likedByMe,
-                        isHideLike: diaryResponseDTO.isHideLike,
-                        isHideComment: diaryResponseDTO.isHideComment,
-                        commentCount: diaryResponseDTO.commentCount,
-                        createdAt: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.createdAt)
+                        imageURLs: content.postImages.compactMap { URL(string: $0.url) },
+                        likeCount: content.likeCount,
+                        likeByMe: content.likedByMe,
+                        isHideLike: content.isHideLike,
+                        isHideComment: content.isHideComment,
+                        commentCount: content.commentCount,
+                        createdAt: DateFormatterFactory.dateTimeWithISO.date(from: content.createdAt)
                     )
                 }
             }
@@ -111,8 +111,8 @@ final class DefaultDiaryRepository: DiaryRepository {
                         likeCount: diaryResponseDTO.likeCount,
                         commentCount: diaryResponseDTO.commentCount,
                         username: diaryResponseDTO.member.name,
-                        profileImageURL: diaryResponseDTO.member.profileImage,
-                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        profileImageURL: URL(string: diaryResponseDTO.member.profileImage),
+                        diaryImageURL: nil,
                         isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId
                     )
                 }

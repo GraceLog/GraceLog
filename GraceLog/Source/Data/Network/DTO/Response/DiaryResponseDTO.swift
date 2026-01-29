@@ -12,6 +12,19 @@ struct DiaryPagingResponseDTO: Decodable {
     let size: Int
     let first: Bool
     let last: Bool
+    let numberOfElements: Int
+    let sort: [String]
+    let empty: Bool
+    let pageable: Pageable
+}
+
+struct Pageable: Decodable {
+    let unpaged: Bool
+    let pageNumber: Int
+    let offset: Int
+    let pageSize: Int
+    let sort: [String]
+    let paged: Bool
 }
 
 struct DiaryResponseDTO: Decodable {
@@ -34,6 +47,6 @@ struct DiaryResponseDTO: Decodable {
 
 struct DiaryImagesInfo: Decodable {
     let id: Int
-    let url: URL
+    let url: String
     let fileName: String
 }
