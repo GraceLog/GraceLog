@@ -14,10 +14,10 @@ final class DiaryDetailsViewReactor: Reactor {
     var initialState: State
     
     enum Action {
-        case fetchDiary(Int)
+        case fetchDiary(Date)
         case fetchDateRangeDiaryList(Date)
         case didTapBackButton
-        case didTapLikeButton(Int)
+        case didTapLikeButton
         case didTapCommentButton(Int)
     }
     
@@ -30,6 +30,7 @@ final class DiaryDetailsViewReactor: Reactor {
     struct State {
         @Pulse var diary: DiaryDetails?
         @Pulse var dateRangeDiaries: [DiaryDetails]
+        @Pulse var editedDateList: Set<Date>
         @Pulse var error: Error?
     }
     
@@ -41,7 +42,8 @@ final class DiaryDetailsViewReactor: Reactor {
         self.usecase = usecase
         
         self.initialState = State(
-            dateRangeDiaries: []
+            dateRangeDiaries: [],
+            editedDateList: []
         )
     }
 }
@@ -49,15 +51,19 @@ final class DiaryDetailsViewReactor: Reactor {
 extension DiaryDetailsViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .fetchDiary(let diaryId):
-            usecase.fetchDiaryDetails(diaryId: diaryId)
+        case .fetchDiary(let selectedDate):
+            guard let selectedDiary = currentState.dateRangeDiaries.first(where: { $0.createdAt == selectedDate }) else {
+                return .empty()
+            }
+            usecase.fetchDiaryDetails(diaryId: selectedDiary.diaryId)
         case .fetchDateRangeDiaryList(let date):
             usecase.fetchDateRangeDiaryList(
                 date: date
             )
         case .didTapBackButton:
             coordinator.popViewController()
-        case .didTapLikeButton(let diaryID):
+        case .didTapLikeButton:
+            guard let diaryID = currentState.diary?.diaryId else { return .empty() }
             usecase.toggleDiaryLike(id: diaryID)
             return .just(.toggleLike)
         case .didTapCommentButton:
@@ -74,11 +80,11 @@ extension DiaryDetailsViewReactor {
             newState.diary = diary
         case .setDateRangeDiaryList(let diaryList):
             newState.dateRangeDiaries = diaryList
+            newState.editedDateList = Set(diaryList.compactMap { $0.createdAt })
         case .toggleLike:
             if var diary = newState.diary {
                 diary.likeByMe.toggle()
-                diary.likeCount += diary.likeByMe ? 1 : -1
-                diary.likeCount = max(0, diary.likeCount)
+                diary.likeCount = max(0, diary.likeByMe ? diary.likeCount + 1 : diary.likeCount - 1)
                 newState.diary = diary
             }
         case .setError(let error):

@@ -129,12 +129,8 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .disposed(by: disposeBag)
         
         diaryDetailsView.likeButton.rx.tap
-            .do(onNext: { _ in
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            })
-            .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
-            .compactMap { reactor.currentState.diary?.diaryId }
-            .map { DiaryDetailsViewReactor.Action.didTapLikeButton($0) }
+            .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
+            .map { DiaryDetailsViewReactor.Action.didTapLikeButton }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -144,10 +140,10 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        let diaryObservable = reactor.pulse(\.$diary).share(replay: 1)
+        let diaryObservable = reactor.pulse(\.$diary).share(replay: 1).compactMap { $0 }
         
         diaryObservable
-            .compactMap { $0 }
+            .take(1)
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, diary in
                 if diary.user.id == UserManager.shared.id {
@@ -160,12 +156,18 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .disposed(by: disposeBag)
         
         diaryObservable
-            .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, diary in
                 if let createdAt = diary.createdAt {
                     owner.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: createdAt)
-                    owner.calendarView.select(createdAt)
+                    let alreadySelectedSameDay = {
+                        guard let selected = owner.calendarView.selectedDate else { return false }
+                        return Calendar.current.isDate(selected, inSameDayAs: createdAt)
+                    }()
+                    
+                    if !alreadySelectedSameDay {
+                        owner.calendarView.select(createdAt)
+                    }
                 }
                 
                 owner.diaryDetailsView.configure(
@@ -182,10 +184,12 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$dateRangeDiaries)
+        reactor.pulse(\.$editedDateList)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, _ in
-                owner.calendarView.reloadData()
+                UIView.performWithoutAnimation {
+                    owner.calendarView.reloadData()
+                }
             }
             .disposed(by: disposeBag)
         
@@ -227,11 +231,10 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     /// 감사일기가 작성된 날짜 마커
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        guard let diaryList = reactor?.currentState.dateRangeDiaries else { return 0 }
+        guard let diaryList = reactor?.currentState.editedDateList else { return 0 }
         
         let hasEvent = diaryList.contains(where: {
-            guard let createdAt = $0.createdAt else { return false }
-            return Calendar.current.isDate(createdAt, inSameDayAs: date)
+            return Calendar.current.isDate($0, inSameDayAs: date)
         })
         
         return hasEvent ? 1 : 0
@@ -239,22 +242,20 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     /// 날짜 선택 가능 여부 결정
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        guard let diaryList = reactor?.currentState.dateRangeDiaries else { return false }
+        guard let diaryList = reactor?.currentState.editedDateList else { return false }
         
         let hasEvent = diaryList.contains(where: {
-            guard let createdAt = $0.createdAt else { return false }
-            return Calendar.current.isDate(createdAt, inSameDayAs: date)
+            return Calendar.current.isDate($0, inSameDayAs: date)
         })
         
         return hasEvent
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if let selectedDiary = reactor?.currentState.dateRangeDiaries.first(where: {
-            guard let createdAt = $0.createdAt else { return false }
-            return Calendar.current.isDate(createdAt, inSameDayAs: date)
-        }) {
-            reactor?.action.onNext(.fetchDiary(selectedDiary.diaryId))
-        }
+        guard let selectedDate = reactor?.currentState.editedDateList.first(where: {
+            Calendar.current.isDate($0, inSameDayAs: date)
+        }) else { return }
+        
+        reactor?.action.onNext(.fetchDiary(selectedDate))
     }
 }
