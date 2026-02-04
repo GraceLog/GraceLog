@@ -11,8 +11,11 @@ enum DiaryAPI {
     case createDiary(CreateDiaryRequestDTO)
     case fetchDiary(diaryId: Int)
     case fetchCommunityDiaryList(CommunityDiaryListRequestDTO)
+    case fetchMyActivityDiaryList(MyActivityDiaryListRequestDTO)
     case fetchMyDiaryList(MyDiaryListRequestDTO)
     case fetchDateRangeDiaryList(DateRangeDiaryListRequestDTO)
+    case fetchLastPostDate(DiaryLastPostDateRequestDTO)
+    case fetchDiaryExistenceDates(DiaryExistenceDatesRequestDTO)
     case deleteDiary(diaryId: Int)
 }
 
@@ -26,8 +29,11 @@ extension DiaryAPI: TargetType {
         case .createDiary: return .post
         case .fetchDiary: return .get
         case .fetchCommunityDiaryList: return .get
+        case .fetchMyActivityDiaryList: return .get
         case .fetchMyDiaryList: return .get
         case .fetchDateRangeDiaryList: return .get
+        case .fetchLastPostDate: return .get
+        case .fetchDiaryExistenceDates: return .get
         case .deleteDiary: return .delete
         }
     }
@@ -38,10 +44,16 @@ extension DiaryAPI: TargetType {
             return ""
         case .fetchDiary(let id):
             return "/\(id)"
+        case .fetchMyActivityDiaryList:
+            return "/myActivity"
         case .fetchMyDiaryList:
             return "/myPostList"
         case .fetchDateRangeDiaryList:
             return "/dateRangePostList"
+        case .fetchLastPostDate:
+            return "/lastPostDate"
+        case .fetchDiaryExistenceDates:
+            return "/dateRangePostExistence"
         case .deleteDiary(let id):
             return "/\(id)"
         }
@@ -64,9 +76,15 @@ extension DiaryAPI: TargetType {
             return .none
         case .fetchCommunityDiaryList(let params):
             return .query(params)
+        case .fetchMyActivityDiaryList(let params):
+            return .query(params)
         case .fetchMyDiaryList(let params):
             return .query(params)
         case .fetchDateRangeDiaryList(let params):
+            return .query(params)
+        case .fetchLastPostDate(let params):
+            return .query(params)
+        case .fetchDiaryExistenceDates(let params):
             return .query(params)
         case .deleteDiary:
             return .none

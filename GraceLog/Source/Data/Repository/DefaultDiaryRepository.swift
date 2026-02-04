@@ -51,6 +51,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                 return responseDTO.map { diaryResponseDTO in
                     return MyDiaryPreview(
                         id: diaryResponseDTO.postId,
+                        userId: diaryResponseDTO.member.memberId,
                         editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
@@ -61,8 +62,15 @@ final class DefaultDiaryRepository: DiaryRepository {
     }
     
     
-    func fetchDateRangeDiaryList(startDate: String, endDate: String, communityId: Int?, memberId: Int) -> Single<[DiaryDetails]> {
-        let request = DateRangeDiaryListRequestDTO(startDate: startDate, endDate: endDate, communityId: communityId, memberId: memberId)
+    func fetchDateRangeDiaryList(startDate: String, endDate: String, communityId: Int?, memberId: Int, cursorId: Int?, size: Int?) -> Single<[DiaryDetails]> {
+        let request = DateRangeDiaryListRequestDTO(
+            startDate: startDate,
+            endDate: endDate,
+            communityId: communityId,
+            memberId: memberId,
+            cursorId: nil,
+            size: nil
+        )
         
         return network.request(DiaryAPI.fetchDateRangeDiaryList(request))
             .map { (responseDTO: [DiaryResponseDTO]) in
@@ -110,10 +118,12 @@ final class DefaultDiaryRepository: DiaryRepository {
                         isLiked: diaryResponseDTO.likedByMe,
                         likeCount: diaryResponseDTO.likeCount,
                         commentCount: diaryResponseDTO.commentCount,
+                        userId: diaryResponseDTO.member.memberId,
                         username: diaryResponseDTO.member.name,
                         profileImageURL: diaryResponseDTO.member.profileImage,
                         diaryImageURL: diaryResponseDTO.postImages.first?.url,
-                        isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId
+                        isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId,
+                        communityId: diaryResponseDTO.postCommunityId
                     )
                 }
                 
@@ -121,6 +131,144 @@ final class DefaultDiaryRepository: DiaryRepository {
                     diaryList: diaryList,
                     isLastPage: responseDTO.last
                 )
+            }
+    }
+    
+    func fetchDateRangeMemberDiaryList(startDate: String, endDate: String, memberId: Int, communityId: Int?, cursorId: Int?, size: Int?) -> Single<[DiaryDetails]> {
+        let request = DateRangeDiaryListRequestDTO(
+            startDate: startDate,
+            endDate: endDate,
+            communityId: communityId,
+            memberId: memberId,
+            cursorId: cursorId,
+            size: size
+        )
+        
+        return network.request(DiaryAPI.fetchDateRangeDiaryList(request))
+            .map { (responseDTO: DiaryPagingResponseDTO) in
+                return responseDTO.content.map { diaryResponseDTO in
+                    return DiaryDetails(
+                        diaryId: diaryResponseDTO.postId,
+                        communityId: diaryResponseDTO.postCommunityId,
+                        title: diaryResponseDTO.title,
+                        description: diaryResponseDTO.description,
+                        user: GraceLogUser(
+                            id: diaryResponseDTO.member.memberId,
+                            name: diaryResponseDTO.member.name,
+                            nickname: diaryResponseDTO.member.nickname,
+                            profileImageURL: diaryResponseDTO.member.profileImage,
+                            email: diaryResponseDTO.member.email,
+                            message: diaryResponseDTO.member.message
+                        ),
+                        imageURLs: diaryResponseDTO.postImages.map { $0.url },
+                        likeCount: diaryResponseDTO.likeCount,
+                        likeByMe: diaryResponseDTO.likedByMe,
+                        isHideLike: diaryResponseDTO.isHideLike,
+                        isHideComment: diaryResponseDTO.isHideComment,
+                        commentCount: diaryResponseDTO.commentCount,
+                        createdAt: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.createdAt)
+                    )
+                }
+            }
+    }
+    
+    func fetchDateRangeCommunityDiaryList(startDate: String, endDate: String, communityId: Int, memberId: Int?, cursorId: Int?, size: Int) -> Single<CommunityDiaryPreViewInfo> {
+        
+        let request = DateRangeDiaryListRequestDTO(
+            startDate: startDate,
+            endDate: endDate,
+            communityId: communityId,
+            memberId: memberId,
+            cursorId: cursorId,
+            size: size
+        )
+        
+        return network.request(DiaryAPI.fetchDateRangeDiaryList(request))
+            .map { (responseDTO: DiaryPagingResponseDTO) in
+                let diaryList = responseDTO.content.map { diaryResponseDTO in
+                    return CommunityDiaryPreview(
+                        id: diaryResponseDTO.postId,
+                        title: diaryResponseDTO.title,
+                        content: diaryResponseDTO.description,
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
+                        isLiked: diaryResponseDTO.likedByMe,
+                        likeCount: diaryResponseDTO.likeCount,
+                        commentCount: diaryResponseDTO.commentCount,
+                        userId: diaryResponseDTO.member.memberId,
+                        username: diaryResponseDTO.member.name,
+                        profileImageURL: diaryResponseDTO.member.profileImage,
+                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId,
+                        communityId: diaryResponseDTO.postCommunityId
+                    )
+                }
+                
+                return CommunityDiaryPreViewInfo(
+                    diaryList: diaryList,
+                    isLastPage: responseDTO.last
+                )
+            }
+    }
+    
+    func fetchMyActivityDiaryList(cursorId: Int, size: Int) -> Single<CommunityDiaryPreViewInfo> {
+        let request = MyActivityDiaryListRequestDTO(cursorId: cursorId, size: size)
+        
+        return network.request(DiaryAPI.fetchMyActivityDiaryList(request))
+            .map { (responseDTO: DiaryPagingResponseDTO) in
+                let diaryList = responseDTO.content.map { diaryResponseDTO in
+                    return CommunityDiaryPreview(
+                        id: diaryResponseDTO.postId,
+                        title: diaryResponseDTO.title,
+                        content: diaryResponseDTO.description,
+                        editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
+                        isLiked: diaryResponseDTO.likedByMe,
+                        likeCount: diaryResponseDTO.likeCount,
+                        commentCount: diaryResponseDTO.commentCount,
+                        userId: diaryResponseDTO.member.memberId,
+                        username: diaryResponseDTO.member.name,
+                        profileImageURL: diaryResponseDTO.member.profileImage,
+                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId,
+                        communityId: diaryResponseDTO.postCommunityId
+                    )
+                }
+                
+                return CommunityDiaryPreViewInfo(
+                    diaryList: diaryList,
+                    isLastPage: responseDTO.last
+                )
+            }
+    }
+    
+    func fetchDiaryLastPostDate(communityId: Int) -> Single<Date?> {
+        let request = DiaryLastPostDateRequestDTO(communityId: communityId)
+        return network.request(DiaryAPI.fetchLastPostDate(request))
+            .map { (responseDTO: DiaryLastPostDateResponseDTO) in
+                let date = responseDTO.lastPostDate.toDate()
+                return date
+            }
+    }
+    
+    func fetchDiaryExistenceDates(startDate: String, endDate: String, communityId: Int?, memberId: Int?, cursorId: Int?, size: Int?) -> Single<[DiaryExistenceDate]> {
+        let request = DiaryExistenceDatesRequestDTO(
+            startDate: startDate,
+            endDate: endDate,
+            communityId: communityId,
+            memberId: memberId,
+            cursorId: cursorId,
+            size: size
+        )
+        
+        return network.request(DiaryAPI.fetchDiaryExistenceDates(request))
+            .map { (responseDTO: [DiaryExistenceDateResponseDTO]) in
+                return responseDTO
+                    .filter { $0.isExistPost }
+                    .compactMap { dateResponseDTO in
+                        guard let date = dateResponseDTO.date.toDate() else {
+                            return nil
+                        }
+                        return DiaryExistenceDate(date: date)
+                    }
             }
     }
     

@@ -9,6 +9,7 @@ import Foundation
 
 struct MyDiaryPreview {
     let id: Int
+    let userId: Int
     let editedDate: Date?
     let title: String
     let content: String
@@ -19,6 +20,7 @@ extension MyDiaryPreview {
     static var empty: MyDiaryPreview {
         MyDiaryPreview(
             id: 0,
+            userId: 0,
             editedDate: nil,
             title: "",
             content: "",
