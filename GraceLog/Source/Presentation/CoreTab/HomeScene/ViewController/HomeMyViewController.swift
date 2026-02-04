@@ -180,7 +180,9 @@ extension HomeMyViewController {
                               let selectedItem = try? self.myDiaryView.diaryCollectionView.rx.model(at: indexPath) as MyDiaryPreview else {
                             return
                         }
-                        reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
+                        reactor.action.onNext(.didTapDiaryDetail(
+                            selectedItem.id, nil, selectedItem.userId)
+                        )
                     })
                     .disposed(by: cell.disposeBag)
                 

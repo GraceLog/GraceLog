@@ -169,7 +169,11 @@ extension HomeCommunityViewController {
                             return
                         }
                         
-                        reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
+                        reactor.action.onNext(.didTapDiaryDetail(
+                            selectedItem.id,
+                            selectedItem.communityId,
+                            selectedItem.userId
+                        ))
                     })
                     .disposed(by: cell.disposeBag)
                 
