@@ -182,7 +182,15 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$dateRangeDiaries)
+        diaryObservable
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, diary in
+                guard let date = diary.createdAt else { return }
+                reactor.action.onNext(.fetchPostDateList(date))
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$postDateList)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, _ in
                 owner.calendarView.reloadData()
@@ -222,39 +230,26 @@ extension DiaryDetailsViewController: FSCalendarDelegate, FSCalendarDataSource {
         config?.title = DateFormatterFactory.toYearMonthString(from: calendar.currentPage)
         calendarButton.configuration = config
         
-        reactor?.action.onNext(.fetchDateRangeDiaryList(calendar.currentPage))
+        reactor?.action.onNext(.fetchPostDateList(calendar.currentPage))
     }
     
     /// 감사일기가 작성된 날짜 마커
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        guard let diaryList = reactor?.currentState.dateRangeDiaries else { return 0 }
+        guard let dateList = reactor?.currentState.postDateList else { return 0 }
         
-        let hasEvent = diaryList.contains(where: {
-            guard let createdAt = $0.createdAt else { return false }
-            return Calendar.current.isDate(createdAt, inSameDayAs: date)
-        })
-        
+        let hasEvent = dateList.contains(where: { return Calendar.current.isDate($0, inSameDayAs: date) })
         return hasEvent ? 1 : 0
     }
     
     /// 날짜 선택 가능 여부 결정
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        guard let diaryList = reactor?.currentState.dateRangeDiaries else { return false }
+        guard let dateList = reactor?.currentState.postDateList else { return false }
         
-        let hasEvent = diaryList.contains(where: {
-            guard let createdAt = $0.createdAt else { return false }
-            return Calendar.current.isDate(createdAt, inSameDayAs: date)
-        })
-        
+        let hasEvent = dateList.contains(where: { return Calendar.current.isDate($0, inSameDayAs: date) })
         return hasEvent
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if let selectedDiary = reactor?.currentState.dateRangeDiaries.first(where: {
-            guard let createdAt = $0.createdAt else { return false }
-            return Calendar.current.isDate(createdAt, inSameDayAs: date)
-        }) {
-            reactor?.action.onNext(.fetchDiary(selectedDiary.diaryId))
-        }
+        reactor?.action.onNext(.fetchDateRangeDiaryList(date))
     }
 }

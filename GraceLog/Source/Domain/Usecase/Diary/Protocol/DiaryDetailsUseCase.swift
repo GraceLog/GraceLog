@@ -9,11 +9,12 @@ import RxRelay
 
 protocol DiaryDetailsUseCase {
     var diary: PublishRelay<DiaryDetails> { get }
-    var dateRangeDiaries: BehaviorRelay<[DiaryDetails]> { get }
+    var postDateList: BehaviorRelay<[DiaryExistenceDate]> { get }
     var toggleDiaryResult: PublishRelay<Bool> { get }
     var error: PublishRelay<Error> { get }
     
     func fetchDiaryDetails(diaryId: Int)
-    func fetchDateRangeDiaryList(date: Date)
+    func fetchDiaryPostDateList(date: Date)
+    func fetchDateRangeDiaryList(date: String)
     func toggleDiaryLike(id: Int)
 }

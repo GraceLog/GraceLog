@@ -13,20 +13,26 @@ final class DiaryDetailsCoordinator: Coordinator {
     var navigationController: UINavigationController
     
     private let diaryId: Int
+    private let communityId: Int?
+    private let memberId: Int?
     
     init(
         _ navigationController: UINavigationController,
-        diaryId: Int
+        diaryId: Int,
+        communityId: Int?,
+        memberId: Int?
     ) {
         self.navigationController = navigationController
         self.diaryId = diaryId
+        self.communityId = communityId
+        self.memberId = memberId
     }
     
     func start() {
         let diaryDetailsVC = DependencyContainer.shared.injector.resolve(
             DiaryDetailsViewController.self,
             arguments: self as DiaryDetailsCoordinator,
-            diaryId
+            diaryId, communityId, memberId
         )
         self.navigationController.pushViewController(diaryDetailsVC, animated: true)
     }
