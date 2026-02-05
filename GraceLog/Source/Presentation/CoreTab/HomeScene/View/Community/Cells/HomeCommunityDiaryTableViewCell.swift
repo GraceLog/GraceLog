@@ -22,7 +22,6 @@ final class HomeCommunityDiaryTableViewCell: UITableViewCell {
         $0.alignment = .fill
         $0.backgroundColor = .clear
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.layoutMargins = .init(top: .zero, left: 20, bottom: .zero, right: 20)
         $0.spacing = 10
     }
     

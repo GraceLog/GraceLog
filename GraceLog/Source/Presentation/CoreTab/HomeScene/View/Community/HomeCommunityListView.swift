@@ -14,7 +14,7 @@ final class HomeCommunityListView: UIView {
     private let communityListLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 9
-        $0.sectionInset = UIEdgeInsets(top: 27, left: 18, bottom: 23, right: 18)
+        $0.sectionInset = UIEdgeInsets(top: 27, left: 0, bottom: 23, right: 0)
         $0.itemSize = CGSize(width: 64, height: 87)
     }
     
