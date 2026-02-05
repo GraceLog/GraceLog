@@ -21,7 +21,9 @@ final class CommunityGroupCoordinator: NavigationCoordinator {
     }
     
     func start() {
-        let viewController = CommunityGroupViewController(reactor: CommunityGroupReactor(diaryDetailUseCase: DefaultDiaryDetailsUseCase(diaryRepository: DefaultDiaryRepository(network: .init()), communityId: communityId, memberId: memberId), coordinator: self))
+        let viewController = DependencyContainer.shared.injector
+            .resolve(CommunityGroupViewController.self, argument: communityId)
+        viewController.reactor?.coordinator = self
         navigationController.pushViewController(viewController, animated: true)
     }
 }
@@ -39,5 +41,17 @@ extension CommunityGroupCoordinator {
     func popViewController() {
         navigationController.popViewController(animated: true)
         parentCoordinator?.removeChildCoordinator(self)
+    }
+    
+    func showDiaryDetail(diaryId: Int, communityId: Int?, memberId: Int?) {
+        let diaryDetailsCoordinator = DiaryDetailsCoordinator(
+            self.navigationController,
+            diaryId: diaryId,
+            communityId: communityId,
+            memberId: memberId
+        )
+        diaryDetailsCoordinator.parentCoordinator = self
+        self.childCoordinators.append(diaryDetailsCoordinator)
+        diaryDetailsCoordinator.start()
     }
 }

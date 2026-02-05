@@ -179,6 +179,7 @@
 		DE645D4E2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D4D2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift */; };
 		DE645D502F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D4F2F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift */; };
 		DE645D522F2DB06C00C98B5A /* DiaryExistenceDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D512F2DB06C00C98B5A /* DiaryExistenceDate.swift */; };
+		DE645D822F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D812F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift */; };
 		DE645D842F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D832F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift */; };
 		DE645D862F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D852F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift */; };
 		DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */; };
@@ -468,6 +469,7 @@
 		DE645D4D2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryExistenceDatesRequestDTO.swift; sourceTree = "<group>"; };
 		DE645D4F2F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryExistenceDateResponseDTO.swift; sourceTree = "<group>"; };
 		DE645D512F2DB06C00C98B5A /* DiaryExistenceDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryExistenceDate.swift; sourceTree = "<group>"; };
+		DE645D812F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGroupPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE645D832F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLastPostDateResponseDTO.swift; sourceTree = "<group>"; };
 		DE645D852F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLastPostDateRequestDTO.swift; sourceTree = "<group>"; };
 		DE655B1E2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDivideTableViewCell.swift; sourceTree = "<group>"; };
@@ -1534,6 +1536,7 @@
 			isa = PBXGroup;
 			children = (
 				DE645B892F20462500C98B5A /* CreateCommunityPresentationAssembly.swift */,
+				DE645D812F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -2133,6 +2136,7 @@
 				DE6459B12F10CBB800C98B5A /* NotificationCenterHandler.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
+				DE645D822F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift in Sources */,
 				DE4D0F4A2E750EC300827EDE /* Announcement.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
 				DECCC6282EE582E000E893DB /* VideoResponseDTO.swift in Sources */,
@@ -2438,7 +2442,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2471,7 +2475,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

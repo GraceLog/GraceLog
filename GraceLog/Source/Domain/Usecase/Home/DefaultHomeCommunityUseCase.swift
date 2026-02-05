@@ -99,9 +99,8 @@ extension DefaultHomeCommunityUseCase {
         var updatedList = diaryList.value
         if let index = updatedList.firstIndex(where: { $0.id == id }) {
             var diary = updatedList[index]
-            
             diary.isLiked.toggle()
-            diary.likeCount += diary.isLiked ? 1 : -1
+            diary.likeCount = diary.isLiked ? diary.likeCount + 1 : max(0, diary.likeCount - 1)
             
             updatedList[index] = diary
             diaryList.accept(updatedList)

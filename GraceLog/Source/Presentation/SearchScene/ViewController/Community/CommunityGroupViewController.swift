@@ -9,6 +9,7 @@ import UIKit
 
 import FSCalendar
 import RxSwift
+import ReactorKit
 import RxDataSources
 import SnapKit
 import Then
@@ -93,7 +94,7 @@ final class CommunityGroupViewController: GraceLogBaseViewController<CommunityGr
     
     override func setupConstraints() {
         super.setupConstraints()
-
+        
         scrollView.snp.makeConstraints {
             $0.directionalEdges.equalToSuperview()
         }
@@ -110,7 +111,23 @@ final class CommunityGroupViewController: GraceLogBaseViewController<CommunityGr
     }
     
     override func bind(reactor: CommunityGroupReactor) {
-        reactor.action.onNext(.fetchDiaryList(Date()))
+        let latestPostDate = reactor.pulse(\.$latestPostDate)
+            .compactMap { $0 }
+            .share()
+        
+        latestPostDate
+            .subscribe(with: self) { owner, date in
+                reactor.action.onNext(.fetchEditedDateList(date))
+                reactor.action.onNext(.fetchDiaryList(date))
+            }
+            .disposed(by: disposeBag)
+        
+        latestPostDate
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(with: self) { owner, date in
+                owner.calendarView.select(date)
+            }
+            .disposed(by: disposeBag)
         
         backButton.rx.tap
             .map { Reactor.Action.didTapBackButton }
@@ -125,12 +142,13 @@ final class CommunityGroupViewController: GraceLogBaseViewController<CommunityGr
         
         reactor.pulse(\.$editedDateList)
             .asDriver(onErrorJustReturn: [])
-            .drive(with: self) { owner, editedDateList in
+            .drive(with: self) { owner, _ in
                 owner.calendarView.reloadData()
             }
             .disposed(by: disposeBag)
         
         bindCommunityDiaryTableView(reactor: reactor)
+        bindScrollViewPagination(reactor: reactor)
     }
     
     private func bindCommunityDiaryTableView(reactor: CommunityGroupReactor) {
@@ -178,7 +196,11 @@ final class CommunityGroupViewController: GraceLogBaseViewController<CommunityGr
                             return
                         }
                         
-                        reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
+                        reactor.action.onNext(.didTapDiaryDetail(
+                            selectedItem.id,
+                            selectedItem.communityId,
+                            selectedItem.userId
+                        ))
                     })
                     .disposed(by: cell.disposeBag)
                 
@@ -210,6 +232,21 @@ final class CommunityGroupViewController: GraceLogBaseViewController<CommunityGr
         reactor.pulse(\.$sectionedDiaryList)
             .asDriver(onErrorJustReturn: [])
             .drive(communityDiaryListView.diaryTableView.rx.items(dataSource: diaryDataSource))
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindScrollViewPagination(reactor: CommunityGroupReactor) {
+        scrollView.rx.didEndDragging
+            .filter { [weak self] _ in
+                guard let self = self else { return false }
+                let offsetY = self.scrollView.contentOffset.y
+                let contentHeight = self.scrollView.contentSize.height
+                let height = self.scrollView.frame.height
+                
+                return offsetY > contentHeight - height
+            }
+            .map { _ in CommunityGroupReactor.Action.loadNextPage }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
 }
@@ -245,7 +282,7 @@ extension CommunityGroupViewController: FSCalendarDelegate, FSCalendarDataSource
         config?.title = DateFormatterFactory.toYearMonthString(from: nextMonthDate)
         calendarButton.configuration = config
         
-        reactor?.action.onNext(.fetchDiaryList(nextMonthDate))
+        reactor?.action.onNext(.fetchEditedDateList(nextMonthDate))
     }
     
     /// 감사일기가 작성된 날짜 마커
@@ -254,7 +291,7 @@ extension CommunityGroupViewController: FSCalendarDelegate, FSCalendarDataSource
         let hasEvent = currentEditedDateList.contains(where: { return Calendar.current.isDate($0, inSameDayAs: date) })
         return hasEvent ? 1 : 0
     }
-
+    
     /// 날짜 선택 가능 여부 결정
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         guard let currentEditedDateList = reactor?.currentState.editedDateList else { return false }

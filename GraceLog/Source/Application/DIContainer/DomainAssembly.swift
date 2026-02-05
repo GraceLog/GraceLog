@@ -90,5 +90,16 @@ struct DomainAssembly: Assembly {
             let communityRepository = resolver.resolve(CommunityRepository.self)!
             return DefaultCreateCommunityUseCase(communityRepository: communityRepository)
         }
+        
+        container.register(CommunityGroupUseCase.self) { (resolver, communityId: Int) in
+            let diaryRepository = resolver.resolve(DiaryRepository.self)!
+            let likeRepository = resolver.resolve(LikeRepository.self)!
+            
+            return DefaultCommunityGroupUseCase(
+                diaryRepository: diaryRepository,
+                likeRepository: likeRepository,
+                communityId: communityId
+            )
+        }
     }
 }

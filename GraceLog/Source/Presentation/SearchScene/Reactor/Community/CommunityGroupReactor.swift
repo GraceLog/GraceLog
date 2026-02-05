@@ -8,33 +8,41 @@
 import ReactorKit
 
 final class CommunityGroupReactor: Reactor {
-    private let coordinator: CommunityGroupCoordinator
-    private let diaryDetailUseCase: DiaryDetailsUseCase
+    var coordinator: CommunityGroupCoordinator?
+    private let usecase: CommunityGroupUseCase
     
     let initialState: State
     
-    init(diaryDetailUseCase: DiaryDetailsUseCase, coordinator: CommunityGroupCoordinator) {
-        self.diaryDetailUseCase = diaryDetailUseCase
-        self.coordinator = coordinator
-        self.initialState = .init(editedDateList: [], sectionedDiaryList: [])
+    init(
+        usecase: CommunityGroupUseCase
+    ) {
+        self.usecase = usecase
+        self.initialState = .init(
+            editedDateList: [],
+            sectionedDiaryList: []
+        )
+        
+        usecase.fetchLatestCommunityDiaryExistenceDate()
     }
     
     enum Action {
-        case didTapBackButton
+        case fetchEditedDateList(Date)
         case fetchDiaryList(Date)
-        case didTapDiaryDetail(Int)
+        case loadNextPage
+        case didTapBackButton
+        case didTapDiaryDetail(Int, Int?, Int?)
         case didTapLikeButton(Int)
         case didTapCommentButton(Int)
     }
     
     enum Mutation {
+        case setLastestPostDate(Date)
         case setDiaryList([CommunityGroupSection])
-        case setEditedDateList([Date])
-        case setLikedStateResult((Bool, Int))
-        case setUnLikedStateResult((Bool, Int))
+        case setEditedDateList([DiaryExistenceDate])
     }
     
     struct State {
+        @Pulse var latestPostDate: Date?
         @Pulse var editedDateList: [Date]
         @Pulse var sectionedDiaryList: [CommunityGroupSection]
         @Pulse var isSuccessLikeDiary: (Bool, Int)?
@@ -43,113 +51,93 @@ final class CommunityGroupReactor: Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .fetchEditedDateList(let date):
+            usecase.fetchCommunityDiaryExistenceDates(date: date)
+        case .fetchDiaryList(let selectedDate):
+            usecase.fetchCommunityDiaryList(date: DateFormatterFactory.toDateOnlyString(from: selectedDate))
+        case .loadNextPage:
+            usecase.loadNextPage()
         case .didTapBackButton:
-            coordinator.popViewController()
-        case let .fetchDiaryList(selectedDate):
-            let calendar = Calendar.current
-            let year = calendar.component(.year, from: selectedDate)
-            let month = calendar.component(.month, from: selectedDate)
-            let (startDate, endDate) = DateFormatterFactory.getMonthDateRange(year: year, month: month)
-            diaryDetailUseCase.fetchDateRangeDiaryList(startDate: startDate, endDate: endDate)
+            coordinator?.popViewController()
         case .didTapLikeButton(let diaryID):
-            guard let selectedDiary = currentState.sectionedDiaryList.flatMap { $0.items }.first(where: { $0.id == diaryID }) else { return .empty() }
-            if selectedDiary.isLiked {
-                diaryDetailUseCase.unlikeDiary(id: diaryID)
-            } else {
-                diaryDetailUseCase.likeDiary(id: diaryID)
-            }
+            usecase.toggleDiaryLike(id: diaryID)
         case let .didTapCommentButton(diaryID):
-            coordinator.showCommentBottomSheet(diaryID: diaryID)
-        case .didTapDiaryDetail(_):
-            return .empty()
+            coordinator?.showCommentBottomSheet(diaryID: diaryID)
+        case .didTapDiaryDetail(let diaryId, let communityId, let memberId):
+            coordinator?.showDiaryDetail(
+                diaryId: diaryId,
+                communityId: communityId,
+                memberId: memberId
+            )
         }
         return .empty()
     }
+
+    func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
+        
+        switch mutation {
+        case .setLastestPostDate(let date):
+            newState.latestPostDate = date
+        case .setDiaryList(let model):
+            newState.sectionedDiaryList = model
+        case .setEditedDateList(let dates):
+            newState.editedDateList = dates.map { $0.date }
+        }
+        return newState
+    }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        let diaryMutation = diaryDetailUseCase.dateRangeDiaries.share(replay: 1)
-        let editedDiaryMutation = diaryMutation.map { $0.compactMap { $0.createdAt } }
+        let latestPostDateMutation = usecase.latestCommunityDiaryExistenceDate
+            .compactMap { $0 }
+            .map { Mutation.setLastestPostDate($0) }
+        
+        let editedDateListMutation = usecase.diaryExistenceDates
             .map { Mutation.setEditedDateList($0) }
-        let fetchedDiaryMutation = diaryMutation
+        
+        let diaryListMutation = usecase.communityDiaryList
             .map { diaries -> [CommunityGroupSection] in
-                let datedDiaries: [(date: Date, diary: DiaryDetails)] = diaries.compactMap { diary in
-                    guard let date = diary.createdAt else { return nil }
+                let datedDiaries: [(date: Date, diary: CommunityDiaryPreview)] = diaries.compactMap { diary in
+                    guard let date = diary.editedDate else { return nil }
                     return (date, diary)
                 }
                 let calendar = Calendar.current
                 let grouped = Dictionary(grouping: datedDiaries) { item in
-                    calendar.startOfDay(for: item.date) 
+                    calendar.startOfDay(for: item.date)
                 }
-
+                
                 let sections: [CommunityGroupSection] = grouped.map { (dayStart, items) in
                     CommunityGroupSection(
                         date: dayStart,
                         items: items.map { (_, diary) in
                             CommunityDiaryItem(from: .init(
-                                id: diary.diaryId,
+                                id: diary.id,
                                 title: diary.title,
-                                content: diary.description,
-                                editedDate: diary.createdAt,
-                                isLiked: !diary.isHideLike,
+                                content: diary.content,
+                                editedDate: diary.editedDate,
+                                isLiked: diary.isLiked,
                                 likeCount: diary.likeCount,
                                 commentCount: diary.commentCount,
-                                username: diary.user.name,
-                                profileImageURL: diary.user.profileImageURL,
-                                diaryImageURL: diary.imageURLs.first ?? nil,
-                                isCurrentUser: diary.likeByMe
+                                userId: diary.userId,
+                                username: diary.username,
+                                profileImageURL: diary.profileImageURL,
+                                diaryImageURL: diary.diaryImageURL,
+                                isCurrentUser: diary.isCurrentUser,
+                                communityId: diary.communityId
                             ))
                         }
                     )
-                }
-                .sorted { $0.date > $1.date }
-
+                }.sorted { $0.date > $1.date }
+                
                 return sections
             }
             .map { Mutation.setDiaryList($0) }
         
-        let diaryLikedToggleResult = diaryDetailUseCase.likeDiaryResult.map { Mutation.setLikedStateResult(($0.0, $0.1)) }
-        let diaryUnLikedToggleResult = diaryDetailUseCase.unlikeDiaryResult.map { Mutation.setUnLikedStateResult($0) }
-        return Observable.merge(mutation, fetchedDiaryMutation, editedDiaryMutation, diaryLikedToggleResult, diaryUnLikedToggleResult)
-    }
-    
-    func reduce(state: State, mutation: Mutation) -> State {
-        var newState = state
-        
-        switch mutation {
-        case .setDiaryList(let model):
-            newState.sectionedDiaryList = model
-        case .setEditedDateList(let model):
-            newState.editedDateList = model
-        case let .setLikedStateResult(result):
-            let (isSuccess, diaryID) = result
-            guard isSuccess else { return newState }
-            newState.sectionedDiaryList = newState.sectionedDiaryList.map { section in
-                var section = section
-                section.items = section.items.map { item in
-                    guard item.id == diaryID else { return item }
-                    var newItem = item
-                    newItem.isLiked = true
-                    newItem.likeCount = max(0, item.likeCount + 1)
-                    return newItem
-                }
-                return section
-            }
-        case let .setUnLikedStateResult(result):
-            let (isSuccess, diaryID) = result
-            guard isSuccess else { return newState }
-            newState.sectionedDiaryList = newState.sectionedDiaryList.map { section in
-                var section = section
-                section.items = section.items.map { item in
-                    guard item.id == diaryID else { return item }
-                    var newItem = item
-                    newItem.isLiked = false
-                    newItem.likeCount = max(0, item.likeCount - 1)
-                    return newItem
-                }
-                return section
-            }
-        }
-        
-        return newState
+        return Observable.merge(
+            mutation,
+            latestPostDateMutation,
+            editedDateListMutation,
+            diaryListMutation
+        )
     }
 }
