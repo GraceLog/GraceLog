@@ -8,10 +8,11 @@
 import Foundation
 
 struct Comment {
-    let id: String
+    let id: Int
     let authorName: String
     let createdAt: String
     let profileImageURL: URL?
     let comment: String
+    let replyCount: Int
     let subComments: [Comment]
 }
