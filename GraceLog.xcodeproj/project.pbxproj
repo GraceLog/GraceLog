@@ -62,6 +62,10 @@
 		709CBB6D2E2B8CA100F68457 /* CommentToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709CBB6C2E2B8CA100F68457 /* CommentToggleButton.swift */; };
 		709FEE902F2B64FF00FDD22B /* CommentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709FEE8F2F2B64FF00FDD22B /* CommentAPI.swift */; };
 		709FEE922F2B860100FDD22B /* CreateCommentRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709FEE912F2B860100FDD22B /* CreateCommentRequestDTO.swift */; };
+		709FEE942F2B8A9400FDD22B /* DefaultCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709FEE932F2B8A9400FDD22B /* DefaultCommentRepository.swift */; };
+		709FEE962F2B8AA500FDD22B /* CommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709FEE952F2B8AA500FDD22B /* CommentRepository.swift */; };
+		709FEE972F2B8AA600FDD22B /* CommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709FEE952F2B8AA500FDD22B /* CommentRepository.swift */; };
+		709FEE982F2B8AA600FDD22B /* CommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709FEE952F2B8AA500FDD22B /* CommentRepository.swift */; };
 		709FEE9A2F2B8EB500FDD22B /* FetchCommentListResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709FEE992F2B8EB500FDD22B /* FetchCommentListResponseDTO.swift */; };
 		70A97C462E18F5B900F08DF6 /* DiaryKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */; };
 		70A97C482E18F61000F08DF6 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A97C472E18F61000F08DF6 /* Community.swift */; };
@@ -343,6 +347,8 @@
 		709CBB6C2E2B8CA100F68457 /* CommentToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentToggleButton.swift; sourceTree = "<group>"; };
 		709FEE8F2F2B64FF00FDD22B /* CommentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAPI.swift; sourceTree = "<group>"; };
 		709FEE912F2B860100FDD22B /* CreateCommentRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommentRequestDTO.swift; sourceTree = "<group>"; };
+		709FEE932F2B8A9400FDD22B /* DefaultCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCommentRepository.swift; sourceTree = "<group>"; };
+		709FEE952F2B8AA500FDD22B /* CommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRepository.swift; sourceTree = "<group>"; };
 		709FEE992F2B8EB500FDD22B /* FetchCommentListResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCommentListResponseDTO.swift; sourceTree = "<group>"; };
 		70A97C452E18F5B900F08DF6 /* DiaryKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryKeyword.swift; sourceTree = "<group>"; };
 		70A97C472E18F61000F08DF6 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
@@ -1183,6 +1189,7 @@
 				DEA80D912F05048C00216B1D /* VideoRepository.swift */,
 				DEA80D992F050B1F00216B1D /* DailyVerseRepository.swift */,
 				DE645B932F206A1D00C98B5A /* AnnouncementRepository.swift */,
+				709FEE952F2B8AA500FDD22B /* CommentRepository.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1208,6 +1215,7 @@
 				DEA80D972F0507A500216B1D /* DefaultLikeRepository.swift */,
 				DEA80D9D2F050B3F00216B1D /* DefaultDailyVerseRepository.swift */,
 				DE645B972F206A9400C98B5A /* DefaultAnnouncementRepository.swift */,
+				709FEE932F2B8A9400FDD22B /* DefaultCommentRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -1945,6 +1953,7 @@
 				DE24DB6E2D26D36100581621 /* MockFireStoreRepository.swift in Sources */,
 				DEEFEACC2D2A5E8200699692 /* GraceLogUser.swift in Sources */,
 				DEA80D842F026BAC00216B1D /* CommunityRepository.swift in Sources */,
+				709FEE972F2B8AA600FDD22B /* CommentRepository.swift in Sources */,
 				DEA80D8E2F05048000216B1D /* LikeRepository.swift in Sources */,
 				DE645B962F206A1D00C98B5A /* AnnouncementRepository.swift in Sources */,
 				DEEFEAC12D26D4B800699692 /* SignInUseCase.swift in Sources */,
@@ -2098,6 +2107,7 @@
 				DE27005C2D212609005C9DCF /* DefaultSignInUseCase.swift in Sources */,
 				DE2387362E0A66DA00893D8C /* HomeMyDiaryView.swift in Sources */,
 				70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */,
+				709FEE962F2B8AA500FDD22B /* CommentRepository.swift in Sources */,
 				DE93B6F52ECDF6C000BCFB5D /* CommunityDiaryListRequestDTO.swift in Sources */,
 				DE042C3F2E93FCE90089E20F /* DiaryDetailsCoordinator.swift in Sources */,
 				DE2387412E0BB83B00893D8C /* HomeMyRecommendVideoView.swift in Sources */,
@@ -2146,6 +2156,7 @@
 				DED558662DABAFBE00137B10 /* CommonSectionWithDescHeaderView.swift in Sources */,
 				DE645A472F1B696800C98B5A /* AnnouncementPresentationAssembly.swift in Sources */,
 				DE23872E2E07C2DC00893D8C /* HomeMyViewController.swift in Sources */,
+				709FEE942F2B8A9400FDD22B /* DefaultCommentRepository.swift in Sources */,
 				DE27005A2D2125FF005C9DCF /* SignInUseCase.swift in Sources */,
 				DE42374C2EBCCDB4006FAA7B /* DateRangeDiaryListRequestDTO.swift in Sources */,
 				704815822E018E30009ECDBD /* GLDividerView.swift in Sources */,
@@ -2190,6 +2201,7 @@
 				DE58FED22D04284E008CADCD /* GraceLogUITests.swift in Sources */,
 				DEA80D922F05048C00216B1D /* VideoRepository.swift in Sources */,
 				DEA80D8F2F05048000216B1D /* LikeRepository.swift in Sources */,
+				709FEE982F2B8AA600FDD22B /* CommentRepository.swift in Sources */,
 				DEEFEACD2D2A5E8400699692 /* GraceLogUser.swift in Sources */,
 				DED5588B2DBE226D00137B10 /* AuthRepository.swift in Sources */,
 				DEEFEAC02D26D4B800699692 /* SignInUseCase.swift in Sources */,
