@@ -34,7 +34,7 @@ final class DiaryDetailsCoordinator: Coordinator {
     func showCommentBottomSheet() {
         let commentBottomSheetVC = CommentBottomSheetViewController(
             reactor: CommentBottomSheetViewReactor(
-                usecase: DefaultCommentUseCase()
+                usecase: DefaultCommentUseCase(commentRepository: DefaultCommentRepository(network: .init()), postId: diaryId)
             )
         )
         self.navigationController.present(commentBottomSheetVC, animated: true)

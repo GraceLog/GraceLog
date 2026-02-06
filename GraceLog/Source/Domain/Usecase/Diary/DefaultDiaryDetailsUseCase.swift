@@ -47,11 +47,6 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
             .subscribe(onSuccess: { diary in
                 self.communityId = diary.communityId
                 self.memberId = diary.user.id
-                
-                if let createdAt = diary.createdAt {
-                    self.fetchDateRangeDiaryList(date: createdAt)
-                }
-                
                 self.diary.accept(diary)
             }, onFailure: { error in
                 self.error.accept(error)

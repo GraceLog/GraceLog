@@ -11,7 +11,9 @@ struct UserResponseDTO: Decodable {
     let memberId: Int
     let name: String
     let nickname: String
-    let profileImage: URL?
+    let profileImage: String
     let email: String
     let message: String
+    let updatedAt: String
+    let createdAt: String
 }

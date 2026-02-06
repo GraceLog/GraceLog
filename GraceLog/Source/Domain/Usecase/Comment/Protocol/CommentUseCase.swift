@@ -9,7 +9,11 @@ import RxRelay
 
 protocol CommentUseCase {
     var commentList: BehaviorRelay<[Comment]> { get }
+    var repliesByParent: BehaviorRelay<[Int: [Comment]]> { get }
+    var commentError: PublishRelay<Error> { get }
     
     func fetchCommentList()
-    func createComment(_ comment: String)
+    func fetchReplyList(parentId: Int)
+    func createComment(_ comment: String, parentId: Int)
+    func clearReplies(parentId: Int)
 }

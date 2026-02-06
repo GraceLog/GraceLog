@@ -11,7 +11,7 @@ struct CommentSection: AnimatableSectionModelType {
     var mainComment: CommentState
     var subComments: [CommentItem]
     
-    var identity: String {
+    var identity: Int {
         return mainComment.item.identity
     }
     
@@ -33,6 +33,7 @@ struct CommentSection: AnimatableSectionModelType {
 struct CommentState {
     let item: CommentItem
     var isFolder: Bool
+    let replyCount: Int
 }
 
 struct CommentItem {
@@ -44,7 +45,7 @@ struct CommentItem {
 }
 
 extension CommentItem: IdentifiableType, Equatable {
-    var identity: String {
+    var identity: Int {
         return id
     }
     
