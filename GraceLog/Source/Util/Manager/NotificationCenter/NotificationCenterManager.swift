@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 enum NotificationCenterManager: NotificationCenterHandler {
+    case authenticationDidFail
     case reloadHomeMyDiaryList
     case reloadHomeCommunityDiaryList
     case reloadMyInfo
@@ -16,6 +17,8 @@ enum NotificationCenterManager: NotificationCenterHandler {
     
     var name: Notification.Name {
         switch self {
+        case .authenticationDidFail:
+            return Notification.Name("authenticationDidFail")
         case .reloadHomeMyDiaryList:
             return Notification.Name("reloadHomeMyDiaryList")
         case .reloadHomeCommunityDiaryList:
