@@ -32,7 +32,7 @@ extension CommunityGroupCoordinator {
     func showCommentBottomSheet(diaryID: Int) {
         let commentBottomSheetVC = CommentBottomSheetViewController(
             reactor: CommentBottomSheetViewReactor(
-                usecase: DefaultCommentUseCase(diaryID: diaryID)
+                usecase: DefaultCommentUseCase(commentRepository: DefaultCommentRepository(network: .init()), postId: diaryID)
             )
         )
         self.navigationController.present(commentBottomSheetVC, animated: true)

@@ -55,7 +55,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                         editedDate: DateFormatterFactory.dateTimeWithISO.date(from: diaryResponseDTO.updatedAt),
                         title: diaryResponseDTO.title,
                         content: diaryResponseDTO.description,
-                        imageURL: nil
+                        imageURL: diaryResponseDTO.postImages.first.flatMap { URL(string: $0.url) }
                     )
                 }
             }
@@ -121,7 +121,7 @@ final class DefaultDiaryRepository: DiaryRepository {
                         userId: diaryResponseDTO.member.memberId,
                         username: diaryResponseDTO.member.name,
                         profileImageURL: URL(string: diaryResponseDTO.member.profileImage),
-                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        diaryImageURL: diaryResponseDTO.postImages.first.flatMap { URL(string: $0.url) },
                         isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId,
                         communityId: diaryResponseDTO.postCommunityId
                     )
@@ -156,11 +156,11 @@ final class DefaultDiaryRepository: DiaryRepository {
                             id: diaryResponseDTO.member.memberId,
                             name: diaryResponseDTO.member.name,
                             nickname: diaryResponseDTO.member.nickname,
-                            profileImageURL: diaryResponseDTO.member.profileImage,
+                            profileImageURL: URL(string: diaryResponseDTO.member.profileImage),
                             email: diaryResponseDTO.member.email,
                             message: diaryResponseDTO.member.message
                         ),
-                        imageURLs: diaryResponseDTO.postImages.map { $0.url },
+                        imageURLs: diaryResponseDTO.postImages.compactMap { URL(string: $0.url) },
                         likeCount: diaryResponseDTO.likeCount,
                         likeByMe: diaryResponseDTO.likedByMe,
                         isHideLike: diaryResponseDTO.isHideLike,
@@ -196,8 +196,8 @@ final class DefaultDiaryRepository: DiaryRepository {
                         commentCount: diaryResponseDTO.commentCount,
                         userId: diaryResponseDTO.member.memberId,
                         username: diaryResponseDTO.member.name,
-                        profileImageURL: diaryResponseDTO.member.profileImage,
-                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        profileImageURL: URL(string: diaryResponseDTO.member.profileImage),
+                        diaryImageURL: diaryResponseDTO.postImages.first.flatMap { URL(string: $0.url) },
                         isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId,
                         communityId: diaryResponseDTO.postCommunityId
                     )
@@ -226,8 +226,8 @@ final class DefaultDiaryRepository: DiaryRepository {
                         commentCount: diaryResponseDTO.commentCount,
                         userId: diaryResponseDTO.member.memberId,
                         username: diaryResponseDTO.member.name,
-                        profileImageURL: diaryResponseDTO.member.profileImage,
-                        diaryImageURL: diaryResponseDTO.postImages.first?.url,
+                        profileImageURL: URL(string: diaryResponseDTO.member.profileImage),
+                        diaryImageURL: diaryResponseDTO.postImages.first.flatMap { URL(string: $0.url) },
                         isCurrentUser: UserManager.shared.id == diaryResponseDTO.member.memberId,
                         communityId: diaryResponseDTO.postCommunityId
                     )
