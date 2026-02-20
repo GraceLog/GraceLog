@@ -87,6 +87,7 @@
 		70CBC73B2E8427400037C613 /* ProfileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC73A2E8427400037C613 /* ProfileItem.swift */; };
 		70CBC7602E92602A0037C613 /* CommunityRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CBC75F2E92602A0037C613 /* CommunityRoom.swift */; };
 		70D73E3A2F003CEA0045D531 /* CreateCommunityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D73E392F003CEA0045D531 /* CreateCommunityCoordinator.swift */; };
+		70D73E8C2F0278620045D531 /* CommunityGroupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D73E8B2F0278620045D531 /* CommunityGroupCoordinator.swift */; };
 		70F0061A2E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */; };
 		88C9F4B2C850546A45083619 /* Pods_GraceLog_GraceLogUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0638CA878A08BDCEFDE7EC10 /* Pods_GraceLog_GraceLogUITests.framework */; };
 		DE042C3D2E93FCB30089E20F /* DiaryDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE042C3C2E93FCB30089E20F /* DiaryDetailsUseCase.swift */; };
@@ -179,6 +180,15 @@
 		DE6459B32F10CBC700C98B5A /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */; };
 		DE645A452F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */; };
 		DE645A472F1B696800C98B5A /* AnnouncementPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */; };
+		DE645B872F1FA44800C98B5A /* CreateCommunityRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645B862F1FA44800C98B5A /* CreateCommunityRequestDTO.swift */; };
+		DE645B8A2F20462500C98B5A /* CreateCommunityPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645B892F20462500C98B5A /* CreateCommunityPresentationAssembly.swift */; };
+		DE645D4C2F2CC98800C98B5A /* MyActivityDiaryListRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D4B2F2CC98800C98B5A /* MyActivityDiaryListRequestDTO.swift */; };
+		DE645D4E2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D4D2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift */; };
+		DE645D502F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D4F2F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift */; };
+		DE645D522F2DB06C00C98B5A /* DiaryExistenceDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D512F2DB06C00C98B5A /* DiaryExistenceDate.swift */; };
+		DE645D822F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D812F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift */; };
+		DE645D842F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D832F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift */; };
+		DE645D862F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645D852F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift */; };
 		DE645B8E2F2066DF00C98B5A /* AnnouncementAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645B8D2F2066DF00C98B5A /* AnnouncementAPI.swift */; };
 		DE645B922F2069DE00C98B5A /* AnnouncementResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645B912F2069DE00C98B5A /* AnnouncementResponseDTO.swift */; };
 		DE645B942F206A1D00C98B5A /* AnnouncementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE645B932F206A1D00C98B5A /* AnnouncementRepository.swift */; };
@@ -371,6 +381,7 @@
 		70CBC73A2E8427400037C613 /* ProfileItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileItem.swift; sourceTree = "<group>"; };
 		70CBC75F2E92602A0037C613 /* CommunityRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRoom.swift; sourceTree = "<group>"; };
 		70D73E392F003CEA0045D531 /* CreateCommunityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityCoordinator.swift; sourceTree = "<group>"; };
+		70D73E8B2F0278620045D531 /* CommunityGroupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGroupCoordinator.swift; sourceTree = "<group>"; };
 		70F006192E0EC12C00228C70 /* DiaryTimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A5653D885A3CC815C05106B /* Pods-GraceLogUseCaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLogUseCaseTests.debug.xcconfig"; path = "Target Support Files/Pods-GraceLogUseCaseTests/Pods-GraceLogUseCaseTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9EDDF4DA9FBD1D0DC053E39F /* Pods-GraceLog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GraceLog.debug.xcconfig"; path = "Target Support Files/Pods-GraceLog/Pods-GraceLog.debug.xcconfig"; sourceTree = "<group>"; };
@@ -470,6 +481,15 @@
 		DE6459B22F10CBC700C98B5A /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		DE645A442F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditPresentationAssembly.swift; sourceTree = "<group>"; };
 		DE645A462F1B696800C98B5A /* AnnouncementPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE645B862F1FA44800C98B5A /* CreateCommunityRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityRequestDTO.swift; sourceTree = "<group>"; };
+		DE645B892F20462500C98B5A /* CreateCommunityPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommunityPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE645D4B2F2CC98800C98B5A /* MyActivityDiaryListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityDiaryListRequestDTO.swift; sourceTree = "<group>"; };
+		DE645D4D2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryExistenceDatesRequestDTO.swift; sourceTree = "<group>"; };
+		DE645D4F2F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryExistenceDateResponseDTO.swift; sourceTree = "<group>"; };
+		DE645D512F2DB06C00C98B5A /* DiaryExistenceDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryExistenceDate.swift; sourceTree = "<group>"; };
+		DE645D812F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityGroupPresentationAssembly.swift; sourceTree = "<group>"; };
+		DE645D832F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLastPostDateResponseDTO.swift; sourceTree = "<group>"; };
+		DE645D852F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLastPostDateRequestDTO.swift; sourceTree = "<group>"; };
 		DE645B8D2F2066DF00C98B5A /* AnnouncementAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementAPI.swift; sourceTree = "<group>"; };
 		DE645B912F2069DE00C98B5A /* AnnouncementResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementResponseDTO.swift; sourceTree = "<group>"; };
 		DE645B932F206A1D00C98B5A /* AnnouncementRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementRepository.swift; sourceTree = "<group>"; };
@@ -577,6 +597,11 @@
 		70D053A82EB772CF00060BE5 /* Constants */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		70D73E8F2F06ACA00045D531 /* DataSource */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -877,6 +902,7 @@
 				70A97C5E2E21646000F08DF6 /* Home */,
 				70A97C642E2169C700F08DF6 /* MyInfo */,
 				70A97C612E2167B400F08DF6 /* Diary */,
+				DE645B882F2045F800C98B5A /* Community */,
 			);
 			path = PresentationDI;
 			sourceTree = "<group>";
@@ -1142,6 +1168,7 @@
 				70CBC73A2E8427400037C613 /* ProfileItem.swift */,
 				70CBC75F2E92602A0037C613 /* CommunityRoom.swift */,
 				DECCC6292EE5857500E893DB /* VideoInfo.swift */,
+				DE645D512F2DB06C00C98B5A /* DiaryExistenceDate.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1352,6 +1379,7 @@
 		DE3BFCC62D043DB70076426D /* SearchScene */ = {
 			isa = PBXGroup;
 			children = (
+				70D73E8F2F06ACA00045D531 /* DataSource */,
 				70CBC75E2E925FEF0037C613 /* Reactor */,
 				70CBC75C2E925FCB0037C613 /* View */,
 				DE3BFCE22D059DEF0076426D /* Coordinator */,
@@ -1431,6 +1459,7 @@
 			children = (
 				DE3BFCE32D059E970076426D /* SearchCoordinator.swift */,
 				70D73E392F003CEA0045D531 /* CreateCommunityCoordinator.swift */,
+				70D73E8B2F0278620045D531 /* CommunityGroupCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1529,6 +1558,15 @@
 			path = NotificationCenter;
 			sourceTree = "<group>";
 		};
+		DE645B882F2045F800C98B5A /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				DE645B892F20462500C98B5A /* CreateCommunityPresentationAssembly.swift */,
+				DE645D812F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
 		DE66C2F82D96B380009A983F /* Diary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1618,6 +1656,10 @@
 				DE4237572EBF07AF006FAA7B /* LikeDiaryRequestDTO.swift */,
 				DE4237592EC20AB8006FAA7B /* LikeCountRequestDTO.swift */,
 				DE93B6F42ECDF6C000BCFB5D /* CommunityDiaryListRequestDTO.swift */,
+				DE645B862F1FA44800C98B5A /* CreateCommunityRequestDTO.swift */,
+				DE645D4B2F2CC98800C98B5A /* MyActivityDiaryListRequestDTO.swift */,
+				DE645D4D2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift */,
+				DE645D852F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift */,
 				709FEE912F2B860100FDD22B /* CreateCommentRequestDTO.swift */,
 			);
 			path = Request;
@@ -1634,6 +1676,8 @@
 				DE93B6F82ECDF97000BCFB5D /* CommunityResponseDTO.swift */,
 				DE93B6FC2ED061EB00BCFB5D /* DailyVerseResponseDTO.swift */,
 				DECCC6272EE582E000E893DB /* VideoResponseDTO.swift */,
+				DE645D4F2F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift */,
+				DE645D832F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift */,
 				DE645B912F2069DE00C98B5A /* AnnouncementResponseDTO.swift */,
 				709FEE992F2B8EB500FDD22B /* FetchCommentListResponseDTO.swift */,
 			);
@@ -1703,6 +1747,7 @@
 				70CBC75C2E925FCB0037C613 /* View */,
 				70CBC75E2E925FEF0037C613 /* Reactor */,
 				70D053A82EB772CF00060BE5 /* Constants */,
+				70D73E8F2F06ACA00045D531 /* DataSource */,
 			);
 			name = GraceLog;
 			productName = GraceLog;
@@ -1999,6 +2044,7 @@
 				DE597A6E2E26141100B2CB5B /* AuthPresentationAssembly.swift in Sources */,
 				DE93B6F72ECDF80100BCFB5D /* CommunityAPI.swift in Sources */,
 				0220A0752DE7F57000D045F7 /* ImagePickerManager.swift in Sources */,
+				DE645D862F3220B300C98B5A /* DiaryLastPostDateRequestDTO.swift in Sources */,
 				702D2B582E02B1F900D5E71E /* UITextField+Extension.swift in Sources */,
 				70CBC73B2E8427400037C613 /* ProfileItem.swift in Sources */,
 				702D2B702E07F35B00D5E71E /* DiarySettingView.swift in Sources */,
@@ -2025,6 +2071,7 @@
 				DE2387302E07E46300893D8C /* HomeMyViewReactor.swift in Sources */,
 				DE9A1FD02D6C87E60044F655 /* HomeCommunityDateHeaderView.swift in Sources */,
 				DEACFE682E0D04B900AD4222 /* HomeCommunityListCollectionViewCell.swift in Sources */,
+				70D73E8C2F0278620045D531 /* CommunityGroupCoordinator.swift in Sources */,
 				DE23873B2E0AD95F00893D8C /* HomePastDiaryCollectionViewCell.swift in Sources */,
 				709CBB6D2E2B8CA100F68457 /* CommentToggleButton.swift in Sources */,
 				DED558962DBE576A00137B10 /* Const.swift in Sources */,
@@ -2044,6 +2091,7 @@
 				DEA80D8A2F04AC6B00216B1D /* DiaryReserveTimeView.swift in Sources */,
 				DE9A1FDC2D79AFFA0044F655 /* MyDiaryPreview.swift in Sources */,
 				70A97C682E226B3900F08DF6 /* DependencyInjector.swift in Sources */,
+				DE645D502F2DAFD200C98B5A /* DiaryExistenceDateResponseDTO.swift in Sources */,
 				DED558862DBE224300137B10 /* DefaultAuthRepository.swift in Sources */,
 				DE2700632D22D188005C9DCF /* DefaultUserRepository.swift in Sources */,
 				704815772DFEC53A009ECDBD /* GLUnderlineSegmentedControl.swift in Sources */,
@@ -2062,6 +2110,7 @@
 				02DC29822DDC29C000662D8A /* ProfileEditViewReactor.swift in Sources */,
 				DE645A452F1A44F300C98B5A /* ProfileEditPresentationAssembly.swift in Sources */,
 				02DC29832DDC29C000662D8A /* ProfileEditViewController.swift in Sources */,
+				DE645D4E2F2CCA9B00C98B5A /* DiaryExistenceDatesRequestDTO.swift in Sources */,
 				026656AB2DE7E9CA00541D96 /* NavigationBarUtil.swift in Sources */,
 				02DC29862DDC29C000662D8A /* MyInfoViewReactor.swift in Sources */,
 				DE645B8E2F2066DF00C98B5A /* AnnouncementAPI.swift in Sources */,
@@ -2119,11 +2168,13 @@
 				709CBB5B2E2AACB600F68457 /* DefaultCommentUseCase.swift in Sources */,
 				709CBB672E2AC8E900F68457 /* CommentTableViewCell.swift in Sources */,
 				DE4237462EBCC96B006FAA7B /* CreateDiaryRequestDTO.swift in Sources */,
+				DE645B872F1FA44800C98B5A /* CreateCommunityRequestDTO.swift in Sources */,
 				DEA80D962F0504F100216B1D /* DefaultVideoRepository.swift in Sources */,
 				70062C562E4AF8FA0096C1F7 /* URL+Extension.swift in Sources */,
 				DE6459B12F10CBB800C98B5A /* NotificationCenterHandler.swift in Sources */,
 				70A97C6B2E2275B700F08DF6 /* DependencyContainer.swift in Sources */,
 				DE2700462D1EFD06005C9DCF /* SignInViewController.swift in Sources */,
+				DE645D822F31CAB100C98B5A /* CommunityGroupPresentationAssembly.swift in Sources */,
 				DE4D0F4A2E750EC300827EDE /* Announcement.swift in Sources */,
 				DE9A1FEC2D7C04C50044F655 /* Bundle.swift in Sources */,
 				DECCC6282EE582E000E893DB /* VideoResponseDTO.swift in Sources */,
@@ -2135,6 +2186,7 @@
 				DE069B9A2D53A884007C2066 /* DiaryViewController.swift in Sources */,
 				DED558762DBC73EC00137B10 /* TargetType.swift in Sources */,
 				DE655B1F2DA1758F0073B4F7 /* CommonDivideTableViewCell.swift in Sources */,
+				DE645D522F2DB06C00C98B5A /* DiaryExistenceDate.swift in Sources */,
 				DED5587D2DBC7B3100137B10 /* SignInRequestDTO.swift in Sources */,
 				DED5589F2DC4B12200137B10 /* KeychainAccessible.swift in Sources */,
 				DEF8D6742E1A91EF00685517 /* HomeCommunityUseCase.swift in Sources */,
@@ -2145,10 +2197,13 @@
 				DE069BA22D571485007C2066 /* HomeRecommendVideoTableViewCell.swift in Sources */,
 				DE4237502EBEE935006FAA7B /* DefaultDiaryRepository.swift in Sources */,
 				DE66C2F52D96B0E4009A983F /* DiaryViewReactor.swift in Sources */,
+				DE645D4C2F2CC98800C98B5A /* MyActivityDiaryListRequestDTO.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
+				DE645B8A2F20462500C98B5A /* CreateCommunityPresentationAssembly.swift in Sources */,
 				DE66C2F32D941AF5009A983F /* DiaryShareTableViewCell.swift in Sources */,
 				DEA80D9E2F050B3F00216B1D /* DefaultDailyVerseRepository.swift in Sources */,
 				DEACFE6A2E0F81DE00AD4222 /* HomeCommunityListSection.swift in Sources */,
+				DE645D842F31CE3B00C98B5A /* DiaryLastPostDateResponseDTO.swift in Sources */,
 				DE9A1FF62D7C07FE0044F655 /* HomePersonalUseCase.swift in Sources */,
 				DE93B6FF2ED06B9B00BCFB5D /* CommunityDiaryPreview.swift in Sources */,
 				70A97C602E2164C600F08DF6 /* HomePresentationAssembly.swift in Sources */,
@@ -2431,7 +2486,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2464,7 +2519,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sangjun.GraceLog3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

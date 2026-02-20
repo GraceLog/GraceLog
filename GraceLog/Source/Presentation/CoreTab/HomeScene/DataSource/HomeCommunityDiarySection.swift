@@ -11,12 +11,14 @@ import UIKit
 struct CommunityDiaryItem {
     let id: Int
     let isCurrentUser: Bool
+    let userId: Int
     let username: String
     let title: String
     let content: String
     var likeCount: Int
     var commentCount: Int
     var isLiked: Bool
+    let communityId: Int?
     let profileImageURL: URL?
     let cardImageURL: URL?
     let editedDate: String
@@ -24,15 +26,27 @@ struct CommunityDiaryItem {
     init(from: CommunityDiaryPreview) {
         self.id = from.id
         self.isCurrentUser = from.isCurrentUser
+        self.userId = from.userId
         self.username = from.username
         self.title = from.title
         self.content = from.content
         self.likeCount = from.likeCount
         self.commentCount = from.commentCount
         self.isLiked = from.isLiked
+        self.communityId = from.communityId
         self.profileImageURL = from.profileImageURL
         self.cardImageURL = from.diaryImageURL
         self.editedDate = ""
+    }
+}
+
+extension CommunityDiaryItem: IdentifiableType, Equatable {
+    typealias Identity = Int
+    var identity: Int { id }
+
+    static func == (lhs: CommunityDiaryItem, rhs: CommunityDiaryItem) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.isLiked == rhs.isLiked
     }
 }
 

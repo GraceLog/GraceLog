@@ -1,13 +1,13 @@
 //
-//  ComunityDiaryListRequestDTO.swift
+//  DiaryExistenceDatesRequestDTO.swift
 //  GraceLog
 //
-//  Created by 이상준 on 11/6/25.
+//  Created by 이상준 on 1/30/26.
 //
 
 import Foundation
 
-struct DateRangeDiaryListRequestDTO: Encodable {
+struct DiaryExistenceDatesRequestDTO: Encodable {
     let startDate: String
     let endDate: String
     let communityId: Int?

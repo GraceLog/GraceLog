@@ -9,6 +9,7 @@ import Alamofire
 
 enum CommunityAPI {
     case fetchMyCommunityList
+    case createCommunity(CreateCommunityRequestDTO)
     case joinCommunity(communityId: Int)
     case leaveCommunity(communityId: Int)
 }
@@ -21,6 +22,7 @@ extension CommunityAPI: TargetType {
     var method: HTTPMethod {
         switch self {
         case .fetchMyCommunityList: return .get
+        case .createCommunity: return .post
         case .joinCommunity: return .post
         case .leaveCommunity: return .delete
         }
@@ -28,7 +30,7 @@ extension CommunityAPI: TargetType {
     
     var path: String {
         switch self {
-        case .fetchMyCommunityList:
+        case .fetchMyCommunityList, .createCommunity:
             return "/community"
         case .joinCommunity(let id):
             return "/community/\(id)/join"
@@ -39,13 +41,15 @@ extension CommunityAPI: TargetType {
     
     var headers: HeaderType {
         switch self {
-        case .fetchMyCommunityList, .joinCommunity, .leaveCommunity:
+        case .fetchMyCommunityList, .createCommunity, .joinCommunity, .leaveCommunity:
             return .requireAccessToken
         }
     }
     
     var parameters: RequestParams {
         switch self {
+        case .createCommunity(let request):
+            return .body(request)
         case .fetchMyCommunityList, .joinCommunity, .leaveCommunity:
             return .none
         }

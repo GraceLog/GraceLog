@@ -20,8 +20,10 @@ struct CommunityDiaryPreview {
     var isLiked: Bool
     var likeCount: Int
     let commentCount: Int
+    let userId: Int
     let username: String
     let profileImageURL: URL?
     let diaryImageURL: URL?
     let isCurrentUser: Bool
+    let communityId: Int?
 }

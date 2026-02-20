@@ -19,7 +19,7 @@ final class HomeCommunityViewReactor: Reactor {
     
     enum Action {
         case didSelectCommunity(Community)
-        case didTapDiaryDetail(Int)
+        case didTapDiaryDetail(Int, Int?, Int?)
         case didTapLikeButton(Int)
         case loadMoreDiaries
     }
@@ -33,8 +33,6 @@ final class HomeCommunityViewReactor: Reactor {
     struct State {
         @Pulse var communityList: [Community]
         @Pulse var sectionedDiaryList: [HomeCommunityDiarySection]
-        @Pulse var isSuccessLikeDiary: Bool?
-        @Pulse var isSuccessUnlikeResult: Bool?
         @Pulse var error: Error?
     }
     
@@ -59,8 +57,12 @@ extension HomeCommunityViewReactor {
             usecase.fetchDiaryList(
                 communityId: community.id
             )
-        case .didTapDiaryDetail(let diaryID):
-            coordinator?.showDiaryDetail(diaryId: diaryID)
+        case .didTapDiaryDetail(let diaryId, let communityId, let memberId):
+            coordinator?.showDiaryDetail(
+                diaryId: diaryId,
+                communityId: communityId,
+                memberId: memberId
+            )
         case .didTapLikeButton(let diaryID):
             usecase.toggleDiaryLike(id: diaryID)
         case .loadMoreDiaries:

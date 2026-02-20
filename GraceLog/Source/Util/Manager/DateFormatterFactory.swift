@@ -39,6 +39,17 @@ enum DateFormatterFactory {
         yearMonth.string(from: date)
     }
     
+    static var dateOnly: DateFormatter {
+        formatter.then {
+            $0.dateFormat = "yyyy-MM-dd"
+            $0.locale = Locale(identifier: "en_US_POSIX")
+        }
+    }
+    
+    static func toDateOnlyString(from date: Date) -> String {
+        dateOnly.string(from: date)
+    }
+    
     /// 년도, 월을 통해 해당 년도 월의 첫번째, 마지막 날짜를 반환
     // TODO: 다른 DateFormatterFactory 프로퍼티와 비교했을 때 이 클래스에 존재하기엔 모호 (리팩토링 필요)
     static func getMonthDateRange(year: Int, month: Int) -> (startDate: String, endDate: String) {

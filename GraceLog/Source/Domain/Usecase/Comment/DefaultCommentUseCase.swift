@@ -21,6 +21,10 @@ final class DefaultCommentUseCase: CommentUseCase {
         self.postId = postId
     }
     
+    init(diaryID: Int) {
+        self.diaryID = diaryID
+    }
+    
     func fetchCommentList() {
         commentRepository.fetchCommentList(postId: postId)
             .subscribe(with: self, onSuccess: { owner, comments in

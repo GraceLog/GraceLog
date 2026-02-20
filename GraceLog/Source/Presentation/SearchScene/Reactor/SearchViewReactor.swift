@@ -64,8 +64,9 @@ final class SearchViewReactor: Reactor {
             let id = currentState.profiles[indexPath.row].id
             coordinator.showProfileViewController(id: id)
         case let .didTapCommunity(indexPath):
-            let id = currentState.communities[indexPath.row].id
-            coordinator.showCommunityViewController(id: id)
+            let communityId = currentState.communities[indexPath.row].id
+//            guard let memberId = UserManager.shared.id else { return .empty() }
+            coordinator.showCommunityViewController(communityId: communityId, memberId: 0)
         case let .didTapChattingRoom(indexPath):
             let id = currentState.rooms[indexPath.row].id
             coordinator.showCommunityChattingViewController(id: id)

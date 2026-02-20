@@ -30,7 +30,7 @@ final class HomeMyViewReactor: Reactor {
     }
     
     enum Action {
-        case didTapDiaryDetail(Int)
+        case didTapDiaryDetail(Int, Int?, Int?)
         case refreshDiaryList
     }
     
@@ -83,8 +83,12 @@ extension HomeMyViewReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .didTapDiaryDetail(let id):
-            coordinator?.showDiaryDetail(diaryId: id)
+        case .didTapDiaryDetail(let diaryId, let communityId, let memberId):
+            coordinator?.showDiaryDetail(
+                diaryId: diaryId,
+                communityId: communityId,
+                memberId: memberId
+            )
         case .refreshDiaryList:
             homeUsecase.fetchDiaryList()
             return .just(.showToast("일기가 성공적으로 공유되었습니다!"))

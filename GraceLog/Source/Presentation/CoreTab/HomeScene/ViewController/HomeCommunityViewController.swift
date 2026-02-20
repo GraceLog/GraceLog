@@ -27,6 +27,8 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
         $0.backgroundColor = .clear
         $0.distribution = .fill
         $0.alignment = .fill
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.layoutMargins = .init(top: .zero, left: 20, bottom: .zero, right: 20)
     }
     
     private let communitySelectedView = HomeCommunityListView()
@@ -39,7 +41,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
     
     override func setupLayouts() {
         super.setupLayouts()
-        view.addSubview(scrollView)
+        contentView.addSubview(scrollView)
         
         let subviews = [communitySelectedView, communityDiaryListView]
         containerStackView.arrangedSubviews(subviews)
@@ -50,7 +52,7 @@ final class HomeCommunityViewController: GraceLogBaseViewController<HomeCommunit
     override func setupConstraints() {
         super.setupConstraints()
         scrollView.snp.makeConstraints {
-            $0.directionalEdges.width.equalToSuperview()
+            $0.directionalEdges.equalToSuperview()
         }
         
         containerStackView.snp.makeConstraints {
@@ -169,7 +171,11 @@ extension HomeCommunityViewController {
                             return
                         }
                         
-                        reactor.action.onNext(.didTapDiaryDetail(selectedItem.id))
+                        reactor.action.onNext(.didTapDiaryDetail(
+                            selectedItem.id,
+                            selectedItem.communityId,
+                            selectedItem.userId
+                        ))
                     })
                     .disposed(by: cell.disposeBag)
                 

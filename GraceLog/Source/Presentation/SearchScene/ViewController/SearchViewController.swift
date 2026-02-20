@@ -123,6 +123,14 @@ final class SearchViewController: GraceLogBaseViewController<SearchViewReactor> 
             .map { SearchViewReactor.Action.didTapAddCommunityButton }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        // TODO: - 공동체 생성 이후 다시 돌아왔을때 이벤트 구현 필요
+        NotificationCenterManager.reloadCommunityList.addObserver()
+            .subscribe(with: self) { _, _ in
+                print("공동체 생성 성공")
+            }
+            .disposed(by: disposeBag)
+            
     }
     
     private func setupDataSource() {

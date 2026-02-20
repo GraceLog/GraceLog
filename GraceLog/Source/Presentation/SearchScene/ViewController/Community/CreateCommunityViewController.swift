@@ -112,11 +112,19 @@ final class CreateCommunityViewController: GraceLogBaseViewController<CreateComm
                 owner.showToast(message)
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$isSuccessCreateCommunity)
+            .compactMap { $0 }
+            .bind(with: self) { owner, isSuccess in
+                if isSuccess {
+                    reactor.action.onNext(.executeCreateCommunity)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: - Diary Bindings
-
 extension CreateCommunityViewController {
     private func bindDiaryImageCollectionView(reactor: CreateCommunityReactor) {
         let imageDataSource = RxCollectionViewSectionedAnimatedDataSource<DiaryImageSection>(

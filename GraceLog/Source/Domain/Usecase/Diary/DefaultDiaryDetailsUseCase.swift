@@ -15,7 +15,7 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     private let disposeBag = DisposeBag()
     
     var diary = PublishRelay<DiaryDetails>()
-    var dateRangeDiaries = BehaviorRelay<[DiaryDetails]>(value: [])
+    var postDateList = BehaviorRelay<[DiaryExistenceDate]>(value: [])
     var toggleDiaryResult = PublishRelay<Bool>()
     var error = PublishRelay<Error>()
     
@@ -26,11 +26,15 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     init(
         diaryRepository: DiaryRepository,
         likeRepository: LikeRepository,
-        diaryId: Int
+        diaryId: Int,
+        communityId: Int?,
+        memberId: Int?
     ) {
         self.diaryRepository = diaryRepository
         self.likeRepository = likeRepository
         self.diaryId = diaryId
+        self.communityId = communityId
+        self.memberId = memberId
         
         fetchDiaryDetails(diaryId: diaryId)
     }
@@ -39,14 +43,11 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
     ///
     /// **동작 순서:**
     /// 1. 일기 ID로 단일 일기 상세 정보 조회
-    /// 2. communityId와 memberId 저장
-    /// 3. 작성 날짜(createdAt)를 기준으로 해당 월의 모든 일기 목록 조회(캘린더 마커 표시용)
-    /// 4. 일기 상세 정보를 Relay로 전달
+    /// 2. 조회한 일기의 생성날짜를 통해 해달 달에 유저가 해당 공동체에 공유한 날짜들을 조회(자신인 경우 공동체에 공유한 일기뿐 아니라 전체 조회)
+    /// 4. 캘린더에 마커된 날짜 클릭시 해당 날짜에 작성한 일기 리스트 조회(현재는 하루에 한개만 작성 가능하므로 first값)
     func fetchDiaryDetails(diaryId: Int) {
         diaryRepository.fetchDiary(diaryId: diaryId)
             .subscribe(onSuccess: { diary in
-                self.communityId = diary.communityId
-                self.memberId = diary.user.id
                 self.diary.accept(diary)
             }, onFailure: { error in
                 self.error.accept(error)
@@ -54,22 +55,41 @@ final class DefaultDiaryDetailsUseCase: DiaryDetailsUseCase {
             .disposed(by: disposeBag)
     }
     
-    func fetchDateRangeDiaryList(date: Date) {
-        guard let memberId = memberId else { return }
-        
+    func fetchDiaryPostDateList(date: Date) {
         let calendar = Calendar.current
         let year = calendar.component(.year, from: date)
         let month = calendar.component(.month, from: date)
         let (startDate, endDate) = DateFormatterFactory.getMonthDateRange(year: year, month: month)
         
-        diaryRepository.fetchDateRangeDiaryList(
+        diaryRepository.fetchDiaryExistenceDates(
             startDate: startDate,
             endDate: endDate,
             communityId: communityId,
-            memberId: memberId
+            memberId: memberId,
+            cursorId: nil,
+            size: nil
+        )
+        .subscribe(onSuccess: {
+            self.postDateList.accept($0)
+        }, onFailure: {
+            self.error.accept($0)
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    func fetchDateRangeDiaryList(date: String) {
+        guard let memberId = memberId else { return }
+        
+        diaryRepository.fetchDateRangeMemberDiaryList(
+            startDate: date,
+            endDate: date,
+            memberId: memberId, communityId: communityId,
+            cursorId: nil,
+            size: 1
         )
         .subscribe(onSuccess: { diaryList in
-            self.dateRangeDiaries.accept(diaryList)
+            guard let diary = diaryList.first else { return }
+            self.diary.accept(diary)
         }, onFailure: { error in
             self.error.accept(error)
         })

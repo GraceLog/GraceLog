@@ -14,7 +14,8 @@ final class DiaryDetailsViewReactor: Reactor {
     var initialState: State
     
     enum Action {
-        case fetchDiary(Date)
+        case fetchDiary(Int)
+        case fetchPostDateList(Date)
         case fetchDateRangeDiaryList(Date)
         case didTapBackButton
         case didTapLikeButton
@@ -23,14 +24,13 @@ final class DiaryDetailsViewReactor: Reactor {
     
     enum Mutation {
         case setDiary(DiaryDetails)
-        case setDateRangeDiaryList([DiaryDetails])
+        case setPostDateList([DiaryExistenceDate])
         case toggleLike
         case setError(Error)
     }
     struct State {
         @Pulse var diary: DiaryDetails?
-        @Pulse var dateRangeDiaries: [DiaryDetails]
-        @Pulse var editedDateList: Set<Date>
+        @Pulse var postDateList: [Date]
         @Pulse var error: Error?
     }
     
@@ -42,8 +42,7 @@ final class DiaryDetailsViewReactor: Reactor {
         self.usecase = usecase
         
         self.initialState = State(
-            dateRangeDiaries: [],
-            editedDateList: []
+            postDateList: []
         )
     }
 }
@@ -51,15 +50,12 @@ final class DiaryDetailsViewReactor: Reactor {
 extension DiaryDetailsViewReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .fetchDiary(let selectedDate):
-            guard let selectedDiary = currentState.dateRangeDiaries.first(where: { $0.createdAt == selectedDate }) else {
-                return .empty()
-            }
-            usecase.fetchDiaryDetails(diaryId: selectedDiary.diaryId)
+        case .fetchDiary(let diaryId):
+            usecase.fetchDiaryDetails(diaryId: diaryId)
+        case .fetchPostDateList(let date):
+            usecase.fetchDiaryPostDateList(date: date)
         case .fetchDateRangeDiaryList(let date):
-            usecase.fetchDateRangeDiaryList(
-                date: date
-            )
+            usecase.fetchDateRangeDiaryList(date: DateFormatterFactory.toDateOnlyString(from: date))
         case .didTapBackButton:
             coordinator.popViewController()
         case .didTapLikeButton:
@@ -78,9 +74,8 @@ extension DiaryDetailsViewReactor {
         switch mutation {
         case .setDiary(let diary):
             newState.diary = diary
-        case .setDateRangeDiaryList(let diaryList):
-            newState.dateRangeDiaries = diaryList
-            newState.editedDateList = Set(diaryList.compactMap { $0.createdAt })
+        case .setPostDateList(let dates):
+            newState.postDateList = dates.map { $0.date }
         case .toggleLike:
             if var diary = newState.diary {
                 diary.likeByMe.toggle()
@@ -98,15 +93,15 @@ extension DiaryDetailsViewReactor {
         let fetchDiaryDetail = usecase.diary
             .map { Mutation.setDiary($0) }
         
-        let fetchDateRangeDiaryList = usecase.dateRangeDiaries
-            .map { Mutation.setDateRangeDiaryList($0) }
+        let postDateListMutation = usecase.postDateList
+            .map { Mutation.setPostDateList($0) }
         
         let errorMuataion = usecase.error
             .map { Mutation.setError($0) }
         
         return Observable.merge(
             fetchDiaryDetail,
-            fetchDateRangeDiaryList,
+            postDateListMutation,
             errorMuataion,
             mutation
         )

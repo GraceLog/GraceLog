@@ -10,15 +10,14 @@ import ReactorKit
 final class CreateCommunityReactor: Reactor {
     let initialState: State
     private let usecase: CreateCommunityUseCase
-    private let coordinator: CreateCommunityCoordinator
+    var coordinator: CreateCommunityCoordinator?
     
     private var maxCommunityImageCount: Int {
         usecase.maxImageCount
     }
     
-    init(usecase: CreateCommunityUseCase, coordinator: CreateCommunityCoordinator) {
+    init(usecase: CreateCommunityUseCase) {
         self.usecase = usecase
-        self.coordinator = coordinator
         self.initialState = State(
             images: [],
             editedTitle: "",
@@ -32,18 +31,21 @@ final class CreateCommunityReactor: Reactor {
         case editTitle(String)
         case didTapCreateButton
         case didTapBackButton
+        case executeCreateCommunity
     }
     
     enum Mutation {
         case setImages([DiaryImage])
         case setTitle(String)
         case setErrorMessage(String?)
+        case setCreateCommunityResult(Bool)
     }
     
     struct State {
         @Pulse var images: [DiaryImage]
         var editedTitle: String
         var errorMessage: String?
+        @Pulse var isSuccessCreateCommunity: Bool?
     }
     
     // MARK: - Mutate
@@ -59,27 +61,26 @@ final class CreateCommunityReactor: Reactor {
             }
             
             return .just(.setImages(uploadImages))
-            
         case .deleteImage(let index):
             var updatedImages = currentState.images
             if index < updatedImages.count {
                 updatedImages.remove(at: index)
             }
-            return .just(.setImages(updatedImages))
             
+            return .just(.setImages(updatedImages))
         case let .editTitle(title):
             return .just(.setTitle(title))
-            
         case .didTapCreateButton:
             usecase.createCommunity(
                 title: currentState.editedTitle,
                 images: currentState.images
             )
-            return .empty()
         case .didTapBackButton:
-            coordinator.popViewController()
-            return .empty()
+            coordinator?.popViewController()
+        case .executeCreateCommunity:
+            coordinator?.createCommunityEvent()
         }
+        return .empty()
     }
     
     func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
@@ -108,7 +109,21 @@ final class CreateCommunityReactor: Reactor {
                 }
             }
         
-        return Observable.merge(mutation, resultMutation)
+        let createResultMutation = usecase.createCommunityResult
+            .map { result -> Mutation in
+                switch result {
+                case .success:
+                    return .setCreateCommunityResult(true)
+                case .failure:
+                    return .setCreateCommunityResult(false)
+                }
+            }
+        
+        return Observable.merge(
+            mutation,
+            resultMutation,
+            createResultMutation
+        )
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -117,12 +132,12 @@ final class CreateCommunityReactor: Reactor {
         switch mutation {
         case .setImages(let images):
             newState.images = images
-            
         case .setTitle(let title):
             newState.editedTitle = title
-            
         case .setErrorMessage(let message):
             newState.errorMessage = message
+        case .setCreateCommunityResult(let isSuccess):
+            newState.isSuccessCreateCommunity = isSuccess
         }
         
         return newState

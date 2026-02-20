@@ -41,3 +41,10 @@ final class TokenManager: KeychainService {
         return accessToken != nil
     }
 }
+
+extension TokenManager {
+    func clearTokens() {
+        keychainAccess.remove(Key.accessToken)
+        keychainAccess.remove(Key.refreshToken)
+    }
+}

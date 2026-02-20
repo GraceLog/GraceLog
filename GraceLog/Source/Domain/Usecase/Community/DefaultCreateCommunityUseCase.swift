@@ -6,10 +6,19 @@
 //
 
 import RxRelay
+import RxSwift
 
 final class DefaultCreateCommunityUseCase: CreateCommunityUseCase {
     var maxImageCount: Int { Constants.updatableMaxImageCount }
     let createCommunityResult = PublishRelay<Result<Void, CreateCommunityError>>()
+    
+    private let disposeBag = DisposeBag()
+    
+    private let communityRepository: CommunityRepository
+    
+    init(communityRepository: CommunityRepository) {
+        self.communityRepository = communityRepository
+    }
     
     func createCommunity(title: String, images: [DiaryImage]) {
         guard !title.isEmpty else {
@@ -27,16 +36,17 @@ final class DefaultCreateCommunityUseCase: CreateCommunityUseCase {
             return
         }
         
-        // MARK: - 실제 API 연동 (TODO)
-        print("업로드된 이미지: \(images)\n작성한 제목: \(title)")
-        
-        let apiSucceeded = Bool.random()
-        
-        if apiSucceeded {
-            createCommunityResult.accept(.success(()))
-        } else {
-            createCommunityResult.accept(.failure(.apiFailure))
+        let images = images.compactMap { diaryImage in
+            diaryImage.image.jpegData(compressionQuality: 0.8)
         }
+        
+        communityRepository.createCommunity(images: images, name: title)
+            .subscribe(onSuccess: { _ in
+                self.createCommunityResult.accept(.success(()))
+            }, onFailure: { _ in
+                self.createCommunityResult.accept(.failure(.apiFailure))
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -44,5 +54,5 @@ enum CreateCommunityError: Error {
     case emptyTitle
     case emptyImages
     case exceedMaxImageCount(max: Int)
-    case apiFailure                   
+    case apiFailure
 }

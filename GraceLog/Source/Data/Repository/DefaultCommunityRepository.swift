@@ -28,4 +28,15 @@ final class DefaultCommunityRepository: CommunityRepository {
                 }
             }
     }
+    
+    func createCommunity(images: [Data], name: String) -> Single<GLEmptyResponse> {
+        let request = CreateCommunityRequestDTO(name: name)
+        
+        return network.request(
+            CommunityAPI.createCommunity(request),
+            images: images,
+            bodyFieldName: "createCommunityRequest",
+            imageFieldName: "communityImage"
+        )
+    }
 }
