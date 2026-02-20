@@ -35,7 +35,7 @@ final class AnnouncementViewController: GraceLogBaseViewController<AnnouncementV
     }
     
     private lazy var annuncementTableView = UITableView().then {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = GLColor.backgroundMain.color
         $0.separatorColor = GLColor.textMain.color
         $0.separatorInset = .zero
         $0.register(AnnouncementTableViewCell.self, forCellReuseIdentifier: AnnouncementTableViewCell.reuseIdentifier)
@@ -66,7 +66,8 @@ final class AnnouncementViewController: GraceLogBaseViewController<AnnouncementV
         }
         
         annuncementTableView.snp.makeConstraints {
-            $0.directionalEdges.equalToSuperview()
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.directionalHorizontalEdges.bottom.equalToSuperview()
         }
     }
     

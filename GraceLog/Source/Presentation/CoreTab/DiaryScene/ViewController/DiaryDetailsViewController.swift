@@ -129,12 +129,8 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .disposed(by: disposeBag)
         
         diaryDetailsView.likeButton.rx.tap
-            .do(onNext: { _ in
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            })
-            .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
-            .compactMap { reactor.currentState.diary?.diaryId }
-            .map { DiaryDetailsViewReactor.Action.didTapLikeButton($0) }
+            .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .default))
+            .map { DiaryDetailsViewReactor.Action.didTapLikeButton }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -144,10 +140,10 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        let diaryObservable = reactor.pulse(\.$diary).share(replay: 1)
+        let diaryObservable = reactor.pulse(\.$diary).share(replay: 1).compactMap { $0 }
         
         diaryObservable
-            .compactMap { $0 }
+            .take(1)
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, diary in
                 if diary.user.id == UserManager.shared.id {
@@ -160,12 +156,18 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
             .disposed(by: disposeBag)
         
         diaryObservable
-            .compactMap { $0 }
             .asDriver(onErrorDriveWith: .empty())
             .drive(with: self) { owner, diary in
                 if let createdAt = diary.createdAt {
                     owner.calendarButton.configuration?.title = DateFormatterFactory.toYearMonthString(from: createdAt)
-                    owner.calendarView.select(createdAt)
+                    let alreadySelectedSameDay = {
+                        guard let selected = owner.calendarView.selectedDate else { return false }
+                        return Calendar.current.isDate(selected, inSameDayAs: createdAt)
+                    }()
+                    
+                    if !alreadySelectedSameDay {
+                        owner.calendarView.select(createdAt)
+                    }
                 }
                 
                 owner.diaryDetailsView.configure(
@@ -193,7 +195,9 @@ final class DiaryDetailsViewController: GraceLogBaseViewController<DiaryDetailsV
         reactor.pulse(\.$postDateList)
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, _ in
-                owner.calendarView.reloadData()
+                UIView.performWithoutAnimation {
+                    owner.calendarView.reloadData()
+                }
             }
             .disposed(by: disposeBag)
         

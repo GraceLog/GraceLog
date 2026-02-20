@@ -58,6 +58,12 @@ final class CommentBottomSheetViewController: GraceLogBaseViewController<Comment
     
     override func bind(reactor: CommentBottomSheetViewReactor) {
         super.bind(reactor: reactor)
+        rx.methodInvoked(#selector(UIViewController.viewDidLoad))
+            .take(1)
+            .map { _ in CommentBottomSheetViewReactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         commentTableView.rx.setDelegate(self).disposed(by: disposeBag)
         
         commentDataSource = RxTableViewSectionedAnimatedDataSource(configureCell: { dataSource, tableView, indexPath, item in
@@ -75,13 +81,6 @@ final class CommentBottomSheetViewController: GraceLogBaseViewController<Comment
             .asDriver(onErrorJustReturn: [])
             .drive(commentTableView.rx.items(dataSource: commentDataSource))
             .disposed(by: disposeBag)
-        
-        commentEditView.commentSendButton.rx.tap
-            .throttle(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
-            .withLatestFrom(commentEditView.commentTextField.rx.text.orEmpty)
-            .map { CommentBottomSheetViewReactor.Action.didEditButton($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
     }
 }
 
@@ -91,7 +90,8 @@ extension CommentBottomSheetViewController: UITableViewDelegate {
         let sectionedModel = commentDataSource[section]
         let mainComment = sectionedModel.mainComment
         let item = mainComment.item
-        let isFolder = mainComment.isFolder
+        
+        let parentId = item.id
         
         headerView.configureUI(
             profileImageURL: item.profileImageURL,
@@ -100,18 +100,25 @@ extension CommentBottomSheetViewController: UITableViewDelegate {
             comment: item.comment
         )
         
-        headerView.commentToggleButton.currentState = isFolder ? .folded(replyCount: sectionedModel.subComments.count) : .unfolded
+        headerView.commentToggleButton.currentState =
+        mainComment.isFolder
+        ? .folded(replyCount: sectionedModel.mainComment.replyCount)
+        : .unfolded
         
         headerView.commentToggleButton.rx.tapGesture().when(.recognized)
             .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
             .subscribe(with: self) { owner, _ in
-                let isFolder = (headerView.commentToggleButton.currentState == .unfolded)
-                
+                owner.reactor?.action.onNext(.didTapToggleReplies(parentId: parentId))
+            }
+            .disposed(by: headerView.disposeBag)
+        
+        headerView.replyButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler(qos: .default))
+            .subscribe(with: self) { owner, _ in
+                owner.reactor?.action.onNext(.didEditReplyButton(parentId: parentId))
                 DispatchQueue.main.async {
-                    headerView.commentToggleButton.currentState = isFolder ? .folded(replyCount: sectionedModel.subComments.count) : .unfolded
+                    owner.commentEditView.commentTextField.becomeFirstResponder()
                 }
-                
-                owner.reactor?.action.onNext(.didTapFolderButton((section, isFolder)))
             }
             .disposed(by: headerView.disposeBag)
         

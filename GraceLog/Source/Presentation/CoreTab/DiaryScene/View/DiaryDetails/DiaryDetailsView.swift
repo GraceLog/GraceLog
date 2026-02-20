@@ -17,7 +17,6 @@ final class DiaryDetailsView: UIView {
     private let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.masksToBounds = true
-        $0.clipsToBounds = true
         $0.isUserInteractionEnabled = true
     }
     
@@ -30,7 +29,7 @@ final class DiaryDetailsView: UIView {
     
     private let mainStackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 0
+        $0.spacing = 40
         $0.alignment = .center
         $0.distribution = .fill
     }
@@ -143,9 +142,7 @@ final class DiaryDetailsView: UIView {
         ].forEach { mainStackView.addArrangedSubview($0) }
         
         mainStackView.setCustomSpacing(12, after: categoryLabel)
-        mainStackView.setCustomSpacing(40, after: titleLabel)
         mainStackView.setCustomSpacing(24, after: descriptionLabel)
-        mainStackView.setCustomSpacing(40, after: moreButton)
     }
     
     private func setupConstraints() {
@@ -243,10 +240,7 @@ extension DiaryDetailsView {
             title: expanded ? "접기" : "이어서 더보기",
             imageName: expanded ? "chevron_up" : "chevron_down"
         )
-        UIView.animate(
-            withDuration: 0.3,
-            delay: 0.03,
-            options: [.curveEaseInOut]
-        ) { self.descriptionLabel.sizeToFit() }
+        
+        descriptionLabel.sizeToFit()
     }
 }

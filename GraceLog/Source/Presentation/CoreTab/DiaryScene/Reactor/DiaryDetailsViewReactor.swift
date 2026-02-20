@@ -18,7 +18,7 @@ final class DiaryDetailsViewReactor: Reactor {
         case fetchPostDateList(Date)
         case fetchDateRangeDiaryList(Date)
         case didTapBackButton
-        case didTapLikeButton(Int)
+        case didTapLikeButton
         case didTapCommentButton(Int)
     }
     
@@ -58,7 +58,8 @@ extension DiaryDetailsViewReactor {
             usecase.fetchDateRangeDiaryList(date: DateFormatterFactory.toDateOnlyString(from: date))
         case .didTapBackButton:
             coordinator.popViewController()
-        case .didTapLikeButton(let diaryID):
+        case .didTapLikeButton:
+            guard let diaryID = currentState.diary?.diaryId else { return .empty() }
             usecase.toggleDiaryLike(id: diaryID)
             return .just(.toggleLike)
         case .didTapCommentButton:
@@ -78,8 +79,7 @@ extension DiaryDetailsViewReactor {
         case .toggleLike:
             if var diary = newState.diary {
                 diary.likeByMe.toggle()
-                diary.likeCount += diary.likeByMe ? 1 : -1
-                diary.likeCount = max(0, diary.likeCount)
+                diary.likeCount = max(0, diary.likeByMe ? diary.likeCount + 1 : diary.likeCount - 1)
                 newState.diary = diary
             }
         case .setError(let error):

@@ -78,11 +78,16 @@ struct DomainAssembly: Assembly {
         }
         
         container.register(AnnouncementListUseCase.self) { resolver in
-            return DefaultAnnouncementListUseCase()
+            let announcementRepository = resolver.resolve(AnnouncementRepository.self)!
+            return DefaultAnnouncementListUseCase(announcementRepository: announcementRepository)
         }
         
         container.register(AnnouncementDetailUseCase.self) { resolver, announcementId in
-            return DefaultAnnouncementDetailUseCase(announcementId: announcementId)
+            let announcementRepository = resolver.resolve(AnnouncementRepository.self)!
+            return DefaultAnnouncementDetailUseCase(
+                announcementRepository: announcementRepository,
+                announcementId: announcementId
+            )
         }
         
         // Community
